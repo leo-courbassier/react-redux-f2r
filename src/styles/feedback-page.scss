@@ -1,0 +1,124 @@
+$feedback-page-top-margin: 100px;
+$feedback-panel-height: 40px;
+
+.feedback-page {
+  margin-top: $onboarding-page-top-margin;
+
+  .coming-soon {
+    max-width: 300px;
+    padding: 30px 15px;
+    text-align: center;
+    box-shadow: 2px 6px 14px -5px rgba(0,0,0,0.64);
+    &-message {
+      color: $f2r-gray-header-text;
+      font-size: 1.3em;
+    }
+    &-cta {
+      margin-top: 15px;
+    }
+  }
+
+  .f2r-tips {
+    .heading {
+      border-bottom: 1px solid $f2r-gray-header-text;
+      color: $f2r-gray-header-text;
+      padding: 10px 10px 5px 10px;
+      margin: 0px 10px 10px 10px;
+      font-weight: bold;
+    }
+    .tip-text {
+      color: $f2r-gray-header-text;
+      padding: 3px 10px 15px 10px;
+      margin: 10px;
+    }
+    ul {
+      margin-top: 10px;
+      padding-left: 30px;
+    }
+    width: 240px;
+    background: $f2r-tips-gray;
+    box-shadow: $panel-box-shadow;
+  }
+
+  .intro-message {
+    padding: 30px 0;
+    text-align: center;
+    color: $f2r-gray-header-text;
+    font-size: 1.2em;
+  }
+
+  .panels {
+    .panel {
+      border-radius: 0px;
+      box-shadow: $panel-box-shadow;
+      margin-bottom: 20px;
+    }
+  }
+
+  .section {
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    padding: 0px 0px 1px 0px;
+    margin: 25px 0px 5px 0px;
+
+    &:first-child {
+      margin-top: 0px;
+    }
+    color: $f2r-gray-header-text;
+    font-size: 1.2em;
+  }
+
+  .control-label {
+    color: $f2r-control-label-gray;
+  }
+
+  .form-group {
+    margin-top: 15px;
+  }
+
+  .row-switch {
+    margin-top: 10px;
+    &-label {
+      padding-left: 10px;
+    }
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  .help-success {
+    padding: 15px 0;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .help-error {
+    text-align: left;
+    font-weight: bold;
+  }
+
+  .submit-buttons .btn {
+    margin-right: 15px;
+  }
+
+  .tenant-info {
+    padding-top: 15px;
+    &-heading {
+      margin-top: 10px;
+      color: $f2r-gray-header-text;
+      font-size: 1.2em;
+      font-weight: bold;
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+    &-text {
+      padding: 5px 0;
+    }
+  }
+
+  .profile-image {
+    padding-right: 15px;
+    text-align: right;
+  }
+}

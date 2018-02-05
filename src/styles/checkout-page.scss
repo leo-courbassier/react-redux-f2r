@@ -1,0 +1,74 @@
+.checkout-page {
+  margin-top: 100px;
+
+  .checkout-submit {
+    padding-bottom: 30px;
+    text-align: right;
+  }
+
+  .order-heading {
+    margin: 15px 0;
+    h1 {
+      font-size: 21px;
+    }
+    .checkout-submit {
+      margin-top: 15px;
+      padding-bottom: 0;
+    }
+  }
+
+  .order-total-row {
+    border-top: 2px solid gray;
+  }
+
+  .stripe-checkout-container {
+    text-align: center;
+
+    .row {
+      margin: 0 auto;
+      display: inline-flex;
+      width: 100%;
+    }
+
+    .item {
+      padding: 0px 3px 0px 3px;
+      margin: 0 auto;
+    }
+
+    .item.cvc, .item.expiry{
+      width: 100px;
+    }
+
+    .control-label {
+      color: #666;
+    }
+  }
+
+  .finished-panel {
+    margin-top: 60px;
+  }
+
+  .finished-content {
+    display: flex;
+    align-items: center;
+    &-image {
+      img {
+        max-width: 100%;
+        max-height: 372px;
+        height: auto;
+      }
+    }
+    p:first-child {
+      margin-top: 15px;
+      margin-bottom: 30px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+    }
+  }
+
+  .card-error {
+    padding-bottom: 15px;
+    text-align: center;
+  }
+}

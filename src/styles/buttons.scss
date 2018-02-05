@@ -1,0 +1,22 @@
+.submit-button{
+  .spinner {
+    float: left;
+    height: 1px;
+    margin: -4px 0px 0px -4px;
+    padding: 0;
+  }
+  .text {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    float: right;
+  }
+}
+.lord_button{
+  background-color:$f2r-blue;
+  border-color:$f2r-blue;
+  hover:$f2r-blue;
+  .active{
+   background-color:$f2r-blue;
+   }
+}

@@ -1,0 +1,149 @@
+$screen-extra-extra-small: 320px;
+$screen-extra-small: 480px;
+$screen-small: 768px;
+$screen-medium: 992px;
+$screen-large: 1200px;
+
+
+$navbar-height: 65px;
+$logo-mark-height: 55px;
+
+
+$document-font-size: 14px;
+// components use rem
+// type use em
+
+html {
+  font-size: $document-font-size;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  margin-top: $navbar-height;
+
+}
+
+#app {
+
+}
+// this cancels out bootstrap/LinkContainer .active route styling
+.navbar-collapse .nav.navbar-nav.navbar-right > li.active > a {
+    background-color: $f2r-black;
+    color: $f2r-white;
+}
+.navbar {
+  .navbar-collapse {
+    border-color: #333;
+    box-shadow: none;
+    li {
+      padding-left: 15px;
+    }
+  }
+  .navbar-toggle {
+    position: absolute;
+    right: 0;
+    top: 7px;
+  }
+  &.navbar-default {
+    .navbar-nav {
+      li {
+        a {
+        color: $f2r-white;
+        }
+        &.active a{
+          color: $f2r-black;
+        }
+      }
+    }
+  }
+  border: none;
+  box-shadow: 2px 6px 14px -5px rgba(0,0,0,0.64);
+  min-height: $navbar-height;
+  li a {
+    padding-top: $navbar-height / 2;
+    padding-bottom: $navbar-height / 2;
+    @media only screen and (max-width : $screen-small - 1) {
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+  }
+  li.sidebar-item {
+    @media only screen and (min-width : $screen-small) {
+      display: none;
+    }
+  }
+  .container-fluid {
+    padding-left: 0px;
+    .navbar-header {
+      min-height: $navbar-height;
+    }
+  }
+  background: $f2r-black;
+
+  .navbar-brand {
+    padding: 4px 15px;
+    .logo {
+        margin-top: $logo-mark-height / 5.5;
+        @media only screen and (max-width : $screen-small - 1) {
+          margin-top: $logo-mark-height - 55;
+        }
+      &.mark {
+        margin-left: 10px;
+        height: $logo-mark-height;
+        background: none;
+      }
+      &.text {
+        height: $logo-mark-height - 7;
+        background: none;
+        @media only screen and (max-width : $screen-extra-extra-small) {
+          display: none;
+        }
+      }
+
+      // generated from svg export
+      .st0{fill:none;}
+      .st1{fill:#397ABE;}
+      .st2{fill:#24AE5F;}
+      .st3{fill:#999999;}
+    }
+  }
+}
+
+
+
+.not-found-page {
+  margin-top: 100px;
+}
+
+
+
+// reference breakpoints
+
+
+/* Custom, iPhone Retina */
+// @media only screen and (min-width : 320px) {
+
+// }
+
+// /* Extra Small Devices, Phones */
+// @media only screen and (min-width : 480px) {
+
+// }
+
+// /* Small Devices, Tablets */
+// @media only screen and (min-width : 768px) {
+
+// }
+
+// /* Medium Devices, Desktops */
+// @media only screen and (min-width : 992px) {
+
+// }
+
+// /* Large Devices, Wide Screens */
+// @media only screen and (min-width : 1200px) {
+
+// }

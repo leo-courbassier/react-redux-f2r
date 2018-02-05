@@ -1,0 +1,22 @@
+// form globals
+
+.help-block, span{
+  &.warn {
+    color: $f2r-red-warn;
+  }
+  .success{
+    color: $f2r-green;
+  }
+}
+
+span.warn{
+  padding-left:2px;
+  .text{
+    font-size:.7em;
+  }
+}
+
+textarea {
+    resize: none;
+    width: 100%;
+}

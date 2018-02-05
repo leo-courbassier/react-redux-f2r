@@ -1,0 +1,423 @@
+$onboarding-page-top-margin: 100px;
+$onboarding-panel-height: 40px;
+
+.onboarding-page {
+  .welcome-text{
+    @include invisible-panel();
+    text-align: center;
+    padding: 0px 0px 20px 0px;
+    color: $f2r-gray-header-text;
+    font-size:1.5em;
+    line-height: 1em;
+  }
+  .inline-tooltip-icon{
+    font-size: .8em;
+    padding-left: 5px;
+  }
+  .panels {
+    margin-top: $onboarding-page-top-margin;
+
+    .panel {
+      border-radius: 0px;
+      box-shadow: $panel-box-shadow;
+      margin-bottom: 20px;
+    }
+    .panel-header a {
+      text-decoration: none;
+      color: $f2r-gray-header-text;
+
+      &:hover {
+        text-decoration: none;
+      }
+      height: $onboarding-panel-height;
+      width: 100%;
+      display: inline-flex;
+      flex-wrap: nowrap;
+      flex-direction: row;
+
+      .icon {
+        width: $onboarding-panel-height;
+        height: $onboarding-panel-height;
+        font-size: 2.3em;
+      }
+      .description {
+        @media only screen and (max-width:$screen-extra-small) {
+          font-size: .9em;
+        }
+        text-align: left;
+        padding-left: 12px;
+        overflow: hidden;
+
+        span {
+          height: $onboarding-panel-height / 2;
+          white-space: nowrap;
+          display: block;
+        }
+        width: 100%;
+        height: $onboarding-panel-height;
+      }
+      .help {
+        width: $onboarding-panel-height;
+        height: $onboarding-panel-height;
+        font-size: 1.4em;
+        padding: 8px;
+      }
+      div {
+        display: inline;
+      }
+    }
+  }
+  .onboarding-submit {
+    float: right;
+    .proceed-button {
+      margin-left: 15px;
+    }
+  }
+  .section {
+    width: 100%;
+    border-bottom: 1px solid $f2r-onboading-section;
+    padding: 0px 0px 1px 0px;
+    margin: 25px 0px 5px 0px;
+
+    &:first-child {
+      margin-top: 0px;
+    }
+    color: $f2r-gray-header-text;
+    font-size: 1.2em;
+  }
+  .section-box {
+    text-align: center;
+    font-size: .9em;
+    color: $f2r-gray-header-text;
+    padding: 3px 10px 3px 10px;
+    margin: 12px 0px 12px 0px;
+    width: 100%;
+    background: $f2r-tips-gray;
+    box-shadow: $panel-box-shadow;
+  }
+  .step {
+    .control-label {
+      color: $f2r-control-label-gray;
+    }
+    .help-block {
+      font-size: .9em;
+      margin-bottom: 15px;
+    }
+    &.step-one {
+      ._react-file-reader-input {
+        width: 130px;
+        vertical-align: middle;
+      }
+      .profile-image {
+        .row {
+          margin: 0 auto;
+
+          .item {
+            padding: 0px 3px 0px 3px;
+            margin: 0 auto;
+            width: 100px;
+          }
+          display: inline-flex;
+          align-items: center;
+          width: 100%;
+        }
+        input, img {
+          display: inline-flex;
+        }
+        .img-circle {
+          box-shadow: $panel-box-shadow;
+        }
+      }
+      .military-email {
+        .row {
+          margin: 0 auto;
+
+          .item {
+            padding: 0px 3px 0px 3px;
+            margin: 0 auto;
+            width: 250px;
+          }
+          display: inline-flex;
+          width: 100%;
+        }
+      }
+      .pets,
+      .date-of-birth {
+        .row {
+          margin: 0 auto;
+
+          .item {
+            padding: 0px 3px 0px 3px;
+            margin: 0 auto;
+            width: 110px;
+          }
+          display: inline-flex;
+          width: 100%;
+        }
+        select {
+          display: inline;
+          width: 110px;
+        }
+        .checkbox-inline {
+          width: 100px;
+          padding-right: 10px;
+        }
+        div {
+          height: 50px;
+        }
+      }
+      .social-links {
+        width: 100%;
+        display: inline-flex;
+        margin-bottom: 30px;
+
+        a {
+          cursor: pointer;
+        }
+
+        div, a {
+          margin: 0 auto;
+          padding-left: 200px;
+          width: 200px;
+          height: 35px;
+          color: $f2r-green;
+        }
+        a,
+        div.linked,
+        a.linked {
+          padding-left: 0;
+        }
+        @media only screen and (max-width:$screen-small) {
+          div {
+            background-size: 85%;
+          }
+        }
+        .linkedin {
+        }
+        .facebook {
+        }
+      }
+    }
+    &.step-two {
+      .your-job, .employer-contact, .income-sources {
+        .row {
+          margin: 0 auto;
+
+          .item {
+            padding: 0px 3px 0px 3px;
+            margin: 0 auto;
+            width: 300px;
+          }
+          display: inline-flex;
+          width: 100%;
+        }
+      }
+      .income-sources {
+        margin-bottom: 80px;
+
+        .form-group {
+        }
+        .row {
+          border-bottom: 1px solid $f2r-onboading-section;
+          height: 120px;
+        }
+        ._react-file-reader-input {
+          width: 120px;
+        }
+        .item {
+          height: 75px;
+
+          &.remove {
+            margin-top: 25px;
+          }
+          .amount {
+            height: 35px;
+          }
+          &.upload {
+            // margin-top: -20px;
+          }
+          .upload-label {
+          }
+          .remove-button {
+            float: left;
+          }
+        }
+        .add-button {
+          float: left;
+          margin-right: 5px;
+        }
+      }
+    }
+    &.step-three {
+      @include invisible-panel();
+
+      .previous-landlords {
+        margin-bottom: 80px;
+      }
+      .previous-landlords, .your-renter-history, .owned-property-info, .years-as-renter {
+        .item {
+          .remove-button {
+            float: left;
+          }
+        }
+        .add-button {
+          float: left;
+          margin-right: 5px;
+        }
+        .row {
+          margin: 0 auto;
+
+          .item {
+            padding: 0px 3px 0px 3px;
+            margin: 0 auto;
+            width: 300px;
+          }
+          display: inline-flex;
+          width: 100%;
+        }
+      }
+      .verification-disclaimer {
+        color: $f2r-gray-header-text;
+      }
+    }
+    &.step-four {
+      .row {
+        margin: 0 auto;
+        display: inline-flex;
+        width: 100%;
+        .item {
+          padding: 0px 3px 0px 3px;
+          margin: 0 auto;
+          &.post-option{
+            width: 150px;
+            color: $f2r-gray-header-text;
+            .title{
+              text-align: center;
+              font-size: 1.2em;
+            }
+            .icon {
+              text-align: center;
+              font-size: 3em;
+
+            }
+            .help{
+
+            }
+            .button {
+              text-align: center;
+            }
+          }
+          &.account,
+          &.amount {
+            width: 45%;
+          }
+        }
+      }
+      .stripe-checkout-container{
+        .item.cvc, .item.expiry{
+          width: 100px;
+        }
+      }
+      // these already have text-success and text-center classes
+      .stripe-success-message,
+      .dwolla-success-message {
+        font-size: 14px;
+      }
+    }
+    &.step-five {
+      ._react-file-reader-input {
+        width: 100%;
+      }
+      .row {
+        margin: 0 auto;
+
+        .item {
+          padding: 0px 3px 0px 3px;
+          margin: 0 auto;
+        }
+        display: inline-flex;
+        width: 100%;
+      }
+    }
+    &.step-six {
+
+      .add-roommates {
+        .add-button {
+          margin-right: 5px;
+        }
+      }
+      .row {
+        margin: 0 auto;
+        &.switches {
+          .bootstrap-switch {
+            float: right;
+          }
+          .item{min-width: 250px;}
+        }
+
+        .item {
+          padding: 0px 3px 0px 3px;
+          margin: 0 auto;
+          width: 300px;
+        }
+        display: inline-flex;
+        width: 100%;
+      }
+
+      &.chooser{
+        button{
+          width: 175px;
+        }
+        .row{
+
+          .item{
+            width: 200px;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+  .ready-checkout-panel .panel-body {
+    padding: 0;
+  }
+  .complete-content {
+    font-size: 16px;
+    text-align: center;
+    &-container {
+      overflow: hidden;
+    }
+    &-lead {
+      margin-top: 30px;
+      margin-bottom: 30px;
+      padding: 0 15px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+    }
+    &-image {
+      margin: 0 auto;
+      width: 110%;
+      max-width: 850px;
+      height: 200px;
+      background-size: cover;
+      background-position: 50% 50%;
+      @media (min-width: 1350px) {
+        height: 250px;
+      }
+    }
+    &-text {
+      margin-top: 15px;
+      padding: 0 15px;
+    }
+  }
+  .complete-checkout {
+    margin-top: 30px;
+  }
+  .complete-footer {
+    margin-top: 30px;
+    padding: 15px;
+    text-align: right;
+    border-top: 1px solid #ccc;
+  }
+}

@@ -1,0 +1,34 @@
+.signup-page {
+  margin-top: $panel-primary-top-margin;
+  @media only screen and (max-width : $screen-extra-small) {
+    margin-top: $panel-primary-top-margin-mobile;
+  }
+  .signup-panel {
+    width: $panel-primary-width;
+    @media only screen and (max-width : $screen-extra-small) {
+      width: $panel-primary-width-mobile;
+    }
+    margin: 0 auto;
+  }
+  button[type=submit] {
+    float: right;
+  }
+}
+
+.signup-page-lord{
+  margin-top: $panel-primary-top-margin;
+  @media only screen and (max-width : $screen-extra-small) {
+    margin-top: $panel-primary-top-margin-mobile;
+  }
+  .signup-panel-lord {
+    width: $panel-primary-width;
+    @media only screen and (max-width : $screen-extra-small) {
+      width: $panel-primary-width-mobile;
+    }
+    margin: 0 auto;
+  }
+  button[type=submit] {
+    float: right;
+  }
+}
+

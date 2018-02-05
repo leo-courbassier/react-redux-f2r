@@ -1,0 +1,21 @@
+$onboarding-page-top-margin: 100px;
+
+
+
+.dashboard-page {
+  .panels {
+    margin-top: $onboarding-page-top-margin;
+  }
+  .sidebar {
+    .menu {
+      position: fixed;
+      margin-top: $onboarding-page-top-margin;
+    }
+  }
+  .statusbar {
+    .content {
+      position: fixed;
+      margin-top: $onboarding-page-top-margin;
+    }
+  }
+}

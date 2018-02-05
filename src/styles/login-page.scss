@@ -1,0 +1,16 @@
+.login-page {
+  margin-top: $panel-primary-top-margin;
+  @media only screen and (max-width : $screen-extra-small) {
+    margin-top: $panel-primary-top-margin-mobile;
+  }
+  .login-panel {
+    width: $panel-primary-width;
+    @media only screen and (max-width : $screen-extra-small) {
+      width: $panel-primary-width-mobile;
+    }
+    margin: 0 auto;
+  }
+  button[type=submit] {
+    float: right;
+  }
+}
