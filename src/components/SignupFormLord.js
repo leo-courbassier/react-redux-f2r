@@ -66,22 +66,34 @@ class SignupFormLord extends Component {
     } else if (!this.state.acceptTerms) {
       help.innerHTML = 'Terms of Service and Privacy Policy must be accepted.';
     } else {
+      debugger
       this.props.signup(
         this.props.appState.addUser.firstName,
         this.props.appState.addUser.lastName,
         this.props.appState.addUser.email,
         this.props.appState.addUser.password,
-        this.state.acceptTerms
+        this.state.acceptTerms,
+        this.props.appState.addUser.userType
         );
     }
   }
 
   render () {
     const signupPanelTitle = (
-      <h2>Sign Up Lord</h2>
+      <h2>Sign Up Landlord Utopia</h2>
     );
     const SignupFormLord = (
       <form>
+
+        <BS.FormGroup controlId="userType">
+          <BS.FormControl
+          value={this.props.appState.addUser.userType=1}
+          onChange={this.signupKeypress.bind(this)}   
+          style={{display:'none'}} 
+          name="userType"
+          type="text" />
+          <BS.FormControl.Feedback />
+        </BS.FormGroup>
         <BS.FormGroup controlId="signupFirstName">
           <BS.FormControl
           value={this.props.appState.addUser.firstName}
@@ -91,6 +103,8 @@ class SignupFormLord extends Component {
           placeholder="FIRST NAME" />
           <BS.FormControl.Feedback />
         </BS.FormGroup>
+
+
         <BS.FormGroup controlId="signupLastName">
           <BS.FormControl
           value={this.props.appState.addUser.lastName}
@@ -117,6 +131,7 @@ class SignupFormLord extends Component {
           placeholder="PASSWORD" />
           <BS.FormControl.Feedback />
         </BS.FormGroup>
+
         <BS.FormGroup controlId="signupPasswordConfirm">
           <BS.FormControl
           value={this.props.appState.addUser.confirmPassword}
@@ -130,32 +145,27 @@ class SignupFormLord extends Component {
           password={this.props.appState.addUser.password} />
         </BS.FormGroup>
         <BS.FormGroup>
-
-        </BS.FormGroup>
-        <BS.FormGroup controlId="signupType">
-          <BS.Radio inline defaultChecked>Tenant</BS.Radio>
         </BS.FormGroup>
         <BS.FormGroup controlId="signupType">
           <BS.Checkbox
           onChange={()=> this.setState({ acceptTerms: !this.state.acceptTerms })}
           value={this.props.appState.addUser.acceptTerms}
-          name="acceptTerms" inline>By signing up for Fit 2 Rent, you agree to:<br></br>
-            Our <a href="http://www.fit2rent.com/terms" target="_blank">Terms of Service</a> and <a href="http://www.fit2rent.com/privacy" target="_blank">Privacy Policy</a> and our payment provider, Dwolla's, <a href="https://www.dwolla.com/legal/tos/" target="_blank">Terms of Service</a> and <a href="https://www.dwolla.com/legal/privacy/" target="_blank">Privacy Policies</a>.
+          name="acceptTerms" inline >I’d like to receive your insanely entertaining newsletter.
           </BS.Checkbox>
+        </BS.FormGroup>
+        <BS.FormGroup controlId="signupType">
+          By signing up for Fit to Rent, you agree to our <a href="http://www.fit2rent.com/terms" target="_blank">Terms of Use</a>.
         </BS.FormGroup>
         <BS.HelpBlock ref="help" className="warn">
           {this.signupHelpMessage()}
         </BS.HelpBlock>
-
-
-
         <SubmitButton
         appState={this.props.appState}
         statusAction="signupSubmit"
         submit={this.submit.bind(this)}
         className="lord_button"
-        textLoading="Signing Up Lord">
-          Sign Up Lord
+        textLoading="Signing Up LandLord">
+          Sign Up
         </SubmitButton>
       </form>
     );
