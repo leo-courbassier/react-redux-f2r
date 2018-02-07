@@ -29,8 +29,11 @@ export function login(user, password) {
       }else{
         auth = null;
       }
+      debugger
       dispatch({ type: types.USER_LOGIN, authorized, auth, json });
-      if (authorized == true){
+      if (authorized == true && json.userType=='LANDLORD'){
+        browserHistory.push('/onboardinglandlord');
+      }else if(authorized == true && json.userType == 'RENTER'){
         browserHistory.push('/onboarding');
       }
     });
