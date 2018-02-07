@@ -40,14 +40,14 @@ export function signup(firstName, lastName, user, password, acceptTerms,userType
     .then(json => {
       api.setStatus(dispatch, 'loading', 'signupSubmit', false);
       let success = false;
-      if (json.email === user && userType==='0'){
+      if (json.email === user && json.userType==='RENTER'){
         success = true;
         let authorized = true;
         dispatch({ type: types.USER_LOGIN, authorized, auth, json });
         browserHistory.push('/onboarding');
         let header = `Basic ${auth}`;
         api.checkInvites(dispatch, header);
-      }else if(json.email === user && userType==='1'){
+      }else if(json.email === user && json.userType==='LANDLORD'){
 
         success = true;
         let authorized = true;
