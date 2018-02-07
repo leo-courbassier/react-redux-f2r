@@ -20,7 +20,8 @@ const initialState = {
     email: null,
     password: null,
     confirmPassword: null,
-    acceptTerms: false
+    acceptTerms: false,
+    userType:null
   }
 };
 
@@ -43,7 +44,7 @@ export default function signupAppState(state = initialState, action) {
     case types.SIGNUP_FORM_CLEAR:
       {
         let newState = objectAssign({}, state);
-        newState.addUser = {firstName: null, lastName: null, email: null, password: null};
+        newState.addUser = {firstName: null, lastName: null, email: null, password: null,userType:null};
         newState.success = null;
         newState.error = null;
         return newState;

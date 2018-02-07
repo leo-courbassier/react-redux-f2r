@@ -26,10 +26,10 @@ const NavBar = ({store, logout}) => {
     </LinkContainer>
   );
 
-  const signUpLord = (
-    <LinkContainer to={{ pathname: '/signupLord' }}>
+  const signUpLandLord = (
+    <LinkContainer to={{ pathname: '/signuplandlord' }}>
       <BS.NavItem eventKey={2} href="#">
-        Sign Up Lord
+        Sign Up LandLord
       </BS.NavItem>
     </LinkContainer>
   );
@@ -80,7 +80,7 @@ const NavBar = ({store, logout}) => {
           </BS.NavItem>
         </LinkContainer>
         {isLoggedIn() ? null : signUp }
-        {isLoggedIn() ? null : signUpLord }
+        {isLoggedIn() ? null : signUpLandLord }
         {isLoggedIn() ? contactUs : null }
         {isLoggedIn() ? helpCenter : null }
         {isLoggedIn() ? exampleMandate : null }

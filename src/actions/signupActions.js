@@ -14,8 +14,9 @@ export function clearSignupForm() {
   return { type: types.SIGNUP_FORM_CLEAR };
 }
 
-export function signup(firstName, lastName, user, password, acceptTerms) {
+export function signup(firstName, lastName, user, password, acceptTerms,userType) {
   return function (dispatch) {
+    debugger
     let auth = btoa(user + ':' + password);
     let endpoint = services.USER_SIGNUP;
     api.setStatus(dispatch, 'loading', 'signupSubmit', true);
@@ -30,7 +31,7 @@ export function signup(firstName, lastName, user, password, acceptTerms) {
         'email': user,
         'password': password,
         'isAcceptTos': acceptTerms,
-        'userType': '0'
+        'userType': userType || '0'
       })
     })
     .then(response => {
@@ -39,13 +40,22 @@ export function signup(firstName, lastName, user, password, acceptTerms) {
     .then(json => {
       api.setStatus(dispatch, 'loading', 'signupSubmit', false);
       let success = false;
-      if (json.email === user){
+      if (json.email === user && userType==='0'){
         success = true;
         let authorized = true;
         dispatch({ type: types.USER_LOGIN, authorized, auth, json });
         browserHistory.push('/onboarding');
         let header = `Basic ${auth}`;
         api.checkInvites(dispatch, header);
+      }else if(json.email === user && userType==='1'){
+
+        success = true;
+        let authorized = true;
+        dispatch({ type: types.USER_LOGIN, authorized, auth, json });
+        browserHistory.push('/onboardinglandlord');
+        let header = `Basic ${auth}`;
+        api.checkInvites(dispatch, header);
+
       }else{
         let error = json.message;
         dispatch({ type: types.SIGNUP_FORM_SUCCESS, success, error });

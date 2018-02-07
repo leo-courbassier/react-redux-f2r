@@ -19,7 +19,7 @@ import CheckoutPage from './containers/CheckoutPage';
 import LandingPage from './components/LandingPage.js';
 import LoginPage from './containers/LoginPage.js';
 import SignupPage from './containers/SignupPage.js';
-import SignupPageLord from './containers/SignupPageLord.js';
+import SignupPageLandLord from './containers/SignupPageLandLord.js';
 import ForgotPage from './containers/ForgotPage.js';
 import ResetPage from './containers/ResetPage.js';
 import FeedbackPage from './containers/FeedbackPage.js';
@@ -56,7 +56,7 @@ render(
 
         <Route path="login" component={LoginPage} />
         <Route path="signup" component={SignupPage} />
-        <Route path="signupLord" component={SignupPageLord} />
+        <Route path="signuplandlord" component={SignupPageLandLord} />
         <Route path="forgot" component={ForgotPage} />
         <Route path="reset/:token" component={ResetPage} />
 
