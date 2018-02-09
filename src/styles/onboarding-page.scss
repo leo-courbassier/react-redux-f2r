@@ -1,6 +1,8 @@
 $onboarding-page-top-margin: 100px;
 $onboarding-panel-height: 40px;
-
+.Dashboard{
+  padding-top:12px;
+}
 .onboarding-page {
   .welcome-text{
     @include invisible-panel();

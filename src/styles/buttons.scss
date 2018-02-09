@@ -11,6 +11,20 @@
     text-align: center;
     float: right;
   }
+
+}
+.btn-success:hover {
+    color:#fff;
+    background-color: $f2r-blue;
+    border-color: $f2r-blue;
+}
+
+.btn-success {
+   background-color:$f2r-blue;
+  border-color:$f2r-blue;
+  .active{
+   background-color:$f2r-blue;
+   }
 }
 .lord_button{
   background-color:$f2r-blue;

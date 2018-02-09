@@ -25,7 +25,6 @@ import * as api from '../actions/api';
 
 const startTooltip = (
   <span>
-    <h7><b>Start Here</b></h7>
     <p>Tell us and your future tenants about yourself to start gaining your advantage and separating yourself from the competition.</p>
   </span>
 );
@@ -42,7 +41,7 @@ const headerData = [
   {title: 'Step 2 of 5', subtitle: 'Tell us about your properties', tooltip: 'Share the specifics of your various properties so we can use those details as a means to find your future tenants later on.', icon: 'home' },
   {title: 'Step 3 of 5', subtitle: 'Let us set up your leases', tooltip: 'Where you’ll set up the timing, frequency, and specifics of your rental payments and deposits so we can put your mind to rest.', icon: 'file' },
   {title: 'Step 4 of 5', subtitle: 'Time to start getting you paid!', tooltip: 'Details for the accounts and mechanics of how you’d like us to set up your recurring rental payments.', icon: 'piggy-bank' },
-  {title: 'Welcome to your Dashboard', subtitle: '', tooltip: 'We\'ll help you get a free credit report so you can show you are a responsible, financially ready renter.', icon: 'flag' }
+  {title: 'Welcome to your Dashboard', subtitle: '', tooltip: 'A comprehensive solution for administering your rental property needs.', icon: 'flag',class:'Dashboard'}
   //{title: 'Step 6 of 6', subtitle: 'Create your rent mandate', tooltip: '', icon: 'flag', extraTooltip: endTooltip }
 ];
 
@@ -186,7 +185,8 @@ class OnboardingPage extends Component {
           <BS.Glyphicon glyph={data.icon} />
         </div>
         <div className="description">
-          <span>{data.title}</span>
+
+          <span className={data.class}>{data.title}</span>
           <span>{data.subtitle}</span>
         </div>
         <BS.OverlayTrigger onClick={(e) => {e.stopPropagation(); e.preventDefault()}} placement="left" overlay={tooltip}>
@@ -315,6 +315,7 @@ class OnboardingPage extends Component {
           {panel[3]}
         </BS.Panel>
         <BS.Panel
+        className="welcome-dashboard"
         onEntered={this.scrollToPanel.bind(this)}
         header={this.renderHeader(headerData[4])}
         eventKey="4">
@@ -384,8 +385,8 @@ class OnboardingPage extends Component {
     const welcomeText = (
       <div  className="welcome-text">
         <BS.Panel>
-          <p>Let’s build your reputation and generate your F2R Score!</p>
-          <p>It’s <i>your</i> home, <i>your</i> life. . . start taking control</p>
+          <p>Great! You’re now on your way</p>
+          <p><i>Let’s set you up with your own key to confidence!</i></p>
         </BS.Panel>
       </div>
     );
