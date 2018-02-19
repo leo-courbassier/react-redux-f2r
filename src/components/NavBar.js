@@ -18,18 +18,12 @@ const NavBar = ({store, logout}) => {
       browserHistory.push('/');
     }
   };
-  const signUp = (
-    <LinkContainer to={{ pathname: '/signup' }}>
-      <BS.NavItem eventKey={2} href="#">
-        Sign Up
-      </BS.NavItem>
-    </LinkContainer>
-  );
+
 
   const signUpLandLord = (
     <LinkContainer to={{ pathname: '/signuplandlord' }}>
       <BS.NavItem eventKey={2} href="#">
-        Sign Up LandLord
+        Sign Up
       </BS.NavItem>
     </LinkContainer>
   );
@@ -79,7 +73,7 @@ const NavBar = ({store, logout}) => {
             {isLoggedIn() ? 'Log Out' : 'Log In'}
           </BS.NavItem>
         </LinkContainer>
-        {isLoggedIn() ? null : signUp }
+        
         {isLoggedIn() ? null : signUpLandLord }
         {isLoggedIn() ? contactUs : null }
         {isLoggedIn() ? helpCenter : null }

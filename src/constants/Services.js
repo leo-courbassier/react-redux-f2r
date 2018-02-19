@@ -1,5 +1,7 @@
 // server address
-export const BASE_URL = 'https://ec2-52-91-200-31.compute-1.amazonaws.com:9931/api';
+//export const BASE_URL = 'https://ec2-52-91-200-31.compute-1.amazonaws.com:9931/api';
+export const BASE_URL = 'https://ec2-54-235-238-44.compute-1.amazonaws.com:9931/api';
+
 //export const BASE_URL = 'https://api.fit2rent.com/api';
 
 // methods

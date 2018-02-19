@@ -43,6 +43,21 @@ class SideBar extends Component {
       <div className="sidebar">
         <ul className="menu">
           <li>
+            <BS.Glyphicon glyph="user" /><a href="http://www.fit2rent.com/contact" target="_blank">My Account</a>
+          </li>
+          <li>
+            <BS.Glyphicon glyph="home" /><a href="http://www.fit2rent.com/contact" target="_blank">My Properties</a>
+          </li>
+          <li>
+            <BS.Glyphicon glyph="file" /><a href="http://www.fit2rent.com/contact" target="_blank">My Leases</a>
+          </li>
+          <li>
+            <BS.Glyphicon glyph="user" /><a href="http://www.fit2rent.com/contact" target="_blank">My Tenants</a>
+          </li>
+          <li>
+            <BS.Glyphicon glyph="usd" /><a href="http://www.fit2rent.com/contact" target="_blank">My Payments</a>
+          </li>
+          <li>
             <BS.Glyphicon glyph="comment" /><a href="http://www.fit2rent.com/contact" target="_blank">Contact Us</a>
           </li>
           <li>
@@ -57,27 +72,6 @@ class SideBar extends Component {
               </div>
             </li>
           )}
-          <li>
-            <div className="example-mandate-callout">
-              <div className="heading">See What You're Getting:</div>
-              <div className="content anonymous">
-                <BS.Button
-                href="http://www.fit2rent.com/pdf/anonymous_mandate_report.pdf"
-                bsStyle="primary"
-                target="_blank">
-                Anonymous Rent Mandate
-                </BS.Button>
-              </div>
-              <div className="content personal">
-                <BS.Button
-                href="http://www.fit2rent.com/pdf/personal_mandate_report.pdf"
-                bsStyle="primary"
-                target="_blank">
-                Personal Rent Mandate
-                </BS.Button>
-              </div>
-            </div>
-          </li>
           <li>
             <div className="mandatory-legend">
               * - indicates mandatory profile fields

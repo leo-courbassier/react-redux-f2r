@@ -181,13 +181,15 @@ class StepOneForm extends Component {
               as="url"
               id="profile-pic-upload"
               onChange={this.handleFileChange.bind(this)}>
+
                 <SubmitButton
                 className="upload-button"
                 appState={this.props.appState}
 
                 statusAction="profilePicUpload"
                 textLoading="Uploading">
-                  Select an Image
+                <BS.Glyphicon glyph="upload" />
+                  Upload
                 </SubmitButton>
                 <BS.HelpBlock className="text-center">
                   <span className="text-success">
@@ -330,59 +332,17 @@ class StepOneForm extends Component {
       <Loader appState={this.props.appState} statusType="loading" statusAction="stepOneForm">
         <div className="step step-one">
           <form>
-            <div className="section">Profile Image</div>
+            <div className="section">Profile Pic</div>
             <BS.HelpBlock>
-              Smile! Select your favorite photo for your profile. You will receive an Anonymous Rent Mandate as well as a Personalized Rent Mandate, complete with your picture and personal description. You have the power to choose how much information to share with unknown landlords.
+              No one will see your profile pic unless you want them to. But having one will help everyone know that you’re real.
             </BS.HelpBlock>
             {profileImage}
             <div className="section">Personal Description</div>
             <BS.HelpBlock>
-              Tell us and prospective landlords about yourself, your family, and/or your interests.
+              Tell us and prospective tenants about yourself, your properties, your family, your interests, or anything else.
             </BS.HelpBlock>
             {personalDescription}
-            <div className="section">Date of Birth{warn}</div>
-            <BS.HelpBlock>
-              Please tell us your birthday! (We’ll eat cake that day.)
-            </BS.HelpBlock>
-            {dateOfBirth}
-            <div className="section">Pets</div>
-            <BS.HelpBlock>
-              We love our pets, too. Tell us about your furry friends so prospective landlords know that you’re a proud pet owner.
-            </BS.HelpBlock>
-            {pets}
-            <div className="section">Link Social<InfoTooltip placement="right" tooltip={socialTooltip} /></div>
-            <BS.HelpBlock>
-              Linking your social accounts lends insight into who you are and what you've accomplished. Your LinkedIn and Facebook accounts contribute to your F2R Score. We will <strong>never</strong> share this info with anyone!
-            </BS.HelpBlock>
-            {(!isLinkedinLinked && !isFacebookLinked) && (
-              <BS.HelpBlock>
-                When you click the buttons below, a new browser tab will open. Please log in to your social account and give permissions to the Fit to Rent application. You will receive a message stating you have successfully linked your account. If you encounter an issue, simply try clicking the button again.
-              </BS.HelpBlock>
-            )}
-            <div className="social-links">
-              {isLinkedinLinked ? linkedLinkedin : linkLinkedin}
-              {isFacebookLinked ? linkedFacebook : linkFacebook}
-            </div>
-            <BS.HelpBlock>
-              Are you an Active Duty member of the U.S. Armed Forces? If so, provide us with your military email below so we can verify your employment status.  You can provide this in lieu of connecting with LinkedIn, but remember, connecting your LinkedIn gets you more points.  We’ll use this information ONLY to verify the information you provide in Step 2, we’ll NEVER email or share it.
-            </BS.HelpBlock>
-            <div className="military-email">
-
-
-              <BS.FormGroup controlId="alternativeEmail">
-                <div className="row">
-                  <div className="item">
-                    <BS.ControlLabel>Military Email with .mil domain</BS.ControlLabel>
-                    <BS.FormControl
-                    value={store.alternativeEmail}
-                    onChange={this.keypress.bind(this)}
-                    name="alternativeEmail"
-                    type="text" />
-                  </div>
-                </div>
-              </BS.FormGroup>
-
-            </div>
+           
           </form>
           <BS.HelpBlock className="pullLeft warn">
             {this.state.submitted ? this.isInvalid() : ''}
