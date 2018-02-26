@@ -36,6 +36,7 @@ export function updateOnboardingScore() {
 // step one
 
 export function updateStepOneForm(settings, name, value) {
+
   return function (dispatch, getState) {
     api.setStatus(dispatch, 'modified', 'stepOneForm', true);
     dispatch({type: types.ONBOARDING_STEPONE_FORM_UPDATE, settings, name, value});
@@ -90,12 +91,13 @@ export function loadStepOne(){
   };
 }
 
-export function saveStepOne(description, dobMonth, dobDay, dobYear, dogs, cats, other, alternativeEmail, isActiveDutyMilitary, openNextStep, callback) {
+export function saveStepOne(description,  dogs, cats, other, openNextStep, callback,openNextStepFunction) {
   return function (dispatch, getState) {
     let authHeader = api.getAuthHeaders(dispatch, getState);
 
     let userId = getState().loginAppState.userInfo.id;
 
+    debugger
 
     let pets = [];
     for (let i=0;i < dogs;i++){
@@ -108,11 +110,6 @@ export function saveStepOne(description, dobMonth, dobDay, dobYear, dogs, cats, 
       pets.push({"type": "OTHER", "userId": userId});
     }
 
-    let dateOfBirth = null;
-    if (dobYear && dobMonth && dobDay) {
-      let month = (dobMonth < 10) ? '0'+dobMonth : dobMonth;
-      dateOfBirth = dobYear+'-'+month+'-'+dobDay;
-    }
 
     let statusAction = openNextStep ? 'stepOneFormProceed' : 'stepOneForm';
     api.setStatus(dispatch, 'saving', statusAction, true);
@@ -120,10 +117,7 @@ export function saveStepOne(description, dobMonth, dobDay, dobYear, dogs, cats, 
     let payloadUser = {
         "id": userId,
         "userDetails": {
-          "description": description,
-          "dateOfBirth": dateOfBirth,
-          "alternativeEmail": alternativeEmail,
-          "ttIsActiveDutyMilitay": isActiveDutyMilitary
+          "description": description
         }
       };
 
@@ -135,7 +129,7 @@ export function saveStepOne(description, dobMonth, dobDay, dobYear, dogs, cats, 
       api.setStatus(dispatch, 'modified', 'stepOneForm', false);
       dispatch({type: types.ONBOARDING_STEPONE_FORM_UPDATE, name: 'saved', value: true});
       if (callback) callback();
-      if (openNextStep) openNextStep();
+      if (openNextStep) openNextStepFunction();
     });
 
 

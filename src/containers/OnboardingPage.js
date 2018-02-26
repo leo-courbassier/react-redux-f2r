@@ -144,6 +144,7 @@ class OnboardingPage extends Component {
   }
 
   openNextStep() {
+    console.log('openNextStep onboardingPage');
     let nextStep = parseInt(this.state.activeKey) + 1;
     this.handleSelect(nextStep.toString());
   }

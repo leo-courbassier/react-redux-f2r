@@ -22,7 +22,7 @@ const initialState = {
 
   0: {
       description: null,
-      dobMonth: null,
+      /*dobMonth: null,
       dobDay: null,
       dobYear: null,
       dogs: null,
@@ -32,7 +32,7 @@ const initialState = {
       facebookToken: null,
       linkedinToken: null,
       isActiveDutyMilitary: null,
-      alternativeEmail: null,
+      alternativeEmail: null,*/
       saved: false
   },
   1: {
@@ -180,7 +180,7 @@ export default function onboardingAppState(state = initialState, action) {
 
         let newState = objectAssign({}, state);
         newState[0]['description'] = action.user.description;
-        newState[0]['dobMonth'] = dob[1];
+        /*newState[0]['dobMonth'] = dob[1];
         newState[0]['dobDay'] = dob[2];
         newState[0]['dobYear'] = dob[0];
         newState[0]['isActiveDutyMilitary'] = action.user.ttIsActiveDutyMilitay;
@@ -190,7 +190,7 @@ export default function onboardingAppState(state = initialState, action) {
         newState[0]['other'] = action.other;
         newState[0]['linkedAccounts'] = action.linkedAccounts;
         newState[0]['facebookToken'] = action.facebookToken;
-        newState[0]['linkedinToken'] = action.linkedinToken;
+        newState[0]['linkedinToken'] = action.linkedinToken;*/
         return newState;
       }
 

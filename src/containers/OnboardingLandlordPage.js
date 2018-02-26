@@ -19,7 +19,7 @@ import StepFourForm from '../components/onboardinglandlord/StepFourForm';
 import StepFiveForm from '../components/onboardinglandlord/StepFiveForm';
 import StepSixForm from '../components/onboardinglandlord/StepSixForm';
 
-import * as actions from '../actions/onboardingActions';
+import * as actions from '../actions/onboardingLandlordActions';
 
 import * as api from '../actions/api';
 
@@ -57,7 +57,7 @@ const stepTips = [
 const STEP_IDS = ['stepOneForm', 'stepTwoForm', 'stepThreeForm', 'stepFourForm', 'stepFiveForm', 'stepSixForm'];
 
 
-class OnboardingPage extends Component {
+class OnboardingLandlordPage extends Component {
 
   state = {
     activeKey: '0',
@@ -143,15 +143,18 @@ class OnboardingPage extends Component {
   }
 
   openNextStep() {
+    debugger
     let nextStep = parseInt(this.state.activeKey) + 1;
     this.handleSelect(nextStep.toString());
   }
 
   scrollToPanel(e){
+    debugger
     smoothScroll.animateScroll(e.offsetTop);
   }
 
   isModified() {
+    debugger
     return _.contains(this.props.appState.status['modified'], true);
   }
 
@@ -418,12 +421,12 @@ class OnboardingPage extends Component {
   }
 }
 
-OnboardingPage.propTypes = {
+OnboardingLandlordPage.propTypes = {
   actions: PropTypes.object.isRequired,
   appState: PropTypes.object.isRequired
 };
 
-OnboardingPage.contextTypes = {
+OnboardingLandlordPage.contextTypes = {
   store: PropTypes.object,
   router: React.PropTypes.object.isRequired
 };
@@ -444,4 +447,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(OnboardingPage);
+)(OnboardingLandlordPage);

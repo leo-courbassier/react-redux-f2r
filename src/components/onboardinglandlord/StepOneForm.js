@@ -31,6 +31,7 @@ class StepOneForm extends Component {
   }
 
   keypress(e) {
+    debugger
     this.props.update(this.props.appState, e.target.name, e.target.value);
   }
 
@@ -72,26 +73,29 @@ class StepOneForm extends Component {
   }
 
   isInvalid(){
+
     let store = this.props.appState[STEP_ID];
 
-    if(!store.dobMonth || !store.dobDay || !store.dobYear){
-      return 'Please provide your date of birth.';
-    }
+    // if(!store.dobMonth || !store.dobDay || !store.dobYear){
+    //   return 'Please provide your date of birth.';
+    // }
 
-    const alternativeEmailExt = store.alternativeEmail ? store.alternativeEmail.substr(store.alternativeEmail.length - 4) : store.alternativeEmail;
-    if(store.alternativeEmail && (!isEmail(store.alternativeEmail) || alternativeEmailExt !== '.mil')) {
-      return 'Please provide a valid military email address.';
-    }
+    // const alternativeEmailExt = store.alternativeEmail ? store.alternativeEmail.substr(store.alternativeEmail.length - 4) : store.alternativeEmail;
+    // if(store.alternativeEmail && (!isEmail(store.alternativeEmail) || alternativeEmailExt !== '.mil')) {
+    //   return 'Please provide a valid military email address.';
+    // }
 
-    return false;
+    return true;
   }
 
   submit(openNextStep, e) {
+    debugger;
     e.preventDefault();
     this.setState({submitted: true});
-    if(this.isInvalid()){
-      return false;
-    }
+
+    // if(this.isInvalid()){
+    //   //return false;
+    // }
 
     let store = this.props.appState[STEP_ID];
     let isActiveDutyMilitary = store.alternativeEmail ? true : false;
@@ -100,23 +104,24 @@ class StepOneForm extends Component {
     // otherwise, save button will always trigger a save
     let isModified = this.props.appState.status['modified']['stepOneForm'];
     let allowSave = openNextStep ? isModified : true;
-
+     openNextStep=true;
     if (allowSave) {
       this.props.save(
         store.description,
-        store.dobMonth,
-        store.dobDay,
-        store.dobYear,
+        // store.dobMonth,
+        // store.dobDay,
+        // store.dobYear,
         store.dogs,
         store.cats,
         store.other,
-        store.alternativeEmail,
-        isActiveDutyMilitary,
+        // store.alternativeEmail,
+        // isActiveDutyMilitary,
         openNextStep,
-        this.props.updateOnboardingScore
+        this.props.updateOnboardingScore,
+        this.props.openNextStep
         );
     } else {
-      if (openNextStep) openNextStep();
+      if (openNextStep) this.props.openNextStep();
     }
   }
 
@@ -342,34 +347,50 @@ class StepOneForm extends Component {
               Tell us and prospective tenants about yourself, your properties, your family, your interests, or anything else.
             </BS.HelpBlock>
             {personalDescription}
-           
+
           </form>
           <BS.HelpBlock className="pullLeft warn">
-            {this.state.submitted ? this.isInvalid() : ''}
+            {this.state.submitted}
           </BS.HelpBlock>
+            <div className="landlord-previous">
+                   {this.props.showProceed && (
+                      <SubmitButton
+                      appState={this.props.appState}
+                      statusAction="stepOneFormProceed"
+                      submit={_.partial(this.submit.bind(this), this.props.openPreviousStep)}
+                      textLoading="Saving"
+                      disabled={this.isMandatoryInvalid()}
+                      bsStyle="success"
+                      className="prev-button">
+                        Previous
+                      </SubmitButton>
+                    )}
+        </div>
 
+         <div className="landlord-skyp">
+                   {this.props.showProceed && (
+                      <SubmitButton
+                      appState={this.props.appState}
+                      statusAction="stepOneFormProceed"
+                      submit={_.partial(this.submit.bind(this), this.props.openNextStep)}
+                      textLoading="Saving"
+                      disabled={this.isMandatoryInvalid()}
+                      bsStyle="success"
+                      className="skyp-button">
+                        Skyp
+                      </SubmitButton>
+                    )}
+        </div>
           <div className="onboarding-submit">
             <SubmitButton
             appState={this.props.appState}
             statusAction="stepOneForm"
             submit={_.partial(this.submit.bind(this), false)}
             textLoading="Saving"
-            textModified="Save Changes"
+            textModified="Next"
             bsStyle="primary">
-              Save
+              Next
             </SubmitButton>
-            {this.props.showProceed && (
-              <SubmitButton
-              appState={this.props.appState}
-              statusAction="stepOneFormProceed"
-              submit={_.partial(this.submit.bind(this), this.props.openNextStep)}
-              textLoading="Saving"
-              disabled={this.isMandatoryInvalid()}
-              bsStyle="success"
-              className="proceed-button">
-                Proceed
-              </SubmitButton>
-            )}
           </div>
 
         </div>

@@ -423,3 +423,20 @@ $onboarding-panel-height: 40px;
     border-top: 1px solid #ccc;
   }
 }
+/**New Styles**/
+.landlord-skyp{
+    align-content: center;
+    padding-left: 190px;
+    float: left;
+    .proceed-button {
+      margin-left: 15px;
+    }
+}
+.landlord-previous{
+    align-content: center;
+    float: left;
+    .proceed-button {
+      margin-left: 15px;
+    }
+}
+

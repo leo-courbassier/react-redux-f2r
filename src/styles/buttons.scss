@@ -26,6 +26,35 @@
    background-color:$f2r-blue;
    }
 }
+.skyp-button.btn-success {
+   background-color:$f2r-grey;
+   border-color:$f2r-grey;
+  .active{
+   background-color:$f2r-grey;
+   }
+}
+
+.prev-button.btn-success {
+   background-color:$f2r-grey;
+   border-color:$f2r-grey;
+   color:red;
+  .active{
+   background-color:$f2r-grey;
+   }
+}
+
+.prev-button.btn-success:hover {
+    color:#fff;
+    background-color: $f2r-grey;
+    border-color: $f2r-grey;
+}
+
+.skyp-button.btn-success:hover {
+    color:#fff;
+    background-color: $f2r-grey;
+    border-color: $f2r-grey;
+}
+
 .lord_button{
   background-color:$f2r-blue;
   border-color:$f2r-blue;
