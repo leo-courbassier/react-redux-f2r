@@ -285,14 +285,6 @@ class StepThreeForm extends Component {
     );
   }
 
-
-
-
-
-
-
-
-
   render() {
 
     let store = this.props.appState[STEP_ID];
@@ -323,62 +315,159 @@ class StepThreeForm extends Component {
         <p>Property ownership says a lot about you.  Let us know your status and boost your F2R Score.</p>
       </span>
     );
+    const propertySele = (
+          <select id="property" className="form-control">
+              <option value="Yes">Refundable</option>
+              <option value="Yes">Nonrefundable</option>
+          </select>
+    )
 
+    const refundable = (
+          <select id="property" className="form-control">
+              <option value="Yes">Title</option>
+          </select>
+    )
 
-    const yourRenterHistory = (
-      <div className="your-renter-history">
-        <BS.FormGroup controlId="yourRenterHistory">
+    const propertySelection = (
+      <div className="propertySelection">
+        <BS.FormGroup controlId="propertyS">
         <div className="row">
-          <BS.ControlLabel>Where are you currently living?</BS.ControlLabel>
-        </div>
-        <div className="row">
-          <div className="item">
-            <BS.ControlLabel>State</BS.ControlLabel>
-            <SelectOptions
-              name="currentState"
-              onChange={_.partial(this.stateListKeypress.bind(this), 'currentCityList')}
-              defaultValue={store.currentState}
-              optionList={store.stateList}
-              defaultOption
-              />
-            </div>
-            <div className="item">
-              <BS.ControlLabel>City</BS.ControlLabel>
-              <SelectOptions
-                name="currentCity"
-                disabled={!store.currentState}
-                loading={this.props.appState.status.loading['currentCityList']}
-                loadingText="Retrieving cities..."
-                onChange={this.keypress.bind(this)}
-                defaultValue={store.currentCity}
-                optionList={this.props.appState.cities['currentCityList']}
-                defaultOption
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="item switch">
-                <BS.ControlLabel>Have you ever owned a property?</BS.ControlLabel>
-                <InfoTooltip placement="top" tooltip={propertyTooltip} />
-                <br />
-                <Switch
-                onColor="success"
-                offColor="success"
-                onText="Yes"
-                offText="No"
-                size="mini"
-                onChange={_.partial(this.switchKeypress.bind(this), 'previousHomeowner')}
-                state={store.previousHomeowner} />
-              </div>
-            </div>
-            </BS.FormGroup>
+          <div className="col-md-3"></div>
+          <div className="col-md-3">
+          <BS.ControlLabel>Property Slection</BS.ControlLabel>
           </div>
+          <div className="col-md-3">
+          {propertySele}
+          </div>
+          <div className="col-md-3"></div>
+        </div>
+        </BS.FormGroup>
+      </div>
 
     );
 
 
 
+    const tenantAssignmet = (
 
+        <div className="row">
+         <div className="col-md-12">
+           <div className="col-md-3">
+            <BS.ControlLabel>First Name</BS.ControlLabel>
+           </div>
+           <div className="col-md-3">
+           <BS.FormControl
+           value={store.firstNameTenantAssignemt}
+           name="firstNameTenantAssignemt"
+           onChange={_.partial(this.landlordKeypress.bind(this), 'firstNameTenantAssignemt')}
+           type="text" />
+           </div>
+           <div className="col-md-3">
+            <BS.ControlLabel>Last Name</BS.ControlLabel>
+           </div>
+           <div className="col-md-3">
+           <BS.FormControl
+           value={store.lastNameTenantAssignemt}
+           name="firstNameTenantAssignemt"
+           onChange={_.partial(this.landlordKeypress.bind(this), 'lastNameTenantAssignemt')}
+           type="text" />
+           </div>
+          </div>
+          <br></br>
+          <div className="col-md-12">
+           <div className="col-md-3">
+            <BS.ControlLabel>Email</BS.ControlLabel>
+           </div>
+           <div className="col-md-3">
+           <BS.FormControl
+           value={store.firstNameTenantAssignemt}
+           name="emailTenantAssignemt"
+           onChange={_.partial(this.landlordKeypress.bind(this), 'emailTenantAssignemt')}
+           type="text" />
+           </div>
+           <div className="col-md-3">
+            <BS.ControlLabel>Phone</BS.ControlLabel>
+           </div>
+           <div className="col-md-3">
+           <BS.FormControl
+           value={store.firstNameTenantAssignemt}
+           name="phoneTenantAssignemt"
+           onChange={_.partial(this.landlordKeypress.bind(this), 'phoneTenantAssignemt')}
+           type="text" />
+           </div>
+          </div>
+         </div>
+    )
+
+    const leaseType = (
+
+        <div className="row">
+          <div className="col-md-12 leaseTypeSection">
+            <div className="col-md-5">
+            <div className="input-group">
+            <label className="radio-inline">
+            <input
+            value={store.motnh}
+            onChange={this.keypress.bind(this)}
+            name="monthToMonth"
+            className="input_month"
+            type="radio" />
+            <BS.ControlLabel className="monthToMonth">Month to Month </BS.ControlLabel>
+            </label>
+            </div>
+            </div>
+            <div className="col-md-2">or</div>
+            <div className="col-md-5">
+            <div className="input-group">
+            <label className="radio-inline">
+            <input
+            value={store.motnh}
+            onChange={this.keypress.bind(this)}
+            name="monthToMonth"
+            className="input_month"
+            type="radio" />
+            <BS.ControlLabel className="setTerm">Set Term </BS.ControlLabel>
+            </label>
+           </div>
+           </div>
+          </div>
+        </div>
+    )
+
+    const collectDeposit = (
+
+        <div className="row">
+          <div className="col-md-12 leaseTypeSection">
+            <div className="col-md-5">
+            <div className="input-group">
+            <label className="radio-inline">
+            <input
+            value={store.collectDeposits}
+            onChange={this.keypress.bind(this)}
+            name="monthToMonth"
+            className="input_month"
+            type="radio" />
+            <BS.ControlLabel className="monthToMonth">Collect Deposits</BS.ControlLabel>
+            </label>
+            </div>
+            </div>
+            <div className="col-md-2">or</div>
+            <div className="col-md-5">
+            <div className="input-group">
+            <label className="radio-inline">
+            <input
+            value={store.notNecesary}
+            onChange={this.keypress.bind(this)}
+            name="monthToMonth"
+            className="input_month"
+            type="radio" />
+            <BS.ControlLabel className="setTerm">Not Necessary</BS.ControlLabel>
+            </label>
+           </div>
+           </div>
+          </div>
+        </div>
+    )
 
     const ownedPropertyInfo = (
 
@@ -467,49 +556,162 @@ class StepThreeForm extends Component {
     );
 
 
-    const yearsAsRenter = (
-      <div className="years-as-renter">
-        <BS.FormGroup controlId="yearsAsRenter">
-        <div className="row">
-          <div className="item">
-            <BS.ControlLabel>Approximate years as a renter</BS.ControlLabel>
-            <SelectOptions
-              name="numYearsRenter"
-              onChange={this.keypress.bind(this)}
-              defaultValue={store.numYearsRenter}
-              optionList={yearsAsRenterOptionsList}
-              defaultOption
-              bookend="or more"
-              keyValue
-              />
-            </div>
-            <div className="item">
-              <BS.ControlLabel>Approximate properties rented</BS.ControlLabel>
-              <SelectOptions
-                name="numPropertiesRented"
-                onChange={this.keypress.bind(this)}
-                defaultValue={store.numPropertiesRented}
-                optionList={numPropertiesRentedOptionsList}
-                defaultOption
-                bookend="or more"
-                keyValue
-                />
-              </div>
-          </div>
-        </BS.FormGroup>
+    const detailsPoperty = (
+      <div className="row">
+       <div className="col-md-12">
+         <div className="col-md-3">
+          <BS.ControlLabel>Lease Start Date</BS.ControlLabel>
+         </div>
+         <div className="col-md-3">
+         <BS.FormControl
+         value={store.leaseStartDate}
+         name="leaseStartDate"
+         placeholder="mm/dd/yyyy"
+         onChange={_.partial(this.landlordKeypress.bind(this), 'leaseStartDate')}
+         type="text" />
+         <BS.Glyphicon glyph="calendar" />
+         </div>
+         <div className="col-md-3">
+          <BS.ControlLabel>Lease End Date</BS.ControlLabel>
+         </div>
+         <div className="col-md-3">
+         <BS.FormControl
+         value={store.leaseEndDate}
+         name="leaseEndDate"
+         onChange={_.partial(this.landlordKeypress.bind(this), 'leaseEndDate')}
+         placeholder="mm/dd/yyyy"
+         type="text" />
+         <BS.Glyphicon glyph="calendar" />
+         </div>
+        </div>
+        <br></br>
+        <div className="col-md-12">
+        <div className="col-md-3">
+         <BS.ControlLabel>Payment Start Date</BS.ControlLabel>
+        </div>
+        <div className="col-md-3">
+        <BS.FormControl
+        value={store.paymentStartDate}
+        name="paymentStartDate"
+        placeholder="mm/dd/yyyy"
+        onChange={_.partial(this.landlordKeypress.bind(this), 'paymentStartDate')}
+        type="text" />
+        <BS.Glyphicon glyph="calendar" />
+        </div>
+
+        <div className="col-md-3">
+         <BS.ControlLabel>Payment End Date</BS.ControlLabel>
+        </div>
+        <div className="col-md-3">
+        <BS.FormControl
+        value={store.paymentEndDate}
+        name="paymentEndDate"
+        placeholder="mm/dd/yyyy"
+        onChange={_.partial(this.landlordKeypress.bind(this), 'paymentEndDate')}
+        type="text" />
+        <BS.Glyphicon glyph="calendar" />
+        </div>
+
+        </div>
+
+        <div className="col-md-12">
+        <div className="col-md-3">
+         <BS.ControlLabel>Payment Due Date</BS.ControlLabel>
+        </div>
+        <div className="col-md-3">
+        <BS.FormControl
+        value={store.paymentDueDate}
+        name="paymentDueDate"
+        placeholder="xth of month"
+        onChange={_.partial(this.landlordKeypress.bind(this), 'paymentDueDate')}
+        type="text" />
+        <BS.Glyphicon glyph="calendar" />
+        </div>
+
+        <div className="col-md-3">
+         <BS.ControlLabel>Monthly Rent</BS.ControlLabel>
+        </div>
+        <div className="col-md-3">
+        <BS.FormControl
+        value={store.paymentEndDate}
+        name="monthlyRent"
+        placeholder="$$$$"
+        onChange={_.partial(this.landlordKeypress.bind(this), 'monthlyRent')}
+        type="text" />
+
+        </div>
+
+        </div>
+
+
+       </div>
+  )
+
+
+
+  const depositDetail = (
+    <div className="row">
+     <div className="col-md-12">
+       <div className="col-md-3">
+        <BS.ControlLabel>Deposit Type</BS.ControlLabel>
+       </div>
+       <div className="col-md-3">
+       <BS.FormControl
+       value={store.depositType}
+       name="depositType"
+       placeholder="￼e.g. Securi"
+       onChange={_.partial(this.landlordKeypress.bind(this), 'depositType')}
+       type="text" />
+
+       </div>
+       <div className="col-md-3">
+        <BS.ControlLabel>Deposit Amount</BS.ControlLabel>
+       </div>
+       <div className="col-md-3">
+       <BS.FormControl
+       value={store.depositAmount}
+       name="depositAmount"
+       onChange={_.partial(this.landlordKeypress.bind(this), 'depositAmount')}
+       placeholder="$$$$"
+       type="text" />
+       </div>
       </div>
-    );
+      <br></br>
+      <div className="col-md-12">
+      <div className="col-md-3">
+       <BS.ControlLabel>Deposit Due On</BS.ControlLabel>
+      </div>
+      <div className="col-md-3">
+      <BS.FormControl
+      value={store.depositDueOn}
+      name="depositDueOn"
+      placeholder="mm/dd/yyyy"
+      onChange={_.partial(this.landlordKeypress.bind(this), 'depositDueOn')}
+      type="text" />
+      <BS.Glyphicon glyph="calendar" />
+      </div>
 
-
-
-
-
-
-
-
-
-
-
+      <div className="col-md-3">
+       <BS.ControlLabel>Refundable Status</BS.ControlLabel>
+      </div>
+      <div className="col-md-3">
+      {propertySele}
+      </div>
+      </div>
+      <br></br>
+      <div className="row">
+      <div className="col-md-8 anotherDeposit">
+          <BS.Button
+          onClick={(e) => this.addAnotherDeposit(e)}
+          className="add-button-otherDeposit"
+          type="submit"
+          bsStyle="success">
+            Add Another Deposit
+          </BS.Button>
+      </div>
+      </div>
+     </div>
+)
 
     const landlords = _.map(store.previousLandlords, (source, i) => {return this.renderLandlords(source, i)});
 
@@ -537,36 +739,63 @@ class StepThreeForm extends Component {
       </div>
     );
 
-
+    const addAnotherDeposit = (
+      <div className="addAnotherDeposit">
+        {landlords}
+          <BS.Button
+          onClick={(e) => this.addAnotherDeposit(e)}
+          className="add-button"
+          type="submit"
+          bsStyle="success">
+            Add Another Deposit
+          </BS.Button>
+          {landlords.length ? removeButton : null}
+      </div>
+    );
 
 
     let warn = this.isInvalid() ? (<span className="warn">* <span className="text">{this.state.submitted ? this.isInvalid() : ''}</span></span>) : '';
-
 
     return (
       <Loader appState={this.props.appState} statusType="loading" statusAction="stepThreeForm">
         <div className="step step-three">
           <form>
-            <div className="section">Your Renter History{warn}</div>
-            {yourRenterHistory}
-            <BS.Panel collapsible expanded={this.props.appState[STEP_ID].previousHomeowner}>
-              <div className="section">Owned Property Information</div>
-              {ownedPropertyInfo}
-            </BS.Panel>
-            <div className="section"></div>
-            {yearsAsRenter}
-            <div className="section">Request a Review from a previous Landlord
-            <br></br>
-            <h6>
-              <b>IMPORTANT! We strongly encourage you to provide past landlord information. Verification of your awesomeness as a renter significantly contributes to your overall F2R Score.</b>
-            </h6>
-            </div>
-            {previousLandlords}
+            <div className="section">Lease Info{warn}</div>
+            {propertySelection}
+            <div className="section">Tenant Assignment{warn}</div>
+            {tenantAssignmet}
+            <div className="section">Lease Type{warn}</div>
+            {leaseType}
+            <div className="section">Details{warn}</div>
+
+            {detailsPoperty}
+            <div className="section">Deposits{warn} <div className="depositMessage">(Select “Collect Deposits” ONLY IF there are outstanding deposits you’re owed from your tenants)</div></div>
+            {collectDeposit}
+
+            <div className="section">Deposit Details{warn}</div>
+            {depositDetail}
+            <div className="section">Add more leases</div>
+
           </form>
           <BS.HelpBlock className="pullLeft warn">
             {this.state.submitted ? this.isInvalid() : ''}
           </BS.HelpBlock>
-          <div className="onboarding-submit">
+
+          <div className="row">
+          <div className="col-md-3">
+          {this.props.showProceed && (
+            <SubmitButton
+            appState={this.props.appState}
+            statusAction="stepTwoFormProceed"
+            submit={_.partial(this.submit.bind(this), this.props.openPrevStep)}
+            textLoading="Loading"
+            bsStyle="success"
+            className="proceed-button prev-button">
+              Previous
+            </SubmitButton>
+          )}
+           </div>
+           <div className="col-md-5">
             <SubmitButton
             appState={this.props.appState}
             statusAction="stepThreeForm"
@@ -574,8 +803,10 @@ class StepThreeForm extends Component {
             textLoading="Saving"
             textModified="Save Changes"
             bsStyle="primary">
-              Save
+              ￼Save and Setup Another Lease
             </SubmitButton>
+            </div>
+            <div className="col-md-3">
             {this.props.showProceed && (
               <SubmitButton
               appState={this.props.appState}
@@ -585,10 +816,12 @@ class StepThreeForm extends Component {
               disabled={this.isMandatoryInvalid()}
               bsStyle="success"
               className="proceed-button">
-                Proceed
+                Next
               </SubmitButton>
             )}
-          </div>
+             </div>
+            </div>
+
         </div>
       </Loader>
     );

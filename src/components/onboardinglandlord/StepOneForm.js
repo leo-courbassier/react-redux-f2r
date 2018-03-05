@@ -380,7 +380,7 @@ class StepOneForm extends Component {
                         Skyp
                       </SubmitButton>
                     )}
-        </div>
+          </div>
           <div className="onboarding-submit">
             <SubmitButton
             appState={this.props.appState}

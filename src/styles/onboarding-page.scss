@@ -3,6 +3,30 @@ $onboarding-panel-height: 40px;
 .Dashboard{
   padding-top:12px;
 }
+.buttonStep2{
+  padding-top: 25px;
+}
+.add-button-otherDeposit{
+  float: right;
+}
+.emailGuarantor{
+  padding-left: 62px;
+}
+.anotherDeposit{
+  padding-top: 25px;
+}
+.info-property{
+  font-size: 10px;
+}
+.monthToMonth{
+  color: $f2r-green!important;
+}
+.setTerm{
+  color: $f2r-blue!important;
+}
+.leaseTypeSection{
+  padding-left: 100px;
+}
 .onboarding-page {
   .welcome-text{
     @include invisible-panel();
@@ -74,6 +98,15 @@ $onboarding-panel-height: 40px;
     .proceed-button {
       margin-left: 15px;
     }
+  }
+  .onboarding-submit-four{
+    float: right;
+    .proceed-button {
+      margin-left: 15px;
+    }
+  }
+  .container-step-four{
+    
   }
   .section {
     width: 100%;
@@ -208,7 +241,7 @@ $onboarding-panel-height: 40px;
           .item {
             padding: 0px 3px 0px 3px;
             margin: 0 auto;
-            width: 300px;
+            width: 400px;
           }
           display: inline-flex;
           width: 100%;
@@ -272,7 +305,7 @@ $onboarding-panel-height: 40px;
           .item {
             padding: 0px 3px 0px 3px;
             margin: 0 auto;
-            width: 300px;
+            width: 500px;
           }
           display: inline-flex;
           width: 100%;
@@ -439,4 +472,3 @@ $onboarding-panel-height: 40px;
       margin-left: 15px;
     }
 }
-

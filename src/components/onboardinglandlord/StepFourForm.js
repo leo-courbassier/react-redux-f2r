@@ -9,7 +9,7 @@ import _ from 'underscore';
 import * as Validation from '../../utils/validation';
 import isEmail from 'validator/lib/isEmail';
 import InfoTooltip from '../InfoTooltip';
-
+import SelectOptions from '../SelectOptions';
 import StripeCheckout from '../Stripe';
 import DwollaCheckout from '../Dwolla';
 
@@ -26,7 +26,8 @@ class StepFourForm extends Component {
   }
 
   componentWillMount() {
-    //this.props.load();
+    debugger;
+    this.props.load();
   }
 
   componentWillUnmount () {
@@ -37,6 +38,21 @@ class StepFourForm extends Component {
     this.setState({ activeKey });
   }
 
+  getCityList(state, name){
+    let store = this.context.store;
+    api.getCityList(
+      store.dispatch,
+      store.getState,
+      state,
+      name
+      );
+  }
+
+  stateListKeypress(cityList, e){
+    this.props.update(this.props.appState, e.target.name, e.target.value);
+    let store = this.context.store;
+    this.getCityList(e.target.value, cityList);
+  }
 
   keypress(statusAction, e) {
     this.props.update(this.props.appState, e.target.name, e.target.value, statusAction);
@@ -183,7 +199,7 @@ class StepFourForm extends Component {
               <BS.HelpBlock>
               <ol>
                 <li>We charge a 4% transaction fee</li>
-                <li>Can't be used for rent payments</li>
+                <li>Can t be used for rent payments</li>
                 <li>Simple refund process</li>
               </ol>
               </BS.HelpBlock>
@@ -224,12 +240,11 @@ class StepFourForm extends Component {
       <Loader appState={this.props.appState} statusType="loading" statusAction="stepFiveForm">
       <div className="step step-four">
 
-        {panel}
+
 
         <div className="section">Add a Guarantor</div>
         <div className="section-box">
-          Early in your rental journey? No established history as a tenant? Give Landlords a boost of confidence, and gain an edge in the rental market, by adding a Guarantor.<br />
-          <i>* Adding a guarantor is not required and incurs an extra cost.</i>
+          We need the following information so Dwolla, our payment provider, can verify your identity and give you access to the payment system. We don’t store any of this info.<br />
         </div>
         <form>
           <BS.FormGroup controlId="guarantor">
@@ -252,51 +267,92 @@ class StepFourForm extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="item">
-              <BS.ControlLabel>Email</BS.ControlLabel>
+           <BS.ControlLabel className="emailGuarantor">Email</BS.ControlLabel>
+            <div className="col-md-6">
               <BS.FormControl
               value={store.guarantorEmail}
               onChange={_.partial(this.keypress.bind(this), 'stepFourForm')}
               name="guarantorEmail"
               type="text" />
             </div>
-            <div className="item">
-              <BS.ControlLabel>Phone</BS.ControlLabel>
+          </div>
+          <div className="row">
+           <BS.ControlLabel>Home Address</BS.ControlLabel>
+            <div className="col-md-6">
               <BS.FormControl
-              value={store.guarantorPhone}
-              onChange={_.partial(this.keypress.bind(this), 'stepFourForm')}
-              name="guarantorPhone"
+              value={store.homeAddress}
+              onChange={_.partial(this.keypress.bind(this), 'homeAddress')}
+              name="guarantorEmail"
               type="text" />
             </div>
           </div>
           <div className="row">
+           <div className="item">
+              <BS.ControlLabel>City</BS.ControlLabel>
+              <SelectOptions
+              name="jobCity"
+              disabled={!store.jobState}
+              loading={this.props.appState.status.loading['jobCityList']}
+              loadingText="Retrieving cities..."
+              onChange={this.keypress.bind(this)}
+              defaultValue={store.jobCity}
+              optionList={this.props.appState.cities['jobCityList']}
+              defaultOption
+               />
+             </div>
+             <div className="item">
+             {console.log(store)}
+                <BS.ControlLabel>State</BS.ControlLabel>
+                <SelectOptions
+                name="jobState"
+                onChange={_.partial(this.stateListKeypress.bind(this), 'jobCityList')}
+                defaultValue={store.jobState}
+                optionList={store.stateList}
+                defaultOption
+                 />
+            </div>
             <div className="item">
-              <BS.ControlLabel>Relation</BS.ControlLabel>
+            <BS.ControlLabel>Zip Code</BS.ControlLabel>
               <BS.FormControl
-              value={store.guarantorRelation}
-              onChange={_.partial(this.keypress.bind(this), 'stepFourForm')}
-              name="guarantorRelation"
+              value={store.zipCode}
+              onChange={this.keypress.bind(this)}
+              name="zipCode"
               type="text" />
             </div>
           </div>
+          <div className="row">
+          
+              <div className="col-md-3">
+               <BS.ControlLabel>Date Birth</BS.ControlLabel>
+              </div>
+              <div className="col-md-3">
+              <BS.FormControl
+              value={store.leaseStartDate}
+              name="leaseStartDate"
+              placeholder="mm/dd/yyyy"
+              onChange={_.partial(this.keypress.bind(this), 'leaseStartDate')}
+              type="text" />
+              </div>
+              <BS.Glyphicon glyph="calendar" />
+
+              <div className="col-md-3">
+               <BS.ControlLabel>Last 4 of SSN</BS.ControlLabel>
+              </div>
+              <div className="col-md-3">
+              <BS.FormControl
+              value={store.ssn}
+              name="ssn"
+              onChange={_.partial(this.keypress.bind(this), 'ssn')}
+              type="text" />
+              </div>
+          </div>
           </BS.FormGroup>
         </form>
-
-        <br />
-
+        <br/>
         <BS.HelpBlock className="pullLeft warn">
           {this.state.submitted ? this.isInvalid() : ''}
         </BS.HelpBlock>
-        <div className="onboarding-submit">
-          <SubmitButton
-          appState={this.props.appState}
-          statusAction="stepFourForm"
-          submit={_.partial(this.submit.bind(this), false)}
-          textLoading="Saving"
-          textModified="Save Changes"
-          bsStyle="primary">
-            Add Guarantor
-          </SubmitButton>
+        <div className="onboarding-submit-four">
           {this.props.showProceed && (
             <SubmitButton
             appState={this.props.appState}
@@ -306,7 +362,7 @@ class StepFourForm extends Component {
             textLoading="Saving"
             bsStyle="success"
             className="proceed-button">
-              Proceed
+              Skip
             </SubmitButton>
           )}
         </div>

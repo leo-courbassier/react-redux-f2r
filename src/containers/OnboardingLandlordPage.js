@@ -143,18 +143,15 @@ class OnboardingLandlordPage extends Component {
   }
 
   openNextStep() {
-    debugger
     let nextStep = parseInt(this.state.activeKey) + 1;
     this.handleSelect(nextStep.toString());
   }
 
   scrollToPanel(e){
-    debugger
     smoothScroll.animateScroll(e.offsetTop);
   }
 
   isModified() {
-    debugger
     return _.contains(this.props.appState.status['modified'], true);
   }
 
@@ -210,8 +207,6 @@ class OnboardingLandlordPage extends Component {
 
     const userInfo = this.context.store.getState().loginAppState.userInfo;
 
-
-
     const stepOne =
     (
       <StepOneForm
@@ -251,6 +246,7 @@ class OnboardingLandlordPage extends Component {
     const stepFour =
     (
       <StepFourForm
+      load={this.props.actions.loadStepFour}
       appState={this.props.appState}
       loadDwolla={this.props.actions.loadDwolla}
       saveDwolla={this.props.actions.saveDwolla}
@@ -353,7 +349,7 @@ class OnboardingLandlordPage extends Component {
             </div>
           ) : (
             <div>
-              <p>You've already submitted your payment information and we are in the process of generating your report.</p>
+              <p>You ve already submitted your payment information and we are in the process of generating your report.</p>
               <p>Should you have any questions while we’re busy confirming your entries, please email us at <a href="mailto:customersupport@fittorent.com" target="_blank">customersupport@fittorent.com</a>.</p>
             </div>
           )}

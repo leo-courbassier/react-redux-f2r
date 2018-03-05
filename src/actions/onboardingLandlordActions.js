@@ -186,8 +186,9 @@ export function loadStepTwo(){
       let employerState = user.employerState;
 
       let incomeSources = results[1];
-
+      debugger;
       let stateList = results[2];
+      //let propertyTypeList = {"APT":"Apartment"}//["APT","SFM","CONDO","DUPLEX","MOBILE_HOME","TOWNHOUSE"]
 
       let employerVerification = results[3];
 
@@ -198,6 +199,7 @@ export function loadStepTwo(){
         employerCity,
         employerState,
         incomeSources,
+        //propertyTypeList,
         stateList,
         employerVerification });
 
@@ -403,8 +405,6 @@ export function loadStepThree(){
         'ownedCityList'
         );
 
-
-
       api.setStatus(dispatch, 'loading', 'stepThreeForm', false);
     });
   };
@@ -517,6 +517,66 @@ export function updateStepFourForm(settings, name, value, statusAction) {
     dispatch({type: types.ONBOARDING_STEPFOUR_FORM_UPDATE, settings, name, value});
   };
 }
+
+//step load form four
+
+export function loadStepFour(){
+  return function (dispatch, getState) {
+    let authHeader = api.getAuthHeaders(dispatch, getState);
+
+    let requestUser = api.getUserDetails(dispatch, getState);
+    let requestIncomeSources = api.getIncomeSources(dispatch, getState);
+    let requestStates = api.getStateList(dispatch, getState);
+    let requestEmployerVerification = api.getEmployerVerification(dispatch, getState);
+
+    api.setStatus(dispatch, 'loading', 'stepFourForm', true);
+    Promise.all([
+      requestUser,
+      requestIncomeSources,
+      requestStates,
+      requestEmployerVerification
+      ]).then((results) => {
+
+      let user = results[0].userDetails;
+      let position = user.position;
+      let salary = user.salary;
+      let employer = user.employer;
+      let employerCity = user.employerCity;
+      let employerState = user.employerState;
+
+      let incomeSources = results[1];
+      debugger;
+      let stateList = results[2];
+      //let propertyTypeList = {"APT":"Apartment"}//["APT","SFM","CONDO","DUPLEX","MOBILE_HOME","TOWNHOUSE"]
+
+      let employerVerification = results[3];
+
+      dispatch({ type: types.ONBOARDING_STEPFOUR_FORM_LOAD,
+        position,
+        salary,
+        employer,
+        employerCity,
+        employerState,
+        incomeSources,
+        //propertyTypeList,
+        stateList,
+        employerVerification });
+
+      api.getCityList(
+        dispatch,
+        getState,
+        employerState,
+        'jobCityList'
+        );
+
+      api.setStatus(dispatch, 'loading', 'stepTwoForm', false);
+    });
+  };
+}
+
+
+
+//end
 
 export function clearStepFourForm() {
   return { type: types.ONBOARDING_STEPFOUR_FORM_CLEAR };

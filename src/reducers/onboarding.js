@@ -36,8 +36,8 @@ const initialState = {
       saved: false
   },
   1: {
-      jobTitle: null,
-      jobSalary: null,
+      propertyTitle: null,
+      propertyTypeList: null,
       jobEmployer: null,
       jobCity: null,
       jobState: null,
@@ -90,7 +90,10 @@ const initialState = {
   },
   4: {
     hasCreditReport: false,
-    saved: false
+    saved: false,
+    stateList: null,
+    currentState: null,
+    currentCity: null
   },
   5: {
       inviteStatus: null,
@@ -223,10 +226,11 @@ export default function onboardingAppState(state = initialState, action) {
         newState[1]['jobEmployer'] = action.employer;
         newState[1]['jobCity'] = action.employerCity;
         newState[1]['jobState'] = action.employerState;
+        newState[1]['stateList'] = action.stateList;
 
         newState[1]['incomeSources'] = action.incomeSources;
+        newState[1]['propertyTypeList'] = action.propertyTypeList;
 
-        newState[1]['stateList'] = action.stateList;
 
         // TODO: Move this logic out of the reducer
         if (action.employerVerification && action.employerVerification.length > 0) {
@@ -339,18 +343,8 @@ export default function onboardingAppState(state = initialState, action) {
       }
 
 
-
-
-
-
-
-
-
-
 /////////////////////////////////////////////////////////////////////////////
 // step four
-
-
 
 
 
@@ -361,6 +355,24 @@ export default function onboardingAppState(state = initialState, action) {
         return newState;
       }
 
+      case types.ONBOARDING_STEPFOUR_FORM_LOAD:
+        {
+          let newState = objectAssign({}, state);
+          newState[3]['jobCity'] = action.employerCity;
+          newState[3]['jobState'] = action.employerState;
+          newState[3]['stateList'] = action.stateList;
+
+          return newState;
+        }
+
+        case types.ONBOARDING_STEPFOUR_FORM_SAVE:
+          {
+            let newState = objectAssign({}, state);
+            newState[3]['jobCity'] = action.employerCity;
+            newState[3]['jobState'] = action.employerState;
+            newState[3]['stateList'] = action.stateList;
+            return newState;
+          }
 
     case types.ONBOARDING_STEPFOUR_FORM_CLEAR:
       {
@@ -372,6 +384,9 @@ export default function onboardingAppState(state = initialState, action) {
         newState[3]['stripeAmount'] = null;
         newState[3]['dwollaTransactionStatus'] = null;
         newState[3]['dwollaAmount'] = null;
+        newState[3]['jobCity'] = null;
+        newState[3]['jobState'] = null;
+        newState[3]['stateList'] = null;
         return newState;
       }
 

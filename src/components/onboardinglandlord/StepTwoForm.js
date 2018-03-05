@@ -5,6 +5,7 @@ import * as BS from 'react-bootstrap';
 import Loader from '../Loader';
 import FileReaderInput from 'react-file-reader-input';
 import SubmitButton from '../SubmitButton';
+
 import SelectOptions from '../SelectOptions';
 import _ from 'underscore';
 import * as Validation from '../../utils/validation';
@@ -42,6 +43,7 @@ class StepTwoForm extends Component {
       );
   }
 
+
   keypress(e) {
     this.props.update(this.props.appState, e.target.name, e.target.value);
   }
@@ -52,6 +54,13 @@ class StepTwoForm extends Component {
     let store = this.context.store;
     this.getCityList(e.target.value, cityList);
   }
+
+  // propertyTypeListKeypress(propertyTypeList, e){
+  //   this.props.update(this.props.appState, e.target.name, e.target.value);
+  //   let store = this.context.store;
+  //   this.getCityList(e.target.value, propertyTypeList);
+  // }
+
 
   incomeKeypress(i, e){
     let store = this.context.store;
@@ -248,14 +257,12 @@ class StepTwoForm extends Component {
     let defaultValue = source.type;
     let uploadComplete = this.props.appState.status.uploading[statusAction] == false;
 
+
     return (
       <BS.FormGroup controlId="profileImage">
           <div className="row">
             <div className="item">
               <BS.ControlLabel>Type</BS.ControlLabel>
-
-
-
             <SelectOptions
             name="type"
             onChange={_.partial(this.incomeKeypress.bind(this), i)}
@@ -263,8 +270,6 @@ class StepTwoForm extends Component {
             optionList={typeOptions}
             keyValue
              />
-
-
 
             </div>
             <div className="item">
@@ -315,82 +320,163 @@ class StepTwoForm extends Component {
   render() {
 
     let store = this.props.appState[STEP_ID];
+    let uploadComplete = this.props.appState.status.uploading['profilePicUpload'] == false;
+
+    const yourPropertyInfo = (
+      <div className="info-property">
+      <b>Here you’ll enter your property information. We ll need this info so we can track your tenants and payments against</b><br></br>
+      <b>specific properties and report that information to you in the My Payments section of your dashboard.</b>
+      </div>
+    )
 
 
-    const yourJob = (
+    const bedDropdown = (
+          <select id="bed" className="form-control">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+          </select>
+    )
+
+    const bathDropdown = (
+          <select id="bath" className="form-control">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+          </select>
+    )
+
+
+     const MyPropertyTypeList = (
+       <select className="form-control">
+           <option value=""></option>
+           <option value="APT">Apartment</option>
+           <option value="SFM">Single Family Home</option>
+           <option value="CONDO">Condo</option>
+           <option value="DUPLEX">Duplex</option>
+           <option value="MOBILE_HOME">Mobile Home</option>
+           <option value="TOWNHOUSE">Town Home</option>
+       </select>
+   )
+    const yourPropertyData = (
       <div className="your-job">
         <BS.FormGroup controlId="yourJob">
           <div className="row">
-            <div className="item">
-            <BS.ControlLabel>Title</BS.ControlLabel>
+          <div className='col-md-4 buttonStep2'>
+
+            <FileReaderInput
+            name="profilePic"
+            as="url"
+            id="profile-pic-upload"
+            onChange={this.handleFileChange.bind(this)}>
+
+              <SubmitButton
+              className="upload-button"
+              appState={this.props.appState}
+
+              statusAction="profilePicUpload"
+              textLoading="Uploading">
+              <BS.Glyphicon glyph="upload" />
+                Upload Cover Photo
+              </SubmitButton>
+              <BS.HelpBlock className="text-center">
+                <span className="text-success">
+                  {uploadComplete ? 'Profile image updated.' : ''}
+                </span>
+              </BS.HelpBlock>
+
+            </FileReaderInput>
+          </div>
+
+            <div className='col-md-4'>
+
+            <BS.ControlLabel>Property Title</BS.ControlLabel>
             <BS.FormControl
-            value={store.jobTitle}
+            value={store.propertyTitle}
             onChange={this.keypress.bind(this)}
-            name="jobTitle"
+            name="propertyTitle"
+            id="propertyTitle"
             type="text" />
+
             </div>
-            <div className="item">
-            <BS.ControlLabel>Annual Salary</BS.ControlLabel>
-            <BS.InputGroup>
-              <BS.InputGroup.Addon>$</BS.InputGroup.Addon>
+            <div className='col-md-4'>
+
+            <BS.ControlLabel>Property Type</BS.ControlLabel>
+             {MyPropertyTypeList}
+
+            </div>
+          </div>
+
+            <div className="row">
+            <BS.ControlLabel>Address 1</BS.ControlLabel>
+              <div className="item">
+                <BS.FormControl
+                 value={store.address1}
+                 onChange={this.keypress.bind(this)}
+                 name="address1"
+                 type="text" />
+              </div>
+            </div>
+            <div className="row">
+             <BS.ControlLabel>Address 2</BS.ControlLabel>
+              <div className="item">
               <BS.FormControl
-              value={store.jobSalary}
+              value={store.address2}
               onChange={this.keypress.bind(this)}
-              name="jobSalary"
+              name="address2"
               type="text" />
-            </BS.InputGroup>
+              </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="item">
-            <BS.ControlLabel>Employer</BS.ControlLabel>
-            <BS.FormControl
-            value={store.jobEmployer}
-            onChange={this.keypress.bind(this)}
-            name="jobEmployer"
-            type="text" />
+            <div className="row">
+             <div className="item">
+                <BS.ControlLabel>City</BS.ControlLabel>
+                <SelectOptions
+                name="jobCity"
+                disabled={!store.jobState}
+                loading={this.props.appState.status.loading['jobCityList']}
+                loadingText="Retrieving cities..."
+                onChange={this.keypress.bind(this)}
+                defaultValue={store.jobCity}
+                optionList={this.props.appState.cities['jobCityList']}
+                defaultOption
+                 />
+               </div>
+               <div className="item">
+                  <BS.ControlLabel>State</BS.ControlLabel>
+                  <SelectOptions
+                  name="jobState"
+                  onChange={_.partial(this.stateListKeypress.bind(this), 'jobCityList')}
+                  defaultValue={store.jobState}
+                  optionList={store.stateList}
+                  defaultOption
+                   />
+              </div>
+              <div className="item">
+              <BS.ControlLabel>Zip Code</BS.ControlLabel>
+                <BS.FormControl
+                value={store.zipCode}
+                onChange={this.keypress.bind(this)}
+                name="zipCode"
+                type="text" />
+              </div>
             </div>
+            <div className="row">
+              <div className='item '>
+               <BS.ControlLabel>Sq Ft</BS.ControlLabel>
+               <BS.FormControl
+               value={store.sqft}
+               onChange={this.keypress.bind(this)}
+               name="sqft"
+               type="text" />
+               </div>
+               <div className='item'>
+               <BS.ControlLabel>Bed</BS.ControlLabel>
+               {bedDropdown}
+               </div>
+               <div className='item'>
+                <BS.ControlLabel>Bath</BS.ControlLabel>
+               {bathDropdown}
+               </div>
+              </div>
 
-            <div className="item">
-
-            <BS.ControlLabel>State</BS.ControlLabel>
-
-
-            <SelectOptions
-            name="jobState"
-            onChange={_.partial(this.stateListKeypress.bind(this), 'jobCityList')}
-            defaultValue={store.jobState}
-            optionList={store.stateList}
-            defaultOption
-             />
-
-
-            </div>
-
-
-
-
-            <div className="item">
-            <BS.ControlLabel>City</BS.ControlLabel>
-
-
-            <SelectOptions
-            name="jobCity"
-            disabled={!store.jobState}
-            loading={this.props.appState.status.loading['jobCityList']}
-            loadingText="Retrieving cities..."
-            onChange={this.keypress.bind(this)}
-            defaultValue={store.jobCity}
-            optionList={this.props.appState.cities['jobCityList']}
-            defaultOption
-             />
-
-
-            </div>
-
-
-
-          </div>
         </BS.FormGroup>
       </div>
     );
@@ -452,14 +538,14 @@ class StepTwoForm extends Component {
     );
 
     const incomeSources = (
-      <div className="income-sources">
+      <div className="col-md-4">
         {sources}
           <BS.Button
           onClick={(e) => this.addIncomeSource(e)}
           className="add-button"
           type="submit"
           bsStyle="success">
-            Add
+            Add Another Property
           </BS.Button>
           {sources.length ? removeButton : null}
       </div>
@@ -481,50 +567,46 @@ class StepTwoForm extends Component {
     return (
       <Loader appState={this.props.appState} statusType="loading" statusAction="stepTwoForm">
         <div className="step step-two">
+
           <form>
-            <div className="section">Your Job{jobWarn}</div>
-            {yourJob}
-            <div className="section">Your Employer Contact{employerWarn}</div>
-            <BS.HelpBlock>
-              Please provide contact information for a manager or HR personnel that can verify your employment and salary.
-            </BS.HelpBlock>
-            {employerContact}
-            <div className="section">Other Sources of Income</div>
-            <BS.HelpBlock>
-              Do you have additional sources of income such as a side business or retirement? Add the income type, amount, and any supporting documentation for verification. We keep all this information confidential and don’t store it after it’s verified in order to protect you.
-            </BS.HelpBlock>
+            <div className="section">Property Info{jobWarn}</div>
+            {yourPropertyInfo}
+            <div className="section">Property #1{jobWarn}</div>
+            {yourPropertyData}
+            <div className="section"></div>
+            <div className="row">
+           <div className="col-md-4">
+              {this.props.showProceed && (
+                <SubmitButton
+                appState={this.props.appState}
+                statusAction="stepTwoFormProceed"
+                submit={_.partial(this.submit.bind(this), this.props.openPrevStep)}
+                textLoading="Loading"
+                bsStyle="success"
+                className="proceed-button prev-button">
+                  Previous
+                </SubmitButton>
+              )}
+              <BS.HelpBlock className="pullLeft warn">
+                {this.state.submitted ? this.isInvalid() : ''}
+              </BS.HelpBlock>
+            </div>
             {incomeSources}
-          </form>
-          <BS.HelpBlock className="pullLeft warn">
-            {this.state.submitted ? this.isInvalid() : ''}
-          </BS.HelpBlock>
-
-
-          <div className="onboarding-submit">
-            <SubmitButton
-            appState={this.props.appState}
-            statusAction="stepTwoForm"
-            submit={_.partial(this.submit.bind(this), false)}
-            textLoading="Saving"
-            textModified="Save Changes"
-            bsStyle="primary">
-              Save
-            </SubmitButton>
-            {this.props.showProceed && (
-              <SubmitButton
-              appState={this.props.appState}
-              statusAction="stepTwoFormProceed"
-              submit={_.partial(this.submit.bind(this), this.props.openNextStep)}
-              textLoading="Saving"
-              disabled={this.isMandatoryInvalid()}
-              bsStyle="success"
-              className="proceed-button">
-                Proceed
-              </SubmitButton>
-            )}
-          </div>
-
-
+            <div className="col-md-4">
+                <div className="onboarding-submit">
+                        <SubmitButton
+                        appState={this.props.appState}
+                        statusAction="stepTwoForm"
+                        submit={_.partial(this.submit.bind(this), false)}
+                        textLoading=""
+                        textModified="Save Changes"
+                        bsStyle="primary">
+                          Next
+                        </SubmitButton>
+                  </div>
+              </div>
+            </div>
+         </form>
         </div>
       </Loader>
     );
