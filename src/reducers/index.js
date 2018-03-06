@@ -9,6 +9,7 @@ import onboardingAppState from './onboarding';
 import feedbackAppState from './feedback';
 import checkoutAppState from './checkout';
 import verifyAppState from './verify';
+import accountAppState from './account';
 
 const rootReducer = combineReducers({
   loginAppState,
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   onboardingAppState,
   feedbackAppState,
   checkoutAppState,
-  verifyAppState
+  verifyAppState,
+  accountAppState
 });
 
 export default rootReducer;

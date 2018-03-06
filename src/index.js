@@ -26,7 +26,10 @@ import ResetPage from './containers/ResetPage.js';
 import FeedbackPage from './containers/FeedbackPage.js';
 import VerifyPage from './containers/VerifyPage.js';
 import NotFoundPage from './components/NotFoundPage.js';
+import AccountPage from './containers/AccountPage.js';
+import AccountSummaryPage from './containers/AccountSummaryPage.js';
 
+let NotImplemented = () => <div>Not Implemented</div>;
 
 const store = configureStore();
 
@@ -65,6 +68,12 @@ render(
         <Route onEnter={requireAuth} path="onboardinglandlord" component={OnboardingLandlordPage}/>
         <Route onEnter={requireAuth} path="dashboard" component={DashboardPage}/>
         <Route onEnter={requireAuth} path="checkout" component={CheckoutPage}/>
+        <Route onEnter={requireAuth} path="account" component={AccountPage}>
+          <IndexRoute component={AccountSummaryPage} />
+          <Route path="profile" component={NotImplemented} />
+          <Route path="documents" component={NotImplemented} />
+          <Route path="password" component={NotImplemented} />
+        </Route>
 
         <Route path="feedback/:token" component={FeedbackPage} />
         <Route path="ve/:token" component={VerifyPage} />

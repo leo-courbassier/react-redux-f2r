@@ -1,0 +1,70 @@
+.account-page{
+  margin-top: 65px;
+
+  .panels{
+    margin-top: 100px;
+  }
+
+  .high-lights-column{
+    margin-top: 40px;
+    color: gray;
+
+    .date{
+      font-size: 1.5rem;
+    }
+
+    .welcome{
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .message{
+      font-size: 1.3rem;
+      font-style: italic;
+      text-align: center;
+    }
+    .avatar{
+      height: 110px;
+      margin: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img{
+        border-radius: 50%;
+      }
+    }
+    .high-lights{
+      margin-top: 20px;
+      background: #d4d6d9;
+      border: 1px solid #999;
+      padding: 10px;
+      box-shadow: 4px 4px 5px -2px rgba(0, 0, 0, 0.27);
+
+      h6{
+        margin: 0;
+        font-weight: bold;
+        padding: 5px 0;
+        border-bottom: 1px solid #b4b5b6;
+        font-size: 1rem;
+      }
+
+      .item + .item{
+        margin-top: 11px;
+      }
+
+      .item{
+        label{
+          font-weight: normal;
+          display: block;
+          padding: 4px 0;
+          margin: 0;
+        }
+        > span{
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}

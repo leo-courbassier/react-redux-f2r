@@ -5,7 +5,8 @@ import * as BS from 'react-bootstrap';
 class SideBar extends Component {
 
   state = {
-    open: false
+    open: false,
+    showAccountSubMenu: false
   }
 
   render() {
@@ -37,13 +38,28 @@ class SideBar extends Component {
       </div>
     );
 
+    let {showAccountSubMenu} = this.state;
+    let showSubMenu = (subMenuName) => {
+      let propName = subMenuName[0].toUpperCase() + subMenuName.substr(1);
+      propName = `show${propName}SubMenu`;
+      this.setState({
+        [propName]: !showAccountSubMenu
+      });
+    };
+    let showAccount = () => showSubMenu('account');
+
 
     return (
 
       <div className="sidebar">
         <ul className="menu">
           <li>
-            <BS.Glyphicon glyph="user" /><a href="http://www.fit2rent.com/contact" target="_blank">My Account</a>
+            <BS.Glyphicon glyph="user" /><IndexLink to="/account" onClick={showAccount}>My Account</IndexLink>
+            <ul className={'sub-menu ' + (showAccountSubMenu ? 'show' : '')}>
+              <li><Link to="/account/profile">My Profile</Link></li>
+              <li><Link to="/account/documents">My Documents</Link></li>
+              <li><Link to="/account/password">Login/Password</Link></li>
+            </ul>
           </li>
           <li>
             <BS.Glyphicon glyph="home" /><a href="http://www.fit2rent.com/contact" target="_blank">My Properties</a>
