@@ -19,3 +19,11 @@ $onboarding-page-top-margin: 100px;
     }
   }
 }
+
+.new-dashboard-page{
+  margin-top: 90px;
+
+  > .sidebar-content{
+    transform: translateY(-25px);
+  }
+}

@@ -20,6 +20,7 @@ import StepFiveForm from '../components/onboardinglandlord/StepFiveForm';
 import StepSixForm from '../components/onboardinglandlord/StepSixForm';
 
 import * as actions from '../actions/onboardingLandlordActions';
+import * as sidebarActions from '../actions/sidebarActions';
 
 import * as api from '../actions/api';
 
@@ -390,10 +391,12 @@ class OnboardingLandlordPage extends Component {
       </div>
     );
 
+    let {sidebarActions, sidebarState } = this.props;
+
     return (
       <div className="onboarding-page">
         <BS.Col xsHidden sm={3} md={3}>
-          <SideBar showCheckout={showSidebarCheckoutButton} />
+          <SideBar showCheckout={showSidebarCheckoutButton} sidebarActions={sidebarActions} sidebarState={sidebarState} />
         </BS.Col>
 
         <BS.Col xs={12} sm={9} md={6} className="panels">
@@ -419,6 +422,8 @@ class OnboardingLandlordPage extends Component {
 
 OnboardingLandlordPage.propTypes = {
   actions: PropTypes.object.isRequired,
+  sidebarActions: PropTypes.object.isRequired,
+  sidebarState: PropTypes.object.isRequired,
   appState: PropTypes.object.isRequired
 };
 
@@ -430,13 +435,15 @@ OnboardingLandlordPage.contextTypes = {
 function mapStateToProps(state) {
   return {
     appState: state.onboardingAppState,
-    userState: state.loginAppState
+    userState: state.loginAppState,
+    sidebarState: state.sidebarState
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(actions, dispatch)
+    actions: bindActionCreators(actions, dispatch),
+    sidebarActions: bindActionCreators(sidebarActions, dispatch)
   };
 }
 

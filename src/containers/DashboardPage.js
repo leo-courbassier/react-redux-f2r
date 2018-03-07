@@ -5,24 +5,20 @@ import { bindActionCreators } from 'redux';
 import * as BS from 'react-bootstrap';
 
 import SideBar from '../components/SideBar';
-import StatusBar from '../components/StatusBar';
-
-import * as actions from '../actions/dashboardActions';
+import * as sidebarActions from '../actions/sidebarActions';
 
 
 class DashboardPage extends Component {
   render() {
+    let {children, sidebarActions, sidebarState} = this.props;
 
     return (
-      <div className="dashboard-page">
-        <BS.Col xsHidden sm={3} md={3} className="sidebar">
-          <SideBar />
+      <div className="new-dashboard-page">
+        <BS.Col xsHidden sm={3} md={3} className="sidebar-content">
+          <SideBar sidebarActions={sidebarActions} sidebarState={sidebarState} />
         </BS.Col>
-        <BS.Col xs={12} sm={9} md={6} className="panels">
-          content
-        </BS.Col>
-        <BS.Col xsHidden smHidden md={3} className="statusbar">
-
+        <BS.Col xs={9} sm={9} md={9} className="page-content">
+          {children}
         </BS.Col>
       </div>
     );
@@ -30,23 +26,19 @@ class DashboardPage extends Component {
 }
 
 DashboardPage.propTypes = {
-  actions: PropTypes.object.isRequired,
-  appState: PropTypes.object.isRequired
-};
-
-DashboardPage.contextTypes = {
-  store: PropTypes.object
+  sidebarActions: PropTypes.object.isRequired,
+  sidebarState: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    appState: state.dashboardAppState
+    sidebarState: state.sidebarState
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(actions, dispatch)
+    sidebarActions: bindActionCreators(sidebarActions, dispatch)
   };
 }
 

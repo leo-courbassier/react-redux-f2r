@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import * as BS from 'react-bootstrap';
 
 import * as actions from '../actions/accountActions';
-import SideBar from '../components/SideBar';
 import HighLightsColumn from '../components/account/HighLightsColumn';
 
 class AccountPage extends Component {
@@ -17,18 +16,15 @@ class AccountPage extends Component {
     let {children, accountState} = this.props;
 
     return (
-      <div className="account-page">
-        <BS.Col xsHidden sm={3} md={3}>
-          <SideBar isMenuActive={true} />
-        </BS.Col>
+      <div className="account-page row">
 
-        <BS.Col xs={12} sm={9} md={6} className="panels">
+        <BS.Col xs={12} sm={12} md={8} className="panels">
 
           {children}
 
         </BS.Col>
 
-        <BS.Col xsHidden smHidden md={3}>
+        <BS.Col xsHidden smHidden md={4}>
           <HighLightsColumn accountState={accountState} />
         </BS.Col>
 

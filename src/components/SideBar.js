@@ -4,74 +4,46 @@ import * as BS from 'react-bootstrap';
 
 class SideBar extends Component {
 
-  state = {
-    open: false,
-    showAccountSubMenu: false
-  }
-
   render() {
 
+    let {
+      sidebarState: {
+        accountSubMenu,
+        paymentSubMenu
+      },
+      sidebarActions
+    } = this.props;
 
-    const tempFullMenuHidden = (
-      <div className="sidebar">
-        <ul className="menu">
-          <li>
-            <BS.Glyphicon glyph="user" />My Account
-          </li>
-          <li>
-            <BS.Glyphicon glyph="credit-card" />My Payments
-          </li>
-          <li onClick={ ()=> this.setState({ open: !this.state.open })}>
-            <BS.Glyphicon glyph="flag" />My Mandates
-          </li>
-          <BS.Panel collapsible expanded={this.state.open}>
-          <li>Active Mandates</li>
-          <li>Past Mandates</li>
-          </BS.Panel>
-          <li>
-            <BS.Glyphicon glyph="comment" />Contact Us
-          </li>
-          <li>
-            <BS.Glyphicon glyph="question-sign" />Help Center
-          </li>
-        </ul>
-      </div>
-    );
-
-    let {showAccountSubMenu} = this.state;
-    let showSubMenu = (subMenuName) => {
-      let propName = subMenuName[0].toUpperCase() + subMenuName.substr(1);
-      propName = `show${propName}SubMenu`;
-      this.setState({
-        [propName]: !showAccountSubMenu
-      });
-    };
-    let showAccount = () => showSubMenu('account');
-
+    let updateAccount = () => sidebarActions.updateSubMenu('account', !accountSubMenu);
+    let updatePayment = () => sidebarActions.updateSubMenu('payment', !paymentSubMenu);
 
     return (
 
       <div className="sidebar">
         <ul className="menu">
           <li>
-            <BS.Glyphicon glyph="user" /><IndexLink to="/account" onClick={showAccount}>My Account</IndexLink>
-            <ul className={'sub-menu ' + (showAccountSubMenu ? 'show' : '')}>
-              <li><Link to="/account/profile">My Profile</Link></li>
-              <li><Link to="/account/documents">My Documents</Link></li>
-              <li><Link to="/account/password">Login/Password</Link></li>
+            <BS.Glyphicon glyph="user" /><IndexLink to="/dashboard/account" onClick={updateAccount}>My Account</IndexLink>
+            <ul className={'sub-menu ' + (accountSubMenu ? 'show' : '')}>
+              <li><Link to="/dashboard/account/profile">My Profile</Link></li>
+              <li><Link to="/dashboard/account/documents">My Documents</Link></li>
+              <li><Link to="/dashboard/account/password">Login/Password</Link></li>
             </ul>
           </li>
           <li>
-            <BS.Glyphicon glyph="home" /><a href="http://www.fit2rent.com/contact" target="_blank">My Properties</a>
+            <BS.Glyphicon glyph="home" /><Link to="/dashboard/properties" onClick={sidebarActions.hideSubMenus}>My Properties</Link>
           </li>
           <li>
-            <BS.Glyphicon glyph="file" /><a href="http://www.fit2rent.com/contact" target="_blank">My Leases</a>
+            <BS.Glyphicon glyph="file" /><Link to="/dashboard/leases" onClick={sidebarActions.hideSubMenus}>My Leases</Link>
           </li>
           <li>
-            <BS.Glyphicon glyph="user" /><a href="http://www.fit2rent.com/contact" target="_blank">My Tenants</a>
+            <BS.Glyphicon glyph="user" /><Link to="/dashboard/tenants" onClick={sidebarActions.hideSubMenus}>My Tenants</Link>
           </li>
           <li>
-            <BS.Glyphicon glyph="usd" /><a href="http://www.fit2rent.com/contact" target="_blank">My Payments</a>
+            <BS.Glyphicon glyph="usd" /><IndexLink to="/dashboard/payments" onClick={updatePayment}>My Payments</IndexLink>
+            <ul className={'sub-menu ' + (paymentSubMenu ? 'show' : '')}>
+              <li><Link to="/dashboard/payments/methods">Payment Methods</Link></li>
+              <li><Link to="/dashboard/payments/center">Payment Center</Link></li>
+            </ul>
           </li>
           <li>
             <BS.Glyphicon glyph="comment" /><a href="http://www.fit2rent.com/contact" target="_blank">Contact Us</a>
@@ -99,5 +71,10 @@ class SideBar extends Component {
     );
   }
 }
+
+SideBar.propTypes = {
+  sidebarActions: PropTypes.object.isRequired,
+  sidebarState: PropTypes.object.isRequired
+};
 
 export default SideBar;

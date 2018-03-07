@@ -10,6 +10,7 @@ import feedbackAppState from './feedback';
 import checkoutAppState from './checkout';
 import verifyAppState from './verify';
 import accountAppState from './account';
+import sidebarState from './sidebar';
 
 const rootReducer = combineReducers({
   loginAppState,
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   feedbackAppState,
   checkoutAppState,
   verifyAppState,
-  accountAppState
+  accountAppState,
+  sidebarState
 });
 
 export default rootReducer;

@@ -69,13 +69,22 @@ render(
 
         <Route onEnter={requireAuth} path="onboarding" component={OnboardingPage}/>
         <Route onEnter={requireAuth} path="onboardinglandlord" component={OnboardingLandlordPage}/>
-        <Route onEnter={requireAuth} path="dashboard" component={DashboardPage}/>
         <Route onEnter={requireAuth} path="checkout" component={CheckoutPage}/>
-        <Route onEnter={requireAuth} path="account" component={AccountPage}>
-          <IndexRoute component={AccountSummaryPage} />
-          <Route path="profile" component={AccountProfilePage} />
-          <Route path="documents" component={AccountDocumentsPage} />
-          <Route path="password" component={AccountPasswordPage} />
+        <Route onEnter={requireAuth} path="dashboard" component={DashboardPage}>
+          <Route onEnter={requireAuth} path="account" component={AccountPage}>
+            <IndexRoute component={AccountSummaryPage} />
+            <Route path="profile" component={AccountProfilePage} />
+            <Route path="documents" component={AccountDocumentsPage} />
+            <Route path="password" component={AccountPasswordPage} />
+          </Route>
+          <Route path="properties" component={NotImplemented} />
+          <Route path="leases" component={NotImplemented} />
+          <Route path="tenants" component={NotImplemented} />
+          <Route path="payments" component={NotImplemented}>
+            <IndexRoute component={NotImplemented} />
+            <Route path="methods" component={NotImplemented} />
+            <Route path="center" component={NotImplemented} />
+          </Route>
         </Route>
 
         <Route path="feedback/:token" component={FeedbackPage} />
