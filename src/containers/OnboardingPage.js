@@ -9,7 +9,7 @@ import smoothScroll from 'smooth-scroll';
 import * as BS from 'react-bootstrap';
 import _ from 'underscore';
 
-import SideBar from '../components/SideBar';
+import SidebarContainer from '../containers/SidebarContainer';
 import StatusBar from '../components/StatusBar';
 
 import StepOneForm from '../components/onboarding/StepOneForm';
@@ -401,7 +401,7 @@ class OnboardingPage extends Component {
     return (
       <div className="onboarding-page">
         <BS.Col xsHidden sm={3} md={3}>
-          <SideBar showCheckout={showSidebarCheckoutButton} />
+          <SidebarContainer showCheckout={showSidebarCheckoutButton} />
         </BS.Col>
 
         <BS.Col xs={12} sm={9} md={6} className="panels">

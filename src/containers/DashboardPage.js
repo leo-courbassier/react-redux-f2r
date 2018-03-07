@@ -1,21 +1,20 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import * as BS from 'react-bootstrap';
 
-import SideBar from '../components/SideBar';
-import * as sidebarActions from '../actions/sidebarActions';
+import SidebarContainer from './SidebarContainer';
+
 
 
 class DashboardPage extends Component {
   render() {
-    let {children, sidebarActions, sidebarState} = this.props;
+    let {children} = this.props;
 
     return (
       <div className="new-dashboard-page">
         <BS.Col xsHidden sm={3} md={3} className="sidebar-content">
-          <SideBar sidebarActions={sidebarActions} sidebarState={sidebarState} />
+          <SidebarContainer />
         </BS.Col>
         <BS.Col xs={9} sm={9} md={9} className="page-content">
           {children}
@@ -26,20 +25,14 @@ class DashboardPage extends Component {
 }
 
 DashboardPage.propTypes = {
-  sidebarActions: PropTypes.object.isRequired,
-  sidebarState: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    sidebarState: state.sidebarState
-  };
+function mapStateToProps() {
+  return {};
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    sidebarActions: bindActionCreators(sidebarActions, dispatch)
-  };
+function mapDispatchToProps() {
+  return {};
 }
 
 export default connect(

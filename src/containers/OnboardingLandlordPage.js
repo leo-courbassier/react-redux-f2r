@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, Link } from 'react-router';
@@ -9,7 +8,7 @@ import smoothScroll from 'smooth-scroll';
 import * as BS from 'react-bootstrap';
 import _ from 'underscore';
 
-import SideBar from '../components/SideBar';
+import SidebarContainer from '../containers/SidebarContainer';
 import StatusBar from '../components/StatusBar';
 
 import StepOneForm from '../components/onboardinglandlord/StepOneForm';
@@ -20,7 +19,6 @@ import StepFiveForm from '../components/onboardinglandlord/StepFiveForm';
 import StepSixForm from '../components/onboardinglandlord/StepSixForm';
 
 import * as actions from '../actions/onboardingLandlordActions';
-import * as sidebarActions from '../actions/sidebarActions';
 
 import * as api from '../actions/api';
 
@@ -391,12 +389,10 @@ class OnboardingLandlordPage extends Component {
       </div>
     );
 
-    let {sidebarActions, sidebarState } = this.props;
-
     return (
       <div className="onboarding-page">
         <BS.Col xsHidden sm={3} md={3}>
-          <SideBar showCheckout={showSidebarCheckoutButton} sidebarActions={sidebarActions} sidebarState={sidebarState} />
+          <SidebarContainer showCheckout={showSidebarCheckoutButton} />
         </BS.Col>
 
         <BS.Col xs={12} sm={9} md={6} className="panels">
@@ -435,15 +431,13 @@ OnboardingLandlordPage.contextTypes = {
 function mapStateToProps(state) {
   return {
     appState: state.onboardingAppState,
-    userState: state.loginAppState,
-    sidebarState: state.sidebarState
+    userState: state.loginAppState
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(actions, dispatch),
-    sidebarActions: bindActionCreators(sidebarActions, dispatch)
+    actions: bindActionCreators(actions, dispatch)
   };
 }
 
