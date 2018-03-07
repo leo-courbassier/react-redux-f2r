@@ -1,49 +1,28 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
-import * as actions from '../actions/accountActions';
 import PageTitle from '../components/account/PageTitle';
-import TabEditablePanel from '../components/account/TabEditablePanel';
-import ProfileInfo from '../components/account/ProfileInfo';
+import ProfileInfoContainer from '../containers/account/ProfileInfoContainer';
 
 class AccountProfilePage extends Component {
   render() {
-    let {accountState, actions} = this.props;
     return (
       <div>
         <PageTitle>My Account > Profile</PageTitle>
 
-        <TabEditablePanel title="Profile"
-                          editMode={accountState.editMode.profile}
-                          onClick={(value) => actions.editModeUpdate('profile', value)}
-        >
-          <ProfileInfo accountState={accountState}
-                       actions={actions}
-                       editMode={accountState.editMode.profile}
-          />
-        </TabEditablePanel>
+        <ProfileInfoContainer />
 
       </div>
     );
   }
 }
 
-AccountProfilePage.propTypes = {
-  actions: PropTypes.object.isRequired,
-  accountState: PropTypes.object.isRequired
-};
-
-function mapStateToProps(state) {
-  return {
-    accountState: state.accountAppState
-  };
+function mapStateToProps() {
+  return {};
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(actions, dispatch)
-  };
+function mapDispatchToProps() {
+  return {};
 }
 
 export default connect(

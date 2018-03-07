@@ -418,8 +418,6 @@ class OnboardingLandlordPage extends Component {
 
 OnboardingLandlordPage.propTypes = {
   actions: PropTypes.object.isRequired,
-  sidebarActions: PropTypes.object.isRequired,
-  sidebarState: PropTypes.object.isRequired,
   appState: PropTypes.object.isRequired
 };
 

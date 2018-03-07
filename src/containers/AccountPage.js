@@ -8,9 +8,8 @@ import * as actions from '../actions/accountActions';
 import HighLightsColumn from '../components/account/HighLightsColumn';
 
 class AccountPage extends Component {
-  constructor(props){
-    super(...arguments);
-    props.actions.loadAccountInfo();
+  componentDidMount(){
+    this.props.actions.loadAccountInfo();
   }
   render() {
     let {children, accountState} = this.props;

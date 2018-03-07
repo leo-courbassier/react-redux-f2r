@@ -1,71 +1,34 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
-import * as actions from '../actions/accountActions';
 import PageTitle from '../components/account/PageTitle';
-import TabEditablePanel from '../components/account/TabEditablePanel';
-import ProfileInfo from '../components/account/ProfileInfo';
-import DocumentsInfo from '../components/account/DocumentsInfo';
-import PasswordInfo from '../components/account/PasswordInfo';
+import PasswordInfoContainer from '../containers/account/PasswordInfoContainer';
+import DocumentsInfoContainer from '../containers/account/DocumentsInfoContainer';
+import ProfileInfoContainer from '../containers/account/ProfileInfoContainer';
 
 class AccountSummaryPage extends Component {
   render() {
-    let {accountState, actions} = this.props;
     return (
       <div>
         <PageTitle>My Account > Summary</PageTitle>
 
-        <TabEditablePanel title="Profile"
-                          editMode={accountState.editMode.profile}
-                          onClick={(value) => actions.editModeUpdate('profile', value)}
-        >
-          <ProfileInfo accountState={accountState}
-                       actions={actions}
-                       editMode={accountState.editMode.profile}
-          />
-        </TabEditablePanel>
+        <ProfileInfoContainer />
 
-        <TabEditablePanel title="Documents"
-                          editMode={accountState.editMode.documents}
-                          onClick={(value) => actions.editModeUpdate('documents', value)}
-        >
-          <DocumentsInfo accountState={accountState}
-                         actions={actions}
-                         editMode={accountState.editMode.documents}
-          />
-        </TabEditablePanel>
+        <DocumentsInfoContainer />
 
-        <TabEditablePanel title="Login/Password"
-                          editMode={accountState.editMode.password}
-                          onClick={(value) => actions.editModeUpdate('password', value)}
-        >
-          <PasswordInfo  accountState={accountState}
-                         actions={actions}
-                         editMode={accountState.editMode.password}
-          />
-        </TabEditablePanel>
+        <PasswordInfoContainer />
 
       </div>
     );
   }
 }
 
-AccountSummaryPage.propTypes = {
-  actions: PropTypes.object.isRequired,
-  accountState: PropTypes.object.isRequired
-};
-
-function mapStateToProps(state) {
-  return {
-    accountState: state.accountAppState
-  };
+function mapStateToProps() {
+  return {};
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(actions, dispatch)
-  };
+function mapDispatchToProps() {
+  return {};
 }
 
 export default connect(

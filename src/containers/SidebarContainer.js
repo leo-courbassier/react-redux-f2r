@@ -11,11 +11,6 @@ class SidebarContainer extends Component {
   }
 }
 
-SidebarContainer.propTypes = {
-  sidebarActions: PropTypes.object.isRequired,
-  accountState: PropTypes.object.isRequired
-};
-
 function mapStateToProps(state) {
   return {
     sidebarState: state.sidebarState
