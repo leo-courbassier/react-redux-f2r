@@ -19,3 +19,11 @@ export function loadAccountInfo() {
     });
   }
 }
+
+export function editModeUpdate(panelName, value) {
+ return {
+   type: types.ACCOUNT_EDIT_MODE,
+   panelName,
+   value
+ }
+}

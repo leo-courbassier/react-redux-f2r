@@ -6,15 +6,13 @@ import * as actions from '../actions/accountActions';
 import PageTitle from '../components/account/PageTitle';
 import TabEditablePanel from '../components/account/TabEditablePanel';
 import ProfileInfo from '../components/account/ProfileInfo';
-import DocumentsInfo from '../components/account/DocumentsInfo';
-import PasswordInfo from '../components/account/PasswordInfo';
 
-class AccountSummaryPage extends Component {
+class AccountProfilePage extends Component {
   render() {
     let {accountState, actions} = this.props;
     return (
       <div>
-        <PageTitle>My Account > Summary</PageTitle>
+        <PageTitle>My Account > Profile</PageTitle>
 
         <TabEditablePanel title="Profile"
                           editMode={accountState.editMode.profile}
@@ -26,32 +24,12 @@ class AccountSummaryPage extends Component {
           />
         </TabEditablePanel>
 
-        <TabEditablePanel title="Documents"
-                          editMode={accountState.editMode.documents}
-                          onClick={(value) => actions.editModeUpdate('documents', value)}
-        >
-          <DocumentsInfo accountState={accountState}
-                         actions={actions}
-                         editMode={accountState.editMode.documents}
-          />
-        </TabEditablePanel>
-
-        <TabEditablePanel title="Login/Password"
-                          editMode={accountState.editMode.password}
-                          onClick={(value) => actions.editModeUpdate('password', value)}
-        >
-          <PasswordInfo  accountState={accountState}
-                         actions={actions}
-                         editMode={accountState.editMode.password}
-          />
-        </TabEditablePanel>
-
       </div>
     );
   }
 }
 
-AccountSummaryPage.propTypes = {
+AccountProfilePage.propTypes = {
   actions: PropTypes.object.isRequired,
   accountState: PropTypes.object.isRequired
 };
@@ -71,4 +49,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AccountSummaryPage);
+)(AccountProfilePage);

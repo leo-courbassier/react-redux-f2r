@@ -5,26 +5,14 @@ import { bindActionCreators } from 'redux';
 import * as actions from '../actions/accountActions';
 import PageTitle from '../components/account/PageTitle';
 import TabEditablePanel from '../components/account/TabEditablePanel';
-import ProfileInfo from '../components/account/ProfileInfo';
 import DocumentsInfo from '../components/account/DocumentsInfo';
-import PasswordInfo from '../components/account/PasswordInfo';
 
-class AccountSummaryPage extends Component {
+class AccountDocumentsPage extends Component {
   render() {
     let {accountState, actions} = this.props;
     return (
       <div>
-        <PageTitle>My Account > Summary</PageTitle>
-
-        <TabEditablePanel title="Profile"
-                          editMode={accountState.editMode.profile}
-                          onClick={(value) => actions.editModeUpdate('profile', value)}
-        >
-          <ProfileInfo accountState={accountState}
-                       actions={actions}
-                       editMode={accountState.editMode.profile}
-          />
-        </TabEditablePanel>
+        <PageTitle>My Account > Documents</PageTitle>
 
         <TabEditablePanel title="Documents"
                           editMode={accountState.editMode.documents}
@@ -36,22 +24,12 @@ class AccountSummaryPage extends Component {
           />
         </TabEditablePanel>
 
-        <TabEditablePanel title="Login/Password"
-                          editMode={accountState.editMode.password}
-                          onClick={(value) => actions.editModeUpdate('password', value)}
-        >
-          <PasswordInfo  accountState={accountState}
-                         actions={actions}
-                         editMode={accountState.editMode.password}
-          />
-        </TabEditablePanel>
-
       </div>
     );
   }
 }
 
-AccountSummaryPage.propTypes = {
+AccountDocumentsPage.propTypes = {
   actions: PropTypes.object.isRequired,
   accountState: PropTypes.object.isRequired
 };
@@ -71,4 +49,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AccountSummaryPage);
+)(AccountDocumentsPage);

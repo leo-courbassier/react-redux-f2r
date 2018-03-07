@@ -27,7 +27,10 @@ import FeedbackPage from './containers/FeedbackPage.js';
 import VerifyPage from './containers/VerifyPage.js';
 import NotFoundPage from './components/NotFoundPage.js';
 import AccountPage from './containers/AccountPage.js';
-import AccountSummaryPage from './containers/AccountSummaryPage.js';
+import AccountSummaryPage from './containers/AccountSummaryPage';
+import AccountDocumentsPage from './containers/AccountDocumentsPage';
+import AccountPasswordPage from './containers/AccountPasswordPage';
+import AccountProfilePage from './containers/AccountProfilePage';
 
 let NotImplemented = () => <div>Not Implemented</div>;
 
@@ -70,9 +73,9 @@ render(
         <Route onEnter={requireAuth} path="checkout" component={CheckoutPage}/>
         <Route onEnter={requireAuth} path="account" component={AccountPage}>
           <IndexRoute component={AccountSummaryPage} />
-          <Route path="profile" component={NotImplemented} />
-          <Route path="documents" component={NotImplemented} />
-          <Route path="password" component={NotImplemented} />
+          <Route path="profile" component={AccountProfilePage} />
+          <Route path="documents" component={AccountDocumentsPage} />
+          <Route path="password" component={AccountPasswordPage} />
         </Route>
 
         <Route path="feedback/:token" component={FeedbackPage} />

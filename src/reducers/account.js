@@ -11,7 +11,13 @@ const initialState = {
   },
 
   userInfo: {}, //probably we will remove it in future
-  highlights: {}
+  highlights: {},
+
+  editMode:{
+    profile: false,
+    documents: false,
+    password: false
+  }
 };
 
 
@@ -59,6 +65,13 @@ export default function accountAppState(state = initialState, action) {
       if(action.highlights){
         newState.highlights = action.highlights;
       }
+      return newState;
+    }
+
+    case types.ACCOUNT_EDIT_MODE:
+    {
+      let newState = objectAssign({}, state);
+      newState.editMode[action.panelName] = action.value;
       return newState;
     }
 

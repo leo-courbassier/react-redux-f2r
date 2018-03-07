@@ -2,7 +2,51 @@
   margin-top: 65px;
 
   .panels{
-    margin-top: 100px;
+    margin-top: 70px;
+  }
+
+  .page-title{
+    margin: 0 0 20px;
+    color: gray;
+    font-size: 1.5rem;
+    font-weight: normal;
+    border-bottom: 1px solid gray;
+    padding-bottom: 5px;
+  }
+
+  .editable-panel{
+    border: 1px solid #ddd;
+    background: #fff;
+    box-shadow: 4px 4px 5px -2px rgba(0,0,0,.27);
+    margin-bottom: 20px;
+
+    > .header{
+      padding: 10px 15px;
+      color: #333;
+      background-color: #f5f5f5;
+      display: flex;
+      align-items: center;
+
+      h5{
+        padding: 0;
+        margin: 0 10px 0 0;
+        font-size: 16px;
+        line-height: 2;
+      }
+      .empty-space{
+        flex-grow: 1;
+      }
+      .btn{
+        outline: none;
+
+        .glyphicon{
+          margin-right: 5px;
+        }
+      }
+    }
+    > .body{
+      padding: 15px;
+    }
   }
 
   .high-lights-column{
@@ -36,17 +80,17 @@
       }
     }
     .high-lights{
-      margin-top: 20px;
-      background: #d4d6d9;
-      border: 1px solid #999;
+      margin: 20px auto 0;
+      background: #f5f5f5;
       padding: 10px;
       box-shadow: 4px 4px 5px -2px rgba(0, 0, 0, 0.27);
+      width: 240px;
 
       h6{
-        margin: 0;
+        margin: 0 0 10px;
         font-weight: bold;
-        padding: 5px 0;
-        border-bottom: 1px solid #b4b5b6;
+        padding: 5px 10px;
+        border-bottom: 1px solid gray;
         font-size: 1rem;
       }
 
@@ -55,10 +99,12 @@
       }
 
       .item{
+        padding: 0 10px;
+        font-size: 0.93rem;
+
         label{
           font-weight: normal;
           display: block;
-          padding: 4px 0;
           margin: 0;
         }
         > span{
