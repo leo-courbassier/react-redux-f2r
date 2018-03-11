@@ -5,7 +5,6 @@ import * as BS from 'react-bootstrap';
 import Loader from '../Loader';
 import FileReaderInput from 'react-file-reader-input';
 import SubmitButton from '../SubmitButton';
-
 import SelectOptions from '../SelectOptions';
 import _ from 'underscore';
 import * as Validation from '../../utils/validation';
@@ -26,6 +25,7 @@ class StepTwoForm extends Component {
 
 
   componentWillMount() {
+    debugger;
     this.props.load();
   }
 
@@ -88,114 +88,51 @@ class StepTwoForm extends Component {
   isMandatoryInvalid(){
     let store = this.props.appState[STEP_ID];
 
-    if (
-      !store.employerFirstName ||
-      !store.employerLastName ||
-      !store.employerPhone ||
-      !store.employerEmail
-      )
-    {
-      return true;
-    }
+    // if (
+    //   !store.employerFirstName ||
+    //   !store.employerLastName ||
+    //   !store.employerPhone ||
+    //   !store.employerEmail
+    //   )
+    // {
+    //   return true;
+    // }
 
-    if (
-      !store.jobTitle ||
-      !store.jobSalary ||
-      !store.jobEmployer ||
-      !store.jobCity ||
-      !store.jobState
-      )
-    {
-      return true;
-    }
+    // if (
+    //   !store.jobTitle ||
+    //   !store.jobSalary ||
+    //   !store.jobEmployer ||
+    //   !store.jobCity ||
+    //   !store.jobState
+    //   )
+    // {
+    //   return true;
+    // }
 
-    return false;
+    //return false;
   }
 
-  isInvalid(){
-    let store = this.props.appState[STEP_ID];
-    let invalid = false;
-    let currencyOptions = {allow_negatives: false, thousands_separator: '.', decimal_separator: '.'};
 
-    for (let source of store.incomeSources) {
-      let keyExists = source && source.hasOwnProperty('documentationProvided');
-      if (!keyExists || (keyExists && !source.documentationProvided)) {
-        invalid = 'Other Income must have an uploaded document.'
-      }
-
-      if (source && source.amount) {
-        let amount = source.amount.toString().trim().replace(/\$|,/g, '');
-        if (!isCurrency(amount, currencyOptions)) {
-          invalid = 'Other Income Amount must be in 0.00 format.'
-        }
-      } else {
-        invalid = 'Other Income must have an amount.'
-      }
-    }
-
-    if (store.employerPhone && store.employerPhone.replace(/\D/g,'').trim().length < 10){
-      invalid = 'Employer Phone must be at least a 10 digit number.'
-    }
-
-    if (store.employerEmail && !isEmail(store.employerEmail)) {
-      invalid = 'Employer Email must be a valid email address.'
-    }
-
-    if (
-      !store.employerFirstName ||
-      !store.employerLastName ||
-      !store.employerPhone ||
-      !store.employerEmail
-      )
-    {
-      invalid = 'Please provide your employer information.'
-    }
-
-    if (
-      !store.jobTitle ||
-      !store.jobSalary ||
-      !store.jobEmployer ||
-      !store.jobCity ||
-      !store.jobState
-      )
-    {
-      invalid = 'Please provide your job information.'
-    }
-
-    let jobSalary = store.jobSalary ? store.jobSalary.toString().trim().replace(/\$|,/g, '') : store.jobSalary;
-    if (store.jobSalary && !isCurrency(jobSalary, currencyOptions)) {
-      invalid = 'Job Salary must be in 0.00 format.'
-    }
-
-    return invalid;
-  }
 
   submit(openNextStep, e) {
     e.preventDefault();
     this.setState({submitted: true});
-    if(this.isInvalid()){
-      return false;
-    }
+
     let store = this.props.appState[STEP_ID];
 
     // strip dollar sign, commas, and decimals
-    let jobSalary = store.jobSalary && Math.floor(store.jobSalary.toString().trim().replace(/\$|,/g, '')).toString();
+    //let jobSalary = store.jobSalary && Math.floor(store.jobSalary.toString().trim().replace(/\$|,/g, '')).toString();
     let incomeSources = [];
-    for (let source of store.incomeSources) {
-      if (source) {
-        let newSource = source;
-        newSource.amount = Math.floor(source.amount.toString().trim().replace(/\$|,/g, ''));
-        incomeSources.push(newSource);
+    if( store.incomeSources ){
+      for (let source of store.incomeSources) {
+        if (source) {
+          let newSource = source;
+          //newSource.amount = Math.floor(source.amount.toString().trim().replace(/\$|,/g, ''));
+          incomeSources.push(newSource);
+        }
       }
     }
 
-    // format phone number before saving to API
-    let employerPhone = store.employerPhone;
-    if (employerPhone && employerPhone.replace(/\D/g,'').trim().length === 10) {
-      let number = employerPhone.replace(/\D/g,'').trim();
-      let parts = [number.substring(0, 3), number.substring(3, 6), number.substring(6, 10)];
-      employerPhone = `(${parts[0]}) ${parts[1]}-${parts[2]}`;
-    }
 
     // if proceed button is clicked, only save if form has been modified
     // otherwise, save button will always trigger a save
@@ -204,23 +141,27 @@ class StepTwoForm extends Component {
 
     if (allowSave) {
       this.props.save(
-        store.jobTitle,
-        jobSalary,
-        store.jobEmployer,
-        store.jobCity,
-        store.jobState,
-
-        store.employerId,
-        store.employerFirstName,
-        store.employerLastName,
-        employerPhone,
-        store.employerEmail,
-        incomeSources,
+        store.landlordId,
+        store.propertyTitle,
+        store.address1,
+        store.address2,
+        store.city,
+        store.state,
+        store.zipCode,
+        store.propertyClass,
+        store.propertyStatus,
+        store.numBeds,
+        store.numBaths,
+        store.rent,
+        store.headline,
+        store.sqft,
+        store.beganRentingDate,
+        store.amenityList,
         openNextStep,
-        this.props.updateOnboardingScore
+        store.incomeSources
         );
     } else {
-      if (openNextStep) openNextStep();
+      if (openNextStep) this.props.openNextStep();
     }
   }
 
@@ -230,7 +171,7 @@ class StepTwoForm extends Component {
     let store = this.context.store;
     let sources = this.props.appState[STEP_ID].incomeSources;
 
-    if (MAX_INCOME_SOURCES > sources.length){
+    if (sources && MAX_INCOME_SOURCES > sources.length || !this.props.appState[STEP_ID].incomeSources){
       sources.push({amount: null, type: "0", id:_.uniqueId(), documentationProvided: false});
       store.dispatch({ type: types.ONBOARDING_STEPTWO_UPDATE_INCOME_SOURCES, sources });
     }
@@ -314,9 +255,6 @@ class StepTwoForm extends Component {
   }
 
 
-
-
-
   render() {
 
     let store = this.props.appState[STEP_ID];
@@ -356,6 +294,9 @@ class StepTwoForm extends Component {
            <option value="TOWNHOUSE">Town Home</option>
        </select>
    )
+
+   console.log(this.props.appState)
+
     const yourPropertyData = (
       <div className="your-job">
         <BS.FormGroup controlId="yourJob">
@@ -385,9 +326,7 @@ class StepTwoForm extends Component {
 
             </FileReaderInput>
           </div>
-
             <div className='col-md-4'>
-
             <BS.ControlLabel>Property Title</BS.ControlLabel>
             <BS.FormControl
             value={store.propertyTitle}
@@ -395,16 +334,14 @@ class StepTwoForm extends Component {
             name="propertyTitle"
             id="propertyTitle"
             type="text" />
-
             </div>
             <div className='col-md-4'>
-
             <BS.ControlLabel>Property Type</BS.ControlLabel>
              {MyPropertyTypeList}
-
             </div>
           </div>
-
+ {console.log(store)}
+ {console.log(this.props)}
             <div className="row">
             <BS.ControlLabel>Address 1</BS.ControlLabel>
               <div className="item">
@@ -429,22 +366,21 @@ class StepTwoForm extends Component {
              <div className="item">
                 <BS.ControlLabel>City</BS.ControlLabel>
                 <SelectOptions
-                name="jobCity"
-                disabled={!store.jobState}
-                loading={this.props.appState.status.loading['jobCityList']}
+                name="city"
+                loading={this.props.appState.status.loading['cityList']}
                 loadingText="Retrieving cities..."
                 onChange={this.keypress.bind(this)}
-                defaultValue={store.jobCity}
-                optionList={this.props.appState.cities['jobCityList']}
+                defaultValue={store.city}
+                optionList={this.props.appState.cities['cityList']}
                 defaultOption
                  />
                </div>
                <div className="item">
                   <BS.ControlLabel>State</BS.ControlLabel>
                   <SelectOptions
-                  name="jobState"
-                  onChange={_.partial(this.stateListKeypress.bind(this), 'jobCityList')}
-                  defaultValue={store.jobState}
+                  name="stateList"
+                  onChange={this.keypress.bind(this)}
+                  defaultValue={store.state}
                   optionList={store.stateList}
                   defaultOption
                    />
@@ -452,7 +388,7 @@ class StepTwoForm extends Component {
               <div className="item">
               <BS.ControlLabel>Zip Code</BS.ControlLabel>
                 <BS.FormControl
-                value={store.zipCode}
+                defaultValue={store.zipCode}
                 onChange={this.keypress.bind(this)}
                 name="zipCode"
                 type="text" />
@@ -462,7 +398,7 @@ class StepTwoForm extends Component {
               <div className='item '>
                <BS.ControlLabel>Sq Ft</BS.ControlLabel>
                <BS.FormControl
-               value={store.sqft}
+               defaultValue={store.sqft}
                onChange={this.keypress.bind(this)}
                name="sqft"
                type="text" />
@@ -480,50 +416,6 @@ class StepTwoForm extends Component {
         </BS.FormGroup>
       </div>
     );
-
-    const employerContact = (
-      <div className="employer-contact">
-        <BS.FormGroup controlId="employerContact">
-          <div className="row">
-            <div className="item">
-            <BS.ControlLabel>First Name</BS.ControlLabel>
-            <BS.FormControl
-            value={store.employerFirstName}
-            onChange={this.keypress.bind(this)}
-            name="employerFirstName"
-            type="text" />
-            </div>
-            <div className="item">
-            <BS.ControlLabel>Last Name</BS.ControlLabel>
-            <BS.FormControl
-            value={store.employerLastName}
-            onChange={this.keypress.bind(this)}
-            name="employerLastName"
-            type="text" />
-            </div>
-          </div>
-          <div className="row">
-            <div className="item">
-            <BS.ControlLabel>Phone</BS.ControlLabel>
-            <BS.FormControl
-            value={store.employerPhone}
-            onChange={this.keypress.bind(this)}
-            name="employerPhone"
-            type="text" />
-            </div>
-            <div className="item">
-            <BS.ControlLabel>Email</BS.ControlLabel>
-            <BS.FormControl
-            value={store.employerEmail}
-            onChange={this.keypress.bind(this)}
-            name="employerEmail"
-            type="text" />
-            </div>
-          </div>
-        </BS.FormGroup>
-      </div>
-    );
-
 
     const sources = _.map(store.incomeSources, (source, i) => {return this.renderIncomeSources(source, i)});
 
@@ -551,16 +443,10 @@ class StepTwoForm extends Component {
       </div>
     );
 
-    let warn = this.isInvalid() ? (<span className="warn">* <span className="text">{this.state.submitted ? this.isInvalid() : ''}</span></span>) : '';
+    let warn = (<span className="warn">* <span className="text">{this.state.submitted}</span></span>);
     let jobWarn = '';
     let employerWarn = '';
-    if(this.isInvalid() && this.isInvalid().indexOf('employer') > -1){
-      employerWarn = warn;
-      jobWarn = '';
-    }else{
-      jobWarn = warn;
-      employerWarn = '';
-    }
+
 
 
 
@@ -588,7 +474,7 @@ class StepTwoForm extends Component {
                 </SubmitButton>
               )}
               <BS.HelpBlock className="pullLeft warn">
-                {this.state.submitted ? this.isInvalid() : ''}
+                {this.state.submitted}
               </BS.HelpBlock>
             </div>
             {incomeSources}
