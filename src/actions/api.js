@@ -227,6 +227,7 @@ export function getStateList(dispatch, getState) {
   return get(services.GEO_STATES, authHeader);
 }
 
+
 export function getCityList(dispatch, getState, stateCode, statusAction) {
   let authHeader = getAuthHeaders(dispatch, getState);
   if (stateCode == null || stateCode == '' || stateCode == undefined){return false}
@@ -311,8 +312,10 @@ export function uploadProfilePic(dispatch, getState, file, callback){
 }
 
 export function postStepTwo(dispatch, getState, payload, callback){
+  debugger;
   return post(services.TT_STEP2, getAuthHeaders(dispatch, getState), payload, callback);
 }
+
 
 export function postStepThree(dispatch, getState, payload, callback){
   return post(services.TT_STEP3, getAuthHeaders(dispatch, getState), payload, callback);
@@ -341,6 +344,11 @@ export function inviteRoommate(dispatch, getState, queryString, callback){
 export function getEmployerVerification(dispatch, getState){
   return get(services.VERIFY_VERIFICATION, getAuthHeaders(dispatch, getState));
 }
+
+export function getPropertyList(dispatch, getState){
+  return get(services.GET_PROPERTY_LIST, getAuthHeaders(dispatch, getState));
+}
+
 
 export function postEmployerVerification(dispatch, getState, payload, callback, textCallback){
   return post(services.VERIFY_REQUESTVERIFY, getAuthHeaders(dispatch, getState), payload, callback, textCallback);

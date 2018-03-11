@@ -163,53 +163,77 @@ export function updateStepTwoForm(settings, name, value) {
 
 export function loadStepTwo(){
   return function (dispatch, getState) {
-    let authHeader = api.getAuthHeaders(dispatch, getState);
-
-    let requestUser = api.getUserDetails(dispatch, getState);
     let requestIncomeSources = api.getIncomeSources(dispatch, getState);
+    let authHeader = api.getAuthHeaders(dispatch, getState);
+    let requestUser = api.getUserDetails(dispatch, getState);
     let requestStates = api.getStateList(dispatch, getState);
     let requestEmployerVerification = api.getEmployerVerification(dispatch, getState);
-
+    let getPropertyList = api.getPropertyList(dispatch, getState);
+    debugger;
     api.setStatus(dispatch, 'loading', 'stepTwoForm', true);
     Promise.all([
       requestUser,
       requestIncomeSources,
       requestStates,
-      requestEmployerVerification
+      requestEmployerVerification,
+      getPropertyList
       ]).then((results) => {
 
       let user = results[0].userDetails;
-      let position = user.position;
-      let salary = user.salary;
-      let employer = user.employer;
-      let employerCity = user.employerCity;
-      let employerState = user.employerState;
-
-      let incomeSources = results[1];
-      debugger;
+      let landlordId = results[0].userDetails.userId;
+      let propertyTitle = '';
+      let propertyTypeList= '';
+      let address1= '';
+      let address2= '';
+      let city ='';
+      let state = '';
+      let zipCode= '';
+      let propertyClass = '';
+      let propertyStatus = '';
+      let numBeds = '';
+      let numBaths = '';
+      let rent = '';
+      let headline = '';
+      let sqft = '';
+      let beganRentingDate = '';
+      let amenityList:[];
       let stateList = results[2];
+      let incomeSources = results[4];
       //let propertyTypeList = {"APT":"Apartment"}//["APT","SFM","CONDO","DUPLEX","MOBILE_HOME","TOWNHOUSE"]
 
       let employerVerification = results[3];
+      debugger;
 
       dispatch({ type: types.ONBOARDING_STEPTWO_FORM_LOAD,
-        position,
-        salary,
-        employer,
-        employerCity,
-        employerState,
-        incomeSources,
-        //propertyTypeList,
+        landlordId,
+        propertyTitle,
+        propertyTypeList,
+        address1,
+        address2,
+        city,
+        state,
+        zipCode,
+        propertyClass,
+        propertyStatus,
+        numBeds,
+        numBaths,
+        rent,
+        headline,
+        sqft,
+        beganRentingDate,
+        amenityList:[],
         stateList,
-        employerVerification });
+        incomeSources,
+        saved: false
+
+      });
 
       api.getCityList(
         dispatch,
         getState,
-        employerState,
-        'jobCityList'
+        null,
+        'cityList'
         );
-
       api.setStatus(dispatch, 'loading', 'stepTwoForm', false);
     });
   };
@@ -217,87 +241,91 @@ export function loadStepTwo(){
 
 
 export function saveStepTwo(
-  position,
-  salary,
-  employer,
-  employerCity,
-  employerState,
-
-  employerId,
-  employerFirstName,
-  employerLastName,
-  employerPhone,
-  employerEmail,
-  incomeSources,
-
+  landlordId,
+  propertyTitle,
+  address1,
+  address2,
+  city,
+  state,
+  zipCode,
+  propertyClass,
+  propertyStatus,
+  numBeds,
+  numBaths,
+  rent,
+  headline,
+  sqft,
+  beganRentingDate,
+  amenityList,
   openNextStep,
+  incomeSources,
   callback
   ) {
   return function (dispatch, getState) {
     let authHeader = api.getAuthHeaders(dispatch, getState);
     let userId = getState().loginAppState.userInfo.id;
-
-
-
-
     let statusAction = openNextStep ? 'stepTwoFormProceed' : 'stepTwoForm';
     api.setStatus(dispatch, 'saving', statusAction, true);
 
+    debugger;
 
-    let userDetails = {
-        "id": userId,
-        "userDetails": {
-          "position": position,
-          "salary": parseFloat(salary),
-          "employer": employer,
-          "employerCity": employerCity,
-          "employerState": employerState
-        }
-      };
+    let userDetails =
+                      {
+                        "landlordId":15,
+                        "address":"1023 Ivy Lane",
+                        "city":"Cary",
+                        "state":"NC",
+                        "zipCode":"27511",
+                        "propertyType":"SFM",
+                        "propertyClass":"STANDARD",
+                        "propertyStatus":"VACANT",
+                        "numBeds":"4",
+                        "numBaths":"2.5",
+                        "rent":"1250",
+                        "headline":"Old School Cary Home",
+                        "sqft": 1950,
+                        "amenityList":[
+                            {"amenityName":"Central A/C", "amenityType":"INTERIOR","installDate":"2013-04-15"},
+                            {"amenityName":"Dishwasher", "amenityType":"KITCHEN","installDate":"2014-10-15"}
+                        ]
+                      }
 
-    let payload = {"user": userDetails, "incomeList": incomeSources};
+   let payload = {"user": userDetails,"incomeList": incomeSources};
+
 
     let verificationData = {
 
-        "userId": userId,
-        "position": position,
-        "salary": salary,
-        "companyName": employer,
-        "companyCity": employerCity,
-        "companyState": employerState,
-
-        "id": employerId,
-        "verifierFirstName": employerFirstName,
-        "verifierLastName": employerLastName,
-        "verifierPhone": employerPhone,
-        "verifierEmail": employerEmail
+         "userId": userId
+        // "position": position,
+        // "salary": salary,
+        // "companyName": employer,
+        // "companyCity": employerCity,
+        // "companyState": employerState,
+        // "id": employerId,
+        // "verifierFirstName": employerFirstName,
+        // "verifierLastName": employerLastName,
+        // "verifierPhone": employerPhone,
+        // "verifierEmail": employerEmail
 
       };
 
-    api.postStepTwo(dispatch, getState, payload, () => {
-      api.postEmployerVerification(dispatch, getState, verificationData, null, (id) => {
-        if (id) {
+      api.postStepTwo(dispatch, getState, userDetails, () => {
+        debugger
+        if (userId) {
           let name = 'employerId';
-          let value = id;
+          let value = userId;
           dispatch({type: types.ONBOARDING_STEPTWO_FORM_UPDATE, name, value});
         }
-
         api.setStatus(dispatch, 'saving', statusAction, false);
         api.setStatus(dispatch, 'modified', 'stepTwoForm', false);
-        dispatch({type: types.ONBOARDING_STEPTWO_FORM_UPDATE, name: 'saved', value: true});
+        dispatch({type: types.ONBOARDING_STEPTWO_FORM_SAVE, name: 'saved', value: true});
         if (callback) callback();
         if (openNextStep) openNextStep();
-      });
+
     });
-
-
-
-
 
   };
 }
-
-
 
 export function uploadIncomeDoc(file, statusAction, sources, sourceIndex) {
   return function (dispatch, getState) {
@@ -312,12 +340,6 @@ export function uploadIncomeDoc(file, statusAction, sources, sourceIndex) {
     });
   };
 }
-
-
-
-
-
-
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -349,19 +371,13 @@ export function loadStepThree(){
 
       let user = results[0].userDetails;
       let stateList = results[1];
-
       let currentState = user.state;
       let currentCity = user.city;
       let numYearsRenter = user.ttNumYearsRenter;
       let numPropertiesRented = user.ttNumPropertiesRenter;
-
-
       let previousHomeowner = user.ttPreviousHomeowner;
-
-
       let isLandlord = user.ttIsLandlord;
       let ownerStatus = user.ttHomeOwnershipStatus;
-
       let ownedAddress;
       let ownedState;
       let ownedCity;
@@ -500,12 +516,8 @@ export function saveStepThree(
         if (openNextStep) openNextStep();
       }
     });
-
-
-
   };
 }
-
 
 /////////////////////////////////////////////////////////////////////////////
 // step four
@@ -528,6 +540,7 @@ export function loadStepFour(){
     let requestIncomeSources = api.getIncomeSources(dispatch, getState);
     let requestStates = api.getStateList(dispatch, getState);
     let requestEmployerVerification = api.getEmployerVerification(dispatch, getState);
+
 
     api.setStatus(dispatch, 'loading', 'stepFourForm', true);
     Promise.all([
@@ -566,7 +579,7 @@ export function loadStepFour(){
         dispatch,
         getState,
         employerState,
-        'jobCityList'
+        'cityList'
         );
 
       api.setStatus(dispatch, 'loading', 'stepTwoForm', false);

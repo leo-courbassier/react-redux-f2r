@@ -36,18 +36,25 @@ const initialState = {
       saved: false
   },
   1: {
+      landlordId:null,
       propertyTitle: null,
       propertyTypeList: null,
-      jobEmployer: null,
-      jobCity: null,
-      jobState: null,
-      employerId: null,
-      employerFirstName: null,
-      employerLastName: null,
-      employerPhone: null,
-      employerEmail: null,
-      incomeSources:[],
       stateList: null,
+      address1:null,
+      address2:null,
+      city:null,
+      state:null,
+      zipCode:null,
+      propertyClass:null,
+      propertyStatus:null,
+      numBeds:null,
+      numBaths:null,
+      rent:null,
+      headline:null,
+      sqft:null,
+      beganRentingDate:null,
+      incomeSources:null,
+      amenityList:[],
       saved: false
   },
   2: {
@@ -64,6 +71,7 @@ const initialState = {
       isLandlord: false,
       ownerStatus: null,
       previousLandlords: [],
+      propertyType:null,
       saved: false
   },
   3: {
@@ -183,17 +191,6 @@ export default function onboardingAppState(state = initialState, action) {
 
         let newState = objectAssign({}, state);
         newState[0]['description'] = action.user.description;
-        /*newState[0]['dobMonth'] = dob[1];
-        newState[0]['dobDay'] = dob[2];
-        newState[0]['dobYear'] = dob[0];
-        newState[0]['isActiveDutyMilitary'] = action.user.ttIsActiveDutyMilitay;
-        newState[0]['alternativeEmail'] = action.user.alternativeEmail;
-        newState[0]['dogs'] = action.dogs;
-        newState[0]['cats'] = action.cats;
-        newState[0]['other'] = action.other;
-        newState[0]['linkedAccounts'] = action.linkedAccounts;
-        newState[0]['facebookToken'] = action.facebookToken;
-        newState[0]['linkedinToken'] = action.linkedinToken;*/
         return newState;
       }
 
@@ -212,6 +209,7 @@ export default function onboardingAppState(state = initialState, action) {
 
     case types.ONBOARDING_STEPTWO_FORM_UPDATE:
       {
+        debugger
         let newState = objectAssign({}, state);
         newState[1][action.name] = action.value;
         return newState;
@@ -220,15 +218,22 @@ export default function onboardingAppState(state = initialState, action) {
 
     case types.ONBOARDING_STEPTWO_FORM_LOAD:
       {
+        debugger
         let newState = objectAssign({}, state);
-        newState[1]['jobTitle'] = action.position;
-        newState[1]['jobSalary'] = action.salary;
-        newState[1]['jobEmployer'] = action.employer;
-        newState[1]['jobCity'] = action.employerCity;
-        newState[1]['jobState'] = action.employerState;
+        newState[1]['landlordId'] = action.landlordId;
+        newState[1]['propertyTitle'] = action.propertyTitle;
+        newState[1]['state'] = action.state;
+        newState[1]['zipCode'] = action.zipCode;
+        newState[1]['propertyClass'] = action.propertyClass;
+        newState[1]['propertyStatus'] = action.propertyStatus;
+        newState[1]['numBeds'] = action.beganRentingDate;
+        newState[1]['numBaths'] = action.sqft;
+        newState[1]['rent'] = action.headline;
+        newState[1]['beganRentingDate'] = action.beganRentingDate;
+        newState[1]['sqft'] = action.sqft;
+        newState[1]['headline'] = action.headline;
+        newState[1]['amenityList'] = action.amenityList;
         newState[1]['stateList'] = action.stateList;
-
-        newState[1]['incomeSources'] = action.incomeSources;
         newState[1]['propertyTypeList'] = action.propertyTypeList;
 
 
@@ -256,12 +261,23 @@ export default function onboardingAppState(state = initialState, action) {
 
     case types.ONBOARDING_STEPTWO_FORM_SAVE:
       {
+        debugger;
         let newState = objectAssign({}, state);
-        newState[1]['jobTitle'] = action.position;
-        newState[1]['jobSalary'] = action.salary;
-        newState[1]['jobEmployer'] = action.employer;
-        newState[1]['jobCity'] = action.employerCity;
-        newState[1]['jobState'] = action.employerState;
+        newState[1]['landlordId'] = action.landlordId;
+        newState[1]['propertyTitle'] = action.propertyTitle;
+        newState[1]['state'] = action.state;
+        newState[1]['zipCode'] = action.zipCode;
+        newState[1]['propertyClass'] = action.propertyClass;
+        newState[1]['propertyStatus'] = action.propertyStatus;
+        newState[1]['numBeds'] = action.beganRentingDate;
+        newState[1]['numBaths'] = action.sqft;
+        newState[1]['rent'] = action.headline;
+        newState[1]['beganRentingDate'] = action.beganRentingDate;
+        newState[1]['sqft'] = action.sqft;
+        newState[1]['headline'] = action.headline;
+        newState[1]['amenityList'] = action.amenityList;
+        newState[1]['stateList'] = action.stateList;
+        newState[1]['propertyTypeList'] = action.propertyTypeList;
         newState[1].status['modified'] = false;
         return newState;
       }
@@ -272,12 +288,6 @@ export default function onboardingAppState(state = initialState, action) {
         newState[1]['incomeSources'] = action.sources;
         return newState;
       }
-
-
-
-
-
-
 
 
 
@@ -304,19 +314,14 @@ export default function onboardingAppState(state = initialState, action) {
         newState[2]['currentCity'] = action.currentCity;
         newState[2]['numYearsRenter'] = action.numYearsRenter;
         newState[2]['numPropertiesRented'] = action.numPropertiesRented;
-
         newState[2]['previousHomeowner'] = action.previousHomeowner;
-
         newState[2]['ownerStatus'] = action.ownerStatus;
         newState[2]['isLandlord'] = action.isLandlord;
-
         newState[2]['ownedAddress'] = action.ownedAddress;
         newState[2]['ownedCity'] = action.ownedCity;
         newState[2]['ownedState'] = action.ownedState;
         newState[2]['ownedZip'] = action.ownedZip;
-
         newState[2]['stateList'] = action.stateList;
-
         newState[2]['previousLandlords'] = action.previousLandlords;
 
 
