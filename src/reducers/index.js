@@ -5,7 +5,7 @@ import signupAppState from './signup';
 import forgotAppState from './forgot';
 import resetAppState from './reset';
 import dashboardAppState from './dashboard';
-import onboardingAppState from './onboarding';
+import onboardingAppState from './onboardinglandlord';
 import feedbackAppState from './feedback';
 import checkoutAppState from './checkout';
 import verifyAppState from './verify';

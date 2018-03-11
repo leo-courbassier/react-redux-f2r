@@ -77,6 +77,7 @@ class OnboardingLandlordPage extends Component {
   }
 
   componentWillMount(){
+    debugger;
     this.props.actions.updateOnboardingScore();
   }
 

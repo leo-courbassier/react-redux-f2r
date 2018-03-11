@@ -19,7 +19,7 @@ import StepFourForm from '../components/onboarding/StepFourForm';
 import StepFiveForm from '../components/onboarding/StepFiveForm';
 import StepSixForm from '../components/onboarding/StepSixForm';
 
-import * as actions from '../actions/onboardingActions';
+import * as actions from '../actions/onboardingLandlordActions';
 
 import * as api from '../actions/api';
 

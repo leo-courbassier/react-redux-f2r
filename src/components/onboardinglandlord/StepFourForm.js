@@ -301,7 +301,7 @@ class StepFourForm extends Component {
                />
              </div>
              <div className="item">
-             {console.log(store)}
+            
                 <BS.ControlLabel>State</BS.ControlLabel>
                 <SelectOptions
                 name="jobState"
@@ -321,7 +321,7 @@ class StepFourForm extends Component {
             </div>
           </div>
           <div className="row">
-          
+
               <div className="col-md-3">
                <BS.ControlLabel>Date Birth</BS.ControlLabel>
               </div>

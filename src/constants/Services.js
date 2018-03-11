@@ -10,10 +10,13 @@ export const USER_USER = BASE_URL + '/user/user';
 export const USER_USER_DETAILS = BASE_URL + '/user/user?returnDetails=true';
 export const USER_SIGNUP = BASE_URL + '/user/addUser';
 export const USER_PROFILE_PIC = BASE_URL + '/user/profilePic';
-
 export const USER_UPDATE_USER = BASE_URL + '/user/updateUser';
-
 export const TT_CHECKINVITES = BASE_URL + '/tt/checkInvites';
+
+//step two methods
+export const USER_PROPERTY_PIC = BASE_URL + '/prop/upload';
+export const LL_ADD_PROPERTY = BASE_URL + '/prop/addProp';
+export const GET_PROPERTY_LIST = BASE_URL + '/prop/property';
 
 export const TT_ADDPETS = BASE_URL + '/tt/addPets';
 export const TT_DELETEPETS = BASE_URL + '/tt/deletePets';
@@ -22,7 +25,7 @@ export const TT_PETS = BASE_URL + '/tt/pets';
 export const TT_ADDRESSES = BASE_URL + '/tt/addresses';
 
 export const TT_STEP1 = BASE_URL + '/tt/step1';
-export const TT_STEP2 = BASE_URL + '/tt/step2';
+export const TT_STEP2 = BASE_URL + '/prop/addProp';
 export const TT_STEP3 = BASE_URL + '/tt/step3';
 export const TT_STEP6 = BASE_URL + '/tt/step6';
 

@@ -13,7 +13,6 @@ import configureStore from './store/configureStore';
 import './styles/styles.scss'; // imports all stylesheets
 
 import App from './components/App';
-import OnboardingPage from './containers/OnboardingPage';
 import OnboardingLandlordPage from './containers/OnboardingLandlordPage';
 import DashboardPage from './containers/DashboardPage';
 import CheckoutPage from './containers/CheckoutPage';
@@ -67,7 +66,6 @@ render(
         <Route path="forgot" component={ForgotPage} />
         <Route path="reset/:token" component={ResetPage} />
 
-        <Route onEnter={requireAuth} path="onboarding" component={OnboardingPage}/>
         <Route onEnter={requireAuth} path="onboardinglandlord" component={OnboardingLandlordPage}/>
         <Route onEnter={requireAuth} path="checkout" component={CheckoutPage}/>
         <Route onEnter={requireAuth} path="dashboard" component={DashboardPage}>
