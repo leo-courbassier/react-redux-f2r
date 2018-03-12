@@ -53,7 +53,7 @@ const initialState = {
       headline:null,
       sqft:null,
       beganRentingDate:null,
-      incomeSources:null,
+      incomeSources:[],
       amenityList:[],
       saved: false
   },

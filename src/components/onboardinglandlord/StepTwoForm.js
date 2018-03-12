@@ -197,60 +197,149 @@ class StepTwoForm extends Component {
     let typeOptions = {0:'Disability', 1:'Pension', 2:'Social Security', 3:'Side-Business / Second Job'};
     let defaultValue = source.type;
     let uploadComplete = this.props.appState.status.uploading[statusAction] == false;
+    const MyPropertyTypeList = (
+      <select className="form-control">
+          <option value=""></option>
+          <option value="APT">Apartment</option>
+          <option value="SFM">Single Family Home</option>
+          <option value="CONDO">Condo</option>
+          <option value="DUPLEX">Duplex</option>
+          <option value="MOBILE_HOME">Mobile Home</option>
+          <option value="TOWNHOUSE">Town Home</option>
+      </select>
+  )
+
+  const bedDropdown = (
+        <select id="bed" className="form-control">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+  )
+
+  const bathDropdown = (
+        <select id="bath" className="form-control">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+  )
 
 
     return (
-      <BS.FormGroup controlId="profileImage">
+      <div className="your-job">
+        <BS.FormGroup controlId="yourJob">
           <div className="row">
-            <div className="item">
-              <BS.ControlLabel>Type</BS.ControlLabel>
-            <SelectOptions
-            name="type"
-            onChange={_.partial(this.incomeKeypress.bind(this), i)}
-            defaultValue={defaultValue}
-            optionList={typeOptions}
-            keyValue
-             />
+          <div className='col-md-4 buttonStep2'>
 
-            </div>
-            <div className="item">
-              <BS.ControlLabel>Amount</BS.ControlLabel>
-              <BS.InputGroup>
-                <BS.InputGroup.Addon>$</BS.InputGroup.Addon>
-                <BS.FormControl
-                className="amount"
-                name="amount"
-                onChange={_.partial(this.incomeKeypress.bind(this), i)}
-                componentClass="textarea">
-                {source.amount}
-                </BS.FormControl>
-              </BS.InputGroup>
-            </div>
-            <div className="item upload">
-              <BS.ControlLabel
-              title="Upload Supporting Documentation"
-              className="upload-label">Upload Supporting Documentation</BS.ControlLabel>
-              <FileReaderInput
-              name={docId}
-              as="url"
-              id={docCss}
-              onChange={_.partial(this.handleFileChange.bind(this), statusAction, i)}>
+            <FileReaderInput
+            name="profilePic"
+            as="url"
+            id="profile-pic-upload"
+            onChange={this.handleFileChange.bind(this)}>
 
-                <SubmitButton
-                className="upload-button"
-                appState={this.props.appState}
-                statusAction={statusAction}
-                textLoading="Uploading">
-                  Upload Document
-                </SubmitButton>
-                <BS.HelpBlock>
-                  {uploadComplete ? 'Upload complete.' : ''}
-                </BS.HelpBlock>
-              </FileReaderInput>
+              <SubmitButton
+              className="upload-button"
+              appState={this.props.appState}
+
+              statusAction="profilePicUpload"
+              textLoading="Uploading">
+              <BS.Glyphicon glyph="upload" />
+                Upload Cover Photo
+              </SubmitButton>
+              <BS.HelpBlock className="text-center">
+                <span className="text-success">
+                  {uploadComplete ? 'Profile image updated.' : ''}
+                </span>
+              </BS.HelpBlock>
+
+            </FileReaderInput>
+          </div>
+            <div className='col-md-4'>
+            <BS.ControlLabel>Property Title</BS.ControlLabel>
+            <BS.FormControl
+            value={store.propertyTitle}
+            onChange={this.keypress.bind(this)}
+            name="propertyTitle"
+            id="propertyTitle"
+            type="text" />
+            </div>
+            <div className='col-md-4'>
+            <BS.ControlLabel>Property Type</BS.ControlLabel>
+             {MyPropertyTypeList}
             </div>
           </div>
+            <div className="row">
+            <BS.ControlLabel>Address 1</BS.ControlLabel>
+              <div className="item">
+                <BS.FormControl
+                 value={store.address1}
+                 onChange={this.keypress.bind(this)}
+                 name="address1"
+                 type="text" />
+              </div>
+            </div>
+            <div className="row">
+             <BS.ControlLabel>Address 2</BS.ControlLabel>
+              <div className="item">
+              <BS.FormControl
+              value={store.address2}
+              onChange={this.keypress.bind(this)}
+              name="address2"
+              type="text" />
+              </div>
+            </div>
+            <div className="row">
+             <div className="item">
+                <BS.ControlLabel>City</BS.ControlLabel>
+                <SelectOptions
+                name="city"
+                loading={this.props.appState.status.loading['cityList']}
+                loadingText="Retrieving cities..."
+                onChange={this.keypress.bind(this)}
+                defaultValue={store.city}
+                optionList={this.props.appState.cities['cityList']}
+                defaultOption
+                 />
+               </div>
+               <div className="item">
+                  <BS.ControlLabel>State</BS.ControlLabel>
+                  <SelectOptions
+                  name="stateList"
+                  onChange={this.keypress.bind(this)}
+                  defaultValue={store.state}
+                  optionList={store.stateList}
+                  defaultOption
+                   />
+              </div>
+              <div className="item">
+              <BS.ControlLabel>Zip Code</BS.ControlLabel>
+                <BS.FormControl
+                defaultValue={store.zipCode}
+                onChange={this.keypress.bind(this)}
+                name="zipCode"
+                type="text" />
+              </div>
+            </div>
+            <div className="row">
+              <div className='item '>
+               <BS.ControlLabel>Sq Ft</BS.ControlLabel>
+               <BS.FormControl
+               defaultValue={store.sqft}
+               onChange={this.keypress.bind(this)}
+               name="sqft"
+               type="text" />
+               </div>
+               <div className='item'>
+               <BS.ControlLabel>Bed</BS.ControlLabel>
+               {bedDropdown}
+               </div>
+               <div className='item'>
+                <BS.ControlLabel>Bath</BS.ControlLabel>
+               {bathDropdown}
+               </div>
+              </div>
 
-      </BS.FormGroup>
+        </BS.FormGroup>
+      </div>
     );
   }
 
@@ -340,8 +429,6 @@ class StepTwoForm extends Component {
              {MyPropertyTypeList}
             </div>
           </div>
- {console.log(store)}
- {console.log(this.props)}
             <div className="row">
             <BS.ControlLabel>Address 1</BS.ControlLabel>
               <div className="item">
@@ -430,16 +517,20 @@ class StepTwoForm extends Component {
     );
 
     const incomeSources = (
-      <div className="col-md-4">
+      <div>
+        <div className="col-md-4">
+            <BS.Button
+            onClick={(e) => this.addIncomeSource(e)}
+            className="add-button"
+            type="submit"
+            bsStyle="success">
+              Add Another Property
+            </BS.Button>
+            {sources.length ? removeButton : null}
+        </div>
+        <div className="row">
         {sources}
-          <BS.Button
-          onClick={(e) => this.addIncomeSource(e)}
-          className="add-button"
-          type="submit"
-          bsStyle="success">
-            Add Another Property
-          </BS.Button>
-          {sources.length ? removeButton : null}
+        </div>
       </div>
     );
 

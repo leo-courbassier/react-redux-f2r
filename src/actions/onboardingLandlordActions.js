@@ -198,7 +198,7 @@ export function loadStepTwo(){
       let beganRentingDate = '';
       let amenityList:[];
       let stateList = results[2];
-      let incomeSources = results[4];
+      let incomeSources = [];//results[4];
       //let propertyTypeList = {"APT":"Apartment"}//["APT","SFM","CONDO","DUPLEX","MOBILE_HOME","TOWNHOUSE"]
 
       let employerVerification = results[3];
@@ -223,7 +223,7 @@ export function loadStepTwo(){
         beganRentingDate,
         amenityList:[],
         stateList,
-        incomeSources,
+        incomeSources:[],
         saved: false
 
       });
