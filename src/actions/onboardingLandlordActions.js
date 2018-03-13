@@ -200,7 +200,7 @@ export function loadStepTwo(){
       let stateList = results[2];
       let incomeSources = [];//results[4];
       //let propertyTypeList = {"APT":"Apartment"}//["APT","SFM","CONDO","DUPLEX","MOBILE_HOME","TOWNHOUSE"]
-
+      console.log(requestUser)
       let employerVerification = results[3];
       debugger;
 
@@ -228,12 +228,13 @@ export function loadStepTwo(){
 
       });
 
-      api.getCityList(
-        dispatch,
-        getState,
-        null,
-        'cityList'
-        );
+        api.getCityList(
+          dispatch,
+          getState,
+          null,
+        'currentCityList'
+          );
+
       api.setStatus(dispatch, 'loading', 'stepTwoForm', false);
     });
   };
@@ -271,19 +272,20 @@ export function saveStepTwo(
 
     let userDetails =
                       {
-                        "landlordId":15,
-                        "address":"1023 Ivy Lane",
-                        "city":"Cary",
-                        "state":"NC",
-                        "zipCode":"27511",
+                        "landlordId":landlordId,
+                        "address":address1,
+                        "secondLineAddress":address2,
+                        "city":city,
+                        "state":state,
+                        "zipCode":zipCode,
                         "propertyType":"SFM",
-                        "propertyClass":"STANDARD",
-                        "propertyStatus":"VACANT",
-                        "numBeds":"4",
-                        "numBaths":"2.5",
-                        "rent":"1250",
-                        "headline":"Old School Cary Home",
-                        "sqft": 1950,
+                        "propertyClass":propertyClass,
+                        "propertyStatus":propertyStatus,
+                        "numBeds":numBeds,
+                        "numBaths":numBaths,
+                        "rent":rent,
+                        "headline":propertyTitle,
+                        "sqft": sqft,
                         "amenityList":[
                             {"amenityName":"Central A/C", "amenityType":"INTERIOR","installDate":"2013-04-15"},
                             {"amenityName":"Dishwasher", "amenityType":"KITCHEN","installDate":"2014-10-15"}

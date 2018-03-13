@@ -50,6 +50,7 @@ class StepTwoForm extends Component {
 
 
   stateListKeypress(cityList, e){
+
     this.props.update(this.props.appState, e.target.name, e.target.value);
     let store = this.context.store;
     this.getCityList(e.target.value, cityList);
@@ -292,19 +293,19 @@ class StepTwoForm extends Component {
                 <BS.ControlLabel>City</BS.ControlLabel>
                 <SelectOptions
                 name="city"
-                loading={this.props.appState.status.loading['cityList']}
+                loading={this.props.appState.status.loading['currentCityList']}
                 loadingText="Retrieving cities..."
                 onChange={this.keypress.bind(this)}
                 defaultValue={store.city}
-                optionList={this.props.appState.cities['cityList']}
+                optionList={this.props.appState.cities['currentCityList']}
                 defaultOption
                  />
                </div>
                <div className="item">
                   <BS.ControlLabel>State</BS.ControlLabel>
                   <SelectOptions
-                  name="stateList"
-                  onChange={this.keypress.bind(this)}
+                  name="state"
+                  onChange={_.partial(this.stateListKeypress.bind(this), 'currentCityList')}
                   defaultValue={store.state}
                   optionList={store.stateList}
                   defaultOption
@@ -359,15 +360,21 @@ class StepTwoForm extends Component {
 
     const bedDropdown = (
           <select id="bed" className="form-control">
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
+              <option value="">No.</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4+</option>
           </select>
     )
 
     const bathDropdown = (
           <select id="bath" className="form-control">
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
+                <option value="">No.</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4+</option>
           </select>
     )
 
@@ -384,7 +391,7 @@ class StepTwoForm extends Component {
        </select>
    )
 
-   console.log(this.props.appState)
+
 
     const yourPropertyData = (
       <div className="your-job">
@@ -454,19 +461,20 @@ class StepTwoForm extends Component {
                 <BS.ControlLabel>City</BS.ControlLabel>
                 <SelectOptions
                 name="city"
-                loading={this.props.appState.status.loading['cityList']}
+                disabled={!store.state}
+                loading={this.props.appState.status.loading['currentCityList']}
                 loadingText="Retrieving cities..."
                 onChange={this.keypress.bind(this)}
                 defaultValue={store.city}
-                optionList={this.props.appState.cities['cityList']}
+                optionList={this.props.appState.cities['currentCityList']}
                 defaultOption
                  />
                </div>
                <div className="item">
                   <BS.ControlLabel>State</BS.ControlLabel>
                   <SelectOptions
-                  name="stateList"
-                  onChange={this.keypress.bind(this)}
+                  name="state"
+                  onChange={_.partial(this.stateListKeypress.bind(this), 'currentCityList')}
                   defaultValue={store.state}
                   optionList={store.stateList}
                   defaultOption
