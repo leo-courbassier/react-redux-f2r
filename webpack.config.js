@@ -55,8 +55,8 @@ const getEntry = function (env) {
 const getLoaders = function (env) {
   const loaders = [
       { test: /\.js$/, include: path.join(__dirname, 'src'), loaders: ['babel', 'eslint'] },
-      { test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/, loaders: ['file']},
-      { test: /\.(jpe?g|png|gif|svg)$/i, loaders: ['file']}
+      { test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/, loaders: ['file'] },
+      { test: /\.(jpg|png|gif|svg)$/i, loader: 'url-loader?limit=8192' }
     ];
 
   if (env === productionEnvironment ) {
@@ -80,6 +80,10 @@ function getConfig(env) {
       path: __dirname + '/dist', // Note: Physical files are only output by the production build task `npm run build`.
       publicPath: env === productionEnvironment  ? '/' : 'http://localhost:3000/', // uses absolute to avoid parsing error: http://stackoverflow.com/questions/34133808/webpack-ots-parsing-error-loading-fonts
       filename: 'f2r.js'
+    },
+    resolve: {
+      root: 'src',
+      extensions: ['', '.js', '.jsx', '.json']
     },
     plugins: getPlugins(env),
     module: {
