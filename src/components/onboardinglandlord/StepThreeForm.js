@@ -407,9 +407,9 @@ class StepThreeForm extends Component {
             <div className="input-group">
             <label className="radio-inline">
             <input
-            value={store.motnh}
+            value="month-to-month"
             onChange={this.keypress.bind(this)}
-            name="monthToMonth"
+            name="leaseType"
             className="input_month"
             type="radio" />
             <BS.ControlLabel className="monthToMonth">Month to Month </BS.ControlLabel>
@@ -421,9 +421,9 @@ class StepThreeForm extends Component {
             <div className="input-group">
             <label className="radio-inline">
             <input
-            value={store.motnh}
+            value="set-term"
             onChange={this.keypress.bind(this)}
-            name="monthToMonth"
+            name="leaseType"
             className="input_month"
             type="radio" />
             <BS.ControlLabel className="setTerm">Set Term </BS.ControlLabel>
@@ -555,7 +555,7 @@ class StepThreeForm extends Component {
             </div>
     );
 
-
+    const { leaseType: leaseTypeState } = this.props.appState[2];
     const detailsPoperty = (
       <div className="row">
        <div className="col-md-12">
@@ -614,35 +614,34 @@ class StepThreeForm extends Component {
 
         </div>
 
-        <div className="col-md-12">
-        <div className="col-md-3">
-         <BS.ControlLabel>Payment Due Date</BS.ControlLabel>
-        </div>
-        <div className="col-md-3">
-        <BS.FormControl
-        value={store.paymentDueDate}
-        name="paymentDueDate"
-        placeholder="xth of month"
-        onChange={_.partial(this.landlordKeypress.bind(this), 'paymentDueDate')}
-        type="text" />
-        <BS.Glyphicon glyph="calendar" />
-        </div>
+        <BS.Collapse in={leaseTypeState === 'set-term'}>
+          <div className="col-md-12">
+            <div className="col-md-3">
+              <BS.ControlLabel>Payment Due Date</BS.ControlLabel>
+            </div>
+            <div className="col-md-3">
+              <BS.FormControl
+                value={store.paymentDueDate}
+                name="paymentDueDate"
+                placeholder="xth of month"
+                onChange={_.partial(this.landlordKeypress.bind(this), 'paymentDueDate')}
+                type="text" />
+              <BS.Glyphicon glyph="calendar" />
+            </div>
 
-        <div className="col-md-3">
-         <BS.ControlLabel>Monthly Rent</BS.ControlLabel>
-        </div>
-        <div className="col-md-3">
-        <BS.FormControl
-        value={store.paymentEndDate}
-        name="monthlyRent"
-        placeholder="$$$$"
-        onChange={_.partial(this.landlordKeypress.bind(this), 'monthlyRent')}
-        type="text" />
-
-        </div>
-
-        </div>
-
+            <div className="col-md-3">
+              <BS.ControlLabel>Monthly Rent</BS.ControlLabel>
+            </div>
+            <div className="col-md-3">
+              <BS.FormControl
+                value={store.paymentEndDate}
+                name="monthlyRent"
+                placeholder="$$$$"
+                onChange={_.partial(this.landlordKeypress.bind(this), 'monthlyRent')}
+                type="text" />
+            </div>
+          </div>
+        </BS.Collapse>
 
        </div>
   )
