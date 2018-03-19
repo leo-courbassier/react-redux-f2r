@@ -2,60 +2,32 @@ import React, { Component } from 'react';
 import { Col, Glyphicon } from 'react-bootstrap';
 import UserRating from '../UserRating';
 
-// import greyStar from 'url?mimetype=image/jpeg!/rating-stars/star-grey.jpg';
-// import blueStar from 'url?mimetype=image/jpeg!/rating-stars/star-blue.jpg';
-
 export default class ProfileInfo extends Component {
-  renderRatings() {
-    const { userInfo } = this.props;
-    const ratingPercent = userInfo.f2rScore * 100 / 5;
-    // const wrapperStyles = {
-    //   backgroundImage: `url(${greyStar})`
-    // };
-    const innerStyles = {
-      // backgroundImage: `url(${blueStar})`,
-      width: `${ratingPercent}%`
-    };
-    const stars = Array(5).map((item, index) => (
-      <Glyphicon glyph="star" key={index} />
-    ));
-    return (
-      <div className="rating-info">
-        <div className="rating-title">F2R Rating</div>
-        <div className="rating-value">{userInfo.f2rScore}</div>
-        <div className="rating-stars">
-          {stars}
-          <div className="rating-stars-percent" style={innerStyles}>
-            {stars}
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   renderView(){
-    const {userInfo} = this.props;
+    const { profile } = this.props;
+    const { userDetails } = profile;
     return (
       <div>
         <div className="row">
           <Col xs={6} sm={5} md={6}>
-            <div className="user-name">{userInfo.firstName} {userInfo.lastName}</div>
-            <a href={'mailto:' + userInfo.email}>{userInfo.email}</a>
+            <div className="user-name">{profile.firstName} {profile.lastName}</div>
+            <a href={'mailto:' + profile.email}>{profile.email}</a>
             <br/>
-            {userInfo.phone || 'phone'}
+            {profile.phone || 'No phone number provided.'}
             <br/>
-            {userInfo.birthDate || 'birthDate'}
+            {profile.birthDate || 'No date of birth provided'}
           </Col>
           <Col xs={6} sm={3} md={3} className="right-column">
-            <UserRating userInfo={userInfo} />
+            <UserRating userInfo={profile} />
           </Col>
           <Col xs={6} sm={3} md={3} className="right-column">
-            <img src={userInfo.profilePicURL} />
+            <img src={profile.profilePicURL} />
           </Col>
         </div>
         <div className="section">About</div>
         <div>
-          description
+          {profile.userDetails.description || 'Not provided.'}
         </div>
         <div className="section">Contact Information</div>
         <div className="row contact-info">
@@ -65,11 +37,15 @@ export default class ProfileInfo extends Component {
           </Col>
           <Col xs={4} sm={4} md={4}>
             <div className="sub-heading">Backup Email</div>
-            <div className="value">email</div>
+            <div className="value">
+              {profile.userDetails.alternativeEmail || 'Not provided'}
+            </div>
           </Col>
           <Col xs={4} sm={4} md={4}>
             <div className="sub-heading">Alternate Phone</div>
-            <div className="value">&nbsp;</div>
+            <div className="value">
+              {profile.userDetails.alternativePhone || 'Not provided'}
+            </div>
           </Col>
           <Col xs={4} sm={4} md={4}>
             <div className="sub-heading">Alternate Contact</div>
