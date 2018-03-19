@@ -134,7 +134,51 @@ class StepTwoForm extends Component {
       }
     }
 
+    let amenityArray = [];
 
+    if(store.centralHeat){
+      amenityArray.push({"amenityName":"Central Heat", "amenityType":"INTERIOR","installDate":"2013-04-15"})
+    }
+    if(store.washer){
+      amenityArray.push({"amenityName":"Washer/Dryer", "amenityType":"INTERIOR","installDate":"2013-04-15"})
+    }
+    if(store.centralAc){
+      amenityArray.push({"amenityName":"Central A/C", "amenityType":"INTERIOR","installDate":"2013-04-15"})
+    }
+    if(store.hotWater){
+      amenityArray.push({"amenityName":"Hot  Water", "amenityType":"INTERIOR","installDate":"2013-04-15"})
+    }
+
+    if(store.microwave){
+      amenityArray.push({"amenityName":"Microwave", "amenityType":"KITCHEN","installDate":"2013-04-15"})
+    }
+
+    if(store.ovenRange){
+      amenityArray.push({"amenityName":"Oven Range", "amenityType":"KITCHEN","installDate":"2013-04-15"})
+    }
+    if(store.dishawer){
+      amenityArray.push({"amenityName":"Dishwasher", "amenityType":"KITCHEN","installDate":"2013-04-15"})
+    }
+
+    if(store.refrigerator){
+      amenityArray.push({"amenityName":"Refrigerator", "amenityType":"KITCHEN","installDate":"2013-04-15"})
+    }
+
+    if(store.patio){
+      amenityArray.push({"amenityName":"Patio", "amenityType":"EXTERIOR","installDate":"2013-04-15"})
+    }
+    if(store.yard){
+      amenityArray.push({"amenityName":"Yard", "amenityType":"EXTERIOR","installDate":"2013-04-15"})
+    }
+    if(store.deck){
+      amenityArray.push({"amenityName":"Deck", "amenityType":"EXTERIOR","installDate":"2013-04-15"})
+    }
+    if(store.fence){
+      amenityArray.push({"amenityName":"Fence", "amenityType":"EXTERIOR","installDate":"2013-04-15"})
+    }
+
+
+   store.amenityList = amenityArray;
     // if proceed button is clicked, only save if form has been modified
     // otherwise, save button will always trigger a save
     let isModified = this.props.appState.status['modified']['stepTwoForm'];
@@ -211,7 +255,7 @@ class StepTwoForm extends Component {
   )
 
   const bedDropdown = (
-        <select id="bed" className="form-control">
+        <select name="numBeds" id="bed" className="form-control">
             <option value="Yes">Yes</option>
             <option value="No">No</option>
         </select>
@@ -359,7 +403,9 @@ class StepTwoForm extends Component {
 
 
     const bedDropdown = (
-          <select id="bed" className="form-control">
+          <select name="numBeds" value={store.numBeds}
+            onChange={this.keypress.bind(this)} id="bed"
+            className="form-control">
               <option value="">No.</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -369,7 +415,10 @@ class StepTwoForm extends Component {
     )
 
     const bathDropdown = (
-          <select id="bath" className="form-control">
+          <select id="bath" className="form-control"
+          value={store.numBaths}
+          onChange={this.keypress.bind(this)}
+          name="numBaths">
                 <option value="">No.</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -391,7 +440,169 @@ class StepTwoForm extends Component {
        </select>
    )
 
+ const interior = (
+   <div className="row">
+      <div className="col-md-12">
 
+        <div className="col-md-2">
+        <span className="check_box_aline">
+          Central A/C
+              <input
+              className="form-check-input"
+              defaultValue={store.centralAc}
+              onChange={this.keypress.bind(this)}
+              name="centralAc"
+              type="checkbox" />
+          </span>
+        </div>
+
+        <div className="col-md-2">
+        <span className="check_box_aline">
+          Hot Water Heater
+              <input
+              className="form-check-input"
+              defaultValue={store.hotWater}
+              onChange={this.keypress.bind(this)}
+              name="hotWater"
+              type="checkbox" />
+          </span>
+        </div>
+
+        <div className="col-md-2">
+        <span className="check_box_aline">
+          Central Heat
+              <input
+              className="form-check-input"
+              defaultValue={store.centralHeat}
+              onChange={this.keypress.bind(this)}
+              name="centralHeat"
+              type="checkbox" />
+          </span>
+        </div>
+
+        <div className="col-md-2">
+        <span className="check_box_aline">
+          Washer / Dryer
+              <input
+              className="form-check-input"
+              defaultValue={store.washer}
+              onChange={this.keypress.bind(this)}
+              name="washer"
+              type="checkbox" />
+          </span>
+        </div>
+        <div className="col-md-2">
+        <span className="check_box_aline">
+          Fence
+              <input
+              className="form-check-input"
+              defaultValue={store.fence}
+              onChange={this.keypress.bind(this)}
+              name="fence"
+              type="checkbox" />
+          </span>
+        </div>
+
+        <div className="col-md-2">
+        <span className="check_box_aline">
+          Patio
+              <input
+              className="form-check-input"
+              defaultValue={store.patio}
+              onChange={this.keypress.bind(this)}
+              name="patio"
+              type="checkbox" />
+          </span>
+        </div>
+
+      </div>
+
+   </div>
+ )
+
+ const kitchen = (
+   <div className="row">
+      <div className="col-md-12">
+
+        <div className="col-md-2">
+        <span className="check_box_aline">
+          Refrigerator
+              <input
+              className="form-check-input"
+              defaultValue={store.refrigerator}
+              onChange={this.keypress.bind(this)}
+              name="refrigerator"
+              type="checkbox" />
+          </span>
+        </div>
+
+        <div className="col-md-2">
+        <span className="check_box_aline">
+          Dishwasher
+              <input
+              className="form-check-input"
+              defaultValue={store.dishawer}
+              onChange={this.keypress.bind(this)}
+              name="dishawer"
+              type="checkbox" />
+          </span>
+        </div>
+
+        <div className="col-md-2">
+        <span className="check_box_aline">
+          Oven/Range
+              <input
+              className="form-check-input"
+              defaultValue={store.ovenRange}
+              onChange={this.keypress.bind(this)}
+              name="ovenRange"
+              type="checkbox" />
+          </span>
+        </div>
+
+        <div className="col-md-2">
+        <span className="check_box_aline">
+          Microwave
+              <input
+              className="form-check-input"
+              defaultValue={store.microwave}
+              onChange={this.keypress.bind(this)}
+              name="microwave"
+              type="checkbox" />
+          </span>
+        </div>
+        <div className="col-md-2">
+        <span className="check_box_aline">
+          Yard
+              <input
+              className="form-check-input"
+              defaultValue={store.yard}
+              onChange={this.keypress.bind(this)}
+              name="yard"
+              type="checkbox" />
+          </span>
+        </div>
+
+        <div className="col-md-2">
+        <span className="check_box_aline">
+          Deck
+              <input
+              className="form-check-input"
+              defaultValue={store.deck}
+              onChange={this.keypress.bind(this)}
+              name="deck"
+              type="checkbox" />
+          </span>
+        </div>
+      </div>
+
+   </div>
+ )
+
+ const exterior = (
+   <div className="row">
+   </div>
+ )
 
     const yourPropertyData = (
       <div className="your-job">
@@ -514,6 +725,7 @@ class StepTwoForm extends Component {
 
     const sources = _.map(store.incomeSources, (source, i) => {return this.renderIncomeSources(source, i)});
 
+
     const removeButton = (
       <BS.Button
       onClick={this.removeIncomeSource}
@@ -525,8 +737,8 @@ class StepTwoForm extends Component {
     );
 
     const incomeSources = (
-      <div>
-        <div className="col-md-4">
+      <div className="col-md-4">
+        <div>
             <BS.Button
             onClick={(e) => this.addIncomeSource(e)}
             className="add-button"
@@ -554,12 +766,33 @@ class StepTwoForm extends Component {
         <div className="step step-two">
 
           <form>
-            <div className="section">Property Info{jobWarn}</div>
+            <div className="section">Property Info{warn}</div>
             {yourPropertyInfo}
-            <div className="section">Property #1{jobWarn}</div>
+            <div className="section">Property #1{warn}</div>
             {yourPropertyData}
-            <div className="section"></div>
-            <div className="row">
+            <div className="section">Amenities{warn}</div>
+            <div className="col-md-12">
+             <div className="col-md-4">
+             Interior
+             </div>
+             <div className="col-md-4">
+             Kitchen
+             </div>
+             <div className="col-md-4">
+             Exterior
+            </div>
+            </div>
+            <div className="col-md-12">
+                  {interior}
+            </div>
+
+            <div className="col-md-12">
+                  {kitchen}
+            </div>
+
+
+         <div className="row">
+         <div className="section"></div>
            <div className="col-md-4">
               {this.props.showProceed && (
                 <SubmitButton
@@ -582,9 +815,9 @@ class StepTwoForm extends Component {
                         <SubmitButton
                         appState={this.props.appState}
                         statusAction="stepTwoForm"
-                        submit={_.partial(this.submit.bind(this), false)}
+                        submit={_.partial(this.submit.bind(this), this.props.openNextStep)}
                         textLoading=""
-                        textModified="Save Changes"
+                        className="proceed-button next-button"
                         bsStyle="primary">
                           Next
                         </SubmitButton>

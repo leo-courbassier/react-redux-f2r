@@ -286,10 +286,7 @@ export function saveStepTwo(
                         "rent":rent,
                         "headline":propertyTitle,
                         "sqft": sqft,
-                        "amenityList":[
-                            {"amenityName":"Central A/C", "amenityType":"INTERIOR","installDate":"2013-04-15"},
-                            {"amenityName":"Dishwasher", "amenityType":"KITCHEN","installDate":"2014-10-15"}
-                        ]
+                        "amenityList":amenityList
                       }
 
    let payload = {"user": userDetails,"incomeList": incomeSources};
