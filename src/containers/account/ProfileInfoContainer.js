@@ -5,25 +5,37 @@ import { bindActionCreators } from 'redux';
 import * as accountActions from '../../actions/accountActions';
 import TabEditablePanel from '../../components/account/TabEditablePanel';
 import ProfileInfo from '../../components/account/ProfileInfo';
+import ProfileForm from '../../components/account/ProfileForm';
 
-class PasswordInfoContainer extends Component {
+import Loader from '../../components/Loader';
+
+class ProfileInfoContainer extends Component {
+  componentWillMount() {
+    this.props.actions.loadProfileInfo();
+  }
   render() {
-    let {accountState, accountActions} = this.props;
-    let editMode = accountState.editMode.profile;
-    let updateEditMode = () => accountActions.editModeUpdate('profile', !editMode);
+    let {appState, actions} = this.props;
+    let editMode = appState.editMode.profile;
+    let updateEditMode = () => actions.editModeUpdate('profile', !editMode);
     let onSubmit = (/*formData*/) => {
       updateEditMode();
     };
 
     return (
       <TabEditablePanel title="Profile"
-                        editMode={editMode}
-                        onClick={updateEditMode}
+        editMode={editMode}
+        onClick={updateEditMode}
       >
-        <ProfileInfo userInfo={accountState.userInfo}
-                     editMode={editMode}
-                     onSubmit={onSubmit}
-        />
+
+        <Loader appState={this.props.appState} statusType="loading" statusAction="profile">
+          {
+            editMode
+            ? <ProfileForm appState={appState}
+                onSubmit={onSubmit}
+                />
+            : <ProfileInfo profile={appState.profile} />
+          }
+        </Loader>
       </TabEditablePanel>
     );
   }
@@ -31,17 +43,17 @@ class PasswordInfoContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    accountState: state.accountAppState
+    appState: state.accountAppState
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    accountActions: bindActionCreators(accountActions, dispatch)
+    actions: bindActionCreators(accountActions, dispatch)
   };
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PasswordInfoContainer);
+)(ProfileInfoContainer);

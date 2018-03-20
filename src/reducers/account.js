@@ -75,6 +75,10 @@ export default function accountAppState(state = initialState, action) {
       return newState;
     }
 
+    case types.PROFILE_LOAD:
+      return objectAssign({}, state, {
+        profile: action.payload
+      });
     default:
       return state;
   }

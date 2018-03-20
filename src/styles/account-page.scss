@@ -179,5 +179,87 @@
         font-size: 0.9rem;
       }
     }
+    .rating-info {
+      display: inline-block;
+      text-align: center;
+    }
+    .rating-title {
+      font-size: 1.5rem;
+    }
+    .rating-value {
+      font-size: 2.2rem;
+      &.isNull {
+        color: #ccc;
+        font-size: 1.3rem;
+      }
+    }
+    .rating-stars {
+      background: url('/rating-stars/star-grey.jpg') repeat-x;
+      width: 125px;
+      height: 25px;
+      margin: 0 auto;
+      position: relative;
+      font-size: 25px;
+      span {
+        float: left;
+      }
+    }
+    .stars-wrapper {
+      width: 125px;
+      height: 25px;
+    }
+    .rating-stars-percent {
+      background: url('/rating-stars/star-blue.jpg') repeat-x;
+      width: 0;
+      color: #0365c0;
+      height: 25px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .rating-stars-descr {
+      font-size: 2.2rem;
+      text-align: center;
+      color: #0365c0;
+    }
+  }
+  .profileform-panel {
+    .profile-image {
+      .item {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    .fullname,
+    .pets,
+    .date-of-birth,
+    .family {
+      .item:not(:first-child) {
+        margin-left: 15px;
+      }
+    }
+    .family .label-spacer {
+      height: 25px;
+    }
+  }
+  .row {
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    .item {
+      flex: 1;
+    }
+    .item-lg {
+      flex-grow: 2;
+    }
+    .item-remove {
+      flex-grow: 0;
+    }
+    &.has-gutters .item:not(:first-child) {
+      margin-left: 15px;
+    }
   }
 }
