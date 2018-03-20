@@ -225,4 +225,41 @@
       color: #0365c0;
     }
   }
+  .profileform-panel {
+    .profile-image {
+      .item {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    .fullname,
+    .pets,
+    .date-of-birth,
+    .family {
+      .item:not(:first-child) {
+        margin-left: 15px;
+      }
+    }
+    .family .label-spacer {
+      height: 25px;
+    }
+  }
+  .row {
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    .item {
+      flex: 1;
+    }
+    .item-lg {
+      flex-grow: 2;
+    }
+    .item-remove {
+      flex-grow: 0;
+    }
+    &.has-gutters .item:not(:first-child) {
+      margin-left: 15px;
+    }
+  }
 }

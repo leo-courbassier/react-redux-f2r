@@ -5,6 +5,9 @@ import { bindActionCreators } from 'redux';
 import * as accountActions from '../../actions/accountActions';
 import TabEditablePanel from '../../components/account/TabEditablePanel';
 import ProfileInfo from '../../components/account/ProfileInfo';
+import ProfileForm from '../../components/account/ProfileForm';
+
+import Loader from '../../components/Loader';
 
 class ProfileInfoContainer extends Component {
   componentWillMount() {
@@ -23,12 +26,16 @@ class ProfileInfoContainer extends Component {
         editMode={editMode}
         onClick={updateEditMode}
       >
-        {appState.profile &&
-          <ProfileInfo profile={appState.profile}
-           editMode={editMode}
-           onSubmit={onSubmit}
-          />
-        }
+
+        <Loader appState={this.props.appState} statusType="loading" statusAction="profile">
+          {
+            editMode
+            ? <ProfileForm appState={appState}
+                onSubmit={onSubmit}
+                />
+            : <ProfileInfo profile={appState.profile} />
+          }
+        </Loader>
       </TabEditablePanel>
     );
   }

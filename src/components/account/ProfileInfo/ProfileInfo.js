@@ -1,12 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Col, Glyphicon } from 'react-bootstrap';
 import UserRating from '../UserRating';
+import _ from 'lodash';
 
 export default class ProfileInfo extends Component {
-
+  static propTypes = {
+    profile: PropTypes.object
+  };
+  static defaultProps = {
+    profile: {}
+  }
   renderView(){
     const { profile } = this.props;
-    const { userDetails } = profile;
+    const userDetails = _.get(profile, 'userDetails', {});
     return (
       <div>
         <div className="row">
@@ -64,17 +70,11 @@ export default class ProfileInfo extends Component {
     );
   }
 
-  renderEdit(){
-    return (
-      <div>Edit mode</div>
-    );
-  }
-
   render(){
     let {editMode} = this.props;
     return (
       <div className="profile-info">
-        {editMode ? this.renderEdit() : this.renderView()}
+        {this.renderView()}
       </div>
     );
   }

@@ -32,7 +32,7 @@ export const loadProfileInfo = () => {
   return (dispatch, getState) => {
     let requestUser = api.getUserDetails(dispatch, getState);
 
-    api.setStatus(dispatch, 'loading', 'dashboard', true);
+    api.setStatus(dispatch, 'loading', 'profile', true);
 
     Promise.all([
       requestUser
@@ -42,7 +42,7 @@ export const loadProfileInfo = () => {
 
       dispatch({ type: types.PROFILE_LOAD, payload: profile });
 
-      api.setStatus(dispatch, 'loading', 'dashboard', false);
+      api.setStatus(dispatch, 'loading', 'profile', false);
     });
   };
 };
