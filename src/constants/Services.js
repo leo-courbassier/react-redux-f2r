@@ -26,7 +26,8 @@ export const TT_ADDRESSES = BASE_URL + '/tt/addresses';
 
 export const TT_STEP1 = BASE_URL + '/tt/step1';
 export const TT_STEP2 = BASE_URL + '/prop/addProp';
-export const TT_STEP3 = BASE_URL + '/tt/step3';
+export const TT_STEP3 = BASE_URL + '/lease/create';
+export const ADD_TENANT = BASE_URL + 'user/invite?email=email&id=lease_id&type=LEASE';
 export const TT_STEP6 = BASE_URL + '/tt/step6';
 
 export const TT_LINKEDACCOUNTS = BASE_URL + '/tt/linkedAccounts';

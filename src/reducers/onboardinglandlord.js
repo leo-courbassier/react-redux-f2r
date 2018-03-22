@@ -58,20 +58,20 @@ const initialState = {
       saved: false
   },
   2: {
-      stateList: null,
-      currentState: null,
-      currentCity: null,
-      numYearsRenter: null,
-      numPropertiesRented: null,
-      previousHomeowner: false,
-      ownedAddress: null,
-      ownedCity: null,
-      ownedState: null,
-      ownedZip: null,
-      isLandlord: false,
-      ownerStatus: null,
-      previousLandlords: [],
-      propertyType:null,
+      landlordId: null,
+      propertyId: null,
+      leaseStartDate: null,
+      leaseEndDate: null,
+      paymentStartDate:null,
+      paymentEndDate:null,
+      rentAmount:null,
+      paymentDueDate:null,
+      monthlyRent:null,
+      isLandlord: true,
+      isMonthToMonth:false,
+      leaseStatus:null,
+      renterIds:null,
+      depositList:[],
       saved: false
   },
   3: {
@@ -309,21 +309,20 @@ export default function onboardingAppState(state = initialState, action) {
       {
         let newState = objectAssign({}, state);
 
-
-        newState[2]['currentState'] = action.currentState;
-        newState[2]['currentCity'] = action.currentCity;
-        newState[2]['numYearsRenter'] = action.numYearsRenter;
-        newState[2]['numPropertiesRented'] = action.numPropertiesRented;
-        newState[2]['previousHomeowner'] = action.previousHomeowner;
-        newState[2]['ownerStatus'] = action.ownerStatus;
-        newState[2]['isLandlord'] = action.isLandlord;
-        newState[2]['ownedAddress'] = action.ownedAddress;
-        newState[2]['ownedCity'] = action.ownedCity;
-        newState[2]['ownedState'] = action.ownedState;
-        newState[2]['ownedZip'] = action.ownedZip;
-        newState[2]['stateList'] = action.stateList;
-        newState[2]['previousLandlords'] = action.previousLandlords;
-
+        newState[2]['landlordId'] = action.landlordId;
+        newState[2]['propertyId'] = action.propertyId;
+        newState[2]['leaseStartDate'] = action.leaseStartDate;
+        newState[2]['leaseEndDate'] = action.leaseEndDate;
+        newState[2]['rentAmount'] = action.rentAmount;
+        newState[2]['paymentStartDate'] = action.paymentStartDate;
+        newState[2]['paymentEndDate'] = action.paymentEndDate;
+        newState[2]['paymentDueDate'] = action.paymentDueDate;
+        newState[2]['monthlyRent'] = action.monthlyRent;
+        newState[2]['isLandlord'] = true;//action.isLandlord;
+        newState[2]['isMonthToMonth'] = action.isMonthToMonth;
+        newState[2]['leaseStatus'] = action.leaseStatus;
+        newState[2]['renterIds'] = action.renterIds;
+        newState[2]['depositList'] = action.depositList;
 
         return newState;
       }

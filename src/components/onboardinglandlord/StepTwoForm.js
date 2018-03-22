@@ -816,7 +816,7 @@ class StepTwoForm extends Component {
                         appState={this.props.appState}
                         statusAction="stepTwoForm"
                         submit={_.partial(this.submit.bind(this), this.props.openNextStep)}
-                        textLoading=""
+                        textLoading="Next"
                         className="proceed-button next-button"
                         bsStyle="primary">
                           Next

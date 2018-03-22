@@ -316,6 +316,9 @@ export function postStepTwo(dispatch, getState, payload, callback){
   return post(services.TT_STEP2, getAuthHeaders(dispatch, getState), payload, callback);
 }
 
+export function postAddTenant(dispatch, getState, payload, callback){
+  return post(services.ADD_TENANT, getAuthHeaders(dispatch, getState), payload, callback);
+}
 
 export function postStepThree(dispatch, getState, payload, callback){
   return post(services.TT_STEP3, getAuthHeaders(dispatch, getState), payload, callback);

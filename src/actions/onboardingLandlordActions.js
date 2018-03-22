@@ -354,7 +354,6 @@ export function updateStepThreeForm(settings, name, value) {
 export function loadStepThree(){
   return function (dispatch, getState) {
     let authHeader = api.getAuthHeaders(dispatch, getState);
-
     let requestUser = api.getUserDetails(dispatch, getState);
     let requestAddresses = api.getAddresses(dispatch, getState);
     let requestStates = api.getStateList(dispatch, getState);
@@ -368,58 +367,33 @@ export function loadStepThree(){
       requestLandlordFeedback
       ]).then((results) => {
 
-      let user = results[0].userDetails;
-      let stateList = results[1];
-      let currentState = user.state;
-      let currentCity = user.city;
-      let numYearsRenter = user.ttNumYearsRenter;
-      let numPropertiesRented = user.ttNumPropertiesRenter;
-      let previousHomeowner = user.ttPreviousHomeowner;
-      let isLandlord = user.ttIsLandlord;
-      let ownerStatus = user.ttHomeOwnershipStatus;
-      let ownedAddress;
-      let ownedState;
-      let ownedCity;
-      let ownedZip;
+       let landlordId = results[0].userDetails.userId;
+       let propertyId;
+       let email = results[0].userDetails.email;
+       let startDate;
+       let endDate;
+       let rentAmount;
+       let isLandlord;
+       let isMonthToMonth;
+       let leaseStatus;
+       let renterIds;
+       let depositList;
+       let saved;
 
-      if (results[2].length > 0){
-        ownedAddress = results[2][0].firstLineAddress;
-        ownedState = results[2][0].state;
-        ownedCity = results[2][0].city;
-        ownedZip = results[2][0].zipCode;
-      }
 
-      let previousLandlords = results[3];
 
       dispatch({ type: types.ONBOARDING_STEPTHREE_FORM_LOAD,
-        currentState,
-        currentCity,
-        numYearsRenter,
-        numPropertiesRented,
-        previousHomeowner,
+        landlordId,
+        propertyId,
+        email,
+        startDate,
+        endDate,
+        rentAmount,
         isLandlord,
-        ownerStatus,
-        ownedAddress,
-        ownedState,
-        ownedCity,
-        ownedZip,
-        stateList,
-        previousLandlords });
-
-      api.getCityList(
-        dispatch,
-        getState,
-        currentState,
-        'currentCityList'
-        );
-
-      api.getCityList(
-        dispatch,
-        getState,
-        ownedState,
-        'ownedCityList'
-        );
-
+        isMonthToMonth,
+        leaseStatus,
+        renterIds,
+        depositList});
       api.setStatus(dispatch, 'loading', 'stepThreeForm', false);
     });
   };
@@ -427,18 +401,20 @@ export function loadStepThree(){
 
 
 export function saveStepThree(
-  currentState,
-  currentCity,
-  numYearsRenter,
-  numPropertiesRented,
-  previousHomeowner,
+  landlordId,
+  propertyId,
+  leaseStartDate,
+  leaseEndDate,
+  rentAmount,
+  paymentStartDate,
+  paymentEndDate,
+  paymentDueDate,
+  monthlyRent,
   isLandlord,
-  ownedAddress,
-  ownedCity,
-  ownedState,
-  ownedZip,
-  ownerStatus,
-  previousLandlords,
+  isMonthToMonth,
+  leaseStatus,
+  renterIds,
+  depositList,
   openNextStep,
   callback
   ) {
@@ -449,72 +425,46 @@ export function saveStepThree(
     let statusAction = openNextStep ? 'stepThreeFormProceed' : 'stepThreeForm';
     api.setStatus(dispatch, 'saving', statusAction, true);
 
-    let address = {
-      "firstLineAddress": ownedAddress,
-      "city": ownedCity,
-      "state": ownedState,
-      "zipCode": ownedZip,
-      "isOwner": previousHomeowner
-    };
 
-    if (previousHomeowner == false || previousHomeowner == null){
-      isLandlord = false;
-      address = {
-        "firstLineAddress": null,
-        "city": null,
-        "state": null,
-        "zipCode": null,
-        "isOwner": false
-      };
-    }
-
-    let userDetails = {
-        "id": userId,
-        "userDetails": {
-          "state": currentState,
-          "city": currentCity,
-          "ttNumYearsRenter": numYearsRenter,
-          "ttNumPropertiesRenter": numPropertiesRented,
-          "ttPreviousHomeowner": previousHomeowner,
-          "ttIsLandlord": isLandlord,
-          "ttHomeOwnershipStatus": ownerStatus
+    let landLordObjSave={
+           "landlordId":15,
+           "propertyId":2,
+           "startDate":"2016-09-01",
+           "endDate":"2017-08-31",
+           "paymentDueDate":"2017-08-31",
+           "rentAmount":1250,
+           "isMonthToMonth":"false",
+           "leaseStatus":"ACTIVE",
+           "renterIds":[
+               {"renterId":1}
+           ],
+           "depositList":[
+               {"depositAmount":550, "depositType":"SECURITY","depositStatus":"REFUNDABLE"}
+           ]
         }
-      };
+    debugger;
+    let leaseObje = api.postStepThree(dispatch, getState, landLordObjSave, () => {
 
-
-    let payload = {"user": userDetails, "addressList": [address]};
-
-
-    api.postStepThree(dispatch, getState, payload, () => {
-      _.map(previousLandlords, (landlord, key) => {
-        api.postLandlordFeedback(dispatch, getState, landlord, null, (id) => {
-          if (id) {
-            let name = 'previousLandlords';
-            let value = previousLandlords;
-            value[key].id = id;
-            dispatch({type: types.ONBOARDING_STEPTHREE_FORM_UPDATE, name, value});
-          }
-
-          // update status only once the last landord id is updated
-          if (previousLandlords.length - 1 === key) {
-            api.setStatus(dispatch, 'saving', statusAction, false);
-            api.setStatus(dispatch, 'modified', 'stepThreeForm', false);
-            dispatch({type: types.ONBOARDING_STEPTHREE_FORM_UPDATE, name: 'saved', value: true});
-            if (callback) callback();
-            if (openNextStep) openNextStep();
-          }
-        });
-      });
-
-      // update status if there was no landlord data
-      if (previousLandlords.length < 1) {
+          // if (landLordObjSave.landlordId) {
+          //   let name = 'previousLandlords';
+          //   let value = previousLandlords;
+          //   value[key].id = id;
+          //   dispatch({type: types.ONBOARDING_STEPTHREE_FORM_UPDATE, name, value});
+          // }
         api.setStatus(dispatch, 'saving', statusAction, false);
         api.setStatus(dispatch, 'modified', 'stepThreeForm', false);
         dispatch({type: types.ONBOARDING_STEPTHREE_FORM_UPDATE, name: 'saved', value: true});
         if (callback) callback();
         if (openNextStep) openNextStep();
-      }
+
+        api.setStatus(dispatch, 'saving', statusAction, false);
+        api.setStatus(dispatch, 'modified', 'stepThreeForm', false);
+        dispatch({type: types.ONBOARDING_STEPTWO_FORM_SAVE, name: 'saved', value: true});
+        if (callback) callback();
+        if (openNextStep) openNextStep();
+
     });
+    console.log(leaseObje)
   };
 }
 

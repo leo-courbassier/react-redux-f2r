@@ -36,20 +36,6 @@ class StepThreeForm extends Component {
 
   }
 
-  getCityList(state, name){
-    let store = this.context.store;
-    api.getCityList(
-      store.dispatch,
-      store.getState,
-      state,
-      name
-      );
-  }
-
-  keypress(e) {
-    this.props.update(this.props.appState, e.target.name, e.target.value);
-  }
-
   switchKeypress(name, state) {
     this.props.update(this.props.appState, name, state);
   }
@@ -60,90 +46,32 @@ class StepThreeForm extends Component {
     this.getCityList(e.target.value, cityList);
   }
 
-  landlordKeypress(i, name, e){
+  landlordKeypress(e){
     let store = this.context.store;
-    let sources = this.props.appState[STEP_ID].previousLandlords;
-
-    if (name == 'beginDate' || name == 'endDate') {
-      if (typeof e.format === 'function') {
-        sources[i][name] = e.format('YYYY-MM-DD');
-      } else {
-        sources[i][name] = e;
-      }
-    }else{
-      sources[i][name] = e.target.value;
-    }
+    let sources = this.props.appState[STEP_ID];
 
     api.setStatus(this.context.store.dispatch, 'modified', 'stepThreeForm', true);
     store.dispatch({ type: types.ONBOARDING_STEPTHREE_UPDATE_LANDLORDS, sources });
   }
 
+  keypress(e) {
+    this.props.update(this.props.appState, e.target.name, e.target.value);
+  }
+
   // a boolean method to check if mandatory fields are not filled
   isMandatoryInvalid(){
-    let store = this.props.appState[STEP_ID];
-
-    if (
-      !store.currentState ||
-      !store.currentCity
-      )
-    {
-      return true;
-    }
-
-    return false;
+    return true;
   }
 
   isInvalid(){
-    let store = this.props.appState[STEP_ID];
-    let invalid = false;
-
-    for (let landlord of store.previousLandlords) {
-      if (landlord.phone && landlord.phone.replace(/\D/g,'').trim().length < 10){
-        invalid = 'Landlord Phone must be at least a 10 digit number.'
-      }
-
-      if (landlord.email && !isEmail(landlord.email)) {
-        invalid = 'Landlord Email must be a valid email address.'
-      }
-    }
-
-    if (
-      !store.currentState ||
-      !store.currentCity
-      )
-    {
-      invalid = 'Please let us know the city and state where you currently reside.'
-    }
-
-    return invalid;
+  return true;
   }
 
   submit(openNextStep, e) {
     e.preventDefault();
     this.setState({submitted: true});
-    if(this.isInvalid()){
-      return false;
-    }
+
     let store = this.props.appState[STEP_ID];
-
-    let previousLandlords = [];
-    for (let landlord of store.previousLandlords) {
-      let newLandlord = landlord;
-
-      // strip dollar sign and commas before saving to API
-      if (landlord.rentAmount) {
-        newLandlord.rentAmount = Math.floor(landlord.rentAmount.toString().trim().replace(/\$|,/g, '')).toString();
-      }
-
-      // format phone number before saving to API
-      if (landlord.phone && landlord.phone.replace(/\D/g,'').trim().length === 10) {
-        let number = landlord.phone.replace(/\D/g,'').trim();
-        let parts = [number.substring(0, 3), number.substring(3, 6), number.substring(6, 10)];
-        newLandlord.phone = `(${parts[0]}) ${parts[1]}-${parts[2]}`;
-      }
-
-      previousLandlords.push(newLandlord);
-    }
 
     // if proceed button is clicked, only save if form has been modified
     // otherwise, save button will always trigger a save
@@ -152,20 +80,20 @@ class StepThreeForm extends Component {
 
     if (allowSave) {
       this.props.save(
-        store.currentState,
-        store.currentCity,
-        store.numYearsRenter,
-        store.numPropertiesRented,
-        store.previousHomeowner,
-        store.isLandlord,
-        store.ownedAddress,
-        store.ownedCity,
-        store.ownedState,
-        store.ownedZip,
-        store.ownerStatus,
-        previousLandlords,
-        openNextStep,
-        this.props.updateOnboardingScore
+        store.landlordId,
+        store.propertyId,
+        store.leaseStartDate,
+        store.leaseEndDate,
+        store.rentAmount,
+        store.paymentStartDate,
+        store.paymentEndDate,
+        store.paymentDueDate,
+        store.monthlyRent,
+        store.isMonthToMonth,
+        store.leaseStatus,
+        store.renterIds,
+        store.depositList,
+        openNextStep
         );
     } else {
       if (openNextStep) openNextStep();
@@ -173,11 +101,11 @@ class StepThreeForm extends Component {
   }
 
 
-  addLandlord = (e) => {
+  addAnotherDepositFunction = (e) => {
     e.preventDefault();
     api.setStatus(this.context.store.dispatch, 'modified', 'stepThreeForm', true);
     let store = this.context.store;
-    let sources = this.props.appState[STEP_ID].previousLandlords;
+    let sources = this.props.appState[STEP_ID].deposit;
 
     if (MAX_LANDLORDS > sources.length){
 
@@ -199,12 +127,13 @@ class StepThreeForm extends Component {
     e.preventDefault();
     api.setStatus(this.context.store.dispatch, 'modified', 'stepThreeForm', true);
     let store = this.context.store;
-    let sources = this.props.appState[STEP_ID].previousLandlords;
+    let sources = this.props.appState[STEP_ID];
     sources.pop();
     store.dispatch({ type: types.ONBOARDING_STEPTHREE_UPDATE_LANDLORDS, sources });
   }
 
   renderLandlords = (source, i) => {
+    console.log(source)
     return (
       <BS.FormGroup controlId="previousLandlords">
       <BS.ControlLabel>Landlord {i + 1}</BS.ControlLabel>
@@ -212,17 +141,17 @@ class StepThreeForm extends Component {
         <div className="item">
           <BS.ControlLabel>First Name</BS.ControlLabel>
           <BS.FormControl
-          value={source.llFirstName}
-          name="llFirstName"
-          onChange={_.partial(this.landlordKeypress.bind(this), i, 'llFirstName')}
+          value='FirstName'
+          name=""
+          onChange={this.keypress.bind(this)}
           type="text" />
         </div>
         <div className="item">
           <BS.ControlLabel>Last Name</BS.ControlLabel>
           <BS.FormControl
-          value={source.llLastName}
-          name="llLastName"
-          onChange={_.partial(this.landlordKeypress.bind(this), i, 'llLastName')}
+          value={source.lastName}
+          name=""
+          onChange={this.keypress.bind(this)}
           type="text" />
         </div>
         <div className="item">
@@ -232,8 +161,8 @@ class StepThreeForm extends Component {
           dateFormat="YYYY-MM-DD"
           inputProps={{placeholder: 'YYYY-MM-DD'}}
           viewMode="years"
-          value={source.beginDate}
-          onChange={_.partial(this.landlordKeypress.bind(this), i, 'beginDate')}
+          value={source.leaseStartDate}
+          onChange={_.partial(this.keypress.bind(this))}
           closeOnSelect />
         </div>
         <div className="item">
@@ -243,8 +172,8 @@ class StepThreeForm extends Component {
           dateFormat="YYYY-MM-DD"
           inputProps={{placeholder: 'YYYY-MM-DD'}}
           viewMode="years"
-          value={source.endDate}
-          onChange={_.partial(this.landlordKeypress.bind(this), i, 'endDate')}
+          value={source.leaseEndDate}
+          onChange={_.partial(this.keypress.bind(this))}
           closeOnSelect />
         </div>
       </div>
@@ -254,7 +183,7 @@ class StepThreeForm extends Component {
           <BS.FormControl
           value={source.email}
           name="email"
-          onChange={_.partial(this.landlordKeypress.bind(this), i, 'email')}
+          onChange={_.partial(this.keypress.bind(this))}
           type="text" />
         </div>
         <div className="item">
@@ -262,7 +191,7 @@ class StepThreeForm extends Component {
           <BS.FormControl
           value={source.phone}
           name="phone"
-          onChange={_.partial(this.landlordKeypress.bind(this), i, 'phone')}
+          onChange={_.partial(this.keypress.bind(this))}
           type="text" />
         </div>
         <div className="item">
@@ -272,7 +201,7 @@ class StepThreeForm extends Component {
             <BS.FormControl
             value={source.rentAmount}
             name="rentAmount"
-            onChange={_.partial(this.landlordKeypress.bind(this), i, 'rentAmount')}
+            onChange={_.partial(this.keypress.bind(this))}
             type="text" />
           </BS.InputGroup>
         </div>
@@ -317,8 +246,8 @@ class StepThreeForm extends Component {
     );
     const propertySele = (
           <select id="property" className="form-control">
-              <option value="Yes">Refundable</option>
-              <option value="Yes">Nonrefundable</option>
+              <option value="Refundable">Refundable</option>
+              <option value="Nonrefundable">Nonrefundable</option>
           </select>
     )
 
@@ -357,9 +286,9 @@ class StepThreeForm extends Component {
            </div>
            <div className="col-md-3">
            <BS.FormControl
-           value={store.firstNameTenantAssignemt}
+           value=''
            name="firstNameTenantAssignemt"
-           onChange={_.partial(this.landlordKeypress.bind(this), 'firstNameTenantAssignemt')}
+
            type="text" />
            </div>
            <div className="col-md-3">
@@ -369,7 +298,7 @@ class StepThreeForm extends Component {
            <BS.FormControl
            value={store.lastNameTenantAssignemt}
            name="firstNameTenantAssignemt"
-           onChange={_.partial(this.landlordKeypress.bind(this), 'lastNameTenantAssignemt')}
+
            type="text" />
            </div>
           </div>
@@ -380,9 +309,9 @@ class StepThreeForm extends Component {
            </div>
            <div className="col-md-3">
            <BS.FormControl
-           value={store.firstNameTenantAssignemt}
-           name="emailTenantAssignemt"
-           onChange={_.partial(this.landlordKeypress.bind(this), 'emailTenantAssignemt')}
+           value={store.email}
+           name="email"
+           onChange={_.partial(this.keypress.bind(this))}
            type="text" />
            </div>
            <div className="col-md-3">
@@ -390,9 +319,9 @@ class StepThreeForm extends Component {
            </div>
            <div className="col-md-3">
            <BS.FormControl
-           value={store.firstNameTenantAssignemt}
+           value={store.phone}
            name="phoneTenantAssignemt"
-           onChange={_.partial(this.landlordKeypress.bind(this), 'phoneTenantAssignemt')}
+           onChange={_.partial(this.keypress.bind(this))}
            type="text" />
            </div>
           </div>
@@ -442,9 +371,9 @@ class StepThreeForm extends Component {
             <div className="input-group">
             <label className="radio-inline">
             <input
-            value={store.collectDeposits}
+            value="collect-deposit"
             onChange={this.keypress.bind(this)}
-            name="monthToMonth"
+            name="collectionTypeState"
             className="input_month"
             type="radio" />
             <BS.ControlLabel className="monthToMonth">Collect Deposits</BS.ControlLabel>
@@ -456,9 +385,9 @@ class StepThreeForm extends Component {
             <div className="input-group">
             <label className="radio-inline">
             <input
-            value={store.notNecesary}
+            value="not-necesary"
             onChange={this.keypress.bind(this)}
-            name="monthToMonth"
+            name="collectionTypeState"
             className="input_month"
             type="radio" />
             <BS.ControlLabel className="setTerm">Not Necessary</BS.ControlLabel>
@@ -469,95 +398,98 @@ class StepThreeForm extends Component {
         </div>
     )
 
-    const ownedPropertyInfo = (
-
-      <div className="owned-property-info">
-        <BS.FormGroup controlId="ownedPropertyInfo">
-        <div className="row">
-          <div className="item">
-            <BS.ControlLabel>Address</BS.ControlLabel>
-            <BS.FormControl
-            value={store.ownedAddress}
-            onChange={this.keypress.bind(this)}
-            name="ownedAddress"
-            type="text" />
-          </div>
-          <div className="item">
-            <BS.ControlLabel>State</BS.ControlLabel>
-            <SelectOptions
-              name="ownedState"
-              onChange={_.partial(this.stateListKeypress.bind(this), 'ownedCityList')}
-              defaultValue={store.ownedState}
-              optionList={store.stateList}
-              defaultOption
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="item">
-              <BS.ControlLabel>City</BS.ControlLabel>
-              <SelectOptions
-                name="ownedCity"
-                disabled={!store.ownedState}
-                loading={this.props.appState.status.loading['ownedCityList']}
-                loadingText="Retrieving cities..."
-                onChange={this.keypress.bind(this)}
-                defaultValue={store.ownedCity}
-                optionList={this.props.appState.cities['ownedCityList']}
-                defaultOption
-                />
-              </div>
-              <div className="item">
-                <BS.ControlLabel>Zip</BS.ControlLabel>
-                <BS.FormControl
-                value={store.ownedZip}
-                onChange={this.keypress.bind(this)}
-                name="ownedZip"
-                type="text" />
-              </div>
-            </div>
-            <div className="row">
-              <div className="item">
-                <BS.ControlLabel>Status</BS.ControlLabel>
-                <SelectOptions
-                name="ownerStatus"
-                onChange={this.keypress.bind(this)}
-                defaultValue={store.ownerStatus}
-                optionList={ownerStatusOptionsList}
-                valuesToUpper
-                  />
-                </div>
-                <div className="item">
-                  <BS.HelpBlock>
-                  <ul>
-                    <li>Occupied - You’re currently living there</li>
-                    <li>Leased - You’re currently leasing it out</li>
-                    <li>Selling/Sold - Property sold or currently unoccupied but for sale</li>
-                    <li>Foreclosed - Property is foreclosed and will show up on a Credit Report as such</li>
-                  </ul>
-                  </BS.HelpBlock>
-                </div>
-              </div>
-              <div className="row">
-                <div className="item">
-                  <BS.ControlLabel>If the home is sold, were you ever a Landlord while you owned it?</BS.ControlLabel>
-                  <Switch
-                  onColor="success"
-                  offColor="success"
-                  onText="Yes"
-                  offText="No"
-                  size="mini"
-                  onChange={_.partial(this.switchKeypress.bind(this), 'isLandlord')}
-                  state={store.isLandlord} />
-                </div>
-              </div>
-              </BS.FormGroup>
-            </div>
-    );
+    // const ownedPropertyInfo = (
+    //
+    //   <div className="owned-property-info">
+    //     <BS.FormGroup controlId="ownedPropertyInfo">
+    //     <div className="row">
+    //       <div className="item">
+    //         <BS.ControlLabel>Address</BS.ControlLabel>
+    //         <BS.FormControl
+    //         value={store.ownedAddress}
+    //         onChange={this.keypress.bind(this)}
+    //         name="ownedAddress"
+    //         type="text" />
+    //       </div>
+    //       <div className="item">
+    //         <BS.ControlLabel>State</BS.ControlLabel>
+    //         <SelectOptions
+    //           name="ownedState"
+    //           onChange={_.partial(this.stateListKeypress.bind(this), 'ownedCityList')}
+    //           defaultValue={store.ownedState}
+    //           optionList={store.stateList}
+    //           defaultOption
+    //           />
+    //         </div>
+    //       </div>
+    //       <div className="row">
+    //         <div className="item">
+    //           <BS.ControlLabel>City</BS.ControlLabel>
+    //           <SelectOptions
+    //             name="ownedCity"
+    //             disabled={!store.ownedState}
+    //             loading={this.props.appState.status.loading['ownedCityList']}
+    //             loadingText="Retrieving cities..."
+    //             onChange={this.keypress.bind(this)}
+    //             defaultValue={store.ownedCity}
+    //             optionList={this.props.appState.cities['ownedCityList']}
+    //             defaultOption
+    //             />
+    //           </div>
+    //           <div className="item">
+    //             <BS.ControlLabel>Zip</BS.ControlLabel>
+    //             <BS.FormControl
+    //             value={store.ownedZip}
+    //             onChange={this.keypress.bind(this)}
+    //             name="ownedZip"
+    //             type="text" />
+    //           </div>
+    //         </div>
+    //         <div className="row">
+    //           <div className="item">
+    //             <BS.ControlLabel>Status</BS.ControlLabel>
+    //             <SelectOptions
+    //             name="ownerStatus"
+    //             onChange={this.keypress.bind(this)}
+    //             defaultValue={store.ownerStatus}
+    //             optionList={ownerStatusOptionsList}
+    //             valuesToUpper
+    //               />
+    //             </div>
+    //             <div className="item">
+    //               <BS.HelpBlock>
+    //               <ul>
+    //                 <li>Occupied - You’re currently living there</li>
+    //                 <li>Leased - You’re currently leasing it out</li>
+    //                 <li>Selling/Sold - Property sold or currently unoccupied but for sale</li>
+    //                 <li>Foreclosed - Property is foreclosed and will show up on a Credit Report as such</li>
+    //               </ul>
+    //               </BS.HelpBlock>
+    //             </div>
+    //           </div>
+    //           <div className="row">
+    //             <div className="item">
+    //               <BS.ControlLabel>If the home is sold, were you ever a Landlord while you owned it?</BS.ControlLabel>
+    //               <Switch
+    //               onColor="success"
+    //               offColor="success"
+    //               onText="Yes"
+    //               offText="No"
+    //               size="mini"
+    //               onChange={_.partial(this.switchKeypress.bind(this), 'isLandlord')}
+    //               state={store.isLandlord} />
+    //             </div>
+    //           </div>
+    //           </BS.FormGroup>
+    //         </div>
+    // );
 
     const { leaseType: leaseTypeState } = this.props.appState[2];
+
     const detailsPoperty = (
+      <BS.Collapse in={leaseTypeState === 'set-term'}>
       <div className="row">
+
        <div className="col-md-12">
          <div className="col-md-3">
           <BS.ControlLabel>Lease Start Date</BS.ControlLabel>
@@ -567,7 +499,7 @@ class StepThreeForm extends Component {
          value={store.leaseStartDate}
          name="leaseStartDate"
          placeholder="mm/dd/yyyy"
-         onChange={_.partial(this.landlordKeypress.bind(this), 'leaseStartDate')}
+         onChange={_.partial(this.keypress.bind(this))}
          type="text" />
          <BS.Glyphicon glyph="calendar" />
          </div>
@@ -577,8 +509,8 @@ class StepThreeForm extends Component {
          <div className="col-md-3">
          <BS.FormControl
          value={store.leaseEndDate}
-         name="leaseEndDate"
-         onChange={_.partial(this.landlordKeypress.bind(this), 'leaseEndDate')}
+         name="endDate"
+         onChange={_.partial(this.keypress.bind(this))}
          placeholder="mm/dd/yyyy"
          type="text" />
          <BS.Glyphicon glyph="calendar" />
@@ -594,7 +526,7 @@ class StepThreeForm extends Component {
         value={store.paymentStartDate}
         name="paymentStartDate"
         placeholder="mm/dd/yyyy"
-        onChange={_.partial(this.landlordKeypress.bind(this), 'paymentStartDate')}
+        onChange={_.partial(this.keypress.bind(this))}
         type="text" />
         <BS.Glyphicon glyph="calendar" />
         </div>
@@ -607,15 +539,12 @@ class StepThreeForm extends Component {
         value={store.paymentEndDate}
         name="paymentEndDate"
         placeholder="mm/dd/yyyy"
-        onChange={_.partial(this.landlordKeypress.bind(this), 'paymentEndDate')}
+        onChange={_.partial(this.keypress.bind(this))}
         type="text" />
         <BS.Glyphicon glyph="calendar" />
         </div>
-
         </div>
-
-        <BS.Collapse in={leaseTypeState === 'set-term'}>
-          <div className="col-md-12">
+           <div className="col-md-12">
             <div className="col-md-3">
               <BS.ControlLabel>Payment Due Date</BS.ControlLabel>
             </div>
@@ -624,7 +553,7 @@ class StepThreeForm extends Component {
                 value={store.paymentDueDate}
                 name="paymentDueDate"
                 placeholder="xth of month"
-                onChange={_.partial(this.landlordKeypress.bind(this), 'paymentDueDate')}
+                onChange={_.partial(this.keypress.bind(this))}
                 type="text" />
               <BS.Glyphicon glyph="calendar" />
             </div>
@@ -634,21 +563,85 @@ class StepThreeForm extends Component {
             </div>
             <div className="col-md-3">
               <BS.FormControl
-                value={store.paymentEndDate}
+                value={store.monthlyRent}
                 name="monthlyRent"
                 placeholder="$$$$"
-                onChange={_.partial(this.landlordKeypress.bind(this), 'monthlyRent')}
+                onChange={_.partial(this.keypress.bind(this))}
                 type="text" />
             </div>
           </div>
-        </BS.Collapse>
+        </div>
+      </BS.Collapse>
 
-       </div>
   )
 
 
+  const leaseTypeMonthDescription = (
+    <BS.Collapse in={leaseTypeState === 'month-to-month'}>
+    <div className="row">
+     <div className="col-md-12">
+       <div className="col-md-3">
+        <BS.ControlLabel>Lease Start Date</BS.ControlLabel>
+       </div>
+       <div className="col-md-3">
+       <BS.FormControl
+       value={store.leaseStartDate}
+       name="leaseStartDate"
+       placeholder="mm/dd/yyyy"
+       onChange={this.keypress.bind(this)}
+       type="text" />
+       <BS.Glyphicon glyph="calendar" />
+       </div>
+       <div className="col-md-3">
+        <BS.ControlLabel>Payment Start Date</BS.ControlLabel>
+       </div>
+       <div className="col-md-3">
+       <BS.FormControl
+       value={store.paymentStartDate}
+       name="paymentStartDate"
+       placeholder="mm/dd/yyyy"
+       onChange={_.partial(this.keypress.bind(this))}
+       type="text" />
+       <BS.Glyphicon glyph="calendar" />
+       </div>
+      </div>
+      <br></br>
+         <div className="col-md-12">
+          <div className="col-md-3">
+            <BS.ControlLabel>Payment Due Date</BS.ControlLabel>
+          </div>
+          <div className="col-md-3">
+            <BS.FormControl
+              value={store.paymentDueDate}
+              name="paymentDueDate"
+              placeholder="xth of month"
+              onChange={_.partial(this.keypress.bind(this))}
+              type="text" />
+            <BS.Glyphicon glyph="calendar" />
+          </div>
+
+          <div className="col-md-3">
+            <BS.ControlLabel>Monthly Rent</BS.ControlLabel>
+          </div>
+          <div className="col-md-3">
+            <BS.FormControl
+              value={store.monthlyRent}
+              name="monthlyRent"
+              placeholder="$$$$"
+              onChange={_.partial(this.keypress.bind(this))}
+              type="text" />
+          </div>
+        </div>
+      </div>
+    </BS.Collapse>
+
+)
+
+
+const { collectionTypeState: collectionTypeState } = this.props.appState[2];
 
   const depositDetail = (
+  <BS.Collapse in={collectionTypeState === 'collect-deposit'}>
     <div className="row">
      <div className="col-md-12">
        <div className="col-md-3">
@@ -659,7 +652,7 @@ class StepThreeForm extends Component {
        value={store.depositType}
        name="depositType"
        placeholder="￼e.g. Securi"
-       onChange={_.partial(this.landlordKeypress.bind(this), 'depositType')}
+       onChange={_.partial(this.keypress.bind(this))}
        type="text" />
 
        </div>
@@ -670,7 +663,7 @@ class StepThreeForm extends Component {
        <BS.FormControl
        value={store.depositAmount}
        name="depositAmount"
-       onChange={_.partial(this.landlordKeypress.bind(this), 'depositAmount')}
+       onChange={_.partial(this.keypress.bind(this))}
        placeholder="$$$$"
        type="text" />
        </div>
@@ -685,7 +678,7 @@ class StepThreeForm extends Component {
       value={store.depositDueOn}
       name="depositDueOn"
       placeholder="mm/dd/yyyy"
-      onChange={_.partial(this.landlordKeypress.bind(this), 'depositDueOn')}
+      onChange={_.partial(this.keypress.bind(this))}
       type="text" />
       <BS.Glyphicon glyph="calendar" />
       </div>
@@ -710,9 +703,10 @@ class StepThreeForm extends Component {
       </div>
       </div>
      </div>
+   </BS.Collapse>
 )
 
-    const landlords = _.map(store.previousLandlords, (source, i) => {return this.renderLandlords(source, i)});
+    //const landlords = _.map(store.previousLandlords, (source, i) => {return this.renderLandlords(source, i)});
 
     const removeButton = (
       <BS.Button
@@ -724,31 +718,31 @@ class StepThreeForm extends Component {
       </BS.Button>
     );
 
-    const previousLandlords = (
-      <div className="previous-landlords">
-        {landlords}
-          <BS.Button
-          onClick={(e) => this.addLandlord(e)}
-          className="add-button"
-          type="submit"
-          bsStyle="success">
-            Add
-          </BS.Button>
-          {landlords.length ? removeButton : null}
-      </div>
-    );
+    // const previousLandlords = (
+    //   <div className="previous-landlords">
+    //     {landlords}
+    //       <BS.Button
+    //       onClick={(e) => this.addLandlord(e)}
+    //       className="add-button"
+    //       type="submit"
+    //       bsStyle="success">
+    //         Add
+    //       </BS.Button>
+    //       {landlords.length ? removeButton : null}
+    //   </div>
+    // );
 
     const addAnotherDeposit = (
       <div className="addAnotherDeposit">
-        {landlords}
+        {}
           <BS.Button
-          onClick={(e) => this.addAnotherDeposit(e)}
+          onClick={(e) => this.addAnotherDepositFunction(e)}
           className="add-button"
           type="submit"
           bsStyle="success">
             Add Another Deposit
           </BS.Button>
-          {landlords.length ? removeButton : null}
+
       </div>
     );
 
@@ -766,11 +760,10 @@ class StepThreeForm extends Component {
             <div className="section">Lease Type{warn}</div>
             {leaseType}
             <div className="section">Details{warn}</div>
-
             {detailsPoperty}
+            {leaseTypeMonthDescription}
             <div className="section">Deposits{warn} <div className="depositMessage">(Select “Collect Deposits” ONLY IF there are outstanding deposits you’re owed from your tenants)</div></div>
             {collectDeposit}
-
             <div className="section">Deposit Details{warn}</div>
             {depositDetail}
             <div className="section">Add more leases</div>
