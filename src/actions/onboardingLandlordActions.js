@@ -459,7 +459,7 @@ export function saveStepThree(
 
         api.setStatus(dispatch, 'saving', statusAction, false);
         api.setStatus(dispatch, 'modified', 'stepThreeForm', false);
-        dispatch({type: types.ONBOARDING_STEPTWO_FORM_SAVE, name: 'saved', value: true});
+        dispatch({type: types.ONBOARDING_STEPTHREE_FORM_SAVE, name: 'saved', value: true});
         if (callback) callback();
         if (openNextStep) openNextStep();
 

@@ -322,6 +322,7 @@ export default function onboardingAppState(state = initialState, action) {
         newState[2]['isMonthToMonth'] = action.isMonthToMonth;
         newState[2]['leaseStatus'] = action.leaseStatus;
         newState[2]['renterIds'] = action.renterIds;
+        newState[2]['email'] = action.email;
         newState[2]['depositList'] = action.depositList;
 
         return newState;
