@@ -331,11 +331,22 @@ export default function onboardingAppState(state = initialState, action) {
     case types.ONBOARDING_STEPTHREE_FORM_SAVE:
       {
         let newState = objectAssign({}, state);
-        newState[2]['jobTitle'] = action.position;
-        newState[2]['jobSalary'] = action.salary;
-        newState[2]['jobEmployer'] = action.employer;
-        newState[2]['jobCity'] = action.employerCity;
-        newState[2]['jobState'] = action.employerState;
+        debugger;
+        newState[2]['landlordId'] = action.landlordId;
+        newState[2]['propertyId'] = action.propertyId;
+        newState[2]['leaseStartDate'] = action.leaseStartDate;
+        newState[2]['leaseEndDate'] = action.leaseEndDate;
+        newState[2]['rentAmount'] = action.rentAmount;
+        newState[2]['paymentStartDate'] = action.paymentStartDate;
+        newState[2]['paymentEndDate'] = action.paymentEndDate;
+        newState[2]['paymentDueDate'] = action.paymentDueDate;
+        newState[2]['monthlyRent'] = action.monthlyRent;
+        newState[2]['isLandlord'] = true;//action.isLandlord;
+        newState[2]['isMonthToMonth'] = action.isMonthToMonth;
+        newState[2]['leaseStatus'] = action.leaseStatus;
+        newState[2]['renterIds'] = action.renterIds;
+        newState[2]['email'] = action.email;
+        newState[2]['depositList'] = action.depositList;
         newState[2].status['modified'] = false;
         return newState;
       }
@@ -343,7 +354,23 @@ export default function onboardingAppState(state = initialState, action) {
     case types.ONBOARDING_STEPTHREE_UPDATE_LANDLORDS:
       {
         let newState = objectAssign({}, state);
-        newState[2]['previousLandlords'] = action.sources;
+        debugger;
+        newState[2]['landlordId'] = action.landlordId;
+        newState[2]['propertyId'] = action.propertyId;
+        newState[2]['leaseStartDate'] = action.leaseStartDate;
+        newState[2]['leaseEndDate'] = action.leaseEndDate;
+        newState[2]['rentAmount'] = action.rentAmount;
+        newState[2]['paymentStartDate'] = action.paymentStartDate;
+        newState[2]['paymentEndDate'] = action.paymentEndDate;
+        newState[2]['paymentDueDate'] = action.paymentDueDate;
+        newState[2]['monthlyRent'] = action.monthlyRent;
+        newState[2]['isLandlord'] = true;//action.isLandlord;
+        newState[2]['isMonthToMonth'] = action.isMonthToMonth;
+        newState[2]['leaseStatus'] = action.leaseStatus;
+        newState[2]['renterIds'] = action.renterIds;
+        newState[2]['email'] = action.email;
+        newState[2]['depositList'] = action.depositList;
+        newState[2].status['modified'] = true;
         return newState;
       }
 

@@ -68,6 +68,7 @@ class StepThreeForm extends Component {
   }
 
   submit(openNextStep, e) {
+    debugger;
     e.preventDefault();
     this.setState({submitted: true});
 
@@ -805,7 +806,6 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
               statusAction="stepThreeFormProceed"
               submit={_.partial(this.submit.bind(this), this.props.openNextStep)}
               textLoading="Saving"
-              disabled={this.isMandatoryInvalid()}
               bsStyle="success"
               className="proceed-button">
                 Next
