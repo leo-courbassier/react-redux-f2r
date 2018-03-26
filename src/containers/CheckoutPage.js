@@ -39,9 +39,7 @@ class CheckoutPage extends Component {
                 store={this.context.store.getState().checkoutAppState}
               />
             </BS.Col>
-            <BS.Col xsHidden smHidden md={3}>
-
-            </BS.Col>
+            <BS.Col xsHidden smHidden md={3} />
           </div>
         </Loader>
       </div>

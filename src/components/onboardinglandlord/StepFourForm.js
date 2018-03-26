@@ -26,7 +26,6 @@ class StepFourForm extends Component {
   }
 
   componentWillMount() {
-    debugger;
     this.props.load();
   }
 
@@ -78,11 +77,11 @@ class StepFourForm extends Component {
       )
     {
       if (store.guarantorPhone && store.guarantorPhone.replace(/\D/g,'').trim().length < 10){
-        invalid = 'Guarantor phone must be at least a 10 digit number.'
+        invalid = 'Guarantor phone must be at least a 10 digit number.';
       }
 
       if (store.guarantorEmail && !isEmail(store.guarantorEmail)) {
-        invalid = 'Guarantor email must be valid.'
+        invalid = 'Guarantor email must be valid.';
       }
       if (
         !store.guarantorFirstName ||
@@ -91,7 +90,7 @@ class StepFourForm extends Component {
         !store.guarantorPhone
         )
       {
-        invalid = 'Please let us know the guarantor\'s first name, last name, email, and phone.'
+        invalid = 'Please let us know the guarantor\'s first name, last name, email, and phone.';
       }
     }
 
@@ -218,21 +217,23 @@ class StepFourForm extends Component {
       </div>
     );
 
-    const dwollaCheckout =
+    const dwollaCheckout = (
       <DwollaCheckout
-      load={this.props.loadDwolla}
-      save={this.props.saveDwolla}
-      keypress={this.keypress}
-      update={this.props.update}
-      updateOnboardingScore={this.props.updateOnboardingScore}
-      appState={this.props.appState} />;
-    const stripeCheckout =
+        load={this.props.loadDwolla}
+        save={this.props.saveDwolla}
+        keypress={this.keypress}
+        update={this.props.update}
+        updateOnboardingScore={this.props.updateOnboardingScore}
+        appState={this.props.appState} />
+    );
+    const stripeCheckout = (
       <StripeCheckout
-      keypress={this.keypress}
-      update={this.props.update}
-      saveStripe={this.props.saveStripe}
-      updateOnboardingScore={this.props.updateOnboardingScore}
-      appState={this.props.appState} />;
+        keypress={this.keypress}
+        update={this.props.update}
+        saveStripe={this.props.saveStripe}
+        updateOnboardingScore={this.props.updateOnboardingScore}
+        appState={this.props.appState} />
+      );
     const steps = [postDepositSection, dwollaCheckout, stripeCheckout];
     const panel = steps[this.state.activeKey];
 
@@ -301,7 +302,7 @@ class StepFourForm extends Component {
                />
              </div>
              <div className="item">
-            
+
                 <BS.ControlLabel>State</BS.ControlLabel>
                 <SelectOptions
                 name="jobState"

@@ -7,7 +7,7 @@ import Sidebar from '../components/SideBar';
 
 class SidebarContainer extends Component {
   render() {
-    return <Sidebar {...this.props} />
+    return <Sidebar {...this.props} />;
   }
 }
 

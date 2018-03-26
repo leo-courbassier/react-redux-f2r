@@ -45,9 +45,8 @@ class Chooser extends Component {
 
   switchKeypress(name, collapsible, state) {
     this.props.update(this.props.appState, name, state);
-    if(collapsible){
-      this.state[collapsible] = state;
-      this.setState();
+    if(collapsible) {
+      this.setState({ collapsible: state });
     }
   }
 

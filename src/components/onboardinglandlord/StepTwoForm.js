@@ -25,7 +25,6 @@ class StepTwoForm extends Component {
 
 
   componentWillMount() {
-    debugger;
     this.props.load();
   }
 
@@ -137,44 +136,44 @@ class StepTwoForm extends Component {
     let amenityArray = [];
 
     if(store.centralHeat){
-      amenityArray.push({"amenityName":"Central Heat", "amenityType":"INTERIOR","installDate":"2013-04-15"})
+      amenityArray.push({"amenityName":"Central Heat", "amenityType":"INTERIOR","installDate":"2013-04-15"});
     }
     if(store.washer){
-      amenityArray.push({"amenityName":"Washer/Dryer", "amenityType":"INTERIOR","installDate":"2013-04-15"})
+      amenityArray.push({"amenityName":"Washer/Dryer", "amenityType":"INTERIOR","installDate":"2013-04-15"});
     }
     if(store.centralAc){
-      amenityArray.push({"amenityName":"Central A/C", "amenityType":"INTERIOR","installDate":"2013-04-15"})
+      amenityArray.push({"amenityName":"Central A/C", "amenityType":"INTERIOR","installDate":"2013-04-15"});
     }
     if(store.hotWater){
-      amenityArray.push({"amenityName":"Hot  Water", "amenityType":"INTERIOR","installDate":"2013-04-15"})
+      amenityArray.push({"amenityName":"Hot  Water", "amenityType":"INTERIOR","installDate":"2013-04-15"});
     }
 
     if(store.microwave){
-      amenityArray.push({"amenityName":"Microwave", "amenityType":"KITCHEN","installDate":"2013-04-15"})
+      amenityArray.push({"amenityName":"Microwave", "amenityType":"KITCHEN","installDate":"2013-04-15"});
     }
 
     if(store.ovenRange){
-      amenityArray.push({"amenityName":"Oven Range", "amenityType":"KITCHEN","installDate":"2013-04-15"})
+      amenityArray.push({"amenityName":"Oven Range", "amenityType":"KITCHEN","installDate":"2013-04-15"});
     }
     if(store.dishawer){
-      amenityArray.push({"amenityName":"Dishwasher", "amenityType":"KITCHEN","installDate":"2013-04-15"})
+      amenityArray.push({"amenityName":"Dishwasher", "amenityType":"KITCHEN","installDate":"2013-04-15"});
     }
 
     if(store.refrigerator){
-      amenityArray.push({"amenityName":"Refrigerator", "amenityType":"KITCHEN","installDate":"2013-04-15"})
+      amenityArray.push({"amenityName":"Refrigerator", "amenityType":"KITCHEN","installDate":"2013-04-15"});
     }
 
     if(store.patio){
-      amenityArray.push({"amenityName":"Patio", "amenityType":"EXTERIOR","installDate":"2013-04-15"})
+      amenityArray.push({"amenityName":"Patio", "amenityType":"EXTERIOR","installDate":"2013-04-15"});
     }
     if(store.yard){
-      amenityArray.push({"amenityName":"Yard", "amenityType":"EXTERIOR","installDate":"2013-04-15"})
+      amenityArray.push({"amenityName":"Yard", "amenityType":"EXTERIOR","installDate":"2013-04-15"});
     }
     if(store.deck){
-      amenityArray.push({"amenityName":"Deck", "amenityType":"EXTERIOR","installDate":"2013-04-15"})
+      amenityArray.push({"amenityName":"Deck", "amenityType":"EXTERIOR","installDate":"2013-04-15"});
     }
     if(store.fence){
-      amenityArray.push({"amenityName":"Fence", "amenityType":"EXTERIOR","installDate":"2013-04-15"})
+      amenityArray.push({"amenityName":"Fence", "amenityType":"EXTERIOR","installDate":"2013-04-15"});
     }
 
 
@@ -244,29 +243,29 @@ class StepTwoForm extends Component {
     let uploadComplete = this.props.appState.status.uploading[statusAction] == false;
     const MyPropertyTypeList = (
       <select className="form-control">
-          <option value=""></option>
-          <option value="APT">Apartment</option>
-          <option value="SFM">Single Family Home</option>
-          <option value="CONDO">Condo</option>
-          <option value="DUPLEX">Duplex</option>
-          <option value="MOBILE_HOME">Mobile Home</option>
-          <option value="TOWNHOUSE">Town Home</option>
+        <option value="" />
+        <option value="APT">Apartment</option>
+        <option value="SFM">Single Family Home</option>
+        <option value="CONDO">Condo</option>
+        <option value="DUPLEX">Duplex</option>
+        <option value="MOBILE_HOME">Mobile Home</option>
+        <option value="TOWNHOUSE">Town Home</option>
       </select>
-  )
+    );
 
-  const bedDropdown = (
-        <select name="numBeds" id="bed" className="form-control">
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-        </select>
-  )
+    const bedDropdown = (
+      <select name="numBeds" id="bed" className="form-control">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    );
 
-  const bathDropdown = (
-        <select id="bath" className="form-control">
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-        </select>
-  )
+    const bathDropdown = (
+      <select id="bath" className="form-control">
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+    );
 
 
     return (
@@ -396,10 +395,10 @@ class StepTwoForm extends Component {
 
     const yourPropertyInfo = (
       <div className="info-property">
-      <b>Here you’ll enter your property information. We ll need this info so we can track your tenants and payments against</b><br></br>
+      <b>Here you’ll enter your property information. We ll need this info so we can track your tenants and payments against</b><br />
       <b>specific properties and report that information to you in the My Payments section of your dashboard.</b>
       </div>
-    )
+    );
 
 
     const bedDropdown = (
@@ -412,7 +411,7 @@ class StepTwoForm extends Component {
               <option value="3">3</option>
               <option value="4">4+</option>
           </select>
-    )
+    );
 
     const bathDropdown = (
           <select id="bath" className="form-control"
@@ -425,184 +424,183 @@ class StepTwoForm extends Component {
                 <option value="3">3</option>
                 <option value="4">4+</option>
           </select>
-    )
+    );
 
 
      const MyPropertyTypeList = (
        <select className="form-control">
-           <option value=""></option>
-           <option value="APT">Apartment</option>
-           <option value="SFM">Single Family Home</option>
-           <option value="CONDO">Condo</option>
-           <option value="DUPLEX">Duplex</option>
-           <option value="MOBILE_HOME">Mobile Home</option>
-           <option value="TOWNHOUSE">Town Home</option>
+         <option value="" />
+         <option value="APT">Apartment</option>
+         <option value="SFM">Single Family Home</option>
+         <option value="CONDO">Condo</option>
+         <option value="DUPLEX">Duplex</option>
+         <option value="MOBILE_HOME">Mobile Home</option>
+         <option value="TOWNHOUSE">Town Home</option>
        </select>
-   )
+   );
 
- const interior = (
-   <div className="row">
-      <div className="col-md-12">
+   const interior = (
+     <div className="row">
+        <div className="col-md-12">
 
-        <div className="col-md-2">
-        <span className="check_box_aline">
-          Central A/C
-              <input
-              className="form-check-input"
-              defaultValue={store.centralAc}
-              onChange={this.keypress.bind(this)}
-              name="centralAc"
-              type="checkbox" />
-          </span>
+          <div className="col-md-2">
+          <span className="check_box_aline">
+            Central A/C
+                <input
+                className="form-check-input"
+                defaultValue={store.centralAc}
+                onChange={this.keypress.bind(this)}
+                name="centralAc"
+                type="checkbox" />
+            </span>
+          </div>
+
+          <div className="col-md-2">
+          <span className="check_box_aline">
+            Hot Water Heater
+                <input
+                className="form-check-input"
+                defaultValue={store.hotWater}
+                onChange={this.keypress.bind(this)}
+                name="hotWater"
+                type="checkbox" />
+            </span>
+          </div>
+
+          <div className="col-md-2">
+          <span className="check_box_aline">
+            Central Heat
+                <input
+                className="form-check-input"
+                defaultValue={store.centralHeat}
+                onChange={this.keypress.bind(this)}
+                name="centralHeat"
+                type="checkbox" />
+            </span>
+          </div>
+
+          <div className="col-md-2">
+          <span className="check_box_aline">
+            Washer / Dryer
+                <input
+                className="form-check-input"
+                defaultValue={store.washer}
+                onChange={this.keypress.bind(this)}
+                name="washer"
+                type="checkbox" />
+            </span>
+          </div>
+          <div className="col-md-2">
+          <span className="check_box_aline">
+            Fence
+                <input
+                className="form-check-input"
+                defaultValue={store.fence}
+                onChange={this.keypress.bind(this)}
+                name="fence"
+                type="checkbox" />
+            </span>
+          </div>
+
+          <div className="col-md-2">
+          <span className="check_box_aline">
+            Patio
+                <input
+                className="form-check-input"
+                defaultValue={store.patio}
+                onChange={this.keypress.bind(this)}
+                name="patio"
+                type="checkbox" />
+            </span>
+          </div>
+
         </div>
 
-        <div className="col-md-2">
-        <span className="check_box_aline">
-          Hot Water Heater
-              <input
-              className="form-check-input"
-              defaultValue={store.hotWater}
-              onChange={this.keypress.bind(this)}
-              name="hotWater"
-              type="checkbox" />
-          </span>
+     </div>
+   );
+
+   const kitchen = (
+     <div className="row">
+        <div className="col-md-12">
+
+          <div className="col-md-2">
+          <span className="check_box_aline">
+            Refrigerator
+                <input
+                className="form-check-input"
+                defaultValue={store.refrigerator}
+                onChange={this.keypress.bind(this)}
+                name="refrigerator"
+                type="checkbox" />
+            </span>
+          </div>
+
+          <div className="col-md-2">
+          <span className="check_box_aline">
+            Dishwasher
+                <input
+                className="form-check-input"
+                defaultValue={store.dishawer}
+                onChange={this.keypress.bind(this)}
+                name="dishawer"
+                type="checkbox" />
+            </span>
+          </div>
+
+          <div className="col-md-2">
+          <span className="check_box_aline">
+            Oven/Range
+                <input
+                className="form-check-input"
+                defaultValue={store.ovenRange}
+                onChange={this.keypress.bind(this)}
+                name="ovenRange"
+                type="checkbox" />
+            </span>
+          </div>
+
+          <div className="col-md-2">
+          <span className="check_box_aline">
+            Microwave
+                <input
+                className="form-check-input"
+                defaultValue={store.microwave}
+                onChange={this.keypress.bind(this)}
+                name="microwave"
+                type="checkbox" />
+            </span>
+          </div>
+          <div className="col-md-2">
+          <span className="check_box_aline">
+            Yard
+                <input
+                className="form-check-input"
+                defaultValue={store.yard}
+                onChange={this.keypress.bind(this)}
+                name="yard"
+                type="checkbox" />
+            </span>
+          </div>
+
+          <div className="col-md-2">
+          <span className="check_box_aline">
+            Deck
+                <input
+                className="form-check-input"
+                defaultValue={store.deck}
+                onChange={this.keypress.bind(this)}
+                name="deck"
+                type="checkbox" />
+            </span>
+          </div>
         </div>
 
-        <div className="col-md-2">
-        <span className="check_box_aline">
-          Central Heat
-              <input
-              className="form-check-input"
-              defaultValue={store.centralHeat}
-              onChange={this.keypress.bind(this)}
-              name="centralHeat"
-              type="checkbox" />
-          </span>
-        </div>
+     </div>
+   );
 
-        <div className="col-md-2">
-        <span className="check_box_aline">
-          Washer / Dryer
-              <input
-              className="form-check-input"
-              defaultValue={store.washer}
-              onChange={this.keypress.bind(this)}
-              name="washer"
-              type="checkbox" />
-          </span>
-        </div>
-        <div className="col-md-2">
-        <span className="check_box_aline">
-          Fence
-              <input
-              className="form-check-input"
-              defaultValue={store.fence}
-              onChange={this.keypress.bind(this)}
-              name="fence"
-              type="checkbox" />
-          </span>
-        </div>
-
-        <div className="col-md-2">
-        <span className="check_box_aline">
-          Patio
-              <input
-              className="form-check-input"
-              defaultValue={store.patio}
-              onChange={this.keypress.bind(this)}
-              name="patio"
-              type="checkbox" />
-          </span>
-        </div>
-
-      </div>
-
-   </div>
- )
-
- const kitchen = (
-   <div className="row">
-      <div className="col-md-12">
-
-        <div className="col-md-2">
-        <span className="check_box_aline">
-          Refrigerator
-              <input
-              className="form-check-input"
-              defaultValue={store.refrigerator}
-              onChange={this.keypress.bind(this)}
-              name="refrigerator"
-              type="checkbox" />
-          </span>
-        </div>
-
-        <div className="col-md-2">
-        <span className="check_box_aline">
-          Dishwasher
-              <input
-              className="form-check-input"
-              defaultValue={store.dishawer}
-              onChange={this.keypress.bind(this)}
-              name="dishawer"
-              type="checkbox" />
-          </span>
-        </div>
-
-        <div className="col-md-2">
-        <span className="check_box_aline">
-          Oven/Range
-              <input
-              className="form-check-input"
-              defaultValue={store.ovenRange}
-              onChange={this.keypress.bind(this)}
-              name="ovenRange"
-              type="checkbox" />
-          </span>
-        </div>
-
-        <div className="col-md-2">
-        <span className="check_box_aline">
-          Microwave
-              <input
-              className="form-check-input"
-              defaultValue={store.microwave}
-              onChange={this.keypress.bind(this)}
-              name="microwave"
-              type="checkbox" />
-          </span>
-        </div>
-        <div className="col-md-2">
-        <span className="check_box_aline">
-          Yard
-              <input
-              className="form-check-input"
-              defaultValue={store.yard}
-              onChange={this.keypress.bind(this)}
-              name="yard"
-              type="checkbox" />
-          </span>
-        </div>
-
-        <div className="col-md-2">
-        <span className="check_box_aline">
-          Deck
-              <input
-              className="form-check-input"
-              defaultValue={store.deck}
-              onChange={this.keypress.bind(this)}
-              name="deck"
-              type="checkbox" />
-          </span>
-        </div>
-      </div>
-
-   </div>
- )
-
- const exterior = (
-   <div className="row">
-   </div>
- )
+   const exterior = (
+     <div className="row" />
+   );
 
     const yourPropertyData = (
       <div className="your-job">
@@ -723,7 +721,9 @@ class StepTwoForm extends Component {
       </div>
     );
 
-    const sources = _.map(store.incomeSources, (source, i) => {return this.renderIncomeSources(source, i)});
+    const sources = _.map(store.incomeSources, (source, i) => {
+      return this.renderIncomeSources(source, i);
+    });
 
 
     const removeButton = (
@@ -792,7 +792,7 @@ class StepTwoForm extends Component {
 
 
          <div className="row">
-         <div className="section"></div>
+         <div className="section" />
            <div className="col-md-4">
               {this.props.showProceed && (
                 <SubmitButton

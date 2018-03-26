@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import * as BS from 'react-bootstrap';
 import _ from 'underscore';
 import FileReaderInput from 'react-file-reader-input';
-
+import { Field } from 'redux-form';
 import * as api from '../../../actions/api';
 import * as Conversion from '../../../utils/conversion';
 
@@ -11,14 +11,11 @@ import SelectOptions from '../../SelectOptions';
 import SubmitButton from '../../SubmitButton';
 import SubmitFooter from '../SubmitFooter';
 
-class ProfileForm extends Component {
-  state = {
-    submitted: false,
-    complete: false
-  }
+import { renderInput, DateInput } from '../../ReduxFormFields';
 
-  keypress(e) {
-    this.props.update(this.props.appState, e.target.name, e.target.value);
+class ProfileForm extends Component {
+  componentWillUnmount(){
+    delete this.props.appState.status.uploading['profilePicUpload'];
   }
 
   handleFileChange(e, results) {
@@ -27,57 +24,44 @@ class ProfileForm extends Component {
       this.props.upload(file);
     });
   }
-  get months() {
-    return {'01': 'January', '02': 'February', '03': 'March', '04': 'April', '05': 'May', '06': 'June', '07': 'July', '08': 'August', '09': 'September', '10': 'October', '11': 'November', '12': 'December'};
-  }
-  get days() {
-    let days = [];
-    for (let day = 1; day <= 31; day++) {
-      day < 10 ? days.push('0'+day) : days.push(day);
-    }
-    return days;
+
+  handleFormSubmit = (values) => {
+    const { saveUserDetails } = this.props;
+    saveUserDetails(values);
   }
 
-  get years() {
-    let years = [];
-    for (let year = new Date().getFullYear(); year >= 1900; year--) {
-      years.push(year);
-    }
-    return years;
-  }
-
-  getValidationState(group = 'all', ignoreSubmitted = false) {
-    let groups = {
-      all: {valid: true, error: null},
-      fullname: {valid: true, error: null},
-      phoneNumber: {valid: true, error: null}
-    };
-
-    if (!this.state.submitted && !ignoreSubmitted) {
-      return {valid: true, error: null};
-    }
-
-    const form = this.props.appState.accountProfileForm;
-
-    if (!form.firstName || !form.lastName) {
-      groups.all.valid = false;
-      groups.fullname.valid = false;
-      groups.fullname.error = 'First and Last Name is required.';
-    }
-
-    if (form.phoneNumber) {
-      if (form.phoneNumber && form.phoneNumber.replace(/\D/g,'').trim().length < 10) {
-        groups.all.valid = false;
-        groups.phoneNumber.valid = false;
-        groups.phoneNumber.error = 'Phone number must be at least 10 digits.';
-      }
-    }
-
-    return groups[group];
+  renderFooter() {
+    const { submitting, errors, submitSucceeded } = this.props;
+    return (
+      <div className="account-submit">
+        <div className="account-submit-message">
+          {errors && (
+            <BS.HelpBlock>
+              <span className="text-danger">{errors}</span>
+            </BS.HelpBlock>
+          )}
+          {submitSucceeded && (
+            <BS.HelpBlock>
+              <span className="text-success">Changes saved successfully.</span>
+            </BS.HelpBlock>
+          )}
+        </div>
+        <div className="account-submit-button">
+          <BS.Button
+            className="submit-button"
+            bsStyle="success"
+            disabled={submitting}
+            type="submit">
+            {submitting && <div className="spinner"><ButtonSpinner /></div>}
+            <div className="text">Save</div>
+          </BS.Button>
+        </div>
+      </div>
+    );
   }
 
   render() {
-    const { appState } = this.props;
+    const { appState, handleSubmit } = this.props;
     const { profile, status } = appState;
     const user = profile;
 
@@ -128,114 +112,136 @@ class ProfileForm extends Component {
     );
 
     const fullName = (
-      <BS.FormGroup controlId="firstName" validationState={!this.getValidationState('fullname').valid ? 'error' : null}>
-        <div className="fullname">
-          <div className="row">
-            <div className="item">
-              <BS.ControlLabel>First Name</BS.ControlLabel>
-              <BS.FormControl
-                name="firstName"
-                onChange={this.keypress.bind(this)}
-                type="text"
-                value={profile.firstName}>
-              </BS.FormControl>
-            </div>
-            <div className="item">
-              <BS.ControlLabel>Last Name</BS.ControlLabel>
-              <BS.FormControl
-                name="lastName"
-                onChange={this.keypress.bind(this)}
-                type="text"
-                value={profile.lastName}>
-              </BS.FormControl>
-            </div>
+      <div className="fullname">
+        <div className="row">
+          <div className="item">
+            <Field name="firstName"
+              label="First Name"
+              placeholder="First Name"
+              type="text"
+              component={renderInput} />
+          </div>
+          <div className="item">
+            <Field name="lastName"
+              label="Last Name"
+              placeholder="Last Name"
+              type="text"
+              component={renderInput} />
           </div>
         </div>
-        <BS.HelpBlock className="text-danger">{this.getValidationState('fullname').error}</BS.HelpBlock>
-      </BS.FormGroup>
+      </div>
+    );
+
+    const email = (
+      <Field
+        name="email"
+        type="email"
+        placeholder="example@email.com"
+        component={renderInput} />
     );
 
     const personalDescription = (
-      <BS.FormGroup controlId="personalDescription">
-        <BS.FormControl
-          name="description"
-          onChange={this.keypress.bind(this)}
-          componentClass="textarea"
-          value={profile.description}>
-        </BS.FormControl>
-      </BS.FormGroup>
+      <Field name="userDetails.description"
+        label="Description"
+        type="textarea"
+        component={renderInput} />
     );
 
     const dateOfBirth = (
-      <BS.FormGroup controlId="dateOfBirth">
-        <div className="date-of-birth">
-          <div className="row">
-            <div className="item">
-              <BS.ControlLabel>Month</BS.ControlLabel>
-              <SelectOptions
-                onChange={this.keypress.bind(this)}
-                name="dobMonth"
-                optionList={this.months}
-                defaultOption="Month..."
-                defaultOptionName="Month..."
-                defaultValue={profile.dobMonth}
-                keyValue
-               />
-            </div>
-            <div className="item">
-              <BS.ControlLabel>Day</BS.ControlLabel>
-              <SelectOptions
-                onChange={this.keypress.bind(this)}
-                name="dobDay"
-                optionList={this.days}
-                defaultOption="Day..."
-                defaultOptionName="Day..."
-                defaultValue={profile.dobDay}
-               />
-            </div>
-            <div className="item">
-              <BS.ControlLabel>Year</BS.ControlLabel>
-              <SelectOptions
-                onChange={this.keypress.bind(this)}
-                name="dobYear"
-                optionList={this.years}
-                defaultOption="Year..."
-                defaultOptionName="Year..."
-                defaultValue={profile.dobYear}
-               />
-            </div>
-          </div>
-        </div>
-      </BS.FormGroup>
+      <Field name="userDetails.dateOfBirth" component={DateInput} />
     );
 
     const phoneNumber = (
-      <BS.FormGroup controlId="phoneNumber" validationState={!this.getValidationState('phoneNumber').valid ? 'error' : null}>
-        <BS.FormControl
-          name="phoneNumber"
-          onChange={this.keypress.bind(this)}
-          type="text"
-          placeholder="ex: (555) 555 5555"
-          value={profile.phoneNumber}>
-        </BS.FormControl>
-        <BS.HelpBlock>{this.getValidationState('phoneNumber').error}</BS.HelpBlock>
-      </BS.FormGroup>
+      <Field
+        name="userDetails.phoneNumber"
+        type="text"
+        placeholder="ex: (555) 555 5555"
+        component={renderInput} />
+    );
+
+    const address = (
+      <div className="address">
+        <div className="row">
+          <div className="item">
+            <Field
+              name="userDetails.address"
+              label="Address"
+              type="text"
+              placeholder="Address"
+              component={renderInput} />
+          </div>
+          <div className="item">
+            <Field
+              name="userDetails.city"
+              label="City"
+              type="text"
+              placeholder="City"
+              component={renderInput} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="item">
+            <Field
+              name="userDetails.state"
+              label="State"
+              type="text"
+              placeholder="State"
+              component={renderInput} />
+          </div>
+          <div className="item">
+            <Field
+              name="userDetails.zipCode"
+              label="Zip Code"
+              type="text"
+              placeholder="Zip Code"
+              component={renderInput} />
+          </div>
+        </div>
+      </div>
+    );
+
+    const backupInfo = (
+      <div className="row">
+        <div className="item">
+          <Field
+            name="userDetails.alternativeEmail"
+            label="Backup Email"
+            type="email"
+            placeholder="example@email.com"
+            component={renderInput} />
+        </div>
+        <div className="item">
+          <Field
+            name="userDetails.alternativePhone"
+            label="Backup Phone"
+            type="text"
+            placeholder="ex: (555) 555 5555"
+            component={renderInput} />
+        </div>
+      </div>
     );
 
     return (
       <div className="profileform-panel">
-        <form>
+        <BS.Form onSubmit={handleSubmit(this.handleFormSubmit)}>
           <div className="section section-padded">Profile Image</div>
           {profileImage}
           <div className="section section-padded">Name</div>
           {fullName}
+          <div className="section section-padded">Email</div>
+          {email}
           <div className="section section-padded">Personal Description</div>
           {personalDescription}
           <div className="section section-padded">Date of Birth</div>
           {dateOfBirth}
           <div className="section section-padded">Phone Number</div>
           {phoneNumber}
-        </form>
+          <div className="section section-padded">Address</div>
+          {address}
+          <div className="section section-padded">Backup Info</div>
+          {backupInfo}
+          {this.renderFooter()}
+        </BS.Form>
       </div>
     );
   }

@@ -56,7 +56,7 @@ class SubmitButton extends Component {
       buttonStyle = 'success';
     }
 
-    let buttonClass = `submit-button ${this.props.className}`
+    let buttonClass = `submit-button ${this.props.className}`;
 
     return (
       <BS.Button

@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 
+import { reducer as formReducer } from 'redux-form';
 import loginAppState from './login';
 import signupAppState from './signup';
 import forgotAppState from './forgot';
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
   checkoutAppState,
   verifyAppState,
   accountAppState,
-  sidebarState
+  sidebarState,
+  form: formReducer
 });
 
 export default rootReducer;

@@ -58,19 +58,18 @@ const STEP_IDS = ['stepOneForm', 'stepTwoForm', 'stepThreeForm', 'stepFourForm',
 
 class OnboardingLandlordPage extends Component {
 
-  state = {
-    activeKey: '0',
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeKey: '0',
 
-    // onboarding status
-    hasNotCheckedOut: true,
-    canSkipStep6: false,
+      // onboarding status
+      hasNotCheckedOut: true,
+      canSkipStep6: false,
 
-    // statusbar
-    showStatusBarMargin: true
-  }
-
-  constructor(){
-    super();
+      // statusbar
+      showStatusBarMargin: true
+    };
 
     // fixes function reference in add/removeEventListener
     this.handleScroll = this.handleScroll.bind(this);
@@ -188,7 +187,7 @@ class OnboardingLandlordPage extends Component {
           <span className={data.class}>{data.title}</span>
           <span>{data.subtitle}</span>
         </div>
-        <BS.OverlayTrigger onClick={(e) => {e.stopPropagation(); e.preventDefault()}} placement="left" overlay={tooltip}>
+        <BS.OverlayTrigger onClick={(e) => {e.stopPropagation(); e.preventDefault();}} placement="left" overlay={tooltip}>
           <div className="help">
             <BS.Glyphicon glyph="info-sign" />
           </div>
@@ -198,7 +197,7 @@ class OnboardingLandlordPage extends Component {
   }
 
   renderTip(tip){
-    return tip[this.state.activeKey]
+    return tip[this.state.activeKey];
   }
 
 
@@ -209,27 +208,29 @@ class OnboardingLandlordPage extends Component {
     const stepOne =
     (
       <StepOneForm
-      load={this.props.actions.loadStepOne}
-      save={this.props.actions.saveStepOne}
-      update={this.props.actions.updateStepOneForm}
-      upload={this.props.actions.uploadProfilePic}
-      appState={this.props.appState}
-      openNextStep={this.openNextStep.bind(this)}
-      updateOnboardingScore={this.props.actions.updateOnboardingScore}
-      showProceed={this.state.hasNotCheckedOut}
-      userInfo={userInfo} />
+        load={this.props.actions.loadStepOne}
+        save={this.props.actions.saveStepOne}
+        update={this.props.actions.updateStepOneForm}
+        upload={this.props.actions.uploadProfilePic}
+        appState={this.props.appState}
+        openNextStep={this.openNextStep.bind(this)}
+        updateOnboardingScore={this.props.actions.updateOnboardingScore}
+        showProceed={this.state.hasNotCheckedOut}
+        userInfo={userInfo}
+      />
     );
     const stepTwo =
     (
       <StepTwoForm
-      load={this.props.actions.loadStepTwo}
-      save={this.props.actions.saveStepTwo}
-      update={this.props.actions.updateStepTwoForm}
-      upload={this.props.actions.uploadIncomeDoc}
-      appState={this.props.appState}
-      openNextStep={this.openNextStep.bind(this)}
-      updateOnboardingScore={this.props.actions.updateOnboardingScore}
-      showProceed={this.state.hasNotCheckedOut } />
+        load={this.props.actions.loadStepTwo}
+        save={this.props.actions.saveStepTwo}
+        update={this.props.actions.updateStepTwoForm}
+        upload={this.props.actions.uploadIncomeDoc}
+        appState={this.props.appState}
+        openNextStep={this.openNextStep.bind(this)}
+        updateOnboardingScore={this.props.actions.updateOnboardingScore}
+        showProceed={this.state.hasNotCheckedOut}
+      />
     );
     const stepThree =
     (
@@ -245,37 +246,40 @@ class OnboardingLandlordPage extends Component {
     const stepFour =
     (
       <StepFourForm
-      load={this.props.actions.loadStepFour}
-      appState={this.props.appState}
-      loadDwolla={this.props.actions.loadDwolla}
-      saveDwolla={this.props.actions.saveDwolla}
-      saveGuarantor={this.props.actions.saveGuarantor}
-      saveStripe={this.props.actions.saveStripe}
-      update={this.props.actions.updateStepFourForm}
-      clear={this.props.actions.clearStepFourForm}
-      openNextStep={this.openNextStep.bind(this)}
-      updateOnboardingScore={this.props.actions.updateOnboardingScore}
-      showProceed={this.state.hasNotCheckedOut} />
+        load={this.props.actions.loadStepFour}
+        appState={this.props.appState}
+        loadDwolla={this.props.actions.loadDwolla}
+        saveDwolla={this.props.actions.saveDwolla}
+        saveGuarantor={this.props.actions.saveGuarantor}
+        saveStripe={this.props.actions.saveStripe}
+        update={this.props.actions.updateStepFourForm}
+        clear={this.props.actions.clearStepFourForm}
+        openNextStep={this.openNextStep.bind(this)}
+        updateOnboardingScore={this.props.actions.updateOnboardingScore}
+        showProceed={this.state.hasNotCheckedOut}
+      />
     );
     const stepFive =
     (
       <StepFiveForm
-      load={this.props.actions.loadStepFive}
-      uploadCreditReport={this.props.actions.uploadCreditReport}
-      uploadSupportingDoc={this.props.actions.uploadSupportingDoc}
-      appState={this.props.appState}
-      openNextStep={this.openNextStep.bind(this)}
-      updateOnboardingScore={this.props.actions.updateOnboardingScore}
-      showProceed={this.state.hasNotCheckedOut && !this.state.canSkipStep6} />
+        load={this.props.actions.loadStepFive}
+        uploadCreditReport={this.props.actions.uploadCreditReport}
+        uploadSupportingDoc={this.props.actions.uploadSupportingDoc}
+        appState={this.props.appState}
+        openNextStep={this.openNextStep.bind(this)}
+        updateOnboardingScore={this.props.actions.updateOnboardingScore}
+        showProceed={this.state.hasNotCheckedOut && !this.state.canSkipStep6}
+      />
     );
     const stepSix =
     (
       <StepSixForm
-      load={this.props.actions.loadStepSix}
-      save={this.props.actions.saveStepSix}
-      update={this.props.actions.updateStepSixForm}
-      appState={this.props.appState}
-      updateOnboardingScore={this.props.actions.updateOnboardingScore} />
+        load={this.props.actions.loadStepSix}
+        save={this.props.actions.saveStepSix}
+        update={this.props.actions.updateStepSixForm}
+        appState={this.props.appState}
+        updateOnboardingScore={this.props.actions.updateOnboardingScore}
+      />
     );
 
     const steps = [stepOne,stepTwo,stepThree,stepFour,stepFive,stepSix];

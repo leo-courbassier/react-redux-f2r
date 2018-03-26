@@ -38,7 +38,7 @@ export default function accountAppState(state = initialState, action) {
     {
       let newState = objectAssign({}, state);
       if (action.json) {
-        newState.userInfo = action.json
+        newState.userInfo = action.json;
       }
       return newState;
     }
@@ -54,7 +54,7 @@ export default function accountAppState(state = initialState, action) {
     {
       let newState = objectAssign({}, state);
       if (action.user) {
-        newState.userInfo = action.user
+        newState.userInfo = action.user;
       }
       return newState;
     }

@@ -1,26 +1,43 @@
 import React, { PropTypes } from 'react';
 
+// regex for requirements: http://stackoverflow.com/a/31934169/4958776
+const hasUpper = /(?=.*[A-Z])/;
+const hasLower = /(?=.*[a-z])/;
+const hasNumber = /(?=.*[0-9])/;
+const hasSpecial = /(?=.*[!@#$%^&*])/;
+
 class PasswordStrengthMeter extends React.Component {
-
-  // regex for requirements: http://stackoverflow.com/a/31934169/4958776
-  hasUpper = /(?=.*[A-Z])/;
-  hasLower = /(?=.*[a-z])/;
-  hasNumber = /(?=.*[0-9])/;
-  hasSpecial = /(?=.*[!@#$%^&*])/;
-
-  getScore(password) {
+  static getPasswordScore(password) {
     let score = 0;
 
     if (!password) return score;
 
     // requirement checks
     if (password.length >= 8) score++;
-    if (this.hasUpper.test(password)) score++;
-    if (this.hasLower.test(password)) score++;
-    if (this.hasNumber.test(password)) score++;
-    if (score == 4 && this.hasSpecial.test(password)) score++;
+    if (hasUpper.test(password)) score++;
+    if (hasLower.test(password)) score++;
+    if (hasNumber.test(password)) score++;
+    if (score == 4 && hasSpecial.test(password)) score++;
 
     return score;
+  }
+
+  // this is used externally to display errors
+  static getPasswordErrors(password) {
+    let errors = [];
+
+    if (!password) return errors;
+
+    if (password.length < 8) errors.push('length');
+    if (!hasUpper.test(password)) errors.push('upper');
+    if (!hasLower.test(password)) errors.push('lower');
+    if (!hasNumber.test(password)) errors.push('number');
+
+    return errors;
+  }
+
+  getScore(password) {
+    return PasswordStrengthMeter.getPasswordScore(password);
   }
 
   getMessage(score) {
@@ -50,18 +67,8 @@ class PasswordStrengthMeter extends React.Component {
     return (position <= score) ? 'score-'+score : 'score-neutral';
   }
 
-  // this is used externally to display errors
   getErrors(password) {
-    let errors = [];
-
-    if (!password) return errors;
-
-    if (password.length < 8) errors.push('length');
-    if (!this.hasUpper.test(password)) errors.push('upper');
-    if (!this.hasLower.test(password)) errors.push('lower');
-    if (!this.hasNumber.test(password)) errors.push('number');
-
-    return errors;
+    return PasswordStrengthMeter.getPasswordErrors(password);
   }
 
   render() {
@@ -71,11 +78,11 @@ class PasswordStrengthMeter extends React.Component {
       <div>
         {this.props.password && (
           <div className="password-strength-meter">
-            <span className={'score '+this.getBoxClassName(1, score)}></span>
-            <span className={'score '+this.getBoxClassName(2, score)}></span>
-            <span className={'score '+this.getBoxClassName(3, score)}></span>
-            <span className={'score '+this.getBoxClassName(4, score)}></span>
-            <span className={'score '+this.getBoxClassName(5, score)}></span>
+            <span className={'score '+this.getBoxClassName(1, score)} />
+            <span className={'score '+this.getBoxClassName(2, score)} />
+            <span className={'score '+this.getBoxClassName(3, score)} />
+            <span className={'score '+this.getBoxClassName(4, score)} />
+            <span className={'score '+this.getBoxClassName(5, score)} />
             <span className={'message message-score-'+score}>{message}</span>
           </div>
         )}
