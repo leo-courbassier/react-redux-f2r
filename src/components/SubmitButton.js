@@ -38,8 +38,6 @@ class SubmitButton extends Component {
 
   render() {
     let buttonText;
-    console.log(this.isActive());
-    console.log(this.props.appState.status);
     if (this.isActive()){
       buttonText = this.props.textLoading;
     }else{
@@ -58,7 +56,7 @@ class SubmitButton extends Component {
       buttonStyle = 'success';
     }
 
-    let buttonClass = `submit-button ${this.props.className}`
+    let buttonClass = `submit-button ${this.props.className}`;
 
     return (
       <BS.Button

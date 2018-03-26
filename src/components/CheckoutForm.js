@@ -145,7 +145,7 @@ class CheckoutForm extends Component {
                       </BS.Button>
                     </td>
                   ) : (
-                    <td></td>
+                    <td />
                   )}
                 </tr>
               );

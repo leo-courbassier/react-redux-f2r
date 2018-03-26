@@ -6,7 +6,7 @@ import GeminiScrollbar from 'react-gemini-scrollbar';
 // import ScoreDial from './ScoreDial';
 
 const StatusBar = ({appState, store, tip, showMargin}) => {
-    const getTopItem = function () {
+    const getTopItem = function () { // eslint-disable-line
       if (store.onboardingAppState.score == null || store.onboardingAppState.score == undefined) {
         return (
           <div className="f2r-tips">

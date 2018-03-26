@@ -556,7 +556,7 @@ class StepThreeForm extends Component {
             <div className="section"></div>
             {yearsAsRenter}
             <div className="section">Request a Review from a previous Landlord
-            <br></br>
+            <br />
             <h6>
               <b>IMPORTANT! We strongly encourage you to provide past landlord information. Verification of your awesomeness as a renter significantly contributes to your overall F2R Score.</b>
             </h6>

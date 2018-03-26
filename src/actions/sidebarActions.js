@@ -6,11 +6,11 @@ export function updateSubMenu(subMenuName, value) {
    type: types.SIDEBAR_MENU_UPDATE,
    subMenuName,
    value
- }
+ };
 }
 
 export function hideSubMenus() {
   return {
     type: types.SIDEBAR_MENU_HIDE
-  }
+  };
 }

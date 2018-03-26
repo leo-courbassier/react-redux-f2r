@@ -66,7 +66,6 @@ class SignupFormLord extends Component {
     } else if (!this.state.acceptTerms) {
       help.innerHTML = 'Terms of Service and Privacy Policy must be accepted.';
     } else {
-      debugger
       this.props.signup(
         this.props.appState.addUser.firstName,
         this.props.appState.addUser.lastName,
@@ -88,8 +87,8 @@ class SignupFormLord extends Component {
         <BS.FormGroup controlId="userType">
           <BS.FormControl
           value={this.props.appState.addUser.userType=1}
-          onChange={this.signupKeypress.bind(this)}   
-          style={{display:'none'}} 
+          onChange={this.signupKeypress.bind(this)}
+          style={{display:'none'}}
           name="userType"
           type="text" />
           <BS.FormControl.Feedback />
@@ -143,8 +142,6 @@ class SignupFormLord extends Component {
           <PasswordStrengthMeter
           ref="password"
           password={this.props.appState.addUser.password} />
-        </BS.FormGroup>
-        <BS.FormGroup>
         </BS.FormGroup>
         <BS.FormGroup controlId="signupType">
           <BS.Checkbox

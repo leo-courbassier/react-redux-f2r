@@ -73,18 +73,20 @@ class RenterRoommate extends Component {
         </div>
 
       </div>
-      <div className="section"></div>
+      <div className="section" />
       </BS.FormGroup>
     );
   }
 
 
 
-render(){
+  render(){
 
-  let store = this.props.appState[STEP_ID];
+    let store = this.props.appState[STEP_ID];
 
-  const roommates = _.map(store.roommates, (source, i) => {return this.renderRoommates(source, i)});
+    const roommates = _.map(store.roommates, (source, i) => {
+      return this.renderRoommates(source, i);
+    });
 
     const removeButton = (
       <BS.Button
@@ -114,48 +116,45 @@ render(){
 
 
 
-  let warn = this.props.isInvalid() ? (<span className="warn">* <span className="text">{this.props.submitted ? this.props.isInvalid() : ''}</span></span>) : '';
+    let warn = this.props.isInvalid() ? (<span className="warn">* <span className="text">{this.props.submitted ? this.props.isInvalid() : ''}</span></span>) : '';
 
-  return (
-    <Loader appState={this.props.appState} statusType="loading" statusAction="stepSixForm">
-      <div className="step step-six form renter-roommate">
-        <form>
-        <div className="section">Renter with Roommate(s){warn}</div>
+    return (
+      <Loader appState={this.props.appState} statusType="loading" statusAction="stepSixForm">
+        <div className="step step-six form renter-roommate">
+          <form>
+          <div className="section">Renter with Roommate(s){warn}</div>
 
-        <RenterForm
-        store={this.props.store}
-        appState={this.props.appState}
-        keypress={this.props.keypress.bind(this)}
-        dateKeypress={this.props.dateKeypress.bind(this)}
-        stateListKeypress={this.props.stateListKeypress.bind(this)}
-        switchKeypress={this.props.switchKeypress.bind(this)}
-        update={this.props.update}
-        />
-        <div className="section">Add Roommates</div>
-        {renterRoommates}
-
-        </form>
-        <br />
-        <BS.HelpBlock className="pullLeft warn">
-          {this.props.submitted ? this.props.isInvalid() : ''}
-        </BS.HelpBlock>
-          <SubmitButton
-          className="onboarding-submit"
+          <RenterForm
+          store={this.props.store}
           appState={this.props.appState}
-          statusAction="stepSixForm"
-          submit={this.props.submit.bind(this)}
-          textLoading="Saving"
-          textModified="Save Changes">
-          Save
-          </SubmitButton>
-      </div>
-    </Loader>
-  );
+          keypress={this.props.keypress.bind(this)}
+          dateKeypress={this.props.dateKeypress.bind(this)}
+          stateListKeypress={this.props.stateListKeypress.bind(this)}
+          switchKeypress={this.props.switchKeypress.bind(this)}
+          update={this.props.update}
+          />
+          <div className="section">Add Roommates</div>
+          {renterRoommates}
 
-}
+          </form>
+          <br />
+          <BS.HelpBlock className="pullLeft warn">
+            {this.props.submitted ? this.props.isInvalid() : ''}
+          </BS.HelpBlock>
+            <SubmitButton
+            className="onboarding-submit"
+            appState={this.props.appState}
+            statusAction="stepSixForm"
+            submit={this.props.submit.bind(this)}
+            textLoading="Saving"
+            textModified="Save Changes">
+            Save
+            </SubmitButton>
+        </div>
+      </Loader>
+    );
 
-
-
+  }
 }
 
 

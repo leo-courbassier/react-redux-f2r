@@ -14,5 +14,5 @@ export function isWhole(value) {
 // example valid input: 1, 1.5, 1.50
 // example invalid input: 1.1, 1.05, 1.60
 export function isWholeOrHalf(value) {
-  return value % 1 === 0 || value % 1 === 0.5
+  return value % 1 === 0 || value % 1 === 0.5;
 }

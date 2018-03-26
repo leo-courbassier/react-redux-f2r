@@ -22,6 +22,20 @@ class PasswordStrengthMeter extends React.Component {
     return score;
   }
 
+  // this is used externally to display errors
+  static getPasswordErrors(password) {
+    let errors = [];
+
+    if (!password) return errors;
+
+    if (password.length < 8) errors.push('length');
+    if (!hasUpper.test(password)) errors.push('upper');
+    if (!hasLower.test(password)) errors.push('lower');
+    if (!hasNumber.test(password)) errors.push('number');
+
+    return errors;
+  }
+
   getScore(password) {
     return PasswordStrengthMeter.getPasswordScore(password);
   }
@@ -53,20 +67,6 @@ class PasswordStrengthMeter extends React.Component {
     return (position <= score) ? 'score-'+score : 'score-neutral';
   }
 
-  // this is used externally to display errors
-  static getPasswordErrors(password) {
-    let errors = [];
-
-    if (!password) return errors;
-
-    if (password.length < 8) errors.push('length');
-    if (!hasUpper.test(password)) errors.push('upper');
-    if (!hasLower.test(password)) errors.push('lower');
-    if (!hasNumber.test(password)) errors.push('number');
-
-    return errors;
-  }
-
   getErrors(password) {
     return PasswordStrengthMeter.getPasswordErrors(password);
   }
@@ -78,11 +78,11 @@ class PasswordStrengthMeter extends React.Component {
       <div>
         {this.props.password && (
           <div className="password-strength-meter">
-            <span className={'score '+this.getBoxClassName(1, score)}></span>
-            <span className={'score '+this.getBoxClassName(2, score)}></span>
-            <span className={'score '+this.getBoxClassName(3, score)}></span>
-            <span className={'score '+this.getBoxClassName(4, score)}></span>
-            <span className={'score '+this.getBoxClassName(5, score)}></span>
+            <span className={'score '+this.getBoxClassName(1, score)} />
+            <span className={'score '+this.getBoxClassName(2, score)} />
+            <span className={'score '+this.getBoxClassName(3, score)} />
+            <span className={'score '+this.getBoxClassName(4, score)} />
+            <span className={'score '+this.getBoxClassName(5, score)} />
             <span className={'message message-score-'+score}>{message}</span>
           </div>
         )}

@@ -31,7 +31,9 @@ class SelectOptions extends Component {
 
 
   render() {
-    let options = _.map(this.props.optionList, (item, key, i) => {return this.renderOptions(item, key, this.props.defaultValue, i)});
+    let options = _.map(this.props.optionList, (item, key, i) => {
+      return this.renderOptions(item, key, this.props.defaultValue, i);
+    });
     let defaultOptionValue = this.props.defaultOptionValue ? this.props.defaultOptionValue : '';
     let defaultOptionName = this.props.defaultOptionName ? this.props.defaultOptionName : '';
     let defaultOption = this.props.defaultOption ? <option value={defaultOptionValue}>{defaultOptionName}</option> : null;
@@ -58,7 +60,7 @@ SelectOptions.propTypes = {
   name: PropTypes.string.isRequired,
   defaultValue: PropTypes.string.isRequired,
   className: PropTypes.string,
-  optionList: PropTypes.any.isRequired,
+  optionList: PropTypes.array.isRequired,
   disabled: PropTypes.bool,
   loading: PropTypes.bool,
   loadingText: PropTypes.string

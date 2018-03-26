@@ -230,13 +230,15 @@ export function getStateList(dispatch, getState) {
 
 export function getCityList(dispatch, getState, stateCode, statusAction) {
   let authHeader = getAuthHeaders(dispatch, getState);
-  if (stateCode == null || stateCode == '' || stateCode == undefined){return false}
+  if (stateCode == null || stateCode == '' || stateCode == undefined){
+    return false;
+  }
   setStatus(dispatch, 'loading', statusAction, true);
   return get(services.GEO_CITIES + `?state=${stateCode}`, authHeader, (json) =>{
     let cityList = json;
     dispatch({ type: types.CITIES_UPDATE, statusAction, cityList });
     setStatus(dispatch, 'loading', statusAction, false);
-  })
+  });
 }
 
 export function getLogin(dispatch, getState, auth, callback) {
@@ -316,7 +318,6 @@ export function uploadProfilePic(dispatch, getState, file, callback){
 }
 
 export function postStepTwo(dispatch, getState, payload, callback){
-  debugger;
   return post(services.TT_STEP2, getAuthHeaders(dispatch, getState), payload, callback);
 }
 

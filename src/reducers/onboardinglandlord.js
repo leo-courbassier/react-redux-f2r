@@ -209,7 +209,6 @@ export default function onboardingAppState(state = initialState, action) {
 
     case types.ONBOARDING_STEPTWO_FORM_UPDATE:
       {
-        debugger
         let newState = objectAssign({}, state);
         newState[1][action.name] = action.value;
         return newState;
@@ -218,7 +217,6 @@ export default function onboardingAppState(state = initialState, action) {
 
     case types.ONBOARDING_STEPTWO_FORM_LOAD:
       {
-        debugger
         let newState = objectAssign({}, state);
         newState[1]['landlordId'] = action.landlordId;
         newState[1]['propertyTitle'] = action.propertyTitle;
@@ -261,7 +259,6 @@ export default function onboardingAppState(state = initialState, action) {
 
     case types.ONBOARDING_STEPTWO_FORM_SAVE:
       {
-        debugger;
         let newState = objectAssign({}, state);
         newState[1]['landlordId'] = action.landlordId;
         newState[1]['propertyTitle'] = action.propertyTitle;

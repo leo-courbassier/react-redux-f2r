@@ -16,7 +16,6 @@ export function clearSignupForm() {
 
 export function signup(firstName, lastName, user, password, acceptTerms,userType) {
   return function (dispatch) {
-    debugger
     let auth = btoa(user + ':' + password);
     let endpoint = services.USER_SIGNUP;
     api.setStatus(dispatch, 'loading', 'signupSubmit', true);
