@@ -1,26 +1,29 @@
 import React, { PropTypes } from 'react';
 
+// regex for requirements: http://stackoverflow.com/a/31934169/4958776
+const hasUpper = /(?=.*[A-Z])/;
+const hasLower = /(?=.*[a-z])/;
+const hasNumber = /(?=.*[0-9])/;
+const hasSpecial = /(?=.*[!@#$%^&*])/;
+
 class PasswordStrengthMeter extends React.Component {
-
-  // regex for requirements: http://stackoverflow.com/a/31934169/4958776
-  hasUpper = /(?=.*[A-Z])/;
-  hasLower = /(?=.*[a-z])/;
-  hasNumber = /(?=.*[0-9])/;
-  hasSpecial = /(?=.*[!@#$%^&*])/;
-
-  getScore(password) {
+  static getPasswordScore(password) {
     let score = 0;
 
     if (!password) return score;
 
     // requirement checks
     if (password.length >= 8) score++;
-    if (this.hasUpper.test(password)) score++;
-    if (this.hasLower.test(password)) score++;
-    if (this.hasNumber.test(password)) score++;
-    if (score == 4 && this.hasSpecial.test(password)) score++;
+    if (hasUpper.test(password)) score++;
+    if (hasLower.test(password)) score++;
+    if (hasNumber.test(password)) score++;
+    if (score == 4 && hasSpecial.test(password)) score++;
 
     return score;
+  }
+
+  getScore(password) {
+    return PasswordStrengthMeter.getPasswordScore(password);
   }
 
   getMessage(score) {
@@ -51,17 +54,21 @@ class PasswordStrengthMeter extends React.Component {
   }
 
   // this is used externally to display errors
-  getErrors(password) {
+  static getPasswordErrors(password) {
     let errors = [];
 
     if (!password) return errors;
 
     if (password.length < 8) errors.push('length');
-    if (!this.hasUpper.test(password)) errors.push('upper');
-    if (!this.hasLower.test(password)) errors.push('lower');
-    if (!this.hasNumber.test(password)) errors.push('number');
+    if (!hasUpper.test(password)) errors.push('upper');
+    if (!hasLower.test(password)) errors.push('lower');
+    if (!hasNumber.test(password)) errors.push('number');
 
     return errors;
+  }
+
+  getErrors(password) {
+    return PasswordStrengthMeter.getPasswordErrors(password);
   }
 
   render() {

@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import * as accountActions from '../../actions/accountActions';
 import TabEditablePanel from '../../components/account/TabEditablePanel';
 import PasswordInfo from '../../components/account/PasswordInfo';
+import PasswordForm from '../../containers/account/PasswordFormContainer';
 
 class PasswordInfoContainer extends Component {
   render() {
@@ -20,10 +21,11 @@ class PasswordInfoContainer extends Component {
                         editMode={editMode}
                         onClick={updatePasswordEditMode}
       >
-        <PasswordInfo  userInfo={accountState.userInfo}
-                       editMode={editMode}
-                       onSubmit={onSubmit}
-        />
+        {
+          editMode
+          ? <PasswordForm saveAccountLogin={accountActions.saveAccountLogin} />
+          : <PasswordInfo userInfo={accountState.userInfo} />
+        }
       </TabEditablePanel>
     );
   }

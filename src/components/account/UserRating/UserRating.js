@@ -18,7 +18,7 @@ export default class UserRating extends Component {
       <div className="stars-wrapper">
         {stars}
       </div>
-    )
+    );
   }
   renderScores() {
     const { userInfo } = this.props;
@@ -30,7 +30,7 @@ export default class UserRating extends Component {
       <div className={valueClass}>
         {userInfo.f2rScore || 'No feedback yet'}
       </div>
-    )
+    );
   }
   renderRatings() {
     const { userInfo } = this.props;

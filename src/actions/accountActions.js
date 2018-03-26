@@ -18,7 +18,7 @@ export function loadAccountInfo() {
         memberAge: 1.2
       }
     });
-  }
+  };
 }
 
 export function editModeUpdate(panelName, value) {
@@ -26,7 +26,7 @@ export function editModeUpdate(panelName, value) {
    type: types.ACCOUNT_EDIT_MODE,
    panelName,
    value
- }
+ };
 }
 
 export const loadProfileInfo = () => {
@@ -68,5 +68,20 @@ export function uploadProfilePic(file) {
       dispatch(updateUserInfo());
     });
 
+  };
+}
+
+export function saveAccountLogin(payload, callback) {
+  return function (dispatch, getState) {
+    api.postUserLoginUpdate(dispatch, getState, payload, (response) => {
+      if (response.status !== 200) {
+        dispatch({type: types.LOGIN_FORM_UPDATE, success: false, error: response.message});
+        if (callback) callback();
+        return;
+      }
+
+      dispatch({type: types.LOGIN_FORM_UPDATE, success: true, error: null});
+      if (callback) callback();
+    });
   };
 }

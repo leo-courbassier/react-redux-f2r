@@ -303,6 +303,10 @@ export function postUserDetails(dispatch, getState, payload, callback){
   return post(services.USER_UPDATE_USER, getAuthHeaders(dispatch, getState), payload, callback);
 }
 
+export function postUserLoginUpdate(dispatch, getState, payload, callback){
+  return post(services.USER_UPDATE, getAuthHeaders(dispatch, getState), payload, callback);
+}
+
 export function postStepOne(dispatch, getState, payload, callback){
   return post(services.TT_STEP1, getAuthHeaders(dispatch, getState), payload, callback);
 }
