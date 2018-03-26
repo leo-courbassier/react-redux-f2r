@@ -3,7 +3,7 @@ import { Link, IndexLink } from 'react-router';
 import * as BS from 'react-bootstrap';
 import GeminiScrollbar from 'react-gemini-scrollbar';
 
-import ScoreDial from './ScoreDial';
+// import ScoreDial from './ScoreDial';
 
 const StatusBar = ({appState, store, tip, showMargin}) => {
     const getTopItem = function () {
@@ -27,7 +27,7 @@ const StatusBar = ({appState, store, tip, showMargin}) => {
               <div className="score-description">
                 Subject to information validation and confirmation
               </div>
-              <ScoreDial score={store.onboardingAppState.score} />
+              {/* <ScoreDial score={store.onboardingAppState.score} /> */}
             </div>
             <div className="f2r-legend">
               <ul className="spectrum">

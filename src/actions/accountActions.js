@@ -2,6 +2,7 @@ import * as types from '../constants/ActionTypes';
 import 'isomorphic-fetch';
 
 import * as api from './api';
+import {updateUserInfo} from './loginActions';
 
 export function loadAccountInfo() {
   return function(dispatch, getState){
@@ -46,3 +47,26 @@ export const loadProfileInfo = () => {
     });
   };
 };
+
+export const saveUserDetails = (payload, callback) => {
+  return function (dispatch, getState) {
+    api.postUserDetails(dispatch, getState, payload, (response) => {
+      dispatch({ type: types.PROFILE_LOAD, payload: response });
+      dispatch(updateUserInfo(user => {
+        dispatch({type: types.DASHBOARD_USER_SAVE, user});
+      }));
+      if (callback) callback();
+    });
+  };
+};
+
+export function uploadProfilePic(file) {
+  return function (dispatch, getState) {
+    api.setStatus(dispatch, 'uploading', 'profilePicUpload', true);
+    api.uploadProfilePic(dispatch, getState, file, () => {
+      api.setStatus(dispatch, 'uploading', 'profilePicUpload', false);
+      dispatch(updateUserInfo());
+    });
+
+  };
+}

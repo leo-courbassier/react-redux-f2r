@@ -38,6 +38,8 @@ class SubmitButton extends Component {
 
   render() {
     let buttonText;
+    console.log(this.isActive());
+    console.log(this.props.appState.status);
     if (this.isActive()){
       buttonText = this.props.textLoading;
     }else{

@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import * as accountActions from '../../actions/accountActions';
 import TabEditablePanel from '../../components/account/TabEditablePanel';
 import ProfileInfo from '../../components/account/ProfileInfo';
-import ProfileForm from '../../components/account/ProfileForm';
+import ProfileForm from '../../containers/account/ProfileFormContainer';
 
 import Loader from '../../components/Loader';
 
@@ -17,9 +17,6 @@ class ProfileInfoContainer extends Component {
     let {appState, actions} = this.props;
     let editMode = appState.editMode.profile;
     let updateEditMode = () => actions.editModeUpdate('profile', !editMode);
-    let onSubmit = (/*formData*/) => {
-      updateEditMode();
-    };
 
     return (
       <TabEditablePanel title="Profile"
@@ -31,8 +28,8 @@ class ProfileInfoContainer extends Component {
           {
             editMode
             ? <ProfileForm appState={appState}
-                onSubmit={onSubmit}
-                />
+                saveUserDetails={actions.saveUserDetails}
+                upload={actions.uploadProfilePic} />
             : <ProfileInfo profile={appState.profile} />
           }
         </Loader>
