@@ -31,7 +31,6 @@ class StepOneForm extends Component {
   }
 
   keypress(e) {
-    debugger
     this.props.update(this.props.appState, e.target.name, e.target.value);
   }
 
@@ -89,7 +88,6 @@ class StepOneForm extends Component {
   }
 
   submit(openNextStep, e) {
-    debugger;
     e.preventDefault();
     this.setState({submitted: true});
 
@@ -134,9 +132,15 @@ class StepOneForm extends Component {
 
     let petOptions = [0,1,2,3,4];
 
-    let dogs = _.map(petOptions, (i) => {return this.petOptions(i, store, petOptions.length, 'dogs')});
-    let cats = _.map(petOptions, (i) => {return this.petOptions(i, store, petOptions.length, 'cats')});
-    let other = _.map(petOptions, (i) => {return this.petOptions(i, store, petOptions.length, 'other')});
+    let dogs = _.map(petOptions, (i) => {
+      return this.petOptions(i, store, petOptions.length, 'dogs');
+    });
+    let cats = _.map(petOptions, (i) => {
+      return this.petOptions(i, store, petOptions.length, 'cats');
+    });
+    let other = _.map(petOptions, (i) => {
+      return this.petOptions(i, store, petOptions.length, 'other');
+    });
 
     let months = {1: 'January', 2: 'February', 3: 'March', 4: 'April', 5: 'May', 6: 'June', 7: 'July', 8: 'August', 9: 'September', 10: 'October', 11: 'November', 12: 'December'};
     let days = [];
@@ -219,10 +223,9 @@ class StepOneForm extends Component {
     const personalDescription = (
       <BS.FormGroup controlId="personalDescription">
         <BS.FormControl name="description"
-        onChange={this.keypress.bind(this)}
-        componentClass="textarea"
-        value={store.description}>
-        </BS.FormControl>
+          onChange={this.keypress.bind(this)}
+          componentClass="textarea"
+          value={store.description} />
       </BS.FormGroup>
     );
 
@@ -304,7 +307,7 @@ class StepOneForm extends Component {
 
     const linkFacebook = (
       <a onClick={this.handleFacebookAuthorization.bind(this)}>
-        <div className="data-uri facebook"></div>
+        <div className="data-uri facebook" />
       </a>
     );
 

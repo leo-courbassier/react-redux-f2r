@@ -73,7 +73,7 @@ class RenterRoommate extends Component {
         </div>
 
       </div>
-      <div className="section"></div>
+      <div className="section" />
       </BS.FormGroup>
     );
   }
@@ -84,7 +84,9 @@ render(){
 
   let store = this.props.appState[STEP_ID];
 
-  const roommates = _.map(store.roommates, (source, i) => {return this.renderRoommates(source, i)});
+  const roommates = _.map(store.roommates, (source, i) => {
+    return this.renderRoommates(source, i);
+  });
 
     const removeButton = (
       <BS.Button

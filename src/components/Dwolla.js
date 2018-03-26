@@ -62,11 +62,11 @@ class DwollaCheckout extends Component {
           fallbackToMicrodeposits: false
         }, function(err, res) {
           if (err){
-            console.log('Error: ' + JSON.stringify(err) + ' -- Response: ' + JSON.stringify(res))
+            console.log('Error: ' + JSON.stringify(err) + ' -- Response: ' + JSON.stringify(res)) // eslint-disable-line
           } else {
             self.dwollaFinished();
           }
-      })
+      });
     }
   }
 
@@ -146,7 +146,7 @@ class DwollaCheckout extends Component {
         "acct_name": account.name,
         "acct_type": "checking",
         "paymentType": "TT_PAY_F2R_SEC_DEPOSIT"
-      }
+      };
 
       let userId = this.context.store.getState().loginAppState.userInfo.id;
 
@@ -160,7 +160,7 @@ class DwollaCheckout extends Component {
 
   renderDwollaUI() {
     return (
-      <div ref="dwolla" id="dwolla-ui"></div>
+      <div ref="dwolla" id="dwolla-ui" />
     );
   }
 
@@ -208,7 +208,7 @@ class DwollaCheckout extends Component {
 
 
           <BS.Checkbox
-          onClick={ (e)=> this.setState({ ageVerified: !this.state.ageVerified })}
+          onClick={(e)=> this.setState({ ageVerified: !this.state.ageVerified })}
           value={this.state.ageVerified}
           name="ageVerified" inline>Please confirm you are 18 years or older</BS.Checkbox>
             </div>

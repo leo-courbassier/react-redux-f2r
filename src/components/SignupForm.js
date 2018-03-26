@@ -129,9 +129,6 @@ class SignupForm extends Component {
           ref="password"
           password={this.props.appState.addUser.password} />
         </BS.FormGroup>
-        <BS.FormGroup>
-
-        </BS.FormGroup>
         <BS.FormGroup controlId="signupType">
           <BS.Radio inline defaultChecked>Tenant</BS.Radio>
         </BS.FormGroup>
@@ -139,7 +136,7 @@ class SignupForm extends Component {
           <BS.Checkbox
           onChange={()=> this.setState({ acceptTerms: !this.state.acceptTerms })}
           value={this.props.appState.addUser.acceptTerms}
-          name="acceptTerms" inline>By signing up for Fit 2 Rent, you agree to:<br></br>
+          name="acceptTerms" inline>By signing up for Fit 2 Rent, you agree to:<br />
             Our <a href="http://www.fit2rent.com/terms" target="_blank">Terms of Service</a> and <a href="http://www.fit2rent.com/privacy" target="_blank">Privacy Policy</a> and our payment provider, Dwolla's, <a href="https://www.dwolla.com/legal/tos/" target="_blank">Terms of Service</a> and <a href="https://www.dwolla.com/legal/privacy/" target="_blank">Privacy Policies</a>.
           </BS.Checkbox>
         </BS.FormGroup>

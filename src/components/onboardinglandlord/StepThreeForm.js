@@ -134,7 +134,6 @@ class StepThreeForm extends Component {
   }
 
   renderLandlords = (source, i) => {
-    console.log(source)
     return (
       <BS.FormGroup controlId="previousLandlords">
       <BS.ControlLabel>Landlord {i + 1}</BS.ControlLabel>
@@ -210,7 +209,7 @@ class StepThreeForm extends Component {
       <div className="row">
         <div className="verification-disclaimer">We will contact this landlord to validate their status as the owner or property manager at the time of your lease period.</div>
       </div>
-      <div className="section"></div>
+      <div className="section" />
       </BS.FormGroup>
     );
   }
@@ -250,26 +249,26 @@ class StepThreeForm extends Component {
               <option value="Refundable">Refundable</option>
               <option value="Nonrefundable">Nonrefundable</option>
           </select>
-    )
+    );
 
     const refundable = (
           <select id="property" className="form-control">
               <option value="Yes">Title</option>
           </select>
-    )
+    );
 
     const propertySelection = (
       <div className="propertySelection">
         <BS.FormGroup controlId="propertyS">
         <div className="row">
-          <div className="col-md-3"></div>
+          <div className="col-md-3" />
           <div className="col-md-3">
           <BS.ControlLabel>Property Slection</BS.ControlLabel>
           </div>
           <div className="col-md-3">
           {propertySele}
           </div>
-          <div className="col-md-3"></div>
+          <div className="col-md-3" />
         </div>
         </BS.FormGroup>
       </div>
@@ -303,7 +302,7 @@ class StepThreeForm extends Component {
            type="text" />
            </div>
           </div>
-          <br></br>
+          <br />
           <div className="col-md-12">
            <div className="col-md-3">
             <BS.ControlLabel>Email</BS.ControlLabel>
@@ -327,7 +326,7 @@ class StepThreeForm extends Component {
            </div>
           </div>
          </div>
-    )
+    );
 
     const leaseType = (
 
@@ -362,7 +361,7 @@ class StepThreeForm extends Component {
            </div>
           </div>
         </div>
-    )
+    );
 
     const collectDeposit = (
 
@@ -397,7 +396,7 @@ class StepThreeForm extends Component {
            </div>
           </div>
         </div>
-    )
+    );
 
     // const ownedPropertyInfo = (
     //
@@ -517,7 +516,7 @@ class StepThreeForm extends Component {
          <BS.Glyphicon glyph="calendar" />
          </div>
         </div>
-        <br></br>
+        <br />
         <div className="col-md-12">
         <div className="col-md-3">
          <BS.ControlLabel>Payment Start Date</BS.ControlLabel>
@@ -574,7 +573,7 @@ class StepThreeForm extends Component {
         </div>
       </BS.Collapse>
 
-  )
+  );
 
 
   const leaseTypeMonthDescription = (
@@ -606,7 +605,7 @@ class StepThreeForm extends Component {
        <BS.Glyphicon glyph="calendar" />
        </div>
       </div>
-      <br></br>
+      <br />
          <div className="col-md-12">
           <div className="col-md-3">
             <BS.ControlLabel>Payment Due Date</BS.ControlLabel>
@@ -636,7 +635,7 @@ class StepThreeForm extends Component {
       </div>
     </BS.Collapse>
 
-)
+);
 
 
 const { collectionTypeState: collectionTypeState } = this.props.appState[2];
@@ -669,7 +668,7 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
        type="text" />
        </div>
       </div>
-      <br></br>
+      <br />
       <div className="col-md-12">
       <div className="col-md-3">
        <BS.ControlLabel>Deposit Due On</BS.ControlLabel>
@@ -691,7 +690,7 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
       {propertySele}
       </div>
       </div>
-      <br></br>
+      <br />
       <div className="row">
       <div className="col-md-8 anotherDeposit">
           <BS.Button
@@ -705,7 +704,7 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
       </div>
      </div>
    </BS.Collapse>
-)
+);
 
     //const landlords = _.map(store.previousLandlords, (source, i) => {return this.renderLandlords(source, i)});
 

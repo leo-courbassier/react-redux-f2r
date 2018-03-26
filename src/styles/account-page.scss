@@ -233,10 +233,7 @@
         justify-content: center;
       }
     }
-    .fullname,
-    .pets,
-    .date-of-birth,
-    .family {
+    .row {
       .item:not(:first-child) {
         margin-left: 15px;
       }
@@ -260,6 +257,19 @@
     }
     &.has-gutters .item:not(:first-child) {
       margin-left: 15px;
+    }
+  }
+
+  .account-submit {
+    margin-top: 15px;
+    display: flex;
+    &-message {
+      width: 75%;
+      text-align: left;
+    }
+    &-button {
+      width: 25%;
+      text-align: right;
     }
   }
 }

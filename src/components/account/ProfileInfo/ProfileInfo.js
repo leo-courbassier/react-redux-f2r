@@ -10,6 +10,18 @@ export default class ProfileInfo extends Component {
   static defaultProps = {
     profile: {}
   }
+
+  get address() {
+    const { profile } = this.props;
+    const userDetails = _.get(profile, 'userDetails', {});
+    return [
+      userDetails.address,
+      userDetails.city,
+      userDetails.state,
+      userDetails.zipCode
+    ].join(', ');
+  }
+
   renderView(){
     const { profile } = this.props;
     const userDetails = _.get(profile, 'userDetails', {});
@@ -20,9 +32,9 @@ export default class ProfileInfo extends Component {
             <div className="user-name">{profile.firstName} {profile.lastName}</div>
             <a href={'mailto:' + profile.email}>{profile.email}</a>
             <br/>
-            {profile.phone || 'No phone number provided.'}
+            {userDetails.phoneNumber || 'No phone number provided.'}
             <br/>
-            {profile.birthDate || 'No date of birth provided'}
+            {userDetails.dateOfBirth || 'No date of birth provided'}
           </Col>
           <Col xs={6} sm={3} md={3} className="right-column">
             <UserRating userInfo={profile} />
@@ -33,24 +45,26 @@ export default class ProfileInfo extends Component {
         </div>
         <div className="section">About</div>
         <div>
-          {profile.userDetails.description || 'Not provided.'}
+          {userDetails.description || 'Not provided.'}
         </div>
         <div className="section">Contact Information</div>
         <div className="row contact-info">
           <Col xs={4} sm={4} md={4}>
             <div className="sub-heading">Mailing Address</div>
-            <div className="value">address</div>
+            <div className="value">
+              {this.address}
+            </div>
           </Col>
           <Col xs={4} sm={4} md={4}>
             <div className="sub-heading">Backup Email</div>
             <div className="value">
-              {profile.userDetails.alternativeEmail || 'Not provided'}
+              {userDetails.alternativeEmail || 'Not provided'}
             </div>
           </Col>
           <Col xs={4} sm={4} md={4}>
             <div className="sub-heading">Alternate Phone</div>
             <div className="value">
-              {profile.userDetails.alternativePhone || 'Not provided'}
+              {userDetails.alternativePhone || 'Not provided'}
             </div>
           </Col>
           <Col xs={4} sm={4} md={4}>
@@ -59,7 +73,9 @@ export default class ProfileInfo extends Component {
           </Col>
           <Col xs={4} sm={4} md={4}>
             <div className="sub-heading">Backup Email</div>
-            <div className="value">Some email</div>
+            <div className="value">
+              {userDetails.alternativeEmail || 'Not provided'}
+            </div>
           </Col>
           <Col xs={4} sm={4} md={4}>
             <div className="sub-heading">Phone</div>

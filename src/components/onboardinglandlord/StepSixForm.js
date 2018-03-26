@@ -109,7 +109,7 @@ class StepSixForm extends Component {
       (store.maxBedrooms && !Validation.isWhole(store.maxBedrooms))
       )
     {
-      invalid = 'Minimum and maximum bedrooms must be numbers.'
+      invalid = 'Minimum and maximum bedrooms must be numbers.';
     }
 
     if (
@@ -117,7 +117,7 @@ class StepSixForm extends Component {
       (store.maxBathrooms && !Validation.isWholeOrHalf(store.maxBathrooms))
       )
     {
-      invalid = 'Minimum and maximum bathrooms must only be whole or half numbers.'
+      invalid = 'Minimum and maximum bathrooms must only be whole or half numbers.';
     }
 
     if (
@@ -125,7 +125,7 @@ class StepSixForm extends Component {
       (store.maxBathrooms && !Validation.isNumeric(store.maxBathrooms))
       )
     {
-      invalid = 'Minimum and maximum bathrooms must be numbers.'
+      invalid = 'Minimum and maximum bathrooms must be numbers.';
     }
 
     let minRent = store.minRent ? store.minRent.toString().trim().replace(/\$|,/g, '') : store.minRent;
@@ -135,7 +135,7 @@ class StepSixForm extends Component {
       (maxRent && !isCurrency(maxRent))
       )
     {
-      invalid = 'Min and Max Rent must be in 0.00 format.'
+      invalid = 'Min and Max Rent must be in 0.00 format.';
     }
 
     if (
@@ -143,7 +143,7 @@ class StepSixForm extends Component {
       (store.maxSqft && !Validation.isWhole(store.maxSqft))
       )
     {
-      invalid = 'Minimum and maximum square feet must be numbers.'
+      invalid = 'Minimum and maximum square feet must be numbers.';
     }
 
     if (
@@ -151,7 +151,7 @@ class StepSixForm extends Component {
       !store.maxBedrooms || store.maxBedrooms < 0
       )
     {
-      invalid = 'Please specify minimum and maximum bedrooms.'
+      invalid = 'Please specify minimum and maximum bedrooms.';
     }
 
     if (
@@ -159,7 +159,7 @@ class StepSixForm extends Component {
       !store.maxBathrooms || store.maxBathrooms < 0
       )
     {
-      invalid = 'Please specify minimum and maximum bathrooms.'
+      invalid = 'Please specify minimum and maximum bathrooms.';
     }
 
     if (
@@ -167,7 +167,7 @@ class StepSixForm extends Component {
       !store.maxRent || store.maxRent < 0
       )
     {
-      invalid = 'Please specify minimum and maximum rent.'
+      invalid = 'Please specify minimum and maximum rent.';
     }
 
     if (
@@ -175,7 +175,7 @@ class StepSixForm extends Component {
       !store.maxSqft || store.maxSqft < 0
       )
     {
-      invalid = 'Please specify minimum and maximum square feet.'
+      invalid = 'Please specify minimum and maximum square feet.';
     }
 
     if (
@@ -184,41 +184,41 @@ class StepSixForm extends Component {
       !store.state
       )
     {
-      invalid = 'Please provide a desired city, state and zip code.'
+      invalid = 'Please provide a desired city, state and zip code.';
     }
 
     if (
       !store.moveInDate
       )
     {
-      invalid = 'Please provide a desired move in date.'
+      invalid = 'Please provide a desired move in date.';
     }
 
     if (
       !store.leaseLength
       )
     {
-      invalid = 'Please provide a desired lease duration.'
+      invalid = 'Please provide a desired lease duration.';
     }
 
     if(store.mandateType == 'SHARED'){
       if(store.roommates.length == 0 || (store.roommates.length > 0 && !store.roommates[0].email)){
-        invalid = 'Please provide at least one roommate.'
+        invalid = 'Please provide at least one roommate.';
       }
     }
 
     if(store.mandateType == 'HEAD_OF_HOUSEHOLD'){
       if(!store.familyAges){
-        invalid = 'Please provide your family member ages.'
+        invalid = 'Please provide your family member ages.';
       }
     }
 
     if(store.mandateType == 'JOINT'){
       if(!store.familyAges){
-        invalid = 'Please provide your family member ages.'
+        invalid = 'Please provide your family member ages.';
       }
       if(!store.spouseEmail){
-        invalid = 'Please provide an email for your spouse / partner.'
+        invalid = 'Please provide an email for your spouse / partner.';
       }
     }
 
@@ -239,7 +239,7 @@ class StepSixForm extends Component {
     let saveCallback = () => {
       window.scrollTo(0, 0);
       this.props.updateOnboardingScore();
-    }
+    };
 
     this.props.save(
       store.mandateType,

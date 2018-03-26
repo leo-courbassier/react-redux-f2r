@@ -97,8 +97,6 @@ export function saveStepOne(description,  dogs, cats, other, openNextStep, callb
 
     let userId = getState().loginAppState.userInfo.id;
 
-    debugger
-
     let pets = [];
     for (let i=0;i < dogs;i++){
       pets.push({"type": "DOG", "userId": userId});
@@ -169,7 +167,6 @@ export function loadStepTwo(){
     let requestStates = api.getStateList(dispatch, getState);
     let requestEmployerVerification = api.getEmployerVerification(dispatch, getState);
     let getPropertyList = api.getPropertyList(dispatch, getState);
-    debugger;
     api.setStatus(dispatch, 'loading', 'stepTwoForm', true);
     Promise.all([
       requestUser,
@@ -200,9 +197,7 @@ export function loadStepTwo(){
       let stateList = results[2];
       let incomeSources = [];//results[4];
       //let propertyTypeList = {"APT":"Apartment"}//["APT","SFM","CONDO","DUPLEX","MOBILE_HOME","TOWNHOUSE"]
-      console.log(requestUser)
       let employerVerification = results[3];
-      debugger;
 
       dispatch({ type: types.ONBOARDING_STEPTWO_FORM_LOAD,
         landlordId,
@@ -268,26 +263,23 @@ export function saveStepTwo(
     let statusAction = openNextStep ? 'stepTwoFormProceed' : 'stepTwoForm';
     api.setStatus(dispatch, 'saving', statusAction, true);
 
-    debugger;
-
-    let userDetails =
-                      {
-                        "landlordId":landlordId,
-                        "address":address1,
-                        "secondLineAddress":address2,
-                        "city":city,
-                        "state":state,
-                        "zipCode":zipCode,
-                        "propertyType":"SFM",
-                        "propertyClass":propertyClass,
-                        "propertyStatus":propertyStatus,
-                        "numBeds":numBeds,
-                        "numBaths":numBaths,
-                        "rent":rent,
-                        "headline":propertyTitle,
-                        "sqft": sqft,
-                        "amenityList":amenityList
-                      }
+    let userDetails = {
+      "landlordId":landlordId,
+      "address":address1,
+      "secondLineAddress":address2,
+      "city":city,
+      "state":state,
+      "zipCode":zipCode,
+      "propertyType":"SFM",
+      "propertyClass":propertyClass,
+      "propertyStatus":propertyStatus,
+      "numBeds":numBeds,
+      "numBaths":numBaths,
+      "rent":rent,
+      "headline":propertyTitle,
+      "sqft": sqft,
+      "amenityList":amenityList
+    };
 
    let payload = {"user": userDetails,"incomeList": incomeSources};
 
@@ -309,7 +301,6 @@ export function saveStepTwo(
       };
 
       api.postStepTwo(dispatch, getState, userDetails, () => {
-        debugger
         if (userId) {
           let name = 'employerId';
           let value = userId;
@@ -427,22 +418,21 @@ export function saveStepThree(
 
 
     let landLordObjSave={
-           "landlordId":15,
-           "propertyId":2,
-           "startDate":"2016-09-01",
-           "endDate":"2017-08-31",
-           "paymentDueDate":"2017-08-31",
-           "rentAmount":1250,
-           "isMonthToMonth":"false",
-           "leaseStatus":"ACTIVE",
-           "renterIds":[
-               {"renterId":1}
-           ],
-           "depositList":[
-               {"depositAmount":550, "depositType":"SECURITY","depositStatus":"REFUNDABLE"}
-           ]
-        }
-    debugger;
+       "landlordId":15,
+       "propertyId":2,
+       "startDate":"2016-09-01",
+       "endDate":"2017-08-31",
+       "paymentDueDate":"2017-08-31",
+       "rentAmount":1250,
+       "isMonthToMonth":"false",
+       "leaseStatus":"ACTIVE",
+       "renterIds":[
+           {"renterId":1}
+       ],
+       "depositList":[
+           {"depositAmount":550, "depositType":"SECURITY","depositStatus":"REFUNDABLE"}
+       ]
+    };
     let leaseObje = api.postStepThree(dispatch, getState, landLordObjSave, () => {
 
           // if (landLordObjSave.landlordId) {
@@ -462,9 +452,7 @@ export function saveStepThree(
         dispatch({type: types.ONBOARDING_STEPTHREE_FORM_SAVE, name: 'saved', value: true});
         if (callback) callback();
         if (openNextStep) openNextStep();
-
     });
-    console.log(leaseObje)
   };
 }
 
@@ -507,7 +495,6 @@ export function loadStepFour(){
       let employerState = user.employerState;
 
       let incomeSources = results[1];
-      debugger;
       let stateList = results[2];
       //let propertyTypeList = {"APT":"Apartment"}//["APT","SFM","CONDO","DUPLEX","MOBILE_HOME","TOWNHOUSE"]
 
