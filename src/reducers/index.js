@@ -5,7 +5,6 @@ import loginAppState from './login';
 import signupAppState from './signup';
 import forgotAppState from './forgot';
 import resetAppState from './reset';
-import dashboardAppState from './dashboard';
 import onboardingAppState from './onboardinglandlord';
 import feedbackAppState from './feedback';
 import checkoutAppState from './checkout';
@@ -18,7 +17,6 @@ const rootReducer = combineReducers({
   signupAppState,
   forgotAppState,
   resetAppState,
-  dashboardAppState,
   onboardingAppState,
   feedbackAppState,
   checkoutAppState,

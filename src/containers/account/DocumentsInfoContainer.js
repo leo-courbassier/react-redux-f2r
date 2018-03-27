@@ -4,29 +4,58 @@ import { bindActionCreators } from 'redux';
 
 import * as accountActions from '../../actions/accountActions';
 import TabEditablePanel from '../../components/account/TabEditablePanel';
-import DocumentsInfo from '../../components/account/DocumentsInfo';
+import Documents from '../../components/account/Documents';
+import DocumentsForm from '../../components/account/DocumentsForm';
+import DocumentsPaymentForm from './DocumentsPaymentFormContainer';
 
-class PasswordInfoContainer extends Component {
+class DocumentsInfoContainer extends Component {
+  context
   render() {
-    let {accountState, accountActions} = this.props;
-    let editMode = accountState.editMode.documents;
-    let updateEditMode = () => accountActions.editModeUpdate('documents', !editMode);
-    let onSubmit = (/*formData*/) => {
-      updateEditMode();
+    const {accountState, actions} = this.props;
+    const editMode = accountState.editMode.documents;
+    const toggleEditMode = () => actions.editModeUpdate('documents', !editMode);
+    const onSubmit = (/*formData*/) => {
+      toggleEditMode();
     };
+    const store = this.context.store.getState();
 
     return (
       <TabEditablePanel title="Documents"
                         editMode={editMode}
-                        onClick={updateEditMode}
+                        onClick={toggleEditMode}
       >
-        <DocumentsInfo editMode={editMode}
-                       onSubmit={onSubmit}
-        />
+        {accountState.paymentsReceived
+          ? editMode
+            ? <DocumentsForm
+              appState={accountState}
+              store={store}
+              load={actions.loadAccountDocumentsForm}
+              update={actions.updateAccountDocumentsForm}
+              upload={actions.uploadAccountDocumentsFile}
+              delete={actions.deleteAccountDocumentsFile}
+              openFile={actions.openAccountDocumentsFile}
+              updateF2RScore={actions.updateF2RScore}
+              />
+            : <Documents
+            id="documents"
+            ref="documents"
+            appState={accountState}
+            store={store}
+            load={actions.loadAccountDocuments}
+            openFile={actions.openAccountDocumentsFile}
+            showEditButton={toggleEditMode}
+            onPanelLoaded={function () {}}
+            />
+          : <DocumentsPaymentForm receiveDocumentPayment={actions.receiveDocumentPayment} />}
+
       </TabEditablePanel>
     );
   }
 }
+
+DocumentsInfoContainer.contextTypes = {
+  store: PropTypes.object
+};
 
 function mapStateToProps(state) {
   return {
@@ -36,11 +65,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    accountActions: bindActionCreators(accountActions, dispatch)
+    actions: bindActionCreators(accountActions, dispatch)
   };
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PasswordInfoContainer);
+)(DocumentsInfoContainer);

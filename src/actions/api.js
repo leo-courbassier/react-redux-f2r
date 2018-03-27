@@ -417,3 +417,37 @@ export function getScore(dispatch, getState, callback){
 export function getPseudoScore(dispatch, getState, callback){
   return put(services.TT_PSEUDO_F2RSCORE, getAuthHeaders(dispatch, getState), callback);
 }
+
+export function getDocumentBlobUrl(dispatch, getState, filePath, callback){
+  return fetch(`${services.DEPOT}/?filePath=${filePath}`, {
+    method: 'GET',
+    headers: {
+      'Authorization': getAuthHeaders(dispatch, getState)
+    }
+  })
+  .then(response => {
+    if(response){
+      return response.blob().then(blob => {
+        let url = URL.createObjectURL(blob);
+        if (callback) callback(url);
+      });
+    }else{
+      return false;
+    }
+  })
+  .catch(err => {
+    throw new Error(err);
+  });
+}
+
+export function browseDocuments(dispatch, getState, callback){
+  return get(services.DEPOT_BROWSE, getAuthHeaders(dispatch, getState), callback);
+}
+
+export function deleteDocuments(dispatch, getState, payload, callback){
+  return post(services.DEPOT_DELETE, getAuthHeaders(dispatch, getState), payload, callback);
+}
+
+export function uploadFile(dispatch, getState, file, callback){
+  return postFormData(services.DEPOT_UPLOAD, getAuthHeaders(dispatch, getState), file, callback);
+}

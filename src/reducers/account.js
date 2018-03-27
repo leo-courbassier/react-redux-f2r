@@ -17,7 +17,19 @@ const initialState = {
     profile: false,
     documents: false,
     password: false
-  }
+  },
+  paymentsReceived: false,
+  
+  accountDocuments: {
+    files: [],
+    loaded: false
+  },
+
+  accountDocumentsForm: {
+    files: [],
+    loaded: false
+  },
+
 };
 
 
@@ -79,6 +91,52 @@ export default function accountAppState(state = initialState, action) {
       return objectAssign({}, state, {
         profile: action.payload
       });
+
+    case types.RECEIVE_DOCUMENT_PAYMENT:
+      return objectAssign({}, state, {
+        paymentsReceived: true
+      });
+
+    /**
+     * Account Documents
+     */
+
+    case types.ACCOUNT_DOCUMENTS_LOAD:
+    {
+     let newState = objectAssign({}, state);
+     if (action.files) newState['accountDocuments']['files'] = action.files;
+     newState['accountDocuments']['loaded'] = true;
+     return newState;
+    }
+
+    case types.ACCOUNT_DOCUMENTS_UPDATE:
+    {
+     let newState = objectAssign({}, state);
+     newState['accountDocuments']['files'] = action.files;
+     return newState;
+    }
+
+    case types.ACCOUNT_DOCUMENTS_FORM_LOAD:
+    {
+     let newState = objectAssign({}, state);
+     newState['accountDocumentsForm'] = objectAssign({}, action.documentsData);
+     return newState;
+    }
+
+    case types.ACCOUNT_DOCUMENTS_FORM_UPDATE:
+    {
+     let newState = objectAssign({}, state);
+     newState['accountDocumentsForm'][action.name] = action.value;
+     return newState;
+    }
+
+    case types.ACCOUNT_DOCUMENTS_SAVE:
+    {
+      let newState = objectAssign({}, state);
+      newState['accountDocuments'] = objectAssign({}, newState['accountDocumentsForm']);
+      return newState;
+    }
+
     default:
       return state;
   }

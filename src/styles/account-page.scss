@@ -144,7 +144,7 @@
     }
   }
 
-  .documents-info{
+  .documents-payment-form{
     .storage-invite{
       text-align: center;
 
@@ -153,6 +153,33 @@
         margin-bottom: 10px;
       }
     }
+    .row {
+      margin: 0 -15px;
+    }
+  }
+  .documents-payment-submit-wrap {
+    margin-bottom: 20px;
+  }
+  .documents-payment-form-heading {
+    padding: 0 0 1px;
+    margin: 15px 0;
+    color: gray;
+    font-size: 1.2rem;
+  }
+  .documents-payment-methods {
+    text-align: center;
+  }
+  .payment-method-radio {
+    width: 50px;
+    display: inline-block;
+    margin: 0 5px;
+    img {
+      max-width: 100%;
+      margin-bottom: 5px;
+    }
+  }
+  .payment-agreement-text {
+    font-size: 12px;
   }
   .profile-info{
     color: gray;
@@ -257,6 +284,18 @@
     }
     &.has-gutters .item:not(:first-child) {
       margin-left: 15px;
+    }
+    &.center-aligned {
+      display: flex;
+      align-items: center;
+    }
+    &.row-narrow {
+      margin-left: -5px;
+      margin-right: -5px;
+      [class*="col-"] {
+        padding-left: 5px;
+        padding-right: 5px;
+      }
     }
   }
 

@@ -47,8 +47,11 @@ export const TT_LL_FEEDBACK = BASE_URL + '/tt/llfeedback';
 export const TT_AI = BASE_URL + '/tt/ai';
 export const TT_ADDAI = BASE_URL + '/tt/addAI';
 export const TT_DELETEAI = BASE_URL + '/tt/deleteAI';
+export const DEPOT = BASE_URL + '/depot';
+export const DEPOT_BROWSE = BASE_URL + '/depot/browse';
 export const DEPOT_UPLOAD = BASE_URL + '/depot/upload';
 export const DEPOT_UPLOADCR = BASE_URL + '/depot/uploadCR';
+export const DEPOT_DELETE = BASE_URL + '/depot/delete';
 
 export const TT_ADDRENTMANDATE = BASE_URL + '/tt/addRentMandate';
 export const TT_ADDFAMILY = BASE_URL + '/tt/addFamily';
