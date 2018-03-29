@@ -380,7 +380,7 @@ class StepOneForm extends Component {
                       disabled={this.isMandatoryInvalid()}
                       bsStyle="success"
                       className="skyp-button">
-                        Skyp
+                        Skip
                       </SubmitButton>
                     )}
           </div>

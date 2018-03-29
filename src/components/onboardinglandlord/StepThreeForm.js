@@ -56,6 +56,7 @@ class StepThreeForm extends Component {
 
   keypress(e) {
     this.props.update(this.props.appState, e.target.name, e.target.value);
+    console.log(this.props.appState)
   }
 
   // a boolean method to check if mandatory fields are not filled
@@ -63,12 +64,51 @@ class StepThreeForm extends Component {
     return true;
   }
 
-  isInvalid(){
-  return true;
-  }
+getRecipients() {
+
+      if(!this.props.appState[2].propertyList)return;
+
+      const landlords = this.props.appState[2].propertyList;//this.props.appState[2].propertyList;
+      let recipients = {};
+      for (let landlord of landlords) {
+        recipients[landlord.id] = `${landlord.headline}`;
+      }
+      return recipients;
+    }
+
+    isInvalid() {
+      let store = this.props.appState[STEP_ID];
+      let invalid = false;
+
+      if (
+        store.firstName ||
+        store.email ||
+        store.phone ||
+        store.lastName
+        )
+      {
+        if (store.phone && store.phone.replace(/\D/g,'').trim().length < 10){
+          invalid = 'Phone must be at least a 10 digit number.';
+        }
+
+        if (store.email && !isEmail(store.email)) {
+          invalid = 'Guarantor email must be valid.';
+        }
+        if (
+          !store.firstName ||
+          !store.lastName ||
+          !store.email ||
+          !store.phone
+          )
+        {
+          invalid = 'Please let us know the guarantor\'s first name, last name, email, and phone.';
+        }
+      }
+
+      return invalid;
+    }
 
   submit(openNextStep, e) {
-    debugger;
     e.preventDefault();
     this.setState({submitted: true});
 
@@ -78,6 +118,8 @@ class StepThreeForm extends Component {
     // otherwise, save button will always trigger a save
     let isModified = this.props.appState.status['modified']['stepThreeForm'];
     let allowSave = openNextStep ? isModified : true;
+    store.isMonthToMonth=store.leaseType=='month-to-month'||false;
+    console.log('isMonthToMonth: '+store.isMonthToMonth);
 
     if (allowSave) {
       this.props.save(
@@ -85,7 +127,6 @@ class StepThreeForm extends Component {
         store.propertyId,
         store.leaseStartDate,
         store.leaseEndDate,
-        store.rentAmount,
         store.paymentStartDate,
         store.paymentEndDate,
         store.paymentDueDate,
@@ -142,7 +183,7 @@ class StepThreeForm extends Component {
           <BS.ControlLabel>First Name</BS.ControlLabel>
           <BS.FormControl
           value='FirstName'
-          name=""
+          name="firstName"
           onChange={this.keypress.bind(this)}
           type="text" />
         </div>
@@ -150,7 +191,7 @@ class StepThreeForm extends Component {
           <BS.ControlLabel>Last Name</BS.ControlLabel>
           <BS.FormControl
           value={source.lastName}
-          name=""
+          name="lastName"
           onChange={this.keypress.bind(this)}
           type="text" />
         </div>
@@ -245,11 +286,22 @@ class StepThreeForm extends Component {
       </span>
     );
     const propertySele = (
-          <select id="property" className="form-control">
-              <option value="Refundable">Refundable</option>
-              <option value="Nonrefundable">Nonrefundable</option>
-          </select>
+      <SelectOptions
+          onChange={this.keypress.bind(this)}
+          value="Choose..."
+          name="propertyId"
+          optionList={this.getRecipients()}
+          defaultOption="Choose..."
+          defaultOptionName="Choose..."
+          keyValue
+         />
     );
+    const refundableStatus = (
+      <select id="property" className="form-control">
+          <option value="Refundable">Refundable</option>
+          <option value="Nonrefundable">Nonrefundable</option>
+      </select>
+    )
 
     const refundable = (
           <select id="property" className="form-control">
@@ -286,9 +338,9 @@ class StepThreeForm extends Component {
            </div>
            <div className="col-md-3">
            <BS.FormControl
-           value=''
-           name="firstNameTenantAssignemt"
-
+           name="firstName"
+           value={store.firstName}
+           onChange={this.keypress.bind(this)}
            type="text" />
            </div>
            <div className="col-md-3">
@@ -296,9 +348,9 @@ class StepThreeForm extends Component {
            </div>
            <div className="col-md-3">
            <BS.FormControl
-           value={store.lastNameTenantAssignemt}
-           name="firstNameTenantAssignemt"
-
+           name="lastName"
+           value={store.lastName}
+           onChange={this.keypress.bind(this)}
            type="text" />
            </div>
           </div>
@@ -311,7 +363,7 @@ class StepThreeForm extends Component {
            <BS.FormControl
            value={store.email}
            name="email"
-           onChange={_.partial(this.keypress.bind(this))}
+           onChange={this.keypress.bind(this)}
            type="text" />
            </div>
            <div className="col-md-3">
@@ -320,8 +372,8 @@ class StepThreeForm extends Component {
            <div className="col-md-3">
            <BS.FormControl
            value={store.phone}
-           name="phoneTenantAssignemt"
-           onChange={_.partial(this.keypress.bind(this))}
+           name="phone"
+           onChange={this.keypress.bind(this)}
            type="text" />
            </div>
           </div>
@@ -687,7 +739,7 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
        <BS.ControlLabel>Refundable Status</BS.ControlLabel>
       </div>
       <div className="col-md-3">
-      {propertySele}
+      {refundableStatus}
       </div>
       </div>
       <br />
@@ -718,19 +770,6 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
       </BS.Button>
     );
 
-    // const previousLandlords = (
-    //   <div className="previous-landlords">
-    //     {landlords}
-    //       <BS.Button
-    //       onClick={(e) => this.addLandlord(e)}
-    //       className="add-button"
-    //       type="submit"
-    //       bsStyle="success">
-    //         Add
-    //       </BS.Button>
-    //       {landlords.length ? removeButton : null}
-    //   </div>
-    // );
 
     const addAnotherDeposit = (
       <div className="addAnotherDeposit">
@@ -779,7 +818,7 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
             <SubmitButton
             appState={this.props.appState}
             statusAction="stepTwoFormProceed"
-            submit={_.partial(this.submit.bind(this), this.props.openPrevStep)}
+            submit={this.props.openPrevStep}
             textLoading="Loading"
             bsStyle="success"
             className="proceed-button prev-button">

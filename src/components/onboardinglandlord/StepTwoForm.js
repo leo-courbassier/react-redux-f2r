@@ -182,7 +182,10 @@ class StepTwoForm extends Component {
     // otherwise, save button will always trigger a save
     let isModified = this.props.appState.status['modified']['stepTwoForm'];
     let allowSave = openNextStep ? isModified : true;
-
+    store.propertyClass='STANDARD';
+    store.propertyStatus='VACANT';
+    store.rent='1250'
+    debugger;
     if (allowSave) {
       this.props.save(
         store.landlordId,
@@ -199,7 +202,6 @@ class StepTwoForm extends Component {
         store.rent,
         store.headline,
         store.sqft,
-        store.beganRentingDate,
         store.amenityList,
         openNextStep,
         store.incomeSources
@@ -794,17 +796,17 @@ class StepTwoForm extends Component {
          <div className="row">
          <div className="section" />
            <div className="col-md-4">
-              {this.props.showProceed && (
-                <SubmitButton
-                appState={this.props.appState}
-                statusAction="stepTwoFormProceed"
-                submit={_.partial(this.submit.bind(this), this.props.openPrevStep)}
-                textLoading="Loading"
-                bsStyle="success"
-                className="proceed-button prev-button">
-                  Previous
-                </SubmitButton>
-              )}
+               {this.props.showProceed && (
+                 <SubmitButton
+                 appState={this.props.appState}
+                 statusAction="stepTwoFormPrevious"
+                 submit={this.props.openPrevStep}
+                 textLoading=""
+                 bsStyle="success"
+                 className="proceed-button prev-button">
+                   Previous
+                 </SubmitButton>
+               )}
               <BS.HelpBlock className="pullLeft warn">
                 {this.state.submitted}
               </BS.HelpBlock>

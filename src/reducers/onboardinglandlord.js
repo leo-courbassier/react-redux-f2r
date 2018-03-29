@@ -38,7 +38,6 @@ const initialState = {
   1: {
       landlordId:null,
       propertyTitle: null,
-      propertyTypeList: null,
       stateList: null,
       address1:null,
       address2:null,
@@ -52,7 +51,6 @@ const initialState = {
       rent:null,
       headline:null,
       sqft:null,
-      beganRentingDate:null,
       incomeSources:[],
       amenityList:[],
       saved: false
@@ -60,11 +58,11 @@ const initialState = {
   2: {
       landlordId: null,
       propertyId: null,
+      propertyList: null,
       leaseStartDate: null,
       leaseEndDate: null,
       paymentStartDate:null,
       paymentEndDate:null,
-      rentAmount:null,
       paymentDueDate:null,
       monthlyRent:null,
       isLandlord: true,
@@ -227,7 +225,6 @@ export default function onboardingAppState(state = initialState, action) {
         newState[1]['numBeds'] = action.beganRentingDate;
         newState[1]['numBaths'] = action.sqft;
         newState[1]['rent'] = action.headline;
-        newState[1]['beganRentingDate'] = action.beganRentingDate;
         newState[1]['sqft'] = action.sqft;
         newState[1]['headline'] = action.headline;
         newState[1]['amenityList'] = action.amenityList;
@@ -259,6 +256,7 @@ export default function onboardingAppState(state = initialState, action) {
 
     case types.ONBOARDING_STEPTWO_FORM_SAVE:
       {
+
         let newState = objectAssign({}, state);
         newState[1]['landlordId'] = action.landlordId;
         newState[1]['propertyTitle'] = action.propertyTitle;
@@ -266,10 +264,10 @@ export default function onboardingAppState(state = initialState, action) {
         newState[1]['zipCode'] = action.zipCode;
         newState[1]['propertyClass'] = action.propertyClass;
         newState[1]['propertyStatus'] = action.propertyStatus;
-        newState[1]['numBeds'] = action.beganRentingDate;
-        newState[1]['numBaths'] = action.sqft;
-        newState[1]['rent'] = action.headline;
-        newState[1]['beganRentingDate'] = action.beganRentingDate;
+        newState[1]['numBeds'] = action.numBeds;
+        newState[1]['numBaths'] = action.numBaths;
+        newState[1]['rent'] = action.rent;
+        //newState[1]['beganRentingDate'] = action.beganRentingDate;
         newState[1]['sqft'] = action.sqft;
         newState[1]['headline'] = action.headline;
         newState[1]['amenityList'] = action.amenityList;
@@ -307,10 +305,11 @@ export default function onboardingAppState(state = initialState, action) {
         let newState = objectAssign({}, state);
 
         newState[2]['landlordId'] = action.landlordId;
+        newState[2]['propertyList'] = action.propertyList;
         newState[2]['propertyId'] = action.propertyId;
         newState[2]['leaseStartDate'] = action.leaseStartDate;
         newState[2]['leaseEndDate'] = action.leaseEndDate;
-        newState[2]['rentAmount'] = action.rentAmount;
+
         newState[2]['paymentStartDate'] = action.paymentStartDate;
         newState[2]['paymentEndDate'] = action.paymentEndDate;
         newState[2]['paymentDueDate'] = action.paymentDueDate;
@@ -328,12 +327,12 @@ export default function onboardingAppState(state = initialState, action) {
     case types.ONBOARDING_STEPTHREE_FORM_SAVE:
       {
         let newState = objectAssign({}, state);
-        debugger;
+
         newState[2]['landlordId'] = action.landlordId;
         newState[2]['propertyId'] = action.propertyId;
         newState[2]['leaseStartDate'] = action.leaseStartDate;
         newState[2]['leaseEndDate'] = action.leaseEndDate;
-        newState[2]['rentAmount'] = action.rentAmount;
+
         newState[2]['paymentStartDate'] = action.paymentStartDate;
         newState[2]['paymentEndDate'] = action.paymentEndDate;
         newState[2]['paymentDueDate'] = action.paymentDueDate;
@@ -351,12 +350,12 @@ export default function onboardingAppState(state = initialState, action) {
     case types.ONBOARDING_STEPTHREE_UPDATE_LANDLORDS:
       {
         let newState = objectAssign({}, state);
-        debugger;
+
         newState[2]['landlordId'] = action.landlordId;
         newState[2]['propertyId'] = action.propertyId;
         newState[2]['leaseStartDate'] = action.leaseStartDate;
         newState[2]['leaseEndDate'] = action.leaseEndDate;
-        newState[2]['rentAmount'] = action.rentAmount;
+
         newState[2]['paymentStartDate'] = action.paymentStartDate;
         newState[2]['paymentEndDate'] = action.paymentEndDate;
         newState[2]['paymentDueDate'] = action.paymentDueDate;

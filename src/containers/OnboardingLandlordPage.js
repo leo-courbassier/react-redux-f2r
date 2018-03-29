@@ -145,6 +145,12 @@ class OnboardingLandlordPage extends Component {
     this.handleSelect(nextStep.toString());
   }
 
+  openPrevStep(e) {
+    e.preventDefault();
+    let prevStep = parseInt(this.state.activeKey) - 1;
+    this.handleSelect(prevStep.toString());
+  }
+
   scrollToPanel(e){
     smoothScroll.animateScroll(e.offsetTop);
   }
@@ -228,7 +234,7 @@ class OnboardingLandlordPage extends Component {
         upload={this.props.actions.uploadIncomeDoc}
         appState={this.props.appState}
         openNextStep={this.openNextStep.bind(this)}
-        updateOnboardingScore={this.props.actions.updateOnboardingScore}
+        openPrevStep={this.openPrevStep.bind(this)}
         showProceed={this.state.hasNotCheckedOut}
       />
     );
@@ -240,7 +246,7 @@ class OnboardingLandlordPage extends Component {
       update={this.props.actions.updateStepThreeForm}
       appState={this.props.appState}
       openNextStep={this.openNextStep.bind(this)}
-      updateOnboardingScore={this.props.actions.updateOnboardingScore}
+      openPrevStep={this.openPrevStep.bind(this)}
       showProceed={this.state.hasNotCheckedOut} />
     );
     const stepFour =
