@@ -16,12 +16,9 @@ class PropertiesListContainer extends Component {
     const { appState, actions, goTo } = this.props;
 
     return (
-      <div>
-        <PageTitle>My Properties > Summary</PageTitle>
-        <Loader appState={this.props.appState} statusType="loading" statusAction="propertiesList">
-          <PropertiesList properties={appState.propertiesList[0]} goTo={goTo} />
-        </Loader>
-      </div>
+      <Loader appState={this.props.appState} statusType="loading" statusAction="propertiesList">
+        <PropertiesList properties={appState.propertiesList[0]} goTo={goTo} />
+      </Loader>
     );
   }
 }

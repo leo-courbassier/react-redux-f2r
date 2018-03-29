@@ -16,7 +16,7 @@ export const TT_CHECKINVITES = BASE_URL + '/tt/checkInvites';
 //step two methods
 export const USER_PROPERTY_PIC = BASE_URL + '/prop/upload';
 export const LL_ADD_PROPERTY = BASE_URL + '/prop/addProp';
-export const GET_PROPERTY_LIST = BASE_URL + '/prop/propsView';
+export const GET_PROPERTY_LIST = BASE_URL + '/prop/property';
 
 export const TT_ADDPETS = BASE_URL + '/tt/addPets';
 export const TT_DELETEPETS = BASE_URL + '/tt/deletePets';
@@ -107,3 +107,8 @@ export const VERIFY_CONFIRM = BASE_URL + '/verify/confirm';
 
 export const TT_F2RSCORE = BASE_URL + '/tt/f2rScore';
 export const TT_PSEUDO_F2RSCORE = BASE_URL + '/tt/pseudoF2RScore';
+
+// Properties
+
+export const LL_PROPERTIES_LIST = BASE_URL + '/prop/propsView';
+export const LL_PROPERTIE_PROFILE = BASE_URL + '/prop/property';

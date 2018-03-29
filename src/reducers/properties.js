@@ -7,7 +7,9 @@ const initialState = {
     saving: {},
     modified: {}
   },
-  propertiesList: []
+  editMode: {},
+  propertiesList: [],
+  propertyProfile: {}
 };
 
 
@@ -23,9 +25,21 @@ export default function propertiesAppState(state = initialState, action) {
       return newState;
     }
 
+    case types.PROPERTY_EDIT_MODE:
+    {
+      let newState = _.assign({}, state);
+      newState.editMode[action.panelName] = action.value;
+      return newState;
+    }
+
     case types.PROPERTIES_LIST_LOAD:
       return _.assign({}, state, {
         propertiesList: action.payload
+      });
+
+    case types.PROPERTY_PROFILE_LOAD:
+      return _.assign({}, state, {
+        propertyProfile: action.payload
       });
 
     default:

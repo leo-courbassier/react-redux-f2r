@@ -1,17 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+import PageTitle from '../components/PageTitle';
 import PropertiesListContainer from '../containers/Properties/PropertiesListContainer';
 
-class PropertiesPage extends Component {
-  static propTypes = {
-    children: PropTypes.node.isRequired
-  }
+class PropertiesListPage extends Component {
   render() {
-    const { children } = this.props;
     return (
-      <div>
-        {children}
+      <div className="properties-page">
+        <PageTitle>My Properties > Summary</PageTitle>
+
+        <PropertiesListContainer />
+
       </div>
     );
   }
@@ -28,4 +28,4 @@ function mapDispatchToProps() {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PropertiesPage);
+)(PropertiesListPage);

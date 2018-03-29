@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { Button, Label, Table } from 'react-bootstrap';
 import _ from 'lodash';
 
-export default class PropertyEditor extends Component {
+export default class PropertyForm extends Component {
   static propTypes = {
     property: PropTypes.object
   };
@@ -11,7 +11,7 @@ export default class PropertyEditor extends Component {
   render(){
     const { properties, params } = this.props;
     return (
-      <div>TODO: Implement property edit</div>
+      <div>TODO: Implement property form</div>
     );
   }
 }
