@@ -1,0 +1,45 @@
+.properties-page {
+  margin-top: 70px;
+}
+.properties-list-table {
+  th, td {
+    text-align: center;
+  }
+  thead {
+    background-color: #f1f1f1;
+  }
+}
+.divide-column {
+  display: block;
+  &:after {
+    clear: both;
+    display: table;
+    content: '';
+  }
+  .half-col {
+    display: block;
+    float: left;
+    width: 50%;
+    position: relative;
+    &:first-child {
+      text-align: right;
+      padding-right: 10px;
+      &:after {
+        position: absolute;
+        right: -10px;
+        text-align: center;
+        display: block;
+        content: '/';
+        font-size: 30px;
+        font-weight: 300;
+        width: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+    &:last-child {
+      text-align: left;
+      padding-left: 10px;
+    }
+  }
+}

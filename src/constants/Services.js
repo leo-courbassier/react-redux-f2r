@@ -16,7 +16,7 @@ export const TT_CHECKINVITES = BASE_URL + '/tt/checkInvites';
 //step two methods
 export const USER_PROPERTY_PIC = BASE_URL + '/prop/upload';
 export const LL_ADD_PROPERTY = BASE_URL + '/prop/addProp';
-export const GET_PROPERTY_LIST = BASE_URL + '/prop/property';
+export const GET_PROPERTY_LIST = BASE_URL + '/prop/propsView';
 
 export const TT_ADDPETS = BASE_URL + '/tt/addPets';
 export const TT_DELETEPETS = BASE_URL + '/tt/deletePets';

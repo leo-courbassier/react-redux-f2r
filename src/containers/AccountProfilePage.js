@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import PageTitle from '../components/account/PageTitle';
+import PageTitle from '../components/PageTitle';
 import ProfileInfoContainer from '../containers/account/ProfileInfoContainer';
 
 class AccountProfilePage extends Component {

@@ -11,6 +11,8 @@ import checkoutAppState from './checkout';
 import verifyAppState from './verify';
 import accountAppState from './account';
 import sidebarState from './sidebar';
+import propertiesAppState from './properties';
+import { routerReducer } from 'react-router-redux';
 
 const rootReducer = combineReducers({
   loginAppState,
@@ -23,7 +25,9 @@ const rootReducer = combineReducers({
   verifyAppState,
   accountAppState,
   sidebarState,
-  form: formReducer
+  propertiesAppState,
+  form: formReducer,
+  routing: routerReducer
 });
 
 export default rootReducer;

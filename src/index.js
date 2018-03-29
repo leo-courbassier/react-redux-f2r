@@ -9,6 +9,7 @@ import { Router, Route, IndexRoute, browserHistory, IndexRedirect } from 'react-
 import ReactGA from 'react-ga';
 
 import configureStore from './store/configureStore';
+import { syncHistoryWithStore } from 'react-router-redux';
 
 import './styles/styles.scss'; // imports all stylesheets
 
@@ -30,6 +31,10 @@ import AccountSummaryPage from './containers/AccountSummaryPage';
 import AccountDocumentsPage from './containers/AccountDocumentsPage';
 import AccountPasswordPage from './containers/AccountPasswordPage';
 import AccountProfilePage from './containers/AccountProfilePage';
+import PropertiesPage from './containers/PropertiesPage';
+import PropertiesList from './containers/Properties/PropertiesListContainer';
+import PropertyEditor from './containers/Properties/PropertyEditorContainer';
+import PropertyCreator from './containers/Properties/PropertyCreatorContainer';
 
 let NotImplemented = () => <div>Not Implemented</div>;
 
@@ -54,9 +59,11 @@ function logPageView() {
   ReactGA.pageview(window.location.pathname);
 }
 
+const history = syncHistoryWithStore(browserHistory, store);
+
 render(
   <Provider store={store}>
-    <Router history={browserHistory} onUpdate={logPageView}>
+    <Router history={history} onUpdate={logPageView}>
       <Route path="/" component={App}>
         <IndexRoute component={LoginPage} />
 
@@ -75,7 +82,11 @@ render(
             <Route path="documents" component={AccountDocumentsPage} />
             <Route path="password" component={AccountPasswordPage} />
           </Route>
-          <Route path="properties" component={NotImplemented} />
+          <Route path="properties" component={PropertiesPage}>
+            <IndexRoute component={PropertiesList} />
+            <Route path="new" component={PropertyCreator} />
+            <Route path=":id" component={PropertyEditor} />
+          </Route>
           <Route path="leases" component={NotImplemented} />
           <Route path="tenants" component={NotImplemented} />
           <Route path="payments" component={NotImplemented}>
