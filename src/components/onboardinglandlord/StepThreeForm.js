@@ -54,7 +54,6 @@ class StepThreeForm extends Component {
     store.dispatch({ type: types.ONBOARDING_STEPTHREE_UPDATE_LANDLORDS, sources });
   }
   addIncomeSource = (e) => {
-    debugger;
     e.preventDefault();
     api.setStatus(this.context.store.dispatch, 'modified', 'stepTwoForm', true);
     let store = this.context.store;
@@ -66,7 +65,6 @@ class StepThreeForm extends Component {
   }
 
   renderIncomeSources = (source, i) => {
-    debugger;
     let store = this.props.appState[STEP_ID];
 
     return (
@@ -705,14 +703,7 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
       <br />
       <div className="row">
       <div className="col-md-8 anotherDeposit">
-          <BS.Button
-          onClick={(e) => this.addIncomeSource(e)}
-          className="add-button-otherDeposit"
-          type="submit"
-          bsStyle="success">
-            {incomeSources}
-          </BS.Button>
-
+          {incomeSources}
       </div>
       </div>
      </div>
