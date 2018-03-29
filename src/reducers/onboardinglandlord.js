@@ -70,6 +70,7 @@ const initialState = {
       leaseStatus:null,
       renterIds:null,
       depositList:[],
+      pepe:[],
       saved: false
   },
   3: {
@@ -319,7 +320,6 @@ export default function onboardingAppState(state = initialState, action) {
         newState[2]['leaseStatus'] = action.leaseStatus;
         newState[2]['renterIds'] = action.renterIds;
         newState[2]['email'] = action.email;
-        newState[2]['depositList'] = action.depositList;
 
         return newState;
       }

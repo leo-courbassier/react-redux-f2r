@@ -53,7 +53,29 @@ class StepThreeForm extends Component {
     api.setStatus(this.context.store.dispatch, 'modified', 'stepThreeForm', true);
     store.dispatch({ type: types.ONBOARDING_STEPTHREE_UPDATE_LANDLORDS, sources });
   }
+  addIncomeSource = (e) => {
+    debugger;
+    e.preventDefault();
+    api.setStatus(this.context.store.dispatch, 'modified', 'stepTwoForm', true);
+    let store = this.context.store;
+    let sources = this.props.appState[STEP_ID].depositList;
 
+    sources.push({"depositAmount":550, "depositType":"SECURITY","depositStatus":"REFUNDABLE"});
+    store.dispatch({ type: types.ONBOARDING_STEPTHREE_UPDATE_INCOME_SOURCES, sources });
+
+  }
+
+  renderIncomeSources = (source, i) => {
+    debugger;
+    let store = this.props.appState[STEP_ID];
+
+    return (
+      <div className="your-job">
+        Pepe
+      </div>
+    );
+
+  }
   keypress(e) {
     this.props.update(this.props.appState, e.target.name, e.target.value);
     console.log(this.props.appState)
@@ -327,7 +349,29 @@ getRecipients() {
 
     );
 
+    const sources = _.map(store.depositList, (source, i) => {
+      return this.renderIncomeSources(source, i);
+    });
 
+
+
+    const incomeSources = (
+      <div className="col-md-4">
+        <div>
+            <BS.Button
+            onClick={(e) => this.addIncomeSource(e)}
+            className="add-button"
+            type="submit"
+            bsStyle="success">
+              Add Another Property
+            </BS.Button>
+            {sources.length ? removeButton : null}
+        </div>
+        <div className="row">
+        {sources}
+        </div>
+      </div>
+    );
 
     const tenantAssignmet = (
 
@@ -450,91 +494,7 @@ getRecipients() {
         </div>
     );
 
-    // const ownedPropertyInfo = (
-    //
-    //   <div className="owned-property-info">
-    //     <BS.FormGroup controlId="ownedPropertyInfo">
-    //     <div className="row">
-    //       <div className="item">
-    //         <BS.ControlLabel>Address</BS.ControlLabel>
-    //         <BS.FormControl
-    //         value={store.ownedAddress}
-    //         onChange={this.keypress.bind(this)}
-    //         name="ownedAddress"
-    //         type="text" />
-    //       </div>
-    //       <div className="item">
-    //         <BS.ControlLabel>State</BS.ControlLabel>
-    //         <SelectOptions
-    //           name="ownedState"
-    //           onChange={_.partial(this.stateListKeypress.bind(this), 'ownedCityList')}
-    //           defaultValue={store.ownedState}
-    //           optionList={store.stateList}
-    //           defaultOption
-    //           />
-    //         </div>
-    //       </div>
-    //       <div className="row">
-    //         <div className="item">
-    //           <BS.ControlLabel>City</BS.ControlLabel>
-    //           <SelectOptions
-    //             name="ownedCity"
-    //             disabled={!store.ownedState}
-    //             loading={this.props.appState.status.loading['ownedCityList']}
-    //             loadingText="Retrieving cities..."
-    //             onChange={this.keypress.bind(this)}
-    //             defaultValue={store.ownedCity}
-    //             optionList={this.props.appState.cities['ownedCityList']}
-    //             defaultOption
-    //             />
-    //           </div>
-    //           <div className="item">
-    //             <BS.ControlLabel>Zip</BS.ControlLabel>
-    //             <BS.FormControl
-    //             value={store.ownedZip}
-    //             onChange={this.keypress.bind(this)}
-    //             name="ownedZip"
-    //             type="text" />
-    //           </div>
-    //         </div>
-    //         <div className="row">
-    //           <div className="item">
-    //             <BS.ControlLabel>Status</BS.ControlLabel>
-    //             <SelectOptions
-    //             name="ownerStatus"
-    //             onChange={this.keypress.bind(this)}
-    //             defaultValue={store.ownerStatus}
-    //             optionList={ownerStatusOptionsList}
-    //             valuesToUpper
-    //               />
-    //             </div>
-    //             <div className="item">
-    //               <BS.HelpBlock>
-    //               <ul>
-    //                 <li>Occupied - You’re currently living there</li>
-    //                 <li>Leased - You’re currently leasing it out</li>
-    //                 <li>Selling/Sold - Property sold or currently unoccupied but for sale</li>
-    //                 <li>Foreclosed - Property is foreclosed and will show up on a Credit Report as such</li>
-    //               </ul>
-    //               </BS.HelpBlock>
-    //             </div>
-    //           </div>
-    //           <div className="row">
-    //             <div className="item">
-    //               <BS.ControlLabel>If the home is sold, were you ever a Landlord while you owned it?</BS.ControlLabel>
-    //               <Switch
-    //               onColor="success"
-    //               offColor="success"
-    //               onText="Yes"
-    //               offText="No"
-    //               size="mini"
-    //               onChange={_.partial(this.switchKeypress.bind(this), 'isLandlord')}
-    //               state={store.isLandlord} />
-    //             </div>
-    //           </div>
-    //           </BS.FormGroup>
-    //         </div>
-    // );
+
 
     const { leaseType: leaseTypeState } = this.props.appState[2];
 
@@ -746,19 +706,20 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
       <div className="row">
       <div className="col-md-8 anotherDeposit">
           <BS.Button
-          onClick={(e) => this.addAnotherDeposit(e)}
+          onClick={(e) => this.addIncomeSource(e)}
           className="add-button-otherDeposit"
           type="submit"
           bsStyle="success">
-            Add Another Deposit
+            {incomeSources}
           </BS.Button>
+
       </div>
       </div>
      </div>
    </BS.Collapse>
 );
 
-    //const landlords = _.map(store.previousLandlords, (source, i) => {return this.renderLandlords(source, i)});
+    //const landlords = _.map(store.previousLandlords, (source, i) => {return this.Landlords(source, i)});
 
     const removeButton = (
       <BS.Button

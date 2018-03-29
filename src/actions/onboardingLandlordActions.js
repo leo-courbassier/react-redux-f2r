@@ -321,6 +321,7 @@ export function uploadIncomeDoc(file, statusAction, sources, sourceIndex) {
         newSources[sourceIndex].documentationProvided = true;
       }
       dispatch({ type: types.ONBOARDING_STEPTWO_UPDATE_INCOME_SOURCES, sources: newSources });
+      dispatch({ type: types.ONBOARDING_STEPTHREE_UPDATE_INCOME_SOURCES, sources: newSources });
       api.setStatus(dispatch, 'uploading', statusAction, false);
     });
   };
@@ -364,7 +365,6 @@ export function loadStepThree(){
        let isMonthToMonth;
        let leaseStatus;
        let renterIds;
-       let depositList;
        let saved;
        dispatch({ type: types.ONBOARDING_STEPTHREE_FORM_LOAD,
         landlordId,
@@ -377,8 +377,7 @@ export function loadStepThree(){
         isLandlord,
         isMonthToMonth,
         leaseStatus,
-        renterIds,
-        depositList});
+        renterIds});
         api.setStatus(dispatch, 'loading', 'stepThreeForm', false);
     });
   };
