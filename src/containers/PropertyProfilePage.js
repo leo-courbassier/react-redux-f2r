@@ -14,7 +14,7 @@ class PropertyProfilePage extends Component {
     let {children, accountState, params} = this.props;
 
     return (
-      <BS.Row>
+      <BS.Row className="property-page">
 
         <BS.Col xs={12} sm={12} md={8} className="panels">
           <PageTitle>My Properties > Property Profile</PageTitle>

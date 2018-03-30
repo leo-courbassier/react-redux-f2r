@@ -457,5 +457,5 @@ export function getLLPropertiesList(dispatch, getState){
 }
 
 export function getLLPropertyProfile(propertyId, dispatch, getState){
-  return get(services.LL_PROPERTIE_PROFILE + '?id=' + propertyId, getAuthHeaders(dispatch, getState));
+  return get(services.LL_PROPERTIE_PROFILE + '?includeImage=1&id=' + propertyId, getAuthHeaders(dispatch, getState));
 }

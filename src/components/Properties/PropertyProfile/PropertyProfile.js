@@ -29,8 +29,8 @@ export default class PropertyProfile extends Component {
         <Loader appState={this.props.appState} statusType="loading" statusAction="profile">
           {
             editMode
-            ? <PropertyForm property={appState.property} />
-            : <PropertyInfo property={appState.property} />
+            ? <PropertyForm property={appState.propertyProfile} />
+            : <PropertyInfo property={appState.propertyProfile} />
           }
         </Loader>
       </TabEditablePanel>
