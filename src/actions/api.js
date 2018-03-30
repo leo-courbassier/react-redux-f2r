@@ -451,3 +451,11 @@ export function deleteDocuments(dispatch, getState, payload, callback){
 export function uploadFile(dispatch, getState, file, callback){
   return postFormData(services.DEPOT_UPLOAD, getAuthHeaders(dispatch, getState), file, callback);
 }
+
+export function getLLPropertiesList(dispatch, getState){
+  return get(services.LL_PROPERTIES_LIST, getAuthHeaders(dispatch, getState));
+}
+
+export function getLLPropertyProfile(propertyId, dispatch, getState){
+  return get(services.LL_PROPERTIE_PROFILE + '?includeImage=1&id=' + propertyId, getAuthHeaders(dispatch, getState));
+}

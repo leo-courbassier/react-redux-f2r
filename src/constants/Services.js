@@ -1,6 +1,6 @@
 // server address
 // export const BASE_URL = 'https://ec2-52-91-200-31.compute-1.amazonaws.com:9931/api';
-export const BASE_URL = 'https://ec2-54-235-238-44.compute-1.amazonaws.com:9931/api';
+export const BASE_URL = 'https://dev-api.fit2rent.com:9931/api';
 
 // export const BASE_URL = 'https://api.fit2rent.com/api';
 
@@ -107,3 +107,8 @@ export const VERIFY_CONFIRM = BASE_URL + '/verify/confirm';
 
 export const TT_F2RSCORE = BASE_URL + '/tt/f2rScore';
 export const TT_PSEUDO_F2RSCORE = BASE_URL + '/tt/pseudoF2RScore';
+
+// Properties
+
+export const LL_PROPERTIES_LIST = BASE_URL + '/prop/propsView';
+export const LL_PROPERTIE_PROFILE = BASE_URL + '/prop/property';
