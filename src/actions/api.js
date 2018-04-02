@@ -479,3 +479,7 @@ export function addLLPropertyProfile(dispatch, getState, payload, callback){
 export function updateLLPropertyProfile(dispatch, getState, payload, callback){
   return post(services.LL_UPDATE_PROPERTY_PROFILE, getAuthHeaders(dispatch, getState), payload, callback);
 }
+
+export function getLLLeasesList(dispatch, getState){
+  return get(services.LL_LEASES_LIST, getAuthHeaders(dispatch, getState));
+}

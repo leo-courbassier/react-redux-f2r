@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PageTitle from '../components/PageTitle';
 import PropertiesListContainer from '../containers/Properties/PropertiesListContainer';
 
-class PropertiesListPage extends Component {
+export default class PropertiesListPage extends Component {
   render() {
     return (
       <div className="properties-page">
@@ -16,16 +16,3 @@ class PropertiesListPage extends Component {
     );
   }
 }
-
-function mapStateToProps() {
-  return {};
-}
-
-function mapDispatchToProps() {
-  return {};
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PropertiesListPage);

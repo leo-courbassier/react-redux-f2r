@@ -9,6 +9,7 @@ import geoAppState from './geo';
 import loginAppState from './login';
 import onboardingAppState from './onboardinglandlord';
 import propertiesAppState from './properties';
+import leasesAppState from './leases';
 import resetAppState from './reset';
 import sidebarState from './sidebar';
 import signupAppState from './signup';
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   accountAppState,
   sidebarState,
   propertiesAppState,
+  leasesAppState,
   geoAppState,
   form: formReducer,
   routing: routerReducer
