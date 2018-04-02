@@ -1,0 +1,17 @@
+.data-table {
+  th, td {
+    text-align: center;
+  }
+  thead {
+    background-color: #f1f1f1;
+  }
+  th {
+    position: relative;
+  }
+  .top-right-corner {
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    cursor: pointer;
+  }
+}
