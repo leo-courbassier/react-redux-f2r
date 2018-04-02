@@ -457,5 +457,25 @@ export function getLLPropertiesList(dispatch, getState){
 }
 
 export function getLLPropertyProfile(propertyId, dispatch, getState){
-  return get(services.LL_PROPERTIE_PROFILE + '?includeImage=1&id=' + propertyId, getAuthHeaders(dispatch, getState));
+  return get(services.LL_PROPERTY_PROFILE + '?includeImages=1&id=' + propertyId, getAuthHeaders(dispatch, getState));
+}
+
+export function getLLPropertyLeases(propertyId, dispatch, getState){
+  return get(services.LL_PROPERTY_LEASES + '?propertyId=' + propertyId, getAuthHeaders(dispatch, getState));
+}
+
+export function getLLPropertyTenants(propertyId, dispatch, getState){
+  return get(services.LL_PROPERTY_TENANTS + '?id=' + propertyId, getAuthHeaders(dispatch, getState));
+}
+
+export function uploadPropertyPic(propertyId, dispatch, getState, file, callback){
+  return postFormData(services.LL_PROPERTY_PIC + '?propertyId=' + propertyId, getAuthHeaders(dispatch, getState), file, callback);
+}
+
+export function addLLPropertyProfile(dispatch, getState, payload, callback){
+  return post(services.LL_ADD_PROPERTY_PROFILE, getAuthHeaders(dispatch, getState), payload, callback);
+}
+
+export function updateLLPropertyProfile(dispatch, getState, payload, callback){
+  return post(services.LL_UPDATE_PROPERTY_PROFILE, getAuthHeaders(dispatch, getState), payload, callback);
 }

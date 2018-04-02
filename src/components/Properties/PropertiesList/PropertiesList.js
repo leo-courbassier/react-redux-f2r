@@ -30,11 +30,46 @@ export default class PropertiesList extends Component {
   }
 
   renderDividedColumn(text1, text2) {
-    return (
+    return (text1 || text2) && (
       <span className="divide-column">
         <span className="half-col">{text1}</span>
         <span className="half-col">{text2}</span>
       </span>
+    );
+  }
+
+  renderContent() {
+    const { properties } = this.props;
+    return (
+      _.map(properties, (property, index) => (
+        <tr key={index}>
+          <td>
+            <Link to={`/dashboard/properties/${property.propertyId}`}>
+              {property.propertyName}
+            </Link>
+          </td>
+          <td>{this.getAddress(property)}</td>
+          <td>{this.renderStatus(property.propertyStatus)}</td>
+          <td>{property.rent}</td>
+          <td>{this.renderDividedColumn(property.monthOccupied, property.rentCollected)}</td>
+          <td>{property.rentRemaining}</td>
+          <td>{property.totalEarnings}</td>
+          <td>{property.occupancyRate}</td>
+          <td>{property.averageYield}</td>
+          <td>
+            <Button block bsSize="small" bsStyle="success">Search for Tenants</Button>
+            <Button block bsSize="small" bsStyle="warning">Search for Agents</Button>
+          </td>
+        </tr>
+      ))
+    );
+  }
+
+  renderEmptyContent() {
+    return (
+      <tr>
+        <td colSpan={10}>No properties found.</td>
+      </tr>
     );
   }
 
@@ -58,33 +93,14 @@ export default class PropertiesList extends Component {
             </tr>
           </thead>
           <tbody>
-            {
-              _.map(properties, (property, index) => (
-                <tr key={index}>
-                  <td>
-                    <Link to={`/dashboard/properties/${property.propertyId}`}>
-                      {property.propertyName}
-                    </Link>
-                  </td>
-                  <td>{this.getAddress(property)}</td>
-                  <td>{this.renderStatus(property.propertyStatus)}</td>
-                  <td>{property.rent}</td>
-                  <td>{property.monthOccupied} / {property.rentCollected}</td>
-                  <td>{property.rentRemaining}</td>
-                  <td>{property.totalEarnings}</td>
-                  <td>{property.occupancyRate}</td>
-                  <td>{property.averageYield}</td>
-                  <td>
-                    <Button block bsSize="small" bsStyle="success">Search for Tenants</Button>
-                    <Button block bsSize="small" bsStyle="warning">Search for Agents</Button>
-                  </td>
-                </tr>
-              ))
+            {properties.length
+              ? this.renderContent()
+              : this.renderEmptyContent()
             }
           </tbody>
         </Table>
         <div className="text-right">
-          <Button onClick={this.handleAddNewProperty}>Add New Property</Button>
+          <Button bsStyle="primary" onClick={this.handleAddNewProperty}>Add New Property</Button>
         </div>
       </div>
     );

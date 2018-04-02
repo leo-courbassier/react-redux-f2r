@@ -1,41 +1,26 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
 import * as propertyActions from '../../actions/propertyActions';
-
-import Loader from '../../components/Loader';
+import * as geoActions from '../../actions/geoActions';
 import PropertyCreator from '../../components/Properties/PropertyCreator';
-import PageTitle from '../../components/PageTitle';
-
-class PropertyCreatorContainer extends Component {
-  componentWillMount() {
-  }
-  render() {
-    const { appState, actions, params } = this.props;
-
-    return (
-      <div>
-        <PageTitle>My Properties > Create a New Property</PageTitle>
-        <PropertyCreator property={appState.property} params={params}/>
-      </div>
-    );
-  }
-}
+import { goTo } from '../../actions/routerActions';
 
 function mapStateToProps(state) {
   return {
-    appState: state.propertiesAppState
+    appState: state.propertiesAppState,
+    geoState: state.geoAppState
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(propertyActions, dispatch)
+    actions: bindActionCreators(propertyActions, dispatch),
+    goTo: bindActionCreators(goTo, dispatch),
+    geoActions: bindActionCreators(geoActions, dispatch)
   };
 }
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PropertyCreatorContainer);
+)(PropertyCreator);

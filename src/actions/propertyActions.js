@@ -48,3 +48,74 @@ export const loadPropertyProfile = (propertyId) => {
     });
   };
 };
+
+export const loadPropertyLeases = (propertyId) => {
+    return (dispatch, getState) => {
+    let requestPropertyLeases = api.getLLPropertyLeases(propertyId, dispatch, getState);
+
+    api.setStatus(dispatch, 'loading', 'propertyLeases', true);
+
+    Promise.all([
+      requestPropertyLeases
+    ])
+    .then((results) => {
+      const propertyLeases = results[0];
+
+      dispatch({ type: types.PROPERTY_LEASES_LOAD, payload: propertyLeases });
+
+      api.setStatus(dispatch, 'loading', 'propertyLeases', false);
+    });
+  };
+};
+
+export const loadPropertyTenants = (propertyId) => {
+    return (dispatch, getState) => {
+    let requestPropertyTenants = api.getLLPropertyTenants(propertyId, dispatch, getState);
+
+    api.setStatus(dispatch, 'loading', 'propertyTenants', true);
+
+    Promise.all([
+      requestPropertyTenants
+    ])
+    .then((results) => {
+      const propertyTenants = results[0];
+
+      dispatch({ type: types.PROPERTY_TENANTS_LOAD, payload: propertyTenants });
+
+      api.setStatus(dispatch, 'loading', 'propertyTenants', false);
+    });
+  };
+};
+
+export const uploadPropertyPic = (propertyId, file) => {
+  return function (dispatch, getState) {
+    api.setStatus(dispatch, 'uploading', 'propertyPicUpload', true);
+    api.uploadPropertyPic(propertyId, dispatch, getState, file, (response) => {
+      api.setStatus(dispatch, 'uploading', 'propertyPicUpload', false);
+      dispatch(loadPropertyProfile(propertyId));
+    });
+
+  };
+};
+
+export const savePropertyDetails = (payload, callback) => {
+  return function (dispatch, getState) {
+    api.setStatus(dispatch, 'saving', 'propertyProfile', true);
+    api.updateLLPropertyProfile(dispatch, getState, payload, (response) => {
+      api.setStatus(dispatch, 'saving', 'propertyProfile', false);
+      dispatch({ type: types.PROPERTY_PROFILE_LOAD, payload: response });
+      if (callback) callback(response);
+    });
+  };
+};
+
+export const addPropertyDetails = (payload, callback) => {
+  return function (dispatch, getState) {
+    api.setStatus(dispatch, 'saving', 'propertyProfile', true);
+    api.addLLPropertyProfile(dispatch, getState, payload, (response) => {
+      api.setStatus(dispatch, 'saving', 'propertyProfile', false);
+      dispatch({ type: types.PROPERTY_PROFILE_LOAD, payload: response });
+      if (callback) callback(response);
+    });
+  };
+};

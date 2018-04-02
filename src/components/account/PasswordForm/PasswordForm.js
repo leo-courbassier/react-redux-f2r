@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import * as BS from 'react-bootstrap';
 import { Field } from 'redux-form';
 import { renderInput } from '../../ReduxFormFields';
+import ButtonSpinner from '../../ButtonSpinner';
 import PasswordStrengthMeter from '../../PasswordStrengthMeter';
 
 export default class PasswordForm extends Component {

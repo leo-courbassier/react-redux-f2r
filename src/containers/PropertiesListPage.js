@@ -8,7 +8,7 @@ class PropertiesListPage extends Component {
   render() {
     return (
       <div className="properties-page">
-        <PageTitle>My Properties > Summary</PageTitle>
+        <PageTitle>My Properties {'>'} Summary</PageTitle>
 
         <PropertiesListContainer />
 

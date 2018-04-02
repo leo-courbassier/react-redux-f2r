@@ -7,11 +7,11 @@ import * as api from '../../../actions/api';
 import * as Conversion from '../../../utils/conversion';
 
 import Loader from '../../Loader';
-import SelectOptions from '../../SelectOptions';
+import ButtonSpinner from '../../ButtonSpinner';
 import SubmitButton from '../../SubmitButton';
 import SubmitFooter from '../SubmitFooter';
-
 import { renderInput, DateInput } from '../../ReduxFormFields';
+
 
 class ProfileForm extends Component {
   componentWillUnmount(){
