@@ -111,4 +111,9 @@ export const TT_PSEUDO_F2RSCORE = BASE_URL + '/tt/pseudoF2RScore';
 // Properties
 
 export const LL_PROPERTIES_LIST = BASE_URL + '/prop/propsView';
-export const LL_PROPERTIE_PROFILE = BASE_URL + '/prop/property';
+export const LL_PROPERTY_PROFILE = BASE_URL + '/prop/property';
+export const LL_PROPERTY_LEASES = BASE_URL + '/lease/';
+export const LL_PROPERTY_TENANTS = BASE_URL + '/lease/tenants';
+export const LL_PROPERTY_PIC = BASE_URL + '/prop/upload';
+export const LL_ADD_PROPERTY_PROFILE = BASE_URL + '/prop/addProp';
+export const LL_UPDATE_PROPERTY_PROFILE = BASE_URL + '/prop/updateProp';

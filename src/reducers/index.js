@@ -1,17 +1,18 @@
 import { combineReducers } from 'redux';
 
 import { reducer as formReducer } from 'redux-form';
-import loginAppState from './login';
-import signupAppState from './signup';
-import forgotAppState from './forgot';
-import resetAppState from './reset';
-import onboardingAppState from './onboardinglandlord';
-import feedbackAppState from './feedback';
-import checkoutAppState from './checkout';
-import verifyAppState from './verify';
 import accountAppState from './account';
-import sidebarState from './sidebar';
+import checkoutAppState from './checkout';
+import feedbackAppState from './feedback';
+import forgotAppState from './forgot';
+import geoAppState from './geo';
+import loginAppState from './login';
+import onboardingAppState from './onboardinglandlord';
 import propertiesAppState from './properties';
+import resetAppState from './reset';
+import sidebarState from './sidebar';
+import signupAppState from './signup';
+import verifyAppState from './verify';
 import { routerReducer } from 'react-router-redux';
 
 const rootReducer = combineReducers({
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   accountAppState,
   sidebarState,
   propertiesAppState,
+  geoAppState,
   form: formReducer,
   routing: routerReducer
 });

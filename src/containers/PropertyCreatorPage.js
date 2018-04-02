@@ -7,9 +7,9 @@ import * as BS from 'react-bootstrap';
 import * as actions from '../actions/accountActions';
 import HighLightsColumn from '../components/account/HighLightsColumn';
 import PageTitle from '../components/PageTitle';
-import PropertyProfile from './Properties/PropertyProfileContainer';
+import PropertyCreator from './Properties/PropertyCreatorContainer';
 
-class PropertyProfilePage extends Component {
+class PropertyCreatorPage extends Component {
   render() {
     let {children, accountState, params} = this.props;
 
@@ -17,8 +17,8 @@ class PropertyProfilePage extends Component {
       <BS.Row className="property-page">
 
         <BS.Col xs={12} sm={12} md={8} className="panels">
-          <PageTitle>My Properties {'>'} Property Profile</PageTitle>
-          <PropertyProfile propertyId={params.id} />
+          <PageTitle>My Properties {'>'} Create a New Property</PageTitle>
+          <PropertyCreator />
         </BS.Col>
 
         <BS.Col xsHidden smHidden md={4}>
@@ -30,7 +30,7 @@ class PropertyProfilePage extends Component {
   }
 }
 
-PropertyProfilePage.propTypes = {
+PropertyCreatorPage.propTypes = {
   actions: PropTypes.object.isRequired,
   accountState: PropTypes.object.isRequired
 };
@@ -50,4 +50,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PropertyProfilePage);
+)(PropertyCreatorPage);

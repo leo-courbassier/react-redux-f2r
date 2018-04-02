@@ -56,9 +56,52 @@
       }
     }
   }
-  .amenities-heading {
-    font-size: 1.1rem;
-    text-decoration: underline;
-    margin-bottom: 5px;
+  .propertyform-panel {
+    .family .label-spacer {
+      height: 25px;
+    }
+  }
+  .property-image img {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .v-align-middle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    [class*="col-"] {
+
+    }
+  }
+
+  .property-submit {
+    margin-top: 15px;
+    display: flex;
+    &-message {
+      width: 75%;
+      text-align: left;
+    }
+    &-button {
+      width: 25%;
+      text-align: right;
+    }
+  }
+}
+
+.amenities-heading {
+  font-size: 1.1rem;
+  text-decoration: underline;
+  margin-bottom: 5px;
+}
+.amenity-item {
+  font-size: 12px;
+}
+.row-narrow {
+  margin-left: -5px;
+  margin-right: -5px;
+  [class*="col-"] {
+    padding-left: 5px;
+    padding-right: 5px;
   }
 }

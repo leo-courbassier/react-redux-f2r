@@ -4,12 +4,15 @@ import _ from 'lodash';
 const initialState = {
   status: {
     loading: {},
+    modified: {},
     saving: {},
-    modified: {}
+    uploading: {}
   },
   editMode: {},
   propertiesList: [],
-  propertyProfile: {}
+  propertyProfile: {},
+  propertyLeases: [],
+  propertyTenants: []
 };
 
 
@@ -40,6 +43,16 @@ export default function propertiesAppState(state = initialState, action) {
     case types.PROPERTY_PROFILE_LOAD:
       return _.assign({}, state, {
         propertyProfile: action.payload
+      });
+
+    case types.PROPERTY_LEASES_LOAD:
+      return _.assign({}, state, {
+        propertyLeases: action.payload
+      });
+
+    case types.PROPERTY_TENANTS_LOAD:
+      return _.assign({}, state, {
+        propertyTenants: action.payload
       });
 
     default:

@@ -145,7 +145,7 @@ class StepTwoForm extends Component {
       amenityArray.push({"amenityName":"Central A/C", "amenityType":"INTERIOR","installDate":"2013-04-15"});
     }
     if(store.hotWater){
-      amenityArray.push({"amenityName":"Hot  Water", "amenityType":"INTERIOR","installDate":"2013-04-15"});
+      amenityArray.push({"amenityName":"Hot Water", "amenityType":"INTERIOR","installDate":"2013-04-15"});
     }
 
     if(store.microwave){
@@ -184,8 +184,7 @@ class StepTwoForm extends Component {
     let allowSave = openNextStep ? isModified : true;
     store.propertyClass='STANDARD';
     store.propertyStatus='VACANT';
-    store.rent='1250'
-    debugger;
+    store.rent='1250';
     if (allowSave) {
       this.props.save(
         store.landlordId,
@@ -724,7 +723,6 @@ class StepTwoForm extends Component {
     );
 
     const sources = _.map(store.incomeSources, (source, i) => {
-      debugger
       return this.renderIncomeSources(source, i);
     });
 

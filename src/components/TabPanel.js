@@ -1,8 +1,7 @@
-import React from 'react';
-let {Component} = React;
+import React, { Component } from 'react';
 import * as BS from 'react-bootstrap';
 
-export default class TabEditablePanel extends Component {
+export default class TabPanel extends Component {
   componentWillUnmount(){
     if(this.props.editMode){
       this.changeEditMode();
@@ -21,10 +20,6 @@ export default class TabEditablePanel extends Component {
         <div className="header">
           <h5>{title}</h5>
           <span className="empty-space" />
-          <BS.Button bsSize="sm" onClick={this.changeEditMode.bind(this)} active={editMode}>
-            <BS.Glyphicon glyph="pencil" />
-            {editMode ? 'Cancel' : 'Edit'}
-          </BS.Button>
         </div>
         <div className="body">
           {children}

@@ -76,7 +76,7 @@ class StepThreeForm extends Component {
   }
   keypress(e) {
     this.props.update(this.props.appState, e.target.name, e.target.value);
-    console.log(this.props.appState)
+    // console.log(this.props.appState)
   }
 
   // a boolean method to check if mandatory fields are not filled
@@ -139,7 +139,7 @@ getRecipients() {
     let isModified = this.props.appState.status['modified']['stepThreeForm'];
     let allowSave = openNextStep ? isModified : true;
     store.isMonthToMonth=store.leaseType=='month-to-month'||false;
-    console.log('isMonthToMonth: '+store.isMonthToMonth);
+    // console.log('isMonthToMonth: '+store.isMonthToMonth);
 
     if (allowSave) {
       this.props.save(
@@ -321,7 +321,7 @@ getRecipients() {
           <option value="Refundable">Refundable</option>
           <option value="Nonrefundable">Nonrefundable</option>
       </select>
-    )
+    );
 
     const refundable = (
           <select id="property" className="form-control">
