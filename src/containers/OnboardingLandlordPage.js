@@ -146,7 +146,9 @@ class OnboardingLandlordPage extends Component {
   }
 
   openPrevStep(e) {
-    // e.preventDefault();
+
+    e.preventDefault();
+
     let prevStep = parseInt(this.state.activeKey) - 1;
     this.handleSelect(prevStep.toString());
   }

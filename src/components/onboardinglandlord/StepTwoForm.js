@@ -799,7 +799,7 @@ class StepTwoForm extends Component {
                  <SubmitButton
                  appState={this.props.appState}
                  statusAction="stepTwoFormPrevious"
-                 submit={this.props.openPrevStep()}
+                 submit={this.props.openPrevStep}
                  textLoading=""
                  bsStyle="success"
                  className="proceed-button prev-button">
