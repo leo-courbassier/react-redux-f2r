@@ -54,7 +54,6 @@ class StepThreeForm extends Component {
     store.dispatch({ type: types.ONBOARDING_STEPTHREE_UPDATE_LANDLORDS, sources });
   }
   addIncomeSource = (e) => {
-    debugger;
     e.preventDefault();
     api.setStatus(this.context.store.dispatch, 'modified', 'stepTwoForm', true);
     let store = this.context.store;
@@ -65,16 +64,69 @@ class StepThreeForm extends Component {
 
   }
 
-  renderIncomeSources = (source, i) => {
-    debugger;
-    let store = this.props.appState[STEP_ID];
-    return (
-      <div className="your-job">
-        Pepe
-      </div>
+  renderIncomeSources = (source, index) => {
+    const refundableStatus = (
+      <select name="property" className="form-control">
+        <option value="Refundable">Refundable</option>
+        <option value="Nonrefundable">Nonrefundable</option>
+      </select>
     );
 
+    const warn = this.isInvalid() ? (<span className="warn">* <span className="text">{this.state.submitted ? this.isInvalid() : ''}</span></span>) : '';
+
+    const store = this.props.appState[STEP_ID];
+    return (
+      <div key={index}>
+        {index > 0 && <div className="section">Additional Deposit{warn}</div>}
+        <BS.FormGroup>
+          <BS.Col componentClass={BS.ControlLabel} md={3}>
+            Deposit Type
+          </BS.Col>
+          <BS.Col md={3}>
+            <BS.FormControl
+              value={store.depositType}
+              name="depositType"
+              placeholder="￼e.g. Securi"
+              onChange={_.partial(this.keypress.bind(this))}
+              type="text" />
+
+          </BS.Col>
+          <BS.Col componentClass={BS.ControlLabel} md={3}>
+            Deposit Amount
+          </BS.Col>
+          <BS.Col md={3}>
+            <BS.FormControl
+              value={store.depositAmount}
+              name="depositAmount"
+              onChange={_.partial(this.keypress.bind(this))}
+              placeholder="$$$$"
+              type="text" />
+          </BS.Col>
+        </BS.FormGroup>
+        <BS.FormGroup>
+          <BS.Col componentClass={BS.ControlLabel} md={3}>
+            Deposit Due On
+          </BS.Col>
+          <BS.Col componentClass={BS.ControlLabel} md={3}>
+            <BS.FormControl
+              value={store.depositDueOn}
+              name="depositDueOn"
+              placeholder="mm/dd/yyyy"
+              onChange={_.partial(this.keypress.bind(this))}
+              type="text" />
+            <BS.Glyphicon glyph="calendar" />
+          </BS.Col>
+          <BS.Col componentClass={BS.ControlLabel} md={3}>
+            Refundable Status
+          </BS.Col>
+          <BS.Col componentClass={BS.ControlLabel} md={3}>
+            {refundableStatus}
+          </BS.Col>
+        </BS.FormGroup>
+      </div>
+    );
   }
+
   keypress(e) {
     this.props.update(this.props.appState, e.target.name, e.target.value);
     // console.log(this.props.appState)
@@ -317,12 +369,6 @@ getRecipients() {
           keyValue
          />
     );
-    const refundableStatus = (
-      <select id="property" className="form-control">
-          <option value="Refundable">Refundable</option>
-          <option value="Nonrefundable">Nonrefundable</option>
-      </select>
-    );
 
     const refundable = (
           <select id="property" className="form-control">
@@ -346,30 +392,6 @@ getRecipients() {
         </BS.FormGroup>
       </div>
 
-    );
-
-    const sources = _.map(store.depositList, (source, i) => {
-      return this.renderIncomeSources(source, i);
-    });
-
-
-
-    const incomeSources = (
-      <div className="col-md-4">
-        <div>
-            <BS.Button
-            onClick={(e) => this.addIncomeSource(e)}
-            className="add-button"
-            type="submit"
-            bsStyle="success">
-              Add Another Property
-            </BS.Button>
-            {sources.length ? removeButton : null}
-        </div>
-        <div className="row">
-        {sources}
-        </div>
-      </div>
     );
 
     const tenantAssignmet = (
@@ -652,71 +674,25 @@ getRecipients() {
 const { collectionTypeState: collectionTypeState } = this.props.appState[2];
 
   const depositDetail = (
-  <BS.Collapse in={collectionTypeState === 'collect-deposit'}>
-    <div className="row">
-     <div className="col-md-12">
-       <div className="col-md-3">
-        <BS.ControlLabel>Deposit Type</BS.ControlLabel>
-       </div>
-       <div className="col-md-3">
-       <BS.FormControl
-       value={store.depositType}
-       name="depositType"
-       placeholder="￼e.g. Securi"
-       onChange={_.partial(this.keypress.bind(this))}
-       type="text" />
-
-       </div>
-       <div className="col-md-3">
-        <BS.ControlLabel>Deposit Amount</BS.ControlLabel>
-       </div>
-       <div className="col-md-3">
-       <BS.FormControl
-       value={store.depositAmount}
-       name="depositAmount"
-       onChange={_.partial(this.keypress.bind(this))}
-       placeholder="$$$$"
-       type="text" />
-       </div>
-      </div>
-      <br />
-      <div className="col-md-12">
-      <div className="col-md-3">
-       <BS.ControlLabel>Deposit Due On</BS.ControlLabel>
-      </div>
-      <div className="col-md-3">
-      <BS.FormControl
-      value={store.depositDueOn}
-      name="depositDueOn"
-      placeholder="mm/dd/yyyy"
-      onChange={_.partial(this.keypress.bind(this))}
-      type="text" />
-      <BS.Glyphicon glyph="calendar" />
-      </div>
-
-      <div className="col-md-3">
-       <BS.ControlLabel>Refundable Status</BS.ControlLabel>
-      </div>
-      <div className="col-md-3">
-      {refundableStatus}
-      </div>
-      </div>
-      <br />
-      <div className="row">
-      <div className="col-md-8 anotherDeposit">
+    <BS.Collapse in={collectionTypeState === 'collect-deposit'}>
+      <div className="form-horizontal">
+        {
+          _.map(store.depositList, (source, index) => {
+            return this.renderIncomeSources(source, index);
+          })
+        }
+        <div className="anotherDeposit text-center">
           <BS.Button
-          onClick={(e) => this.addIncomeSource(e)}
-          className="add-button-otherDeposit"
-          type="submit"
-          bsStyle="success">
-            {incomeSources}
+            onClick={(e) => this.addIncomeSource(e)}
+            className="add-button"
+            type="submit"
+            bsStyle="success">
+            Add Another Deposit
           </BS.Button>
-
+        </div>
       </div>
-      </div>
-     </div>
-   </BS.Collapse>
-);
+    </BS.Collapse>
+  );
 
     //const landlords = _.map(store.previousLandlords, (source, i) => {return this.Landlords(source, i)});
 
@@ -733,7 +709,6 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
 
     const addAnotherDeposit = (
       <div className="addAnotherDeposit">
-        {}
           <BS.Button
           onClick={(e) => this.addAnotherDepositFunction(e)}
           className="add-button"
@@ -741,7 +716,6 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
           bsStyle="success">
             Add Another Deposit
           </BS.Button>
-
       </div>
     );
 
