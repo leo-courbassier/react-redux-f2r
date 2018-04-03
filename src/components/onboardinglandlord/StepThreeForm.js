@@ -53,20 +53,33 @@ class StepThreeForm extends Component {
     api.setStatus(this.context.store.dispatch, 'modified', 'stepThreeForm', true);
     store.dispatch({ type: types.ONBOARDING_STEPTHREE_UPDATE_LANDLORDS, sources });
   }
+  
   addIncomeSource = (e) => {
     e.preventDefault();
-    api.setStatus(this.context.store.dispatch, 'modified', 'stepTwoForm', true);
+    api.setStatus(this.context.store.dispatch, 'modified', 'stepThreeForm', true);
     let store = this.context.store;
     let sources = this.props.appState[STEP_ID].depositList;
-
-    sources.push({"depositAmount":550, "depositType":"SECURITY","depositStatus":"REFUNDABLE"});
+    sources.push({"depositAmount":'', "depositType":"","depositStatus":""});
     store.dispatch({ type: types.ONBOARDING_STEPTHREE_UPDATE_INCOME_SOURCES, sources });
-
+     
+    
   }
 
+  updateDepositList(){
+    let store = this.context.store;
+    let sources = this.props.appState[STEP_ID].depositList;
+    store.dispatch({ type: types.ONBOARDING_STEPTHREE_REMOVE_OBJ_FROM_ARRAY, sources });
+  }
+
+
+
+
+
+
   renderIncomeSources = (source, index) => {
+    const store = this.props.appState[STEP_ID];
     const refundableStatus = (
-      <select name="property" className="form-control">
+      <select value={store.depositList[index].depositStatus} onChange={_.partial(this.depositKeypress.bind(this,index))} name="depositStatus" className="form-control">
         <option value="Refundable">Refundable</option>
         <option value="Nonrefundable">Nonrefundable</option>
       </select>
@@ -74,7 +87,7 @@ class StepThreeForm extends Component {
 
     const warn = this.isInvalid() ? (<span className="warn">* <span className="text">{this.state.submitted ? this.isInvalid() : ''}</span></span>) : '';
 
-    const store = this.props.appState[STEP_ID];
+    
     return (
       <div key={index}>
         {index > 0 && <div className="section">Additional Deposit{warn}</div>}
@@ -84,10 +97,10 @@ class StepThreeForm extends Component {
           </BS.Col>
           <BS.Col md={3}>
             <BS.FormControl
-              value={store.depositType}
+              value={store.depositList[index].depositType}
               name="depositType"
               placeholder="￼e.g. Securi"
-              onChange={_.partial(this.keypress.bind(this))}
+              onChange={_.partial(this.depositKeypress.bind(this,index))}
               type="text" />
 
           </BS.Col>
@@ -96,9 +109,9 @@ class StepThreeForm extends Component {
           </BS.Col>
           <BS.Col md={3}>
             <BS.FormControl
-              value={store.depositAmount}
+              value={store.depositList[index].depositAmount}
               name="depositAmount"
-              onChange={_.partial(this.keypress.bind(this))}
+              onChange={_.partial(this.depositKeypress.bind(this,index))}
               placeholder="$$$$"
               type="text" />
           </BS.Col>
@@ -112,7 +125,7 @@ class StepThreeForm extends Component {
               value={store.depositDueOn}
               name="depositDueOn"
               placeholder="mm/dd/yyyy"
-              onChange={_.partial(this.keypress.bind(this))}
+              onChange={_.partial(this.depositKeypress.bind(this,index))}
               type="text" />
             <BS.Glyphicon glyph="calendar" />
           </BS.Col>
@@ -129,7 +142,11 @@ class StepThreeForm extends Component {
 
   keypress(e) {
     this.props.update(this.props.appState, e.target.name, e.target.value);
-    // console.log(this.props.appState)
+    
+  }
+
+    depositKeypress(index,e) {
+    this.props.update(this.props.appState, e.target.name, e.target.value,index);
   }
 
   // a boolean method to check if mandatory fields are not filled
@@ -192,8 +209,9 @@ getRecipients() {
     let isModified = this.props.appState.status['modified']['stepThreeForm'];
     let allowSave = openNextStep ? isModified : true;
     store.isMonthToMonth=store.leaseType=='month-to-month'||false;
-    // console.log('isMonthToMonth: '+store.isMonthToMonth);
-
+    
+    this.updateDepositList();
+  
     if (allowSave) {
       this.props.save(
         store.landlordId,
@@ -208,6 +226,7 @@ getRecipients() {
         store.leaseStatus,
         store.renterIds,
         store.depositList,
+        store.email,
         openNextStep
         );
     } else {
@@ -678,6 +697,7 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
       <div className="form-horizontal">
         {
           _.map(store.depositList, (source, index) => {
+            
             return this.renderIncomeSources(source, index);
           })
         }

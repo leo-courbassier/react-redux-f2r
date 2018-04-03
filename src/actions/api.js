@@ -321,8 +321,8 @@ export function postStepTwo(dispatch, getState, payload, callback){
   return post(services.TT_STEP2, getAuthHeaders(dispatch, getState), payload, callback);
 }
 
-export function postAddTenant(dispatch, getState, payload, callback){
-  return post(services.ADD_TENANT, getAuthHeaders(dispatch, getState), payload, callback);
+export function inviteTenant(dispatch, getState, email,lease_id, callback){
+  return put(services.ADD_TENANT + '?email='+email+'&id='+lease_id+'&type=LEASE', getAuthHeaders(dispatch, getState), callback);
 }
 
 export function postStepThree(dispatch, getState, payload, callback){
