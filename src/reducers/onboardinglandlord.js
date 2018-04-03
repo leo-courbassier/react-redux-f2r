@@ -310,11 +310,10 @@ export default function onboardingAppState(state = initialState, action) {
 
       case types.ONBOARDING_STEPTHREE_REMOVE_OBJ_FROM_ARRAY:
       {
-
+        //new functionality for clear empty objects
         let newState = objectAssign({}, state);
         let depositList = newState[2]['depositList'];
         let incomeSources = [];
-
 
         for (let deposit of depositList) {
 
@@ -328,7 +327,6 @@ export default function onboardingAppState(state = initialState, action) {
        
         return newState;
       }
-
 
 
     case types.ONBOARDING_STEPTHREE_FORM_LOAD:
