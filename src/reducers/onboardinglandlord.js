@@ -69,7 +69,11 @@ const initialState = {
       isMonthToMonth:false,
       leaseStatus:null,
       renterIds:null,
-      depositList:[],
+      depositList:[{
+        depositAmount: 550,
+        depositType: "SECURITY",
+        depositStatus: "REFUNDABLE"
+      }],
       pepe:[],
       saved: false
   },
