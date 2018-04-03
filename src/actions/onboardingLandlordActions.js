@@ -331,12 +331,21 @@ export function uploadIncomeDoc(file, statusAction, sources, sourceIndex) {
 /////////////////////////////////////////////////////////////////////////////
 // step three
 
-export function updateStepThreeForm(settings, name, value) {
+export function updateStepThreeForm(settings, name, value,index) {
   return function (dispatch, getState) {
     api.setStatus(dispatch, 'modified', 'stepThreeForm', true);
-    dispatch({type: types.ONBOARDING_STEPTHREE_FORM_UPDATE, settings, name, value});
+    dispatch({type: types.ONBOARDING_STEPTHREE_FORM_UPDATE, settings, name, value,index});
   };
 }
+
+export function updateDepositList(settings) {
+
+  return function (dispatch, getState) {
+    api.setStatus(dispatch, 'modified', 'stepThreeForm', true);
+    dispatch({type: types.ONBOARDING_STEPTHREE_REMOVE_OBJ_FROM_ARRAY, settings});
+  };
+}
+
 
 export function loadStepThree(){
   return function (dispatch, getState) {
@@ -399,6 +408,7 @@ export function saveStepThree(
   leaseStatus,
   renterIds,
   depositList,
+  email,
   openNextStep,
   callback
   ) {
@@ -423,7 +433,7 @@ export function saveStepThree(
            {"renterId":1}
        ],
        "depositList":[
-           {"depositAmount":550, "depositType":"SECURITY","depositStatus":"REFUNDABLE"}
+           depositList
        ]
     };
     let leaseObje = api.postStepThree(dispatch, getState, landLordObjSave,callback, () => {
@@ -438,12 +448,16 @@ export function saveStepThree(
         api.setStatus(dispatch, 'modified', 'stepThreeForm', false);
         dispatch({type: types.ONBOARDING_STEPTHREE_FORM_SAVE, name: 'saved', value: true});
         if (callback) callback();
-        if (openNextStep) openNextStep();
+        api.inviteTenant(dispatch, getState, email,leaseObje.id,callback, () => {
 
+        })
+        if (openNextStep) openNextStep();
 
     });
   };
 }
+
+
 
 /////////////////////////////////////////////////////////////////////////////
 // step four

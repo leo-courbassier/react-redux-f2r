@@ -249,6 +249,7 @@ class OnboardingLandlordPage extends Component {
       appState={this.props.appState}
       openNextStep={this.openNextStep.bind(this)}
       openPrevStep={this.openPrevStep.bind(this)}
+      updateDepositList={this.props.actions.updateDepositList}
       showProceed={this.state.hasNotCheckedOut} />
     );
     const stepFour =

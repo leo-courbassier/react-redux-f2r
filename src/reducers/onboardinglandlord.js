@@ -70,10 +70,10 @@ const initialState = {
       leaseStatus:null,
       renterIds:null,
       depositList:[{
-        depositAmount: 550,
-        depositType: "SECURITY",
-        depositStatus: "REFUNDABLE"
-      }],
+        depositAmount: 0,
+        depositType: "",
+        depositStatus: ""
+}],
       pepe:[],
       saved: false
   },
@@ -295,14 +295,38 @@ export default function onboardingAppState(state = initialState, action) {
 /////////////////////////////////////////////////////////////////////////////
 // step three
 
-
     case types.ONBOARDING_STEPTHREE_FORM_UPDATE:
       {
+
         let newState = objectAssign({}, state);
-        newState[2][action.name] = action.value;
+    
+        if (action.index!=null||typeof action.index != 'undefined') {
+          newState[2]['depositList'][action.index][action.name] = action.value;
+        } else {
+          newState[2][action.name] = action.value;
+        }
         return newState;
       }
 
+      case types.ONBOARDING_STEPTHREE_REMOVE_OBJ_FROM_ARRAY:
+      {
+        //new functionality for clear empty objects
+        let newState = objectAssign({}, state);
+        let depositList = newState[2]['depositList'];
+        let incomeSources = [];
+
+        for (let deposit of depositList) {
+
+          if (deposit && deposit.depositAmount && deposit.depositType && deposit.depositStatus) {
+             let newSource = deposit;            
+             incomeSources.push(newSource);
+          }
+        }
+        
+        newState[2]['depositList'] = incomeSources;
+       
+        return newState;
+      }
 
 
     case types.ONBOARDING_STEPTHREE_FORM_LOAD:
@@ -314,7 +338,6 @@ export default function onboardingAppState(state = initialState, action) {
         newState[2]['propertyId'] = action.propertyId;
         newState[2]['leaseStartDate'] = action.leaseStartDate;
         newState[2]['leaseEndDate'] = action.leaseEndDate;
-
         newState[2]['paymentStartDate'] = action.paymentStartDate;
         newState[2]['paymentEndDate'] = action.paymentEndDate;
         newState[2]['paymentDueDate'] = action.paymentDueDate;
