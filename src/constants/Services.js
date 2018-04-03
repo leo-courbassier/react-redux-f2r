@@ -119,3 +119,7 @@ export const LL_PROPERTY_TENANTS = BASE_URL + '/lease/tenants';
 export const LL_PROPERTY_PIC = BASE_URL + '/prop/upload';
 export const LL_ADD_PROPERTY_PROFILE = BASE_URL + '/prop/addProp';
 export const LL_UPDATE_PROPERTY_PROFILE = BASE_URL + '/prop/updateProp';
+
+// Leases
+
+export const LL_LEASES_LIST = BASE_URL + '/lease/leaseView';
