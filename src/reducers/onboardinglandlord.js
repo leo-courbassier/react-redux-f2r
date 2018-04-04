@@ -160,11 +160,9 @@ export default function onboardingAppState(state = initialState, action) {
         newState['cities'][action.statusAction] = action.cityList;
         return newState;
       }
-
+   
 
     // score
-
-
     case types.ONBOARDING_UPDATE_SCORE:
       {
         let newState = objectAssign({}, state);
@@ -300,8 +298,8 @@ export default function onboardingAppState(state = initialState, action) {
 
         let newState = objectAssign({}, state);
     
-        if (action.index!=null||typeof action.index != 'undefined') {
-          newState[2]['depositList'][action.index][action.name] = action.value;
+        if (action.index!=null||typeof action.index != 'undefined') {          
+           newState[2]['depositList'][action.index][action.name] = action.value;
         } else {
           newState[2][action.name] = action.value;
         }
@@ -359,7 +357,6 @@ export default function onboardingAppState(state = initialState, action) {
         newState[2]['propertyId'] = action.propertyId;
         newState[2]['leaseStartDate'] = action.leaseStartDate;
         newState[2]['leaseEndDate'] = action.leaseEndDate;
-
         newState[2]['paymentStartDate'] = action.paymentStartDate;
         newState[2]['paymentEndDate'] = action.paymentEndDate;
         newState[2]['paymentDueDate'] = action.paymentDueDate;
@@ -370,7 +367,7 @@ export default function onboardingAppState(state = initialState, action) {
         newState[2]['renterIds'] = action.renterIds;
         newState[2]['email'] = action.email;
         newState[2]['depositList'] = action.depositList;
-        newState[2].status['modified'] = false;
+        //newState[2].status['modified'] = false;
         return newState;
       }
 
@@ -396,6 +393,7 @@ export default function onboardingAppState(state = initialState, action) {
         newState[2].status['modified'] = true;
         return newState;
       }
+
 
 
 /////////////////////////////////////////////////////////////////////////////
