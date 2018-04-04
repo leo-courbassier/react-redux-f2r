@@ -24,9 +24,15 @@ export default class LeasesSummary extends Component {
     );
   }
 
+  getType(lease) {
+    return lease.monthToMonth ? 'Month to Month' : 'Set Term'
+  }
+
   renderTenantList(tenantList) {
-    _.map(tenantList, tenant => (
-      <div className="text-center">{tenant}</div>
+    return _.map(tenantList, tenant => (
+      <div className="text-center">
+        {`${tenant.firstName || ''} ${tenant.middleName || ''} ${tenant.lastName || ''}`}
+      </div>
     ));
   }
 
@@ -40,11 +46,11 @@ export default class LeasesSummary extends Component {
               {lease.propertyName}
             </Link>
           </td>
-          <td>_</td>
+          <td>{this.getType(lease)}</td>
           <td>{this.renderTenantList(lease.tenantList)}</td>
           <td>{lease.startDate}</td>
           <td>{lease.endDate}</td>
-          <td>{lease.rentPaymentDate}</td>
+          <td>{lease.rentPaymentDate || 'N/A'}</td>
           <td>{lease.maturity}</td>
           <td>{lease.refundableAmount}</td>
           <td>{lease.nonRefundableAmount}</td>
