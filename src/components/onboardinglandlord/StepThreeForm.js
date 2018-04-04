@@ -80,8 +80,17 @@ class StepThreeForm extends Component {
     const store = this.props.appState[STEP_ID];
     const refundableStatus = (
       <select value={store.depositList[index].depositStatus} onChange={_.partial(this.depositKeypress.bind(this,index))} name="depositStatus" className="form-control">
-        <option value="Refundable">Refundable</option>
-        <option value="Nonrefundable">Nonrefundable</option>
+        <option value="">Select..</option>
+        <option value="REFUNDABLE">Refundable</option>
+        <option value="NONREFUNDABLE">Nonrefundable</option>
+      </select>
+    );
+
+    const depositTypeList = (
+      <select value={store.depositList[index].depositType} onChange={_.partial(this.depositKeypress.bind(this,index))} name="depositType" className="form-control">
+        <option value="">Select..</option>
+        <option value="SECURITY">Security</option>
+        <option value="PET">Pet</option>
       </select>
     );
 
@@ -94,16 +103,10 @@ class StepThreeForm extends Component {
         <BS.FormGroup>
           <BS.Col componentClass={BS.ControlLabel} md={3}>
             Deposit Type
-          </BS.Col>
-          <BS.Col md={3}>
-            <BS.FormControl
-              value={store.depositList[index].depositType}
-              name="depositType"
-              placeholder="￼e.g. Securi"
-              onChange={_.partial(this.depositKeypress.bind(this,index))}
-              type="text" />
-
-          </BS.Col>
+          </BS.Col>         
+             <BS.Col componentClass={BS.ControlLabel} md={3}>
+            {depositTypeList}
+             </BS.Col>       
           <BS.Col componentClass={BS.ControlLabel} md={3}>
             Deposit Amount
           </BS.Col>
@@ -125,7 +128,7 @@ class StepThreeForm extends Component {
               value={store.depositDueOn}
               name="depositDueOn"
               placeholder="mm/dd/yyyy"
-              onChange={_.partial(this.depositKeypress.bind(this,index))}
+              onChange={this.keypress.bind(this)}
               type="text" />
             <BS.Glyphicon glyph="calendar" />
           </BS.Col>
@@ -141,6 +144,7 @@ class StepThreeForm extends Component {
   }
 
   keypress(e) {
+     console.log(this.props.appState);
     this.props.update(this.props.appState, e.target.name, e.target.value);
     
   }
@@ -184,15 +188,7 @@ getRecipients() {
         if (store.email && !isEmail(store.email)) {
           invalid = 'Guarantor email must be valid.';
         }
-        if (
-          !store.firstName ||
-          !store.lastName ||
-          !store.email ||
-          !store.phone
-          )
-        {
-          invalid = 'Please let us know the guarantor\'s first name, last name, email, and phone.';
-        }
+
       }
 
       return invalid;
@@ -204,14 +200,13 @@ getRecipients() {
 
     let store = this.props.appState[STEP_ID];
 
-    // if proceed button is clicked, only save if form has been modified
-    // otherwise, save button will always trigger a save
     let isModified = this.props.appState.status['modified']['stepThreeForm'];
     let allowSave = openNextStep ? isModified : true;
     store.isMonthToMonth=store.leaseType=='month-to-month'||false;
-    
+    debugger;
+
     this.updateDepositList();
-  
+
     if (allowSave) {
       this.props.save(
         store.landlordId,
@@ -232,6 +227,7 @@ getRecipients() {
     } else {
       if (openNextStep) openNextStep();
     }
+
   }
 
 
@@ -796,8 +792,7 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
               <SubmitButton
               appState={this.props.appState}
               statusAction="stepThreeFormProceed"
-              submit={_.partial(this.submit.bind(this), this.props.openNextStep)}
-              textLoading="Saving"
+              submit={this.props.openNextStep}              
               bsStyle="success"
               className="proceed-button">
                 Next

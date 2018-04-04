@@ -403,7 +403,6 @@ export function saveStepThree(
   paymentEndDate,
   paymentDueDate,
   monthlyRent,
-  isLandlord,
   isMonthToMonth,
   leaseStatus,
   renterIds,
@@ -426,34 +425,33 @@ export function saveStepThree(
        "startDate":"2016-09-01",
        "endDate":"2017-08-31",
        "paymentDueDate":"2017-08-31",
-       "rentAmount":monthlyRent,
+       "rentAmount":parseInt(monthlyRent),
        "isMonthToMonth":isMonthToMonth,
        "leaseStatus":"ACTIVE",
        "renterIds":[
            {"renterId":1}
        ],
-       "depositList":[
-           depositList
-       ]
+       "depositList":depositList       
     };
-    let leaseObje = api.postStepThree(dispatch, getState, landLordObjSave,callback, () => {
 
-        api.setStatus(dispatch, 'saving', statusAction, false);
-        api.setStatus(dispatch, 'modified', 'stepThreeForm', false);
-        dispatch({type: types.ONBOARDING_STEPTHREE_FORM_UPDATE, name: 'saved', value: true});
-        if (callback) callback();
-        if (openNextStep) openNextStep();
+     
+    let leaseObje = api.postStepThree(dispatch, getState, landLordObjSave, (response) => {
 
-        api.setStatus(dispatch, 'saving', statusAction, false);
-        api.setStatus(dispatch, 'modified', 'stepThreeForm', false);
-        dispatch({type: types.ONBOARDING_STEPTHREE_FORM_SAVE, name: 'saved', value: true});
-        if (callback) callback();
-        api.inviteTenant(dispatch, getState, email,leaseObje.id,callback, () => {
+        // api.setStatus(dispatch, 'saving', statusAction, false);
+        // api.setStatus(dispatch, 'modified', 'stepThreeForm', false);
+        //dispatch({type: types.ONBOARDING_STEPTHREE_FORM_UPDATE, name: 'saved', value: true});
+        console.log(response)
+        
+         api.setStatus(dispatch, 'saving', statusAction, false);
+         api.setStatus(dispatch, 'modified', 'stepThreeForm', false);
+         api.inviteTenant(dispatch, getState, email,response.id,callback, () => {
 
-        })
+         })
+        //dispatch({type: types.ONBOARDING_STEPTHREE_FORM_CLEAR, name: 'saved', value: true});
         if (openNextStep) openNextStep();
 
     });
+
   };
 }
 
