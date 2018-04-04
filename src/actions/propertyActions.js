@@ -21,7 +21,7 @@ export const loadPropertiesList = () => {
       requestPropertiesList
     ])
     .then((results) => {
-      const properties = results;
+      const properties = results[0];
 
       dispatch({ type: types.PROPERTIES_LIST_LOAD, payload: properties });
 

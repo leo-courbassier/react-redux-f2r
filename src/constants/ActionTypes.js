@@ -186,6 +186,7 @@ export const STATE_LIST_LOAD = "STATE_LIST_LOAD";
 export const CITY_LIST_LOAD = "CITY_LIST_LOAD";
 
 export const LEASES_LIST_LOAD = 'LEASES_LIST_LOAD';
+export const LEASE_DETAILS_LOAD = 'LEASE_DETAILS_LOAD';
 
 // Individual Payment Components
 

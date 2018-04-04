@@ -14,6 +14,15 @@ import { renderInput, DateInput } from '../../ReduxFormFields';
 
 
 class ProfileForm extends Component {
+  static propTypes = {
+    appState: PropTypes.object.isRequired,
+    errors: PropTypes.object,
+    handleSubmit: PropTypes.func.isRequired,
+    saveUserDetails: PropTypes.func.isRequired,
+    submitSucceeded: PropTypes.bool.isRequired,
+    submitting: PropTypes.bool.isRequired
+  };
+
   componentWillUnmount(){
     delete this.props.appState.status.uploading['profilePicUpload'];
   }

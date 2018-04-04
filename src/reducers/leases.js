@@ -8,7 +8,8 @@ const initialState = {
     saving: {},
     uploading: {}
   },
-  leasesList: []
+  leasesList: [],
+  propertiesList: []
 };
 
 
@@ -27,6 +28,16 @@ export default function leasesAppState(state = initialState, action) {
     case types.LEASES_LIST_LOAD:
       return _.assign({}, state, {
         leasesList: action.payload
+      });
+
+    case types.LEASE_DETAILS_LOAD:
+      return _.assign({}, state, {
+        leaseDetails: action.payload
+      });
+
+    case types.PROPERTIES_LIST_LOAD:
+      return _.assign({}, state, {
+        propertiesList: action.payload
       });
 
     default:

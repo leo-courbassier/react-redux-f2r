@@ -25,7 +25,7 @@ class SelectOptions extends Component {
       bookend = (i == 0) ? ` ${this.props.suffix[0]}` : ` ${this.props.suffix[1]}`;
     }
     return (
-      <option value={value}>{item}{bookend}</option>
+      <option value={value} key={key}>{item}{bookend}</option>
     );
   }
 
@@ -58,7 +58,10 @@ class SelectOptions extends Component {
 SelectOptions.propTypes = {
   onChange: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
-  defaultValue: PropTypes.string.isRequired,
+  defaultValue: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]).isRequired,
   className: PropTypes.string,
   optionList: PropTypes.array.isRequired,
   disabled: PropTypes.bool,

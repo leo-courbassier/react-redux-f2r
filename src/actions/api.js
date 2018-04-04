@@ -6,7 +6,7 @@ import { browserHistory } from 'react-router';
 import {logout} from './loginActions';
 
 
-export function get(endpoint, authHeader, callback){
+export function get(endpoint, authHeader, callback) {
   return fetch(endpoint, {
     method: 'GET',
     headers: {
@@ -15,14 +15,14 @@ export function get(endpoint, authHeader, callback){
     }
   })
   .then(response => {
-    if(response){
+    if(response) {
       return (response.json());
     }else{
       return false;
     }
   })
   .then(json => {
-    if(callback){
+    if(callback) {
       callback(json);
     }
     return json;
@@ -32,7 +32,7 @@ export function get(endpoint, authHeader, callback){
   });
 }
 
-export function getText(endpoint, authHeader, callback){
+export function getText(endpoint, authHeader, callback) {
   return fetch(endpoint, {
     method: 'GET',
     headers: {
@@ -41,14 +41,14 @@ export function getText(endpoint, authHeader, callback){
     }
   })
   .then(response => {
-    if(response){
+    if(response) {
       return (response.text());
     }else{
       return false;
     }
   })
   .then(text => {
-    if(callback){
+    if(callback) {
       callback(text);
     }
     return text;
@@ -58,7 +58,7 @@ export function getText(endpoint, authHeader, callback){
   });
 }
 
-export function post(endpoint, authHeader, payload, callback, textCallback){
+export function post(endpoint, authHeader, payload, callback, textCallback) {
   return fetch(endpoint, {
     method: 'POST',
     headers: {
@@ -68,11 +68,11 @@ export function post(endpoint, authHeader, payload, callback, textCallback){
     body: JSON.stringify(payload)
   })
   .then(response => {
-    if(response){
+    if(response) {
       // be able to accept non-json callbacks
       if(textCallback) response.text().then(textCallback);
 
-      if(!textCallback && response.headers.get("content-type") == 'application/json;charset=UTF-8'){
+      if(!textCallback && response.headers.get("content-type") == 'application/json;charset=UTF-8') {
         return response.json();
       }else{
         return false;
@@ -82,7 +82,7 @@ export function post(endpoint, authHeader, payload, callback, textCallback){
     }
   })
   .then(json => {
-    if(callback){
+    if(callback) {
       callback(json);
     }
     return json;
@@ -92,7 +92,7 @@ export function post(endpoint, authHeader, payload, callback, textCallback){
   });
 }
 
-export function put(endpoint, authHeader, callback){
+export function put(endpoint, authHeader, callback) {
   return fetch(endpoint, {
     method: 'PUT',
     headers: {
@@ -100,8 +100,8 @@ export function put(endpoint, authHeader, callback){
     }
   })
   .then(response => {
-    if(response){
-      if(response.headers.get("content-type") == 'application/json;charset=UTF-8'){
+    if(response) {
+      if(response.headers.get("content-type") == 'application/json;charset=UTF-8') {
         return response.json();
       }else{
         return false;
@@ -111,7 +111,7 @@ export function put(endpoint, authHeader, callback){
     }
   })
   .then(json => {
-    if(callback){
+    if(callback) {
       callback(json);
     }
     return json;
@@ -121,7 +121,7 @@ export function put(endpoint, authHeader, callback){
   });
 }
 
-export function putQueryString(endpoint, authHeader, queryString, callback){
+export function putQueryString(endpoint, authHeader, queryString, callback) {
   return fetch(endpoint + queryString, {
     method: 'PUT',
     headers: {
@@ -129,8 +129,8 @@ export function putQueryString(endpoint, authHeader, queryString, callback){
     }
   })
   .then(response => {
-    if(response){
-      if(response.headers.get("content-type") == 'application/json;charset=UTF-8'){
+    if(response) {
+      if(response.headers.get("content-type") == 'application/json;charset=UTF-8') {
         return response.json();
       }else{
         return false;
@@ -140,7 +140,7 @@ export function putQueryString(endpoint, authHeader, queryString, callback){
     }
   })
   .then(json => {
-    if(callback){
+    if(callback) {
       callback(json);
     }
     return json;
@@ -150,7 +150,7 @@ export function putQueryString(endpoint, authHeader, queryString, callback){
   });
 }
 
-export function postFormData(endpoint, authHeader, file, callback){
+export function postFormData(endpoint, authHeader, file, callback) {
   let fd = new FormData();
   fd.append('file', file);
 
@@ -162,7 +162,7 @@ export function postFormData(endpoint, authHeader, file, callback){
     body: fd
   })
   .then(response =>{
-    if(callback){
+    if(callback) {
       callback(response);
     }
     return false;
@@ -174,15 +174,15 @@ export function postFormData(endpoint, authHeader, file, callback){
 }
 
 
-export function del(endpoint, authHeader, callback){
+export function del(endpoint, authHeader, callback) {
   return fetch(endpoint, {
     method: 'DELETE',
     headers: {'Authorization': authHeader ? authHeader : ''}
   })
   .then(response => {
-    if(response){
-      if(typeof response == 'object'){
-        if(callback){
+    if(response) {
+      if(typeof response == 'object') {
+        if(callback) {
           callback(response);
           return false;
         }else{
@@ -209,7 +209,7 @@ export function clearModified(dispatch) {
 export function getAuthHeaders(dispatch, getState) {
   let state = getState();
   let auth = state.loginAppState.auth;
-  if (auth !== null){
+  if (auth !== null) {
     let header = `Basic ${auth}`;
     return header;
   }else{
@@ -230,7 +230,7 @@ export function getStateList(dispatch, getState) {
 
 export function getCityList(dispatch, getState, stateCode, statusAction) {
   let authHeader = getAuthHeaders(dispatch, getState);
-  if (stateCode == null || stateCode == '' || stateCode == undefined){
+  if (stateCode == null || stateCode == '' || stateCode == undefined) {
     return false;
   }
   setStatus(dispatch, 'loading', statusAction, true);
@@ -261,7 +261,7 @@ export function getLinkedAccounts(dispatch, getState) {
   return get(services.TT_LINKEDACCOUNTS, getAuthHeaders(dispatch, getState));
 }
 
-export function getFacebookAuthorizeUrl(dispatch, getState, callback){
+export function getFacebookAuthorizeUrl(dispatch, getState, callback) {
   return get(services.FACEBOOK_AUTHORIZEURL, getAuthHeaders(dispatch, getState), callback);
 }
 
@@ -269,7 +269,7 @@ export function getLinkedinAuthorizeUrl(dispatch, getState, callback) {
   return get(services.LINKEDIN_AUTHORIZEURL, getAuthHeaders(dispatch, getState, callback));
 }
 
-export function getFacebookToken(dispatch, getState, callback){
+export function getFacebookToken(dispatch, getState, callback) {
   return getText(services.FACEBOOK_TOKEN, getAuthHeaders(dispatch, getState), callback);
 }
 
@@ -301,124 +301,124 @@ export function postETTCheckout(dispatch, getState, productIds, discountCode, to
   return putQueryString(services.E_TT_CHECKOUT, getAuthHeaders(dispatch, getState), '?productIds='+productIds+'&discountCode='+discountCode+'&token='+token, callback);
 }
 
-export function postUserDetails(dispatch, getState, payload, callback){
+export function postUserDetails(dispatch, getState, payload, callback) {
   return post(services.USER_UPDATE_USER, getAuthHeaders(dispatch, getState), payload, callback);
 }
 
-export function postUserLoginUpdate(dispatch, getState, payload, callback){
+export function postUserLoginUpdate(dispatch, getState, payload, callback) {
   return post(services.USER_UPDATE, getAuthHeaders(dispatch, getState), payload, callback);
 }
 
-export function postStepOne(dispatch, getState, payload, callback){
+export function postStepOne(dispatch, getState, payload, callback) {
   return post(services.TT_STEP1, getAuthHeaders(dispatch, getState), payload, callback);
 }
 
-export function uploadProfilePic(dispatch, getState, file, callback){
+export function uploadProfilePic(dispatch, getState, file, callback) {
   return postFormData(services.USER_PROFILE_PIC, getAuthHeaders(dispatch, getState), file, callback);
 }
 
-export function postStepTwo(dispatch, getState, payload, callback){
+export function postStepTwo(dispatch, getState, payload, callback) {
   return post(services.TT_STEP2, getAuthHeaders(dispatch, getState), payload, callback);
 }
 
-export function inviteTenant(dispatch, getState, email,lease_id, callback){
+export function inviteTenant(dispatch, getState, email,lease_id, callback) {
   return put(services.ADD_TENANT + '?email='+email+'&id='+lease_id+'&type=LEASE', getAuthHeaders(dispatch, getState), callback);
 }
 
-export function postStepThree(dispatch, getState, payload, callback){
+export function postStepThree(dispatch, getState, payload, callback) {
   return post(services.TT_STEP3, getAuthHeaders(dispatch, getState), payload, callback);
 }
 
-export function postStepSix(dispatch, getState, payload, callback){
+export function postStepSix(dispatch, getState, payload, callback) {
   return post(services.TT_STEP6, getAuthHeaders(dispatch, getState), payload, callback);
 }
 
-export function getMandates(dispatch, getState, callback){
+export function getMandates(dispatch, getState, callback) {
   return get(services.TT_MANDATES, getAuthHeaders(dispatch, getState), callback);
 }
 
-export function addRentMandate(dispatch, getState, payload, callback){
+export function addRentMandate(dispatch, getState, payload, callback) {
   return post(services.TT_ADDRENTMANDATE, getAuthHeaders(dispatch, getState), payload, callback);
 }
 
-export function addFamily(dispatch, getState, payload, callback){
+export function addFamily(dispatch, getState, payload, callback) {
   return post(services.TT_ADDFAMILY, getAuthHeaders(dispatch, getState), payload, callback);
 }
 
-export function inviteRoommate(dispatch, getState, queryString, callback){
+export function inviteRoommate(dispatch, getState, queryString, callback) {
   return putQueryString(services.TT_INVITEROOMMATE, getAuthHeaders(dispatch, getState), queryString, callback);
 }
 
-export function getEmployerVerification(dispatch, getState){
+export function getEmployerVerification(dispatch, getState) {
   return get(services.VERIFY_VERIFICATION, getAuthHeaders(dispatch, getState));
 }
 
-export function getPropertyList(dispatch, getState){
+export function getPropertyList(dispatch, getState) {
   return get(services.GET_PROPERTY_LIST, getAuthHeaders(dispatch, getState));
 }
 
 
-export function postEmployerVerification(dispatch, getState, payload, callback, textCallback){
+export function postEmployerVerification(dispatch, getState, payload, callback, textCallback) {
   return post(services.VERIFY_REQUESTVERIFY, getAuthHeaders(dispatch, getState), payload, callback, textCallback);
 }
 
-export function getLandlordFeedback(dispatch, getState){
+export function getLandlordFeedback(dispatch, getState) {
   return get(services.TT_LL_FEEDBACK, getAuthHeaders(dispatch, getState));
 }
 
-export function postLandlordFeedback(dispatch, getState, payload, callback, textCallback){
+export function postLandlordFeedback(dispatch, getState, payload, callback, textCallback) {
   return post(services.TT_REQUESTFEEDBACK, getAuthHeaders(dispatch, getState), payload, callback, textCallback);
 }
 
-export function uploadIncomeDoc(dispatch, getState, file, callback){
+export function uploadIncomeDoc(dispatch, getState, file, callback) {
   return postFormData(services.DEPOT_UPLOAD, getAuthHeaders(dispatch, getState), file, callback);
 }
 
-export function uploadCreditReport(dispatch, getState, file, callback){
+export function uploadCreditReport(dispatch, getState, file, callback) {
   return postFormData(services.DEPOT_UPLOADCR, getAuthHeaders(dispatch, getState), file, callback);
 }
 
-export function uploadSupportingDoc(dispatch, getState, file, callback){
+export function uploadSupportingDoc(dispatch, getState, file, callback) {
   return postFormData(services.DEPOT_UPLOAD, getAuthHeaders(dispatch, getState), file, callback);
 }
 
-export function postStripe(dispatch, getState, payload, callback){
+export function postStripe(dispatch, getState, payload, callback) {
   return post(services.PAYMENT_CCADHOC, getAuthHeaders(dispatch, getState), payload, callback);
 }
 
-export function postGuarantor(dispatch, getState, payload, callback){
+export function postGuarantor(dispatch, getState, payload, callback) {
   return post(services.GR_VERIFY, getAuthHeaders(dispatch, getState), payload, callback);
 }
 
-export function verifyFundingSources(dispatch, getState, callback){
+export function verifyFundingSources(dispatch, getState, callback) {
   return get(services.PAYMENT_ACHFS, getAuthHeaders(dispatch, getState), callback);
 }
 
-export function postDwollaPayment(dispatch, getState, payload, callback){
+export function postDwollaPayment(dispatch, getState, payload, callback) {
   return post(services.PAYMENT_ACHADHOC, getAuthHeaders(dispatch, getState), payload, callback);
 }
 
-export function postDwollaCustomer(dispatch, getState, payload, callback){
+export function postDwollaCustomer(dispatch, getState, payload, callback) {
   return post(services.DWOLLA_IAV_CREATECUSTOMER, getAuthHeaders(dispatch, getState), payload, callback);
 }
 
-export function getDwollaToken(dispatch, getState, callback){
+export function getDwollaToken(dispatch, getState, callback) {
   return get(services.DWOLLA_IAV_TOKEN, getAuthHeaders(dispatch, getState), callback);
 }
 
-export function checkInvites(dispatch, auth, callback){
+export function checkInvites(dispatch, auth, callback) {
   return put(services.TT_CHECKINVITES, auth, callback);
 }
 
-export function getScore(dispatch, getState, callback){
+export function getScore(dispatch, getState, callback) {
   return put(services.TT_F2RSCORE, getAuthHeaders(dispatch, getState), callback);
 }
 
-export function getPseudoScore(dispatch, getState, callback){
+export function getPseudoScore(dispatch, getState, callback) {
   return put(services.TT_PSEUDO_F2RSCORE, getAuthHeaders(dispatch, getState), callback);
 }
 
-export function getDocumentBlobUrl(dispatch, getState, filePath, callback){
+export function getDocumentBlobUrl(dispatch, getState, filePath, callback) {
   return fetch(`${services.DEPOT}/?filePath=${filePath}`, {
     method: 'GET',
     headers: {
@@ -426,7 +426,7 @@ export function getDocumentBlobUrl(dispatch, getState, filePath, callback){
     }
   })
   .then(response => {
-    if(response){
+    if(response) {
       return response.blob().then(blob => {
         let url = URL.createObjectURL(blob);
         if (callback) callback(url);
@@ -440,46 +440,58 @@ export function getDocumentBlobUrl(dispatch, getState, filePath, callback){
   });
 }
 
-export function browseDocuments(dispatch, getState, callback){
+export function browseDocuments(dispatch, getState, callback) {
   return get(services.DEPOT_BROWSE, getAuthHeaders(dispatch, getState), callback);
 }
 
-export function deleteDocuments(dispatch, getState, payload, callback){
+export function deleteDocuments(dispatch, getState, payload, callback) {
   return post(services.DEPOT_DELETE, getAuthHeaders(dispatch, getState), payload, callback);
 }
 
-export function uploadFile(dispatch, getState, file, callback){
+export function uploadFile(dispatch, getState, file, callback) {
   return postFormData(services.DEPOT_UPLOAD, getAuthHeaders(dispatch, getState), file, callback);
 }
 
-export function getLLPropertiesList(dispatch, getState){
+export function getLLPropertiesList(dispatch, getState) {
   return get(services.LL_PROPERTIES_LIST, getAuthHeaders(dispatch, getState));
 }
 
-export function getLLPropertyProfile(propertyId, dispatch, getState){
+export function getLLPropertyProfile(propertyId, dispatch, getState) {
   return get(services.LL_PROPERTY_PROFILE + '?includeImages=1&id=' + propertyId, getAuthHeaders(dispatch, getState));
 }
 
-export function getLLPropertyLeases(propertyId, dispatch, getState){
+export function getLLPropertyLeases(propertyId, dispatch, getState) {
   return get(services.LL_PROPERTY_LEASES + '?propertyId=' + propertyId, getAuthHeaders(dispatch, getState));
 }
 
-export function getLLPropertyTenants(propertyId, dispatch, getState){
+export function getLLPropertyTenants(propertyId, dispatch, getState) {
   return get(services.LL_PROPERTY_TENANTS + '?id=' + propertyId, getAuthHeaders(dispatch, getState));
 }
 
-export function uploadPropertyPic(propertyId, dispatch, getState, file, callback){
+export function uploadPropertyPic(propertyId, dispatch, getState, file, callback) {
   return postFormData(services.LL_PROPERTY_PIC + '?propertyId=' + propertyId, getAuthHeaders(dispatch, getState), file, callback);
 }
 
-export function addLLPropertyProfile(dispatch, getState, payload, callback){
+export function addLLPropertyProfile(dispatch, getState, payload, callback) {
   return post(services.LL_ADD_PROPERTY_PROFILE, getAuthHeaders(dispatch, getState), payload, callback);
 }
 
-export function updateLLPropertyProfile(dispatch, getState, payload, callback){
+export function updateLLPropertyProfile(dispatch, getState, payload, callback) {
   return post(services.LL_UPDATE_PROPERTY_PROFILE, getAuthHeaders(dispatch, getState), payload, callback);
 }
 
-export function getLLLeasesList(dispatch, getState){
+export function getLLLeasesList(dispatch, getState) {
   return get(services.LL_LEASES_LIST, getAuthHeaders(dispatch, getState));
+}
+
+export function getLLLeaseDetails(leaseId, dispatch, getState) {
+  return get(services.LL_LEASE_DETAILS + '?leaseId=' + leaseId, getAuthHeaders(dispatch, getState));
+}
+
+export function addLLLeaseDetails(dispatch, getState, payload, callback) {
+  return post(services.LL_ADD_LEASE_DETAILS, getAuthHeaders(dispatch, getState), payload, callback);
+}
+
+export function updateLLLeaseDetails(dispatch, getState, payload, callback) {
+  return post(services.LL_UPDATE_LEASE_DETAILS, getAuthHeaders(dispatch, getState), payload, callback);
 }
