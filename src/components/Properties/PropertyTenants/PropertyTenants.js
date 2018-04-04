@@ -19,13 +19,14 @@ export default class PropertyTenants extends Component {
     return (
       _.map(propertyTenants, (tenant, index) => (
         <tr key={index}>
+          <td>{tenant.leaseId}</td>
           <td>
             {tenant.firstName} {tenant.middleName} {tenant.lastName}
           </td>
           <td>{tenant.email}</td>
-          <td>{tenant.userDetails.phoneNumber}</td>
-          <td>{tenant.madePayments}</td>
-          <td>{tenant.totalPayment}</td>
+          <td>{tenant.userDetails.phoneNumber || 'N/A'}</td>
+          <td>{tenant.madePayments || 'N/A'}</td>
+          <td>{tenant.totalPayment || 'N/A'}</td>
         </tr>
       ))
     );
@@ -43,14 +44,15 @@ export default class PropertyTenants extends Component {
     const { propertyTenants } = this.props;
     return (
       <div>
-        <Table striped bordered condensed hover className="properties-list-table">
+        <Table striped bordered condensed hover className="properties-list-table text-center">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Payments Made</th>
-              <th>Total Payments</th>
+              <th className="text-center">Lease ID</th>
+              <th className="text-center">Name</th>
+              <th className="text-center">Email</th>
+              <th className="text-center">Phone</th>
+              <th className="text-center">Payments Made</th>
+              <th className="text-center">Total Payments</th>
             </tr>
           </thead>
           <tbody>

@@ -14,6 +14,14 @@ export default class PropertyLeases extends Component {
     goTo('/dashboard/leases');
   }
 
+  getSumDeposits(lease, depositStatus) {
+    return _.reduce(
+      _.filter(lease.depositList, { depositStatus }),
+      (sum, item) => (sum + item.depositAmount),
+      0
+    )
+  }
+
   renderDividedColumn(text1, text2) {
     return (
       <span className="divide-column">
@@ -28,13 +36,17 @@ export default class PropertyLeases extends Component {
     return (
       _.map(propertyLeases, (lease, index) => (
         <tr key={index}>
+          <td>{lease.id}</td>
+          <td>{lease.rentAmount}</td>
+          <td>{lease.startDate || 'N/A'}</td>
+          <td>{lease.endDate || 'N/A'}</td>
+          <td>{lease.rentDueDate || 'N/A'}</td>
           <td>
-            {lease.rent}
+            {this.renderDividedColumn(
+              this.getSumDeposits(lease, 'REFUNDABLE'), 
+              this.getSumDeposits(lease, 'NONREFUNDABLE')
+            )}
           </td>
-          <td>{lease.startDate}</td>
-          <td>{lease.endDate}</td>
-          <td>{lease.rentPaymentDate}</td>
-          <td>{this.renderDividedColumn(lease.refundableAmount, lease.nonRefundableAmount)}</td>
         </tr>
       ))
     );
@@ -52,14 +64,15 @@ export default class PropertyLeases extends Component {
     const { propertyLeases } = this.props;
     return (
       <div>
-        <Table striped bordered condensed hover className="properties-list-table">
+        <Table striped bordered condensed hover className="properties-list-table text-center">
           <thead>
             <tr>
-              <th>Rent</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Pay Date</th>
-              <th>Deposits<br /><sub>(Refundable / Non-Refundable)</sub></th>
+              <th className="text-center">Lease ID</th>
+              <th className="text-center">Rent</th>
+              <th className="text-center">Start Date</th>
+              <th className="text-center">End Date</th>
+              <th className="text-center">Pay Date</th>
+              <th className="text-center">Deposits<br /><sub>(Refundable / Non-Refundable)</sub></th>
             </tr>
           </thead>
           <tbody>

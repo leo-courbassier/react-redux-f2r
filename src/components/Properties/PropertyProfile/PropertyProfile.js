@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import _ from 'lodash';
 import Loader from '../../Loader';
 import TabEditablePanel from '../../account/TabEditablePanel';
 import TabPanel from '../../TabPanel';
@@ -24,7 +25,6 @@ export default class PropertyProfile extends Component {
     const { propertyId, actions, geoActions, appState: { propertyProfile: property } } = this.props;
     actions.loadPropertyProfile(propertyId);
     actions.loadPropertyLeases(propertyId);
-    actions.loadPropertyTenants(propertyId);
     geoActions.loadStateList();
     geoActions.loadCityList(property.state);
   }
@@ -32,6 +32,19 @@ export default class PropertyProfile extends Component {
     const { appState, geoState, actions, geoActions, propertyId, goTo } = this.props;
     const editMode = appState.editMode.propertyProfile;
     const updateEditMode = () => actions.editModeUpdate('propertyProfile', !editMode);
+
+    const propertyTenants = _.reduce(
+      appState.propertyLeases,
+      (pt, item) => (
+        _.concat(
+          pt, 
+          _.map(item.renterList, (renter) => (
+            _.set(renter, 'leaseId', item.id)
+          ))
+        )
+      ),
+      []
+    );
 
     return (
       <div>
@@ -58,7 +71,7 @@ export default class PropertyProfile extends Component {
         </TabPanel>
         <TabPanel title="Tenant Information">
           <Loader appState={this.props.appState} statusType="loading" statusAction="propertyTenants">
-            <PropertyTenants propertyTenants={appState.propertyTenants} goTo={goTo} />
+            <PropertyTenants propertyTenants={propertyTenants} goTo={goTo} />
           </Loader>
         </TabPanel>
       </div>

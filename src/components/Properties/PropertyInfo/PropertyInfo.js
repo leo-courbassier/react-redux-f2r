@@ -64,7 +64,7 @@ export default class PropertyInfo extends Component {
           <Col sm={12}>
             <dl className="dl-property">
               <dt>Description</dt>
-              <dd>{property.description || 'Not Available'}</dd>
+              <dd>{property.description || 'N/A'}</dd>
               <dt>Details</dt>
               <dd>
                 <Row>
