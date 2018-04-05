@@ -30,6 +30,17 @@ $onboarding-panel-height: 40px;
 .leaseTypeSection{
   padding-left: 100px;
 }
+.proceed-step3{
+  float:right;
+}
+.save-step3.btn.btn-warning{
+  position:relative;
+  left:35px;
+}
+.save-step3{
+  position:relative;
+  left:60px;
+}
 .onboarding-page {
   .welcome-text{
     @include invisible-panel();

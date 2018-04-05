@@ -447,7 +447,6 @@ export function saveStepThree(
          api.inviteTenant(dispatch, getState, email,response.id,callback, () => {
 
          })
-        //dispatch({type: types.ONBOARDING_STEPTHREE_FORM_CLEAR, name: 'saved', value: true});
         if (openNextStep) openNextStep();
 
     });
@@ -790,9 +789,6 @@ export function saveStepSix(
 
 
     api.setStatus(dispatch, 'saving', 'stepSixForm', true);
-
-
-
 
 
     let mandate = {
