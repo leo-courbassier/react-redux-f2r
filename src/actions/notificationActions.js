@@ -47,11 +47,27 @@ export function updateAlerts(page = 0, forceReload = false, callback) {
   };
 }
 
+export function updateAlertsCount(callback) {
+  return function (dispatch, getState) {
+    api.getAlertsCount(dispatch, getState, count => {
+      count = parseInt(count)
+      
+      dispatch({
+        type: types.NOTIFICATION_ALERTS_COUNT_UPDATE,
+        count
+      });
+
+      if (callback) callback(count);
+    });
+  };
+}
+
 export function deleteAlert(id, callback) {
   return function (dispatch, getState) {
     api.setStatus(dispatch, 'loading', 'deleteAlert', true);
     api.deleteAlerts(dispatch, getState, [id], response => {
       api.setStatus(dispatch, 'loading', 'deleteAlert', false);
+      dispatch({type: types.NOTIFICATION_ALERTS_DELETE,});
       if (callback) callback(response);
     });
   };

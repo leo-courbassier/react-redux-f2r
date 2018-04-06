@@ -16,6 +16,7 @@ const initialState = {
   },
 
   alerts: [],
+  alertsCount: 0,
   alertsPage: 0
 
 };
@@ -39,6 +40,22 @@ export default function notificationAppState(state = initialState, action) {
           newState['alerts'].push(action.data);
         }
         newState['alertsPage'] = action.page;
+        return newState;
+      }
+
+    case types.NOTIFICATION_ALERTS_COUNT_UPDATE:
+      {
+        let newState = objectAssign({}, state);
+        newState['alertsCount'] = action.count;
+        return newState;
+      }
+
+    case types.NOTIFICATION_ALERTS_DELETE:
+      {
+        let newState = objectAssign({}, state);
+        if (newState['alertsCount'] > 0) {
+          newState['alertsCount']--;
+        }
         return newState;
       }
 

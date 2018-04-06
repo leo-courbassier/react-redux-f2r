@@ -191,6 +191,11 @@ class NavBar extends Component {
     const myAlerts = (
       <BS.NavItem eventKey={2} onClick={this.toggleAlerts.bind(this)} href="#">
         <BS.Glyphicon glyph="comment" /> Alerts
+        {this.props.alertsCount > 0 && (
+          <span className="unread">
+            <BS.Label>{this.props.alertsCount} New</BS.Label>
+          </span>
+        )}
       </BS.NavItem>
     );
 

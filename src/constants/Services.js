@@ -139,4 +139,5 @@ export const MESSAGE_DELETE = BASE_URL + '/message/delete';
 // Alerts
 
 export const ALERTS = BASE_URL + '/alerts/';
+export const ALERTS_COUNT = BASE_URL + '/alerts/count';
 export const ALERTS_DELETE = BASE_URL + '/alerts/delete';

@@ -545,6 +545,10 @@ export function getAlerts(dispatch, getState, page = 0, pageSize = 15, callback)
   return get(`${services.ALERTS}?page=${page}&pageSize=${pageSize}`, getAuthHeaders(dispatch, getState), callback);
 }
 
+export function getAlertsCount(dispatch, getState, callback){
+  return getText(services.ALERTS_COUNT, getAuthHeaders(dispatch, getState), callback);
+}
+
 export function deleteAlerts(dispatch, getState, ids, callback){
   return del(`${services.ALERTS_DELETE}?alertIds=${ids.join()}`, getAuthHeaders(dispatch, getState), callback);
 }
