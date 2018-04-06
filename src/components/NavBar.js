@@ -285,7 +285,7 @@ class NavBar extends Component {
         fluid>
         <BS.Navbar.Header>
           <BS.Navbar.Brand>
-            <IndexLink to={this.isOnboardingUser() ? '/onboarding' : '/dashboard/account'}>
+            <IndexLink to={this.isOnboardingUser() ? '/onboardinglandlord' : '/dashboard/account'}>
               <Logo />
             </IndexLink>
           </BS.Navbar.Brand>
