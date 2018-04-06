@@ -1,6 +1,61 @@
 import * as types from '../constants/ActionTypes';
 import * as services from '../constants/Services';
+import { ALERTS_PAGE_SIZE } from '../constants/App';
 import * as api from './api';
+
+export function updateAlerts(page = 0, forceReload = false, callback) {
+  return function (dispatch, getState) {
+    let alerts = getState().notificationAppState.alerts;
+
+    // If the page data already exists, simply switch to that page
+    if (alerts[page] && !forceReload) {
+      dispatch({
+        type: types.NOTIFICATION_ALERTS_UPDATE,
+        page
+      });
+
+      if (callback) callback(alerts[page]);
+
+      return;
+    }
+
+    let pageSize = ALERTS_PAGE_SIZE + 1; // grab extra to see if there's a next page
+
+    api.setStatus(dispatch, 'loading', 'alerts', true);
+
+    api.getAlerts(dispatch, getState, page, pageSize, newAlerts => {
+      let data = null;
+
+      if (newAlerts.length > 0) {
+        let end = newAlerts.length <= ALERTS_PAGE_SIZE ? newAlerts.length : newAlerts.length - 1;
+        data = {
+          items: newAlerts.slice(0, end),
+          hasNext: newAlerts.length <= ALERTS_PAGE_SIZE
+        }
+      }
+
+      dispatch({
+        type: types.NOTIFICATION_ALERTS_UPDATE,
+        data,
+        page
+      });
+
+      api.setStatus(dispatch, 'loading', 'alerts', false);
+
+      if (callback) callback(alerts);
+    });
+  };
+}
+
+export function deleteAlert(id, callback) {
+  return function (dispatch, getState) {
+    api.setStatus(dispatch, 'loading', 'deleteAlert', true);
+    api.deleteAlerts(dispatch, getState, [id], response => {
+      api.setStatus(dispatch, 'loading', 'deleteAlert', false);
+      if (callback) callback(response);
+    });
+  };
+}
 
 export function updateMessages(callback) {
   return function (dispatch, getState) {

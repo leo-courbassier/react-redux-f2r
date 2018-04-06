@@ -135,3 +135,8 @@ export const MESSAGE_FLAG = BASE_URL + '/message/flag';
 export const MESSAGE_COUNT = BASE_URL + '/message/count';
 export const MESSAGE_SEND = BASE_URL + '/message/send';
 export const MESSAGE_DELETE = BASE_URL + '/message/delete';
+
+// Alerts
+
+export const ALERTS = BASE_URL + '/alerts/';
+export const ALERTS_DELETE = BASE_URL + '/alerts/delete';

@@ -13,7 +13,10 @@ const initialState = {
   messages: {
     unread: 0,
     new: false
-  }
+  },
+
+  alerts: [],
+  alertsPage: 0
 
 };
 
@@ -26,6 +29,16 @@ export default function notificationAppState(state = initialState, action) {
       {
         let newState = objectAssign({}, state);
         newState['status'][action.statusType][action.statusAction] = action.statusState;
+        return newState;
+      }
+
+    case types.NOTIFICATION_ALERTS_UPDATE:
+      {
+        let newState = objectAssign({}, state);
+        if (action.data) {
+          newState['alerts'].push(action.data);
+        }
+        newState['alertsPage'] = action.page;
         return newState;
       }
 

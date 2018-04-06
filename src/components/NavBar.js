@@ -4,11 +4,17 @@ import * as BS from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import * as types from '../constants/ActionTypes';
 import Logo from './Logo';
+import Loader from './Loader';
+import ButtonSpinner from './ButtonSpinner';
 
 class NavBar extends Component {
 
   state = {
-    expanded: false
+    expanded: false,
+    alerts: {
+      show: false,
+      target: null
+    }
   }
 
   isLoggedIn() {
@@ -44,10 +50,32 @@ class NavBar extends Component {
     this.setState({expanded: false});
   }
 
+  toggleAlerts(e) {
+    this.setState({
+      alerts: {
+        show: !this.state.alerts.show,
+        target: e.target
+      }
+    });
+  }
+
+  closeAlerts() {
+    this.setState({
+      alerts: {
+        show: false,
+        target: this.state.alerts.target
+      }
+    });
+  }
+
   render() {
+    const alerts = this.props.alerts;
+    const alertsPage = this.props.alertsPage;
+    const hasAlerts = alerts[alertsPage] && alerts[alertsPage].items.length > 0;
+
     const signUp = (
       <LinkContainer to={{ pathname: '/signup' }}>
-        <BS.NavItem eventKey={2} onClick={this.handleClick.bind(this)} href="#">
+        <BS.NavItem eventKey={4} onClick={this.handleClick.bind(this)} href="#">
           Sign Up
         </BS.NavItem>
       </LinkContainer>
@@ -55,10 +83,115 @@ class NavBar extends Component {
 
     const myDashboard = (
       <LinkContainer to={{ pathname: '/dashboard/account' }}>
-        <BS.NavItem eventKey={2} onClick={this.handleClick.bind(this)} href="#">
+        <BS.NavItem eventKey={3} onClick={this.handleClick.bind(this)} href="#">
           <BS.Glyphicon glyph="user" /> Account
         </BS.NavItem>
       </LinkContainer>
+    );
+
+    const alertsDropdown = (
+      <BS.Overlay
+        show={this.state.alerts.show}
+        target={this.state.alerts.target}
+        placement="bottom"
+        container={this}>
+        <BS.Popover id="popover-alerts" className="alerts-dropdown" title="Alerts">
+          <Loader appState={this.props.appState} statusType="loading" statusAction="alerts">
+            <div>
+              {!hasAlerts && (
+                <div className="alerts-dropdown-empty">You don't have any alerts.</div>
+              )}
+              {hasAlerts && (
+                <div>
+                  {alerts[alertsPage].items.map(alert => {
+                    return (
+                      <div key={alert.id} className="alerts-dropdown-item">
+                        <div className="alerts-dropdown-item-content">{alert.description}</div>
+                        <div className="alerts-dropdown-item-delete">
+                          {this.props.appState.status.loading['deleteAlert'] ? (
+                            <ButtonSpinner />
+                          ) : (
+                            <BS.Button
+                              onClick={() => { this.props.deleteAlert(alert.id); }}
+                              bsStyle="default"
+                              bsSize="small">
+                              <BS.Glyphicon glyph="remove" />
+                              <span className="sr-only">Delete</span>
+                            </BS.Button>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+              <div className="alerts-dropdown-footer">
+                <div className="alerts-dropdown-footer-item">
+                  <BS.Button
+                    onClick={this.closeAlerts.bind(this)}
+                    bsStyle="default"
+                    bsSize="small">
+                    Close
+                  </BS.Button>
+                </div>
+                <div className="alerts-dropdown-footer-item">
+                  {hasAlerts && (
+                    <div className="text-center text-muted">Page {alertsPage + 1}</div>
+                  )}
+                </div>
+                <div className="alerts-dropdown-footer-item">
+                  <div className="text-right">
+                    {hasAlerts && (
+                      <BS.ButtonGroup>
+                        {alertsPage === 0 ? (
+                          <BS.Button
+                            bsStyle="default"
+                            bsSize="small"
+                            disabled>
+                            <BS.Glyphicon glyph="chevron-left" />
+                            <span className="sr-only">Prev</span>
+                          </BS.Button>
+                        ) : (
+                          <BS.Button
+                            onClick={() => { this.props.updateAlerts(alertsPage - 1); }}
+                            bsStyle="default"
+                            bsSize="small">
+                            <BS.Glyphicon glyph="chevron-left" />
+                            <span className="sr-only">Prev</span>
+                          </BS.Button>
+                        )}
+                        {alerts[alertsPage].hasNext ? (
+                          <BS.Button
+                            bsStyle="default"
+                            bsSize="small"
+                            disabled>
+                            <BS.Glyphicon glyph="chevron-right" />
+                            <span className="sr-only">Next</span>
+                          </BS.Button>
+                        ) : (
+                          <BS.Button
+                            onClick={() => { this.props.updateAlerts(alertsPage + 1); }}
+                            bsStyle="default"
+                            bsSize="small">
+                            <BS.Glyphicon glyph="chevron-right" />
+                            <span className="sr-only">Next</span>
+                          </BS.Button>
+                        )}
+                      </BS.ButtonGroup>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Loader>
+        </BS.Popover>
+      </BS.Overlay>
+    );
+
+    const myAlerts = (
+      <BS.NavItem eventKey={2} onClick={this.toggleAlerts.bind(this)} href="#">
+        <BS.Glyphicon glyph="comment" /> Alerts
+      </BS.NavItem>
     );
 
     const myMail = (
@@ -127,6 +260,7 @@ class NavBar extends Component {
     const navItems = (
       <BS.Navbar.Collapse>
         <BS.Nav pullRight>
+          {this.isLoggedIn() ? myAlerts : null}
           {this.isLoggedIn() ? myMail : null}
           {this.isDashboardUser() ? myDashboard : null}
           {this.isLoggedIn() ? null : signUp}
@@ -158,6 +292,7 @@ class NavBar extends Component {
           <BS.Navbar.Toggle />
         </BS.Navbar.Header>
         {navItems}
+        {alertsDropdown}
       </BS.Navbar>
     );
   }

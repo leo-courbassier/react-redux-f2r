@@ -121,7 +121,54 @@ body {
   }
 }
 
+.alerts-dropdown {
+  .popover-content {
+    padding: 0;
+    width: 240px;
+  }
 
+  &-empty {
+    padding: 10px;
+    color: $f2r-gray-header-text;
+  }
+
+  &-item {
+    position: relative;
+    display: flex;
+    padding: 10px;
+    color: $f2r-gray-header-text;
+
+    &:not(:first-child) {
+      border-top: 1px solid #ddd;
+    }
+
+    &-content {
+      padding-right: 30px;
+    }
+
+    &-delete {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      button {
+        border: none;
+      }
+    }
+  }
+
+  &-footer {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+
+    &-item {
+      flex: 1;
+      font-size: 12px;
+      line-height: 30px;
+    }
+  }
+}
 
 .not-found-page {
   margin-top: 100px;
