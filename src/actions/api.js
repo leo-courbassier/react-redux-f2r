@@ -483,3 +483,60 @@ export function updateLLPropertyProfile(dispatch, getState, payload, callback){
 export function getLLLeasesList(dispatch, getState){
   return get(services.LL_LEASES_LIST, getAuthHeaders(dispatch, getState));
 }
+
+export function getLeaseTenants(dispatch, getState, id, callback){
+  let idParam = id ? `id=${id}` : '';
+  return get(`${services.LEASE_TENANTS}?${idParam}`, getAuthHeaders(dispatch, getState), callback);
+}
+
+export function getUserByEmail(dispatch, getState, email, callback) {
+  // return get(`${services.USER_USER}?email=${email}&returnDetails=false`, getAuthHeaders(dispatch, getState), callback);
+  return fetch(`${services.USER_USER}?email=${encodeURIComponent(email)}&returnDetails=false`, {
+    method: 'GET',
+    headers: {
+      'Authorization': getAuthHeaders(dispatch, getState),
+      'Content-Type': 'application/json;charset=UTF-8'
+    }
+  })
+  .then(response => {
+    response.text().then(text => {
+      if (text === '') {
+        callback(null);
+      } else {
+        callback(JSON.parse(text));
+      }
+    });
+  })
+  .catch(err => {
+    throw new Error(err);
+  });
+}
+
+export function getMessageInbox(dispatch, getState, offset=0, rowCount=50, callback){
+  return get(`${services.MESSAGE_INBOX}?offset=${offset}&rowCount=${rowCount}`, getAuthHeaders(dispatch, getState), callback);
+}
+
+export function getMessageOutbox(dispatch, getState, offset=0, rowCount=50, callback){
+  return get(`${services.MESSAGE_OUTBOX}?offset=${offset}&rowCount=${rowCount}`, getAuthHeaders(dispatch, getState), callback);
+}
+
+export function sendMessage(dispatch, getState, toEmail, payload, callback){
+  let toEmailParam = toEmail ? `toEmail=${encodeURIComponent(toEmail)}` : '';
+  return post(`${services.MESSAGE_SEND}?${toEmailParam}`, getAuthHeaders(dispatch, getState), payload, callback);
+}
+
+export function getMessage(dispatch, getState, folderType, id, callback){
+  return get(`${services.MESSAGE}/?folderType=${folderType}&id=${id}`, getAuthHeaders(dispatch, getState), callback);
+}
+
+export function flagMessage(dispatch, getState, id, callback){
+  return put(`${services.MESSAGE_FLAG}?id=${id}`, getAuthHeaders(dispatch, getState), callback);
+}
+
+export function deleteMessages(dispatch, getState, folderType, ids, callback){
+  return del(`${services.MESSAGE_DELETE}?folderType=${folderType}&ids=${ids.join()}`, getAuthHeaders(dispatch, getState), callback);
+}
+
+export function getMessagesCount(dispatch, getState, callback){
+  return getText(services.MESSAGE_COUNT, getAuthHeaders(dispatch, getState), callback);
+}

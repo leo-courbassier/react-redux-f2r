@@ -10,10 +10,12 @@ import loginAppState from './login';
 import onboardingAppState from './onboardinglandlord';
 import propertiesAppState from './properties';
 import leasesAppState from './leases';
+import messagesAppState from './messages';
 import resetAppState from './reset';
 import sidebarState from './sidebar';
 import signupAppState from './signup';
 import verifyAppState from './verify';
+import notificationAppState from './notification';
 import { routerReducer } from 'react-router-redux';
 
 const rootReducer = combineReducers({
@@ -29,6 +31,8 @@ const rootReducer = combineReducers({
   sidebarState,
   propertiesAppState,
   leasesAppState,
+  messagesAppState,
+  notificationAppState,
   geoAppState,
   form: formReducer,
   routing: routerReducer

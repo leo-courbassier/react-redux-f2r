@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link, IndexLink } from 'react-router';
 import * as BS from 'react-bootstrap';
 
-import NavBar from '../components/NavBar';
+import NavBarContainer from '../containers/NavBar';
 
 import * as actions from '../actions/loginActions';
 
@@ -10,9 +10,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NavBar
-        logout={actions.logout()}
-        store={this.context.store} />
+        <NavBarContainer />
         {this.props.children}
       </div>
     );
