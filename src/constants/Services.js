@@ -1,3 +1,6 @@
+// const isProd = process.env.F2R_ENV === 'production';
+const isProd = false;
+
 // server address
 // export const BASE_URL = 'https://ec2-52-91-200-31.compute-1.amazonaws.com:9931/api';
 
@@ -5,6 +8,12 @@ export const BASE_URL = 'https://dev-api.fit2rent.com:9931/api';
 
 
 // export const BASE_URL = 'https://api.fit2rent.com/api';
+
+// environment tokens
+
+export const STRIPE_KEY = isProd ? 'pk_live_UAliz3GcbxSxzMqG9Mi4hU8h' : 'pk_test_9sfO7SgxwPOYrh5fTPKNN2w9';
+
+export const DWOLLA_ENV = isProd ? 'live' : 'sandbox';
 
 // methods
 
