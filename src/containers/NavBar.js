@@ -17,7 +17,6 @@ class NavBarContainer extends Component {
 
   checked = {
     alerts: false,
-    alertsCount: false,
     messages: false
   }
 
@@ -36,21 +35,15 @@ class NavBarContainer extends Component {
 
   componentWillUpdate() {
     if (!this.checked.alerts) this.updateAlerts();
-    if (!this.checked.alertsCount) this.updateAlertsCount();
     if (!this.checked.messages) this.updateMessages();
   }
 
   updateAlerts() {
     if (this.context.store.getState().loginAppState.authorized) {
       this.checked.alerts = true;
-      this.props.actions.updateAlerts();
-    }
-  }
-
-  updateAlertsCount() {
-    if (this.context.store.getState().loginAppState.authorized) {
-      this.checked.alertsCount = true;
-      this.props.actions.updateAlertsCount();
+      this.props.actions.updateAlertsCount(() => {
+        this.props.actions.updateAlerts();
+      });
     }
   }
 

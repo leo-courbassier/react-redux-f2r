@@ -3,6 +3,7 @@ import { Link, IndexLink, browserHistory } from 'react-router';
 import * as BS from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import * as types from '../constants/ActionTypes';
+import { ALERTS_PAGE_SIZE } from '../constants/App';
 import Logo from './Logo';
 import Loader from './Loader';
 import ButtonSpinner from './ButtonSpinner';
@@ -108,7 +109,7 @@ class NavBar extends Component {
                       <div key={alert.id} className="alerts-dropdown-item">
                         <div className="alerts-dropdown-item-content">{alert.description}</div>
                         <div className="alerts-dropdown-item-delete">
-                          {this.props.appState.status.loading['deleteAlert'] ? (
+                          {this.props.appState.status.loading['deleteAlert'+alert.id] ? (
                             <ButtonSpinner />
                           ) : (
                             <BS.Button
@@ -162,17 +163,17 @@ class NavBar extends Component {
                         )}
                         {alerts[alertsPage].hasNext ? (
                           <BS.Button
+                            onClick={() => { this.props.updateAlerts(alertsPage + 1); }}
                             bsStyle="default"
-                            bsSize="small"
-                            disabled>
+                            bsSize="small">
                             <BS.Glyphicon glyph="chevron-right" />
                             <span className="sr-only">Next</span>
                           </BS.Button>
                         ) : (
                           <BS.Button
-                            onClick={() => { this.props.updateAlerts(alertsPage + 1); }}
                             bsStyle="default"
-                            bsSize="small">
+                            bsSize="small"
+                            disabled>
                             <BS.Glyphicon glyph="chevron-right" />
                             <span className="sr-only">Next</span>
                           </BS.Button>
@@ -193,7 +194,7 @@ class NavBar extends Component {
         <BS.Glyphicon glyph="comment" /> Alerts
         {this.props.alertsCount > 0 && (
           <span className="unread">
-            <BS.Label>{this.props.alertsCount} New</BS.Label>
+            <BS.Label>{this.props.alertsCount}</BS.Label>
           </span>
         )}
       </BS.NavItem>

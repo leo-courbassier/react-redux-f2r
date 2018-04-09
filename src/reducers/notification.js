@@ -36,6 +36,9 @@ export default function notificationAppState(state = initialState, action) {
     case types.NOTIFICATION_ALERTS_UPDATE:
       {
         let newState = objectAssign({}, state);
+        if (action.forceReload) {
+          newState['alerts'] = [];
+        }
         if (action.data) {
           newState['alerts'].push(action.data);
         }

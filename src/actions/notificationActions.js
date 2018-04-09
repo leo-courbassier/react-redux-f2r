@@ -19,25 +19,25 @@ export function updateAlerts(page = 0, forceReload = false, callback) {
       return;
     }
 
-    let pageSize = ALERTS_PAGE_SIZE + 1; // grab extra to see if there's a next page
-
     api.setStatus(dispatch, 'loading', 'alerts', true);
 
-    api.getAlerts(dispatch, getState, page, pageSize, newAlerts => {
+    api.getAlerts(dispatch, getState, page, ALERTS_PAGE_SIZE, newAlerts => {
+      let alertsCount = getState().notificationAppState.alertsCount;
+
       let data = null;
 
       if (newAlerts.length > 0) {
-        let end = newAlerts.length <= ALERTS_PAGE_SIZE ? newAlerts.length : newAlerts.length - 1;
         data = {
-          items: newAlerts.slice(0, end),
-          hasNext: newAlerts.length <= ALERTS_PAGE_SIZE
+          items: newAlerts,
+          hasNext: ((page + 1) * ALERTS_PAGE_SIZE) < alertsCount
         }
       }
 
       dispatch({
         type: types.NOTIFICATION_ALERTS_UPDATE,
         data,
-        page
+        page,
+        forceReload
       });
 
       api.setStatus(dispatch, 'loading', 'alerts', false);
@@ -51,7 +51,7 @@ export function updateAlertsCount(callback) {
   return function (dispatch, getState) {
     api.getAlertsCount(dispatch, getState, count => {
       count = parseInt(count)
-      
+
       dispatch({
         type: types.NOTIFICATION_ALERTS_COUNT_UPDATE,
         count
@@ -64,9 +64,9 @@ export function updateAlertsCount(callback) {
 
 export function deleteAlert(id, callback) {
   return function (dispatch, getState) {
-    api.setStatus(dispatch, 'loading', 'deleteAlert', true);
+    api.setStatus(dispatch, 'loading', 'deleteAlert'+id, true);
     api.deleteAlerts(dispatch, getState, [id], response => {
-      api.setStatus(dispatch, 'loading', 'deleteAlert', false);
+      api.setStatus(dispatch, 'loading', 'deleteAlert'+id, false);
       dispatch({type: types.NOTIFICATION_ALERTS_DELETE,});
       if (callback) callback(response);
     });
