@@ -42,6 +42,10 @@ import LeaseCreatorPage from './containers/LeaseCreatorPage';
 import TenantsPage from './containers/TenantsPage';
 import TenantsSummaryPage from './containers/TenantsSummaryPage';
 import MessagesPage from './containers/MessagesPage';
+import PaymentsPage from './containers/PaymentsPage';
+import PaymentsSummaryPage from './containers/PaymentsSummaryPage';
+import PaymentsMethodsPage from './containers/PaymentsMethodsPage';
+import PaymentsCenterPage from './containers/PaymentsCenterPage';
 
 let NotImplemented = () => <div>Not Implemented</div>;
 
@@ -102,10 +106,10 @@ render(
           <Route path="tenants" component={TenantsPage}>
             <IndexRoute component={TenantsSummaryPage} />
           </Route>
-          <Route path="payments" component={NotImplemented}>
-            <IndexRoute component={NotImplemented} />
-            <Route path="methods" component={NotImplemented} />
-            <Route path="center" component={NotImplemented} />
+          <Route path="payments" component={PaymentsPage}>
+            <IndexRoute component={PaymentsSummaryPage} />
+            <Route path="methods" component={PaymentsMethodsPage} />
+            <Route path="center" component={PaymentsCenterPage} />
           </Route>
         </Route>
         <Route onEnter={requireAuth} path="messages(/:folder)(/:id)" component={MessagesPage}/>

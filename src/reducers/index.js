@@ -12,6 +12,7 @@ import propertiesAppState from './properties';
 import leasesAppState from './leases';
 import tenantsAppState from './tenants';
 import messagesAppState from './messages';
+import paymentsAppState from './payments';
 import resetAppState from './reset';
 import sidebarState from './sidebar';
 import signupAppState from './signup';
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
   tenantsAppState,
   messagesAppState,
   notificationAppState,
+  paymentsAppState,
   geoAppState,
   dwollaAppState,
   stripeAppState,
