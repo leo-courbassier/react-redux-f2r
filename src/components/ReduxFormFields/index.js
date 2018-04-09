@@ -1,6 +1,7 @@
 import AmenityListInput from './AmenityListInput';
 import DateInput from './DateInput';
 import DepositListInput from './DepositListInput';
+import renderDatePicker from './renderDatePicker';
 import renderInput from './renderInput';
 import renderRadio from './renderRadio';
 import renderSelect from './renderSelect';
@@ -14,6 +15,7 @@ export {
   DateInput,
   DepositListInput,
   hasFieldError,
+  renderDatePicker,
   renderInput,
   renderRadio,
   renderSelect,

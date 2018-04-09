@@ -7,7 +7,7 @@ import { Link } from 'react-router';
 import ButtonSpinner from '../../ButtonSpinner';
 import SubmitButton from '../../SubmitButton';
 import { getLastPropertyImageURL } from '../../../utils/property';
-import { DepositListInput, renderInput, renderRadio, renderSelect,
+import { DepositListInput, renderDatePicker, renderInput, renderRadio, renderSelect,
   SelectInput, TenantListInput } from '../../ReduxFormFields';
 
 export default class LeaseForm extends Component {
@@ -134,17 +134,15 @@ export default class LeaseForm extends Component {
               <Field name="startDate"
                 type="text"
                 label="Lease Start Date"
-                placeholder="mm/dd/yyyy"
                 inline
-                component={renderInput} />
+                component={renderDatePicker} />
             </BS.Col>
             <BS.Col sm={6}>
               <Field name="endDate"
                 type="text"
                 label="Lease End Date"
-                placeholder="mm/dd/yyyy"
                 inline
-                component={renderInput} />
+                component={renderDatePicker} />
             </BS.Col>
           </BS.Row>
           <BS.Row>
@@ -152,17 +150,15 @@ export default class LeaseForm extends Component {
               <Field name="paymentStartDate"
                 type="text"
                 label="Payment Start Date"
-                placeholder="mm/dd/yyyy"
                 inline
-                component={renderInput} />
+                component={renderDatePicker} />
             </BS.Col>
             <BS.Col sm={6}>
               <Field name="paymentEndDate"
                 type="text"
                 label="Payment End Date"
-                placeholder="mm/dd/yyyy"
                 inline
-                component={renderInput} />
+                component={renderDatePicker} />
             </BS.Col>
           </BS.Row>
           <BS.Row>
@@ -170,9 +166,8 @@ export default class LeaseForm extends Component {
               <Field name="rentDueDate"
                 type="text"
                 label="Payment Due Date"
-                placeholder="mm/dd/yyyy"
                 inline
-                component={renderInput} />
+                component={renderDatePicker} />
             </BS.Col>
             <BS.Col sm={6}>
               <Field name="rentAmount"

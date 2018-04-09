@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { reduxForm, formValueSelector } from 'redux-form';
+import _ from 'lodash';
 import LeaseForm from '../../components/Leases/LeaseForm';
 
 const validate = values => {
@@ -18,11 +19,18 @@ const INITIAL_VALUES = {
   monthToMonth: true
 };
 
+const landlordIdSelector = (state) =>
+  _.get(state, ['accountAppState', 'userInfo', 'id'], 0);
+
 const selector = formValueSelector('leaseForm');
 
 export default connect(
   (state, props) => ({
-    initialValues: props.leaseId ? state.leasesAppState.leaseDetails : INITIAL_VALUES,
+    initialValues: props.leaseId
+      ? state.leasesAppState.leaseDetails
+      : _.merge(INITIAL_VALUES, {
+        landlordId: landlordIdSelector(state)
+      }),
     monthToMonth: selector(state, 'monthToMonth')
   })
 )(reduxForm({

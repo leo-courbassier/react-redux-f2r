@@ -18,7 +18,7 @@ class LeaseCreatorPage extends Component {
 
         <BS.Col xs={12} sm={12} md={8} className="panels">
           <PageTitle>My Leases {'>'} Create a New Lease</PageTitle>
-          <LeaseCreator leaseId={params.id} />
+          <LeaseCreator leaseId={params.id} userInfo={accountState.userInfo} />
         </BS.Col>
 
         <BS.Col xsHidden smHidden md={4}>

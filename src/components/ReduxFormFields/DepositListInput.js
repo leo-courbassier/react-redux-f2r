@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Button, Col, Row, ControlLabel, FormControl, FormGroup, Glyphicon, InputGroup } from 'react-bootstrap';
+import Datetime from 'react-datetime';
 import _ from 'lodash';
 import { hasFieldError } from './helpers';
 import SelectOptions from '../SelectOptions';
@@ -47,7 +48,7 @@ export default class DepositListInput extends Component {
     const that = this;
 
     const refundableStatus = (
-      <FormControl componentClass="select" name="depositStatus" value={item.depositStatus} 
+      <FormControl componentClass="select" name="depositStatus" value={item.depositStatus}
         onChange={function(e) { that.handleValueChange(index, e.target.name, e.target.value); }}>
         <option value="">Select..</option>
         <option value="REFUNDABLE">Refundable</option>
@@ -105,19 +106,18 @@ export default class DepositListInput extends Component {
                 Deposit Due On
               </Col>
               <Col md={6}>
-                <div>
-                  <InputGroup>
-                    <FormControl
-                      value={item.depositDueOn}
-                      name="depositDueOn"
-                      placeholder="mm/dd/yyyy"
-                      onChange={function(e) { that.handleValueChange(index, e.target.name, e.target.value); }}
-                      type="text" />
-                    <InputGroup.Addon>
-                      <Glyphicon glyph="calendar" />
-                    </InputGroup.Addon>
-                  </InputGroup>
-                </div>
+                <Datetime
+                  dateFormat="YYYY-MM-DD"
+                  timeFormat={false}
+                  inputProps={{
+                    name: 'depositDueOn',
+                    placeholder: 'YYYY-MM-DD'
+                  }}
+                  viewMode="years"
+                  closeOnSelect
+                  value={item.depositDueOn}
+                  onChange={function(m) { that.handleValueChange(index, 'depositDueOn', m.format ? m.format('YYYY-MM-DD') : m); }}
+                />
               </Col>
             </FormGroup>
           </Col>

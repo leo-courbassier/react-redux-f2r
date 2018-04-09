@@ -18,7 +18,7 @@ class LeaseEditorPage extends Component {
 
         <BS.Col xs={12} sm={12} md={8} className="panels">
           <PageTitle>My Leases {'>'} Edit My Lease</PageTitle>
-          <LeaseEditor leaseId={params.id} />
+          <LeaseEditor leaseId={params.id} userInfo={accountState.userInfo} />
         </BS.Col>
 
         <BS.Col xsHidden smHidden md={4}>
