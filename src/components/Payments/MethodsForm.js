@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import * as BS from 'react-bootstrap';
 import { Field } from 'redux-form';
 
-import { renderInput, renderSelect, DateInput } from '../ReduxFormFields';
+import { renderInput, renderSelect, SelectInput, DateInput } from '../ReduxFormFields';
 
 import { MAX_FUNDING_SOURCES, MAX_CREDIT_CARDS } from '../../constants/App';
 
@@ -53,7 +53,7 @@ class MethodsForm extends Component {
 
   render() {
     const { appState } = this.props;
-    const { fundingSources, creditCards } = appState;
+    const { fundingSources, creditCards, stateList, cityList } = appState;
 
     return (
       <div className="paymentmethodsform-panel">
@@ -100,11 +100,26 @@ class MethodsForm extends Component {
                     component={renderInput}
                   />
                 </div>
-                <div className="row">
+                <div className="row has-gutters">
                   <div className="item">
-
+                    <Field
+                      name="state"
+                      label="State"
+                      optionList={stateList}
+                      component={SelectInput}
+                      onValueChange={this.props.getCityList}
+                      defaultOptionName="Choose a state ..."
+                    />
                   </div>
-                  <div className="item"></div>
+                  <div className="item">
+                    <Field
+                      name="city"
+                      label="City"
+                      optionList={cityList}
+                      component={SelectInput}
+                      defaultOptionName="Choose a city ..."
+                    />
+                  </div>
                   <div className="item"></div>
                 </div>
                 <div className="form-group">

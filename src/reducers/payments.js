@@ -18,6 +18,9 @@ const initialState = {
   fundingSources: [],
   creditCards: [],
 
+  stateList: [],
+  cityList: [],
+
   loaded: false
 
 };
@@ -46,7 +49,15 @@ export default function paymentsAppState(state = initialState, action) {
       let newState = objectAssign({}, state);
       newState.fundingSources = action.fundingSources;
       newState.creditCards = action.creditCards;
+      newState.stateList = action.stateList;
       newState.loaded = true;
+      return newState;
+    }
+
+    case types.PAYMENTS_METHODS_CITIES_UPDATE:
+    {
+      let newState = objectAssign({}, state);
+      newState.cityList = action.cityList;
       return newState;
     }
 

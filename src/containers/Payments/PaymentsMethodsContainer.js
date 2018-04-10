@@ -25,6 +25,7 @@ class PaymentMethodsContainer extends Component {
             <MethodsForm
               appState={appState}
               load={actions.loadPaymentsMethodsForm}
+              getCityList={actions.getCityList}
             />
           ) : (
             <Methods
