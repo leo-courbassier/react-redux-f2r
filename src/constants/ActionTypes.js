@@ -195,6 +195,11 @@ export const LEASE_DETAILS_LOAD = 'LEASE_DETAILS_LOAD';
 // My Tenants
 export const TENANTS_LIST_LOAD = 'TENANTS_LIST_LOAD';
 
+// Payments
+
+export const PAYMENTS_EDIT_MODE = 'PAYMENTS_EDIT_MODE';
+export const PAYMENTS_METHODS_LOAD = 'PAYMENTS_METHODS_LOAD';
+
 // Messages
 
 export const MESSAGES_LOAD = 'MESSAGES_LOAD';

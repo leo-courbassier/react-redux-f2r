@@ -13,7 +13,12 @@ const initialState = {
   editMode:{
     methods: false,
     center: false
-  }
+  },
+
+  fundingSources: [],
+  creditCards: [],
+
+  loaded: false
 
 };
 
@@ -33,6 +38,15 @@ export default function paymentsAppState(state = initialState, action) {
     {
       let newState = objectAssign({}, state);
       newState.editMode[action.panelName] = action.value;
+      return newState;
+    }
+
+    case types.PAYMENTS_METHODS_LOAD:
+    {
+      let newState = objectAssign({}, state);
+      newState.fundingSources = action.fundingSources;
+      newState.creditCards = action.creditCards;
+      newState.loaded = true;
       return newState;
     }
 
