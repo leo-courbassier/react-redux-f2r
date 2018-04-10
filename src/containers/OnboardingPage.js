@@ -55,7 +55,7 @@ const stepTips = [
   {heading: 'Selecting your criteria', text: 'A wide range of desired characteristics helps us expand your search and increase the number of potential properties. We are happy to be your matchmaker in the rental world!'}
 ];
 
-const STEP_IDS = ['stepOneForm', 'stepTwoForm', 'stepThreeForm', 'stepFourForm', 'stepFiveForm', 'stepSixForm'];
+const STEP_IDS = ['stepOneForm', 'stepTwoForm', 'stepThreeForm', 'stepFourForm', 'stepFiveForm'];
 
 
 class OnboardingPage extends Component {
@@ -144,9 +144,13 @@ class OnboardingPage extends Component {
   }
 
   openNextStep() {
-    console.log('openNextStep onboardingPage');
+  
     let nextStep = parseInt(this.state.activeKey) + 1;
     this.handleSelect(nextStep.toString());
+  }
+
+  showConnectAccount() {
+    this.state.showConnectAccount=true;
   }
 
   scrollToPanel(e){
@@ -257,6 +261,7 @@ class OnboardingPage extends Component {
       update={this.props.actions.updateStepFourForm}
       clear={this.props.actions.clearStepFourForm}
       openNextStep={this.openNextStep.bind(this)}
+      load={this.props.actions.loadStepFour}
       updateOnboardingScore={this.props.actions.updateOnboardingScore}
       showProceed={this.state.hasNotCheckedOut} />
     );
@@ -281,7 +286,7 @@ class OnboardingPage extends Component {
       updateOnboardingScore={this.props.actions.updateOnboardingScore} />
     );
 
-    const steps = [stepOne,stepTwo,stepThree,stepFour,stepFive,stepSix];
+    const steps = [stepOne,stepTwo,stepThree,stepFour,stepFive];
     const panel = [];
     panel[this.state.activeKey] = steps[this.state.activeKey];
 
