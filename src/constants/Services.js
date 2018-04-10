@@ -132,6 +132,25 @@ export const LL_UPDATE_PROPERTY_PROFILE = BASE_URL + '/prop/updateProp';
 // Leases
 
 export const LL_LEASES_LIST = BASE_URL + '/lease/leaseView';
+
+export const LEASE_TENANTS = BASE_URL + '/lease/tenants';
+
+// Messages
+
+export const MESSAGE = BASE_URL + '/message';
+export const MESSAGE_INBOX = BASE_URL + '/message/inbox';
+export const MESSAGE_OUTBOX = BASE_URL + '/message/outbox';
+export const MESSAGE_FLAG = BASE_URL + '/message/flag';
+export const MESSAGE_COUNT = BASE_URL + '/message/count';
+export const MESSAGE_SEND = BASE_URL + '/message/send';
+export const MESSAGE_DELETE = BASE_URL + '/message/delete';
+
+// Alerts
+
+export const ALERTS = BASE_URL + '/alerts/';
+export const ALERTS_COUNT = BASE_URL + '/alerts/count';
+export const ALERTS_DELETE = BASE_URL + '/alerts/delete';
+
 export const LL_LEASE_DETAILS = BASE_URL + '/lease/';
 export const LL_UPDATE_LEASE_DETAILS = BASE_URL + '/lease/update';
 export const LL_ADD_LEASE_DETAILS = BASE_URL + '/lease/create';

@@ -37,6 +37,7 @@ import PropertyProfilePage from './containers/PropertyProfilePage';
 import PropertyCreatorPage from './containers/PropertyCreatorPage';
 import LeasesPage from './containers/LeasesPage';
 import LeasesSummaryPage from './containers/LeasesSummaryPage';
+import MessagesPage from './containers/MessagesPage';
 import LeaseEditorPage from './containers/LeaseEditorPage';
 import LeaseCreatorPage from './containers/LeaseCreatorPage';
 
@@ -103,6 +104,7 @@ render(
             <Route path="center" component={NotImplemented} />
           </Route>
         </Route>
+        <Route onEnter={requireAuth} path="messages(/:folder)(/:id)" component={MessagesPage}/>
 
         <Route path="feedback/:token" component={FeedbackPage} />
         <Route path="ve/:token" component={VerifyPage} />
