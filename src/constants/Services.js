@@ -132,7 +132,6 @@ export const LL_UPDATE_PROPERTY_PROFILE = BASE_URL + '/prop/updateProp';
 // Leases
 
 export const LL_LEASES_LIST = BASE_URL + '/lease/leaseView';
-<<<<<<< HEAD
 
 export const LEASE_TENANTS = BASE_URL + '/lease/tenants';
 
