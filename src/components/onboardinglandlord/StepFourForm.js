@@ -99,8 +99,7 @@ class StepFourForm extends Component {
   }
   
   show_dwola_form(){
-      console.log(this.props)
-      
+        
       this.props.showDwollaForm();
   }
  
