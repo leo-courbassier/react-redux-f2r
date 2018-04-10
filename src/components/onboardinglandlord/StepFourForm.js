@@ -12,6 +12,7 @@ import InfoTooltip from '../InfoTooltip';
 import SelectOptions from '../SelectOptions';
 import StripeCheckout from '../Stripe';
 import DwollaCheckout from '../Dwolla';
+import DwollaPayment from '../DwollaPayment';
 
 import * as api from '../../actions/api';
 
@@ -96,7 +97,13 @@ class StepFourForm extends Component {
 
     return invalid;
   }
-
+  
+  show_dwola_form(){
+      console.log(this.props)
+      
+      this.props.showDwollaForm();
+  }
+ 
   submit(openNextStep, e) {
     e.preventDefault();
 
@@ -277,7 +284,7 @@ class StepFourForm extends Component {
                      <SubmitButton
                     appState={this.props.appState}
                     statusAction="stepFourFormProceed"
-                    submit={_.partial(this.submit.bind(this), this.props.showConnectAccount)}
+                    submit={_.partial(this.show_dwola_form.bind(this))}
                     bsStyle="success"
                     className="proceed-button">
                       Connect Your Account
@@ -286,7 +293,7 @@ class StepFourForm extends Component {
             </div>
          </div>
        )}
-       {this.props.appState[3].showConnectAccountValue == true && (
+       {this.props.appState[3].showConnectAccountValue == true && this.props.appState[3].showDwolla != true && (
 
         <div>
         <div className="section">Add a Guarantor</div>
@@ -429,13 +436,15 @@ class StepFourForm extends Component {
             </SubmitButton>
         
           )}
-           </div>
-           </div>
+
+              </div>
+
+             </div>
+           
           </div>
          )}
-         
-        
       </div>
+      {this.props.appState[3].showDwolla && (<DwollaPayment />)}
       </Loader>
     );
 

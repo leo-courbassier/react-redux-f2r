@@ -83,6 +83,7 @@ const initialState = {
       ssn:null,
       stateList: null,
       showConnectAccountValue:false,
+      showDwolla:false,
       saved: false
   },
   4: {
@@ -434,6 +435,22 @@ export default function onboardingAppState(state = initialState, action) {
         newState[3]['ssn'] = null;
         return newState;
       }
+
+      case types.ONBOARDING_STEPFOUR_SHOW_DWOLLA:
+      {
+        let newState = objectAssign({}, state);
+        newState[3]['showDwolla'] = true;
+        return newState;
+      }
+
+      case types.ONBOARDING_STEPFOUR_SHOW_DWOLA_FORM:
+      {
+        let newState = objectAssign({}, state);
+        newState[3]['showConnectAccountValue'] = true;
+        return newState;
+      }
+      
+      
 
     case types.ONBOARDING_STRIPE_TRANSACTION_STATUS:
       {

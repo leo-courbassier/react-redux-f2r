@@ -269,7 +269,7 @@ class OnboardingLandlordPage extends Component {
         update={this.props.actions.updateStepFourForm}
         clear={this.props.actions.clearStepFourForm}
         openNextStep={this.openNextStep.bind(this)}
-        showConnectAccount={this.showConnectAccount.bind(this)}
+        showDwollaForm={this.props.actions.showDwollaForm}
         updateOnboardingScore={this.props.actions.updateOnboardingScore}
         showProceed={this.state.hasNotCheckedOut}
       />

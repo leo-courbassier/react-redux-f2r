@@ -599,6 +599,13 @@ export function saveStripe(payload, id, callback) {
   };
 }
 
+export function showDwollaForm(){
+  return function (dispatch, getState) {
+
+  dispatch({type: types.ONBOARDING_STEPFOUR_SHOW_DWOLA_FORM});
+  }
+}
+
 export function saveGuarantor(
   firstName,
   lastName,
@@ -642,7 +649,7 @@ export function saveGuarantor(
       api.setStatus(dispatch, 'modified', 'stepFourForm', false);
        if (callback) callback();
        if (openNextStep) openNextStep();
-       console.log(response)
+       dispatch({type: types.ONBOARDING_STEPFOUR_SHOW_DWOLLA});
       });
   };
 }
