@@ -9,7 +9,6 @@ import DocumentsForm from '../../components/account/DocumentsForm';
 import DocumentsPaymentForm from './DocumentsPaymentFormContainer';
 
 class DocumentsInfoContainer extends Component {
-  context
   render() {
     const {accountState, actions} = this.props;
     const editMode = accountState.editMode.documents;
