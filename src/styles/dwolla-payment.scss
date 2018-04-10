@@ -1,0 +1,38 @@
+// CSS for DwollaPayment component.
+.dwolla-payment-container {
+  .section {
+    font-size: 1.1em;
+  }
+  .row {
+    margin: 0 auto;
+    display: inline-flex;
+    width: 100%;
+    .item {
+      padding: 0px 3px 0px 3px;
+      margin: 0 auto;
+      &.post-option{
+        width: 150px;
+        color: $f2r-gray-header-text;
+        .title{
+          text-align: center;
+          font-size: 1.2em;
+        }
+        .icon {
+          text-align: center;
+          font-size: 3em;
+
+        }
+        .help{
+
+        }
+        .button {
+          text-align: center;
+        }
+      }
+      &.account,
+      &.amount {
+        width: 45%;
+      }
+    }
+  }
+}
