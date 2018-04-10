@@ -630,14 +630,20 @@ export function saveGuarantor(
               "ssnLast4":"1234"
               }
 
-    api.postGuarantor(dispatch, getState, payload, () => {
+    //   api.postGuarantor(dispatch, getState, payload, () => {
+    //   api.setStatus(dispatch, 'loading', statusAction, false);
+    //   api.setStatus(dispatch, 'modified', 'stepFourForm', false);
+    //   dispatch({type: types.ONBOARDING_STEPFOUR_FORM_UPDATE, name: 'saved', value: true});
+    //   if (callback) callback();
+    //   if (openNextStep) openNextStep();
+    // });
+      api.postDwollaCustomer(dispatch, getState, payload, (response) => {
       api.setStatus(dispatch, 'loading', statusAction, false);
       api.setStatus(dispatch, 'modified', 'stepFourForm', false);
-      dispatch({type: types.ONBOARDING_STEPFOUR_FORM_UPDATE, name: 'saved', value: true});
-      if (callback) callback();
-      if (openNextStep) openNextStep();
-    });
-
+       if (callback) callback();
+       if (openNextStep) openNextStep();
+       console.log(response)
+      });
   };
 }
 
