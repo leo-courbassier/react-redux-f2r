@@ -29,9 +29,13 @@ export default class LeaseForm extends Component {
 
   handleFormSubmit = (values) => {
     const { leaseId, saveLeaseDetails } = this.props;
-    saveLeaseDetails(_.merge({}, values, {
-      id: leaseId
-    }));
+    const finalValues = leaseId
+      ? _.merge({}, values, {
+        id: leaseId
+      })
+      : values;
+
+    saveLeaseDetails(finalValues);
   }
 
   get propertiesOptions() {
@@ -94,7 +98,7 @@ export default class LeaseForm extends Component {
 
     const tenantsSection = (
       <Field
-        name="renterList"
+        name="tenants"
         component={TenantListInput}
       />
     );
@@ -121,8 +125,53 @@ export default class LeaseForm extends Component {
       </BS.Row>
     );
 
-    const leaseDetails = (
+    const leaseDetailsMonthToMonth = (
       <BS.Collapse in={monthToMonth}>
+        <div>
+          <BS.Row>
+            <BS.Col xs={12}>
+              <div className="section section-padded">Details {warn}</div>
+            </BS.Col>
+          </BS.Row>
+          <BS.Row>
+            <BS.Col sm={6}>
+              <Field name="startDate"
+                type="text"
+                label="Lease Start Date"
+                inline
+                component={renderDatePicker} />
+            </BS.Col>
+            <BS.Col sm={6}>
+              <Field name="paymentStartDate"
+                type="text"
+                label="Payment Start Date"
+                inline
+                component={renderDatePicker} />
+            </BS.Col>
+          </BS.Row>
+          <BS.Row>
+            <BS.Col sm={6}>
+              <Field name="rentDueDate"
+                type="text"
+                label="Payment Due Date"
+                inline
+                component={renderDatePicker} />
+            </BS.Col>
+            <BS.Col sm={6}>
+              <Field name="rentAmount"
+                type="text"
+                label="Monthly Rent"
+                placeholder="$$$$"
+                inline
+                component={renderInput} />
+            </BS.Col>
+          </BS.Row>
+        </div>
+      </BS.Collapse>
+    );
+
+    const leaseDetailsSetTerm = (
+      <BS.Collapse in={!monthToMonth}>
         <div>
           <BS.Row>
             <BS.Col xs={12}>
@@ -225,7 +274,8 @@ export default class LeaseForm extends Component {
         {tenantsSection}
         <div className="section section-padded">Lease Type {warn}</div>
         {leaseTypeSection}
-        {leaseDetails}
+        {leaseDetailsMonthToMonth}
+        {leaseDetailsSetTerm}
         <div className="section section-padded">
           Deposits {warn}
           <sub>(Select “Collect Deposits” ONLY IF there are outstanding deposits you’re owed from your tenants)</sub>

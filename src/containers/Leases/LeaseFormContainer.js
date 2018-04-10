@@ -9,7 +9,7 @@ const validate = values => {
 };
 
 const INITIAL_VALUES = {
-  renterList: [{ userDetails:{} }],
+  tenants: [{}], // used for tenants assignment
   depositList: [{
     depositAmount: 550,
     depositType: 'SECURITY',
@@ -27,7 +27,9 @@ const selector = formValueSelector('leaseForm');
 export default connect(
   (state, props) => ({
     initialValues: props.leaseId
-      ? state.leasesAppState.leaseDetails
+      ? _.merge(state.leasesAppState.leaseDetails, {
+        tenants: [{}], // used for tenants assignment
+      })
       : _.merge(INITIAL_VALUES, {
         landlordId: landlordIdSelector(state)
       }),

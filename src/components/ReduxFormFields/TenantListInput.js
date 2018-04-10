@@ -102,8 +102,8 @@ export default class TenantListInput extends Component {
               </Col>
               <Col sm={6}>
                 <FormControl
-                  value={item.userDetails.phoneNumber}
-                  name="userDetails.phoneNumber"
+                  value={item.phoneNumber}
+                  name="phoneNumber"
                   onChange={function(e) { that.handleValueChange(index, e.target.name, e.target.value); }}
                   placeholder="xxx-xxx-xxxx"
                   type="text" />

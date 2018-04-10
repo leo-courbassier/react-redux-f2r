@@ -656,8 +656,7 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
             {collectDeposit}
             <div className="section">Deposit Details{warn}</div>
             {depositDetail}
-            <div className="section"></div>
-
+            <div className="section" />
           </form>
          </div>
       </div>
@@ -1314,15 +1313,14 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
             {collectDeposit}
             <div className="section">Deposit Details{warn}</div>
             {depositDetail}
-            <div className="section"></div>
-
+            <div className="section" />
           </form>
           <BS.HelpBlock className="pullLeft warn">
             {this.state.submitted ? this.isInvalid() : ''}
           </BS.HelpBlock>
 
           {newLease}
-          <div className="section"></div>
+          <div className="section" />
           <div className="row">
           <div className="col-md-4">
           {this.props.showProceed && (

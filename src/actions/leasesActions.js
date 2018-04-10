@@ -1,6 +1,6 @@
 import * as types from '../constants/ActionTypes';
 import 'isomorphic-fetch';
-
+import _ from 'lodash';
 import * as api from './api';
 
 export const loadLeasesList = () => {
@@ -39,24 +39,41 @@ export const loadLeaseDetails = (leaseId) => {
   };
 };
 
+const inviteTenants = (dispatch, getState, { tenants }, leaseId, callback) => {
+  const requestInviteTenants = _.map(tenants, (tenant) => {
+    return api.inviteTenant(dispatch, getState, tenant.email, leaseId);
+  });
+
+  Promise.all(requestInviteTenants)
+  .then((results) => {
+    if (callback) callback();
+  });
+};
+
 export const addLeaseDetails = (payload, callback) => {
   return function (dispatch, getState) {
+    const data = _.omit(payload, ['tenants']);
     api.setStatus(dispatch, 'saving', 'leaseDetails', true);
-    api.addLLLeaseDetails(dispatch, getState, payload, (response) => {
-      api.setStatus(dispatch, 'saving', 'leaseDetails', false);
+    api.addLLLeaseDetails(dispatch, getState, data, (response) => {
       dispatch({ type: types.LEASE_DETAILS_LOAD, payload: response });
-      if (callback) callback(response);
+      inviteTenants(dispatch, getState, payload, response.id, () => {
+        api.setStatus(dispatch, 'saving', 'leaseDetails', false);
+        if (callback) callback(response);
+      });
     });
   };
 };
 
 export const updateLeaseDetails = (payload, callback) => {
   return function (dispatch, getState) {
+    const data = _.omit(payload, ['tenants']);
     api.setStatus(dispatch, 'saving', 'leaseDetails', true);
-    api.updateLLLeaseDetails(dispatch, getState, payload, (response) => {
-      api.setStatus(dispatch, 'saving', 'leaseDetails', false);
+    api.updateLLLeaseDetails(dispatch, getState, data, (response) => {
       dispatch({ type: types.LEASE_DETAILS_LOAD, payload: response });
-      if (callback) callback(response);
+      inviteTenants(dispatch, getState, payload, response.id, () => {
+        api.setStatus(dispatch, 'saving', 'leaseDetails', false);
+        if (callback) callback(response);
+      });
     });
   };
 };
