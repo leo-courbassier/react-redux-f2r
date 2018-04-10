@@ -99,10 +99,11 @@ class StepFourForm extends Component {
 
   submit(openNextStep, e) {
     e.preventDefault();
+
     this.setState({submitted: true});
-    if(this.isInvalid()){
-      return false;
-    }
+    // if(this.isInvalid()){
+    //   return false;
+    // }
     let store = this.props.appState[STEP_ID];
 
     // format phone number before saving to API
@@ -242,10 +243,12 @@ class StepFourForm extends Component {
 
 
     return (
-
+    
       <Loader appState={this.props.appState} statusType="loading" statusAction="StepFourForm">
+    
       <div className="step step-four">
-
+    {this.props.appState[3].showConnectAccountValue != true && (
+      <div>
       <div className="section">Set up your rent collection method</div>
         <div className="section-box">
           Setting up your rent collection method is free, quick, and easy. We don’t store any of your banking information and all transfers are handled through our secure processing technology. The headaches of paper checks are a thing of the past!.<br />
@@ -258,6 +261,7 @@ class StepFourForm extends Component {
               </div>
             </div>
           </div>
+
           <div className="row">          
             <div className="item">
                 <ol>
@@ -267,6 +271,7 @@ class StepFourForm extends Component {
                </ol>
             </div>
           </div>
+
            <div className="row">
               <div className="item">
                      <SubmitButton
@@ -279,6 +284,8 @@ class StepFourForm extends Component {
                     </SubmitButton>
               </div>
             </div>
+         </div>
+       )}
        {this.props.appState[3].showConnectAccountValue == true && (
 
         <div>
@@ -389,22 +396,40 @@ class StepFourForm extends Component {
           </BS.FormGroup>
         </form>
         <br/>
-        <BS.HelpBlock className="pullLeft warn">
-          {this.state.submitted ? this.isInvalid() : ''}
-        </BS.HelpBlock>
+        <div className="row">
+         <div className="col-md-5">
+         </div>
+         <div className="col-md-6">
+          <SubmitButton
+              appState={this.props.appState}
+              statusAction="stepFourFormSave"
+              submit={_.partial(this.submit.bind(this), false)}
+              className="save-step4"
+              textLoading="Saving"
+              textModified="Save Changes"
+              disabled={this.isMandatoryInvalid()}
+              bsStyle="primary">
+                ￼Save 
+            </SubmitButton>
+          </div>
+        
         <div className="onboarding-submit-four">
-          {this.props.showProceed && (
+       
+          {this.props.showProceed && (          
+
             <SubmitButton
             appState={this.props.appState}
             statusAction="stepFourFormProceed"
             submit={_.partial(this.submit.bind(this), this.props.openNextStep)}
             disabled={this.isMandatoryInvalid()}
-            textLoading="Saving"
+            
             bsStyle="success"
             className="proceed-button">
               Skip
             </SubmitButton>
+        
           )}
+           </div>
            </div>
           </div>
          )}
