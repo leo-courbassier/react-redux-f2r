@@ -17,6 +17,7 @@ const initialState = {
 
   fundingSources: [],
   creditCards: [],
+  customerCreated: false,
 
   stateList: [],
   cityList: [],
@@ -58,6 +59,13 @@ export default function paymentsAppState(state = initialState, action) {
     {
       let newState = objectAssign({}, state);
       newState.cityList = action.cityList;
+      return newState;
+    }
+
+    case types.PAYMENTS_METHODS_CUSTOMER_CREATED:
+    {
+      let newState = objectAssign({}, state);
+      newState.customerCreated = true;
       return newState;
     }
 

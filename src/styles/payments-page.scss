@@ -23,5 +23,10 @@
 
   .add-funding-source {
     margin-top: 20px;
+
+    form,
+    &-button {
+      margin-top: 20px;
+    }
   }
 }

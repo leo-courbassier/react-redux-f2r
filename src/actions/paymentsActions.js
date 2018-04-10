@@ -66,3 +66,12 @@ export function getCityList(stateCode) {
     });
   };
 }
+
+export function createCustomer(payload, callback) {
+  return (dispatch, getState) => {
+    return api.postDwollaCustomer(dispatch, getState, payload, response => {
+      dispatch({ type: types.PAYMENTS_METHODS_CUSTOMER_CREATED });
+      if (callback) callback(response);
+    });
+  };
+}
