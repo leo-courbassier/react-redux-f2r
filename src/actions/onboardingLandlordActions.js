@@ -407,14 +407,13 @@ export function saveStepThree(
   leaseStatus,
   renterIds,
   depositList,
-  email,
+  tenant,
   openNextStep,
   callback
   ) {
   return function (dispatch, getState) {
     let authHeader = api.getAuthHeaders(dispatch, getState);
     let userId = getState().loginAppState.userInfo.id;
-
     let statusAction = openNextStep ? 'stepThreeFormProceed' : 'stepThreeForm';
     api.setStatus(dispatch, 'saving', statusAction, true);
 
@@ -431,22 +430,22 @@ export function saveStepThree(
        "renterIds":[
            {"renterId":1}
        ],
-       "depositList":depositList       
+       "depositList":depositList
     };
 
-     
+
     let leaseObje = api.postStepThree(dispatch, getState, landLordObjSave, (response) => {
 
-        // api.setStatus(dispatch, 'saving', statusAction, false);
-        // api.setStatus(dispatch, 'modified', 'stepThreeForm', false);
-        //dispatch({type: types.ONBOARDING_STEPTHREE_FORM_UPDATE, name: 'saved', value: true});
-        console.log(response)
-        
          api.setStatus(dispatch, 'saving', statusAction, false);
          api.setStatus(dispatch, 'modified', 'stepThreeForm', false);
-         api.inviteTenant(dispatch, getState, email,response.id,callback, () => {
 
-         })
+         for (let ten of tenant) {
+              //call send invite tenant
+              api.inviteTenant(dispatch, getState, ten.email,response.id,callback, () => {
+
+              })
+             }
+
         if (openNextStep) openNextStep();
 
     });
@@ -512,11 +511,11 @@ export function loadStepFour(){
         employerVerification });
 
       api.getCityList(
-        dispatch,
-        getState,
-        employerState,
-        'cityList'
-        );
+          dispatch,
+          getState,
+          null,
+        'currentCityList'
+          );
 
       api.setStatus(dispatch, 'loading', 'stepTwoForm', false);
     });
@@ -604,8 +603,12 @@ export function saveGuarantor(
   firstName,
   lastName,
   email,
-  phone,
-  relation,
+  homeAddress,
+  city,
+  state,
+  zipCode,
+  dateBirth,
+  ssn,
   openNextStep,
   callback
   ) {
@@ -614,13 +617,18 @@ export function saveGuarantor(
     let statusAction = openNextStep ? 'stepFourFormProceed' : 'stepFourForm';
     api.setStatus(dispatch, 'loading', statusAction, true);
 
-    let payload = {
-      "email": email,
-      "firstName": firstName,
-      "lastName": lastName,
-      "phoneNumber": phone,
-      "relation": relation
-    };
+  let payload={
+              "first_name":"Luke",
+              "last_name":"Skywalker",
+              "email":"lee@fittorent.com",
+              "dob":"1974-01-31",
+              "address1":"1234 Bonnie Butler Way",
+              "city":"Charlotte",
+              "state":"NC",
+              "zipCode":"28276",
+              "phone":"(704) 555-5555",
+              "ssnLast4":"1234"
+              }
 
     api.postGuarantor(dispatch, getState, payload, () => {
       api.setStatus(dispatch, 'loading', statusAction, false);

@@ -16,6 +16,8 @@ import sidebarState from './sidebar';
 import signupAppState from './signup';
 import verifyAppState from './verify';
 import notificationAppState from './notification';
+import dwollaAppState from './dwolla';
+import stripeAppState from './stripe';
 import { routerReducer } from 'react-router-redux';
 
 const rootReducer = combineReducers({
@@ -34,6 +36,8 @@ const rootReducer = combineReducers({
   messagesAppState,
   notificationAppState,
   geoAppState,
+  dwollaAppState,
+  stripeAppState,
   form: formReducer,
   routing: routerReducer
 });

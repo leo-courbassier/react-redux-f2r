@@ -38,6 +38,8 @@ import PropertyCreatorPage from './containers/PropertyCreatorPage';
 import LeasesPage from './containers/LeasesPage';
 import LeasesSummaryPage from './containers/LeasesSummaryPage';
 import MessagesPage from './containers/MessagesPage';
+import LeaseEditorPage from './containers/LeaseEditorPage';
+import LeaseCreatorPage from './containers/LeaseCreatorPage';
 
 let NotImplemented = () => <div>Not Implemented</div>;
 
@@ -92,8 +94,8 @@ render(
           </Route>
           <Route path="leases" component={LeasesPage}>
             <IndexRoute component={LeasesSummaryPage} />
-            <Route path="new" component={NotImplemented} />
-            <Route path=":id" component={NotImplemented} />
+            <Route path="new" component={LeaseCreatorPage} />
+            <Route path=":id" component={LeaseEditorPage} />
           </Route>
           <Route path="tenants" component={NotImplemented} />
           <Route path="payments" component={NotImplemented}>

@@ -53,7 +53,7 @@ class StepThreeForm extends Component {
     api.setStatus(this.context.store.dispatch, 'modified', 'stepThreeForm', true);
     store.dispatch({ type: types.ONBOARDING_STEPTHREE_UPDATE_LANDLORDS, sources });
   }
-  
+
   addIncomeSource = (e) => {
     e.preventDefault();
     api.setStatus(this.context.store.dispatch, 'modified', 'stepThreeForm', true);
@@ -61,8 +61,8 @@ class StepThreeForm extends Component {
     let sources = this.props.appState[STEP_ID].depositList;
     sources.push({"depositAmount":'', "depositType":"","depositStatus":""});
     store.dispatch({ type: types.ONBOARDING_STEPTHREE_UPDATE_INCOME_SOURCES, sources });
-     
-    
+
+
   }
 
    addIncomeLease = (e) => {
@@ -91,8 +91,8 @@ class StepThreeForm extends Component {
   }]
 });
     store.dispatch({ type: types.ONBOARDING_STEPTHREE_UPDATE_INCOME_SOURCES, sources });
-     
-    
+
+
   }
 
 
@@ -101,6 +101,84 @@ class StepThreeForm extends Component {
     let sources = this.props.appState[STEP_ID].depositList;
     store.dispatch({ type: types.ONBOARDING_STEPTHREE_REMOVE_OBJ_FROM_ARRAY, sources });
   }
+
+    addIncomeTenant = (e) => {
+    e.preventDefault();
+    api.setStatus(this.context.store.dispatch, 'modified', 'stepThreeForm', true);
+    let store = this.context.store;
+    let sources = this.props.appState[STEP_ID].tenant;
+    sources.push({
+                  firstName:"",
+                  lastName:"",
+                  email:"",
+                  phone:""
+                   });
+    store.dispatch({ type: types.ONBOARDING_STEPTHREE_UPDATE_INCOME_SOURCES, sources });
+
+  }
+
+
+  renderIncomeTenant = (source, index) => {
+
+
+   const store = this.props.appState[STEP_ID];
+   const warn = this.isInvalid() ? (<span className="warn">* <span className="text">{this.state.submitted ? this.isInvalid() : ''}</span></span>) : '';
+
+
+    return (
+      <div key={index}>
+        {index > 0 && <div className="section">Additional Tenant{warn}</div>}
+         <div className="row">
+         <div className="col-md-12">
+           <div className="col-md-3">
+            <BS.ControlLabel>First Name</BS.ControlLabel>
+           </div>
+           <div className="col-md-3">
+           <BS.FormControl
+           name="firstName"
+           value={store.tenant[index].firstName}
+           onChange={this.tenantKeypress.bind(this,index)}
+           type="text" />
+           </div>
+           <div className="col-md-3">
+            <BS.ControlLabel>Last Name</BS.ControlLabel>
+           </div>
+           <div className="col-md-3">
+           <BS.FormControl
+           name="lastName"
+           value={store.tenant[index].lastName}
+           onChange={this.tenantKeypress.bind(this,index)}
+           type="text" />
+           </div>
+          </div>
+          <br />
+          <div className="col-md-12">
+           <div className="col-md-3">
+            <BS.ControlLabel>Email</BS.ControlLabel>
+           </div>
+           <div className="col-md-3">
+           <BS.FormControl
+           value={store.tenant[index].email}
+           name="email"
+           onChange={this.tenantKeypress.bind(this,index)}
+           type="text" />
+           </div>
+           <div className="col-md-3">
+            <BS.ControlLabel>Phone</BS.ControlLabel>
+           </div>
+           <div className="col-md-3">
+           <BS.FormControl
+           value={store.tenant[index].phone}
+           name="phone"
+           onChange={this.tenantKeypress.bind(this,index)}
+           type="text" />
+           </div>
+          </div>
+         </div>
+      </div>
+    );
+  }
+
 
   renderIncomeSources = (source, index) => {
     const store = this.props.appState[STEP_ID];
@@ -122,17 +200,17 @@ class StepThreeForm extends Component {
 
     const warn = this.isInvalid() ? (<span className="warn">* <span className="text">{this.state.submitted ? this.isInvalid() : ''}</span></span>) : '';
 
-    
+
     return (
       <div key={index}>
         {index > 0 && <div className="section">Additional Deposit{warn}</div>}
         <BS.FormGroup>
           <BS.Col componentClass={BS.ControlLabel} md={3}>
             Deposit Type
-          </BS.Col>         
+          </BS.Col>
              <BS.Col componentClass={BS.ControlLabel} md={3}>
             {depositTypeList}
-             </BS.Col>       
+             </BS.Col>
           <BS.Col componentClass={BS.ControlLabel} md={3}>
             Deposit Amount
           </BS.Col>
@@ -519,7 +597,6 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
       <div className="form-horizontal">
         {
           _.map(store.depositList, (source, index) => {
-            
             return this.renderIncomeSources(source, index);
           })
         }
@@ -536,11 +613,30 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
     </BS.Collapse>
   );
 
+    const tenantAddNew = (
+      <div className="form-horizontal">
+        {
+          _.map(store.tenant, (source, index) => {
+            return this.renderIncomeTenant(source, index);
+          })
+        }
+        <div className="anotherDeposit text-center">
+          <BS.Button
+            onClick={(e) => this.addIncomeTenant(e)}
+            className="add-button"
+            type="submit"
+            bsStyle="success">
+            Add Another Tenant
+          </BS.Button>
+        </div>
+      </div>
+  );
+
 
 
     const warn = this.isInvalid() ? (<span className="warn">* <span className="text">{this.state.submitted ? this.isInvalid() : ''}</span></span>) : '';
 
-    
+
     return (
       <div key={index}>
         {index > 0 && <div className="section">Additional leases{warn}</div>}
@@ -549,7 +645,8 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
             <div className="section">Lease Info{warn}</div>
             {propertySelection}
             <div className="section">Tenant Assignment{warn}</div>
-            {tenantAssignmet}
+
+            {tenantAddNew}
             <div className="section">Lease Type{warn}</div>
             {leaseType}
             <div className="section">Details{warn}</div>
@@ -559,8 +656,7 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
             {collectDeposit}
             <div className="section">Deposit Details{warn}</div>
             {depositDetail}
-            <div className="section"></div>
-
+            <div className="section" />
           </form>
          </div>
       </div>
@@ -568,12 +664,16 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
   }
 
   keypress(e) {
-     console.log(this.props.appState);
     this.props.update(this.props.appState, e.target.name, e.target.value);
-    
+
   }
 
-    depositKeypress(index,e) {
+  depositKeypress(index,e) {
+
+    this.props.update(this.props.appState, e.target.name, e.target.value,index);
+  }
+   tenantKeypress(index,e) {
+
     this.props.update(this.props.appState, e.target.name, e.target.value,index);
   }
 
@@ -631,9 +731,9 @@ getRecipients() {
     let isModified = this.props.appState.status['modified']['stepThreeForm'];
     let allowSave = openNextStep ? isModified : true;
     store.isMonthToMonth=store.leaseType=='month-to-month'||false;
-    debugger;
 
     this.updateDepositList();
+
 
     if (allowSave) {
       this.props.save(
@@ -649,7 +749,7 @@ getRecipients() {
         store.leaseStatus,
         store.renterIds,
         store.depositList,
-        store.email,
+        store.tenant,
         openNextStep
         );
     } else {
@@ -848,7 +948,7 @@ getRecipients() {
            <BS.FormControl
            name="firstName"
            value={store.firstName}
-           onChange={this.keypress.bind(this)}
+           onChange={this.tenantKeypress.bind(this)}
            type="text" />
            </div>
            <div className="col-md-3">
@@ -858,7 +958,7 @@ getRecipients() {
            <BS.FormControl
            name="lastName"
            value={store.lastName}
-           onChange={this.keypress.bind(this)}
+           onChange={this.tenantKeypress.bind(this)}
            type="text" />
            </div>
           </div>
@@ -871,7 +971,7 @@ getRecipients() {
            <BS.FormControl
            value={store.email}
            name="email"
-           onChange={this.keypress.bind(this)}
+           onChange={this.tenantKeypress.bind(this)}
            type="text" />
            </div>
            <div className="col-md-3">
@@ -881,7 +981,7 @@ getRecipients() {
            <BS.FormControl
            value={store.phone}
            name="phone"
-           onChange={this.keypress.bind(this)}
+           onChange={this.tenantKeypress.bind(this)}
            type="text" />
            </div>
           </div>
@@ -1121,7 +1221,7 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
       <div className="form-horizontal">
         {
           _.map(store.depositList, (source, index) => {
-            
+
             return this.renderIncomeSources(source, index);
           })
         }
@@ -1144,7 +1244,7 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
       <div className="form-horizontal">
         {
           _.map(store.leasesSource, (source, index) => {
-            
+
             return this.renderIncomingLeases(source, index);
           })
         }
@@ -1170,7 +1270,27 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
         Remove
       </BS.Button>
     );
+   const tenantAddNew = (
 
+        <div className="form-horizontal">
+          {
+            _.map(store.tenant, (source, index) => {
+
+              return this.renderIncomeTenant(source, index);
+            })
+          }
+          <div className="anotherDeposit text-center">
+            <BS.Button
+              onClick={(e) => this.addIncomeTenant(e)}
+              className="add-button"
+              type="submit"
+              bsStyle="success">
+              Add Another Tenant
+            </BS.Button>
+          </div>
+        </div>
+
+    );
 
 
 
@@ -1183,7 +1303,7 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
             <div className="section">Lease Info{warn}</div>
             {propertySelection}
             <div className="section">Tenant Assignment{warn}</div>
-            {tenantAssignmet}
+            {tenantAddNew}
             <div className="section">Lease Type{warn}</div>
             {leaseType}
             <div className="section">Details{warn}</div>
@@ -1193,15 +1313,14 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
             {collectDeposit}
             <div className="section">Deposit Details{warn}</div>
             {depositDetail}
-            <div className="section"></div>
-
+            <div className="section" />
           </form>
           <BS.HelpBlock className="pullLeft warn">
             {this.state.submitted ? this.isInvalid() : ''}
           </BS.HelpBlock>
-         
+
           {newLease}
-          <div className="section"></div>
+          <div className="section" />
           <div className="row">
           <div className="col-md-4">
           {this.props.showProceed && (
@@ -1225,7 +1344,7 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
             textLoading="Saving"
             textModified="Save Changes"
             bsStyle="primary">
-              ￼Save 
+              ￼Save
             </SubmitButton>
             </div>
             <div className="col-md-3">
@@ -1233,7 +1352,7 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
               <SubmitButton
               appState={this.props.appState}
               statusAction="stepThreeFormProceed"
-              submit={this.props.openNextStep}              
+              submit={this.props.openNextStep}
               bsStyle="success"
               className="proceed-button proceed-step3">
                 Next

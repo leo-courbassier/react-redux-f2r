@@ -145,6 +145,11 @@ class OnboardingLandlordPage extends Component {
     this.handleSelect(nextStep.toString());
   }
 
+  showConnectAccount() {
+  this.props.appState[3].showConnectAccountValue=true;
+  }
+
+
   openPrevStep(e) {
 
     e.preventDefault();
@@ -264,6 +269,7 @@ class OnboardingLandlordPage extends Component {
         update={this.props.actions.updateStepFourForm}
         clear={this.props.actions.clearStepFourForm}
         openNextStep={this.openNextStep.bind(this)}
+        showConnectAccount={this.showConnectAccount.bind(this)}
         updateOnboardingScore={this.props.actions.updateOnboardingScore}
         showProceed={this.state.hasNotCheckedOut}
       />

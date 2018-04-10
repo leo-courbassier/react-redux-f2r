@@ -35,9 +35,9 @@ export default class PropertyProfile extends Component {
 
     const propertyTenants = _.reduce(
       appState.propertyLeases,
-      (pt, item) => (
+      (tenants, item) => (
         _.concat(
-          pt, 
+          tenants, 
           _.map(item.renterList, (renter) => (
             _.set(renter, 'leaseId', item.id)
           ))

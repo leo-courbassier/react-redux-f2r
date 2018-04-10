@@ -25,19 +25,19 @@ export default class LeasesSummary extends Component {
   }
 
   getType(lease) {
-    return lease.monthToMonth ? 'Month to Month' : 'Set Term'
+    return lease.monthToMonth ? 'Month to Month' : 'Set Term';
   }
 
   renderTenantList(tenantList) {
-    return _.map(tenantList, tenant => (
-      <div className="text-center">
+    return _.map(tenantList, (tenant, index) => (
+      <div className="text-center" key={index}>
         {`${tenant.firstName || ''} ${tenant.middleName || ''} ${tenant.lastName || ''}`}
       </div>
     ));
   }
 
   renderContent() {
-    const { leases } = this.props;
+    const { goTo, leases } = this.props;
     return (
       _.map(leases, (lease, index) => (
         <tr key={index}>
@@ -55,7 +55,8 @@ export default class LeasesSummary extends Component {
           <td>{lease.refundableAmount}</td>
           <td>{lease.nonRefundableAmount}</td>
           <td>
-            <Button block bsSize="small" bsStyle="success">Edit Lease</Button>
+            <Button block bsSize="small" bsStyle="success"
+              onClick={function () { goTo(`/dashboard/leases/${lease.leaseId}`); }}>Edit Lease</Button>
             <Button block bsSize="small" bsStyle="danger">End Lease</Button>
           </td>
         </tr>

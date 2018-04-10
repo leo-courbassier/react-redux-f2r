@@ -1,3 +1,6 @@
+// const isProd = process.env.F2R_ENV === 'production';
+const isProd = false;
+
 // server address
 // export const BASE_URL = 'https://ec2-52-91-200-31.compute-1.amazonaws.com:9931/api';
 
@@ -5,6 +8,12 @@ export const BASE_URL = 'https://dev-api.fit2rent.com:9931/api';
 
 
 // export const BASE_URL = 'https://api.fit2rent.com/api';
+
+// environment tokens
+
+export const STRIPE_KEY = isProd ? 'pk_live_UAliz3GcbxSxzMqG9Mi4hU8h' : 'pk_test_9sfO7SgxwPOYrh5fTPKNN2w9';
+
+export const DWOLLA_ENV = isProd ? 'live' : 'sandbox';
 
 // methods
 
@@ -123,6 +132,7 @@ export const LL_UPDATE_PROPERTY_PROFILE = BASE_URL + '/prop/updateProp';
 // Leases
 
 export const LL_LEASES_LIST = BASE_URL + '/lease/leaseView';
+<<<<<<< HEAD
 
 export const LEASE_TENANTS = BASE_URL + '/lease/tenants';
 
@@ -141,3 +151,7 @@ export const MESSAGE_DELETE = BASE_URL + '/message/delete';
 export const ALERTS = BASE_URL + '/alerts/';
 export const ALERTS_COUNT = BASE_URL + '/alerts/count';
 export const ALERTS_DELETE = BASE_URL + '/alerts/delete';
+
+export const LL_LEASE_DETAILS = BASE_URL + '/lease/';
+export const LL_UPDATE_LEASE_DETAILS = BASE_URL + '/lease/update';
+export const LL_ADD_LEASE_DETAILS = BASE_URL + '/lease/create';

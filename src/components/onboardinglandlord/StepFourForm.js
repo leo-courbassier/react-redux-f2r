@@ -120,13 +120,16 @@ class StepFourForm extends Component {
 
     if (allowSave) {
       this.props.saveGuarantor(
-        store.guarantorFirstName,
-        store.guarantorLastName,
-        store.guarantorEmail,
-        guarantorPhone,
-        store.guarantorRelation,
-        openNextStep,
-        this.props.updateOnboardingScore
+        store.firstName,
+        store.lastName,
+        store.email,
+        store.homeAddress,
+        store.city,
+        store.state,
+        store.zipCode,
+        store.dateBirth,
+        store.ssn,
+        openNextStep
         );
     } else {
       if (openNextStep) openNextStep();
@@ -237,16 +240,54 @@ class StepFourForm extends Component {
     const steps = [postDepositSection, dwollaCheckout, stripeCheckout];
     const panel = steps[this.state.activeKey];
 
+
     return (
-      <Loader appState={this.props.appState} statusType="loading" statusAction="stepFiveForm">
+
+      <Loader appState={this.props.appState} statusType="loading" statusAction="StepFourForm">
       <div className="step step-four">
 
+      <div className="section">Set up your rent collection method</div>
+        <div className="section-box">
+          Setting up your rent collection method is free, quick, and easy. We don’t store any of your banking information and all transfers are handled through our secure processing technology. The headaches of paper checks are a thing of the past!.<br />
+       </div>
+          <div className="collectTitle">Collect Rent and Deposits using... Direct Deposit</div>
+           <div className="row">          
+            <div className="item">
+              <div className="icon my_pig">
+              <BS.Glyphicon glyph="piggy-bank" />
+              </div>
+            </div>
+          </div>
+          <div className="row">          
+            <div className="item">
+                <ol>
+                  <li>$1 fee for every transaction.</li>
+                  <li>Notifications and Alerts.</li>
+                  <li>Payments come in on-time and worry-free.</li>
+               </ol>
+            </div>
+          </div>
+           <div className="row">
+              <div className="item">
+                     <SubmitButton
+                    appState={this.props.appState}
+                    statusAction="stepFourFormProceed"
+                    submit={_.partial(this.submit.bind(this), this.props.showConnectAccount)}
+                    bsStyle="success"
+                    className="proceed-button">
+                      Connect Your Account
+                    </SubmitButton>
+              </div>
+            </div>
+       {this.props.appState[3].showConnectAccountValue == true && (
 
-
+        <div>
         <div className="section">Add a Guarantor</div>
+
         <div className="section-box">
           We need the following information so Dwolla, our payment provider, can verify your identity and give you access to the payment system. We don’t store any of this info.<br />
         </div>
+        
         <form>
           <BS.FormGroup controlId="guarantor">
           <div className="row">
@@ -289,29 +330,27 @@ class StepFourForm extends Component {
           </div>
           <div className="row">
            <div className="item">
-              <BS.ControlLabel>City</BS.ControlLabel>
-              <SelectOptions
-              name="jobCity"
-              disabled={!store.jobState}
-              loading={this.props.appState.status.loading['jobCityList']}
-              loadingText="Retrieving cities..."
-              onChange={this.keypress.bind(this)}
-              defaultValue={store.jobCity}
-              optionList={this.props.appState.cities['jobCityList']}
-              defaultOption
-               />
-             </div>
-             <div className="item">
-
-                <BS.ControlLabel>State</BS.ControlLabel>
+                <BS.ControlLabel>City</BS.ControlLabel>
                 <SelectOptions
-                name="jobState"
-                onChange={_.partial(this.stateListKeypress.bind(this), 'jobCityList')}
-                defaultValue={store.jobState}
-                optionList={store.stateList}
+                name="city"
+                loading={this.props.appState.status.loading['currentCityList']}
+                loadingText="Retrieving cities..."
+                onChange={this.keypress.bind(this)}
+                defaultValue={store.city}
+                optionList={this.props.appState.cities['currentCityList']}
                 defaultOption
                  />
-            </div>
+               </div>
+               <div className="item">
+                  <BS.ControlLabel>State</BS.ControlLabel>
+                  <SelectOptions
+                  name="state"
+                  onChange={_.partial(this.stateListKeypress.bind(this), 'currentCityList')}
+                  defaultValue={store.state}
+                  optionList={store.stateList}
+                  defaultOption
+                   />
+              </div>
             <div className="item">
             <BS.ControlLabel>Zip Code</BS.ControlLabel>
               <BS.FormControl
@@ -366,7 +405,11 @@ class StepFourForm extends Component {
               Skip
             </SubmitButton>
           )}
-        </div>
+           </div>
+          </div>
+         )}
+         
+        
       </div>
       </Loader>
     );
