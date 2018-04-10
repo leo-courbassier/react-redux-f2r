@@ -15,19 +15,10 @@ export function loadDwolla(setup = false){
       let verified = (json.length != 0);
       dispatch({type: types.DWOLLA_PAYMENT_VERIFIED_STATUS, verified});
       if(!verified || setup){
-        api.getUserDetails(dispatch, getState, (json) => {
-          let customer = {
-            "first_name": json.firstName,
-            "last_name": json.lastName,
-            "email": json.email
-          };
-          api.postDwollaCustomer(dispatch, getState, customer, () => {
-            api.getDwollaToken(dispatch, getState, (json) => {
-              let token = json.token;
-              dispatch({type: types.DWOLLA_PAYMENT_TOKEN, token});
-              api.setStatus(dispatch, 'loading', 'dwollaForm', false);
-            });
-          });
+        api.getDwollaToken(dispatch, getState, (json) => {
+          let token = json.token;
+          dispatch({type: types.DWOLLA_PAYMENT_TOKEN, token});
+          api.setStatus(dispatch, 'loading', 'dwollaForm', false);
         });
       }else{
         api.setStatus(dispatch, 'loading', 'dwollaForm', false);
