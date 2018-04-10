@@ -19,9 +19,17 @@ class PaymentAccountsContainer extends Component {
                         onClick={toggleEditMode}
       >
         {editMode ? (
-          <div>Edit mode</div>
+          <MethodsForm
+            appState={paymentsState}
+            store={store}
+            load={actions.loadPaymentsMethodsForm}
+          />
         ) : (
-          <div>View mode</div>
+          <Methods
+            appState={paymentsState}
+            store={store}
+            load={actions.loadPaymentsMethods}
+          />
         )}
       </TabEditablePanel>
     );
