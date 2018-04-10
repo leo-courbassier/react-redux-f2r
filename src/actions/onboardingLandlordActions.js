@@ -430,13 +430,12 @@ export function saveStepThree(
        "renterIds":[
            {"renterId":1}
        ],
-       "depositList":depositList       
+       "depositList":depositList
     };
 
-     
+
     let leaseObje = api.postStepThree(dispatch, getState, landLordObjSave, (response) => {
 
-        
          api.setStatus(dispatch, 'saving', statusAction, false);
          api.setStatus(dispatch, 'modified', 'stepThreeForm', false);
 

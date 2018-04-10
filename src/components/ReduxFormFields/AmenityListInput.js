@@ -6,7 +6,7 @@ import SelectOptions from '../SelectOptions';
 
 export default class AmenityListInput extends Component {
   static propTypes = {
-    field: PropTypes.object.isRequired
+    input: PropTypes.object.isRequired
   };
 
   handleValueChange = (name, type, value) => {

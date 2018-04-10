@@ -19,7 +19,7 @@ export default class PropertyLeases extends Component {
       _.filter(lease.depositList, { depositStatus }),
       (sum, item) => (sum + item.depositAmount),
       0
-    )
+    );
   }
 
   renderDividedColumn(text1, text2) {

@@ -136,7 +136,7 @@ export default class PropertyForm extends Component {
             name="headline"
             label="Title"
             type="text"
-            placeholder="Address"
+            placeholder="Title"
             component={renderInput} />
         </BS.Col>
       </BS.Row>
