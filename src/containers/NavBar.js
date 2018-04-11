@@ -11,15 +11,6 @@ import { POLLING_INTERVALS } from '../constants/App';
 
 class NavBarContainer extends Component {
 
-  timers = {
-    messages: null
-  }
-
-  checked = {
-    alerts: false,
-    messages: false
-  }
-
   componentWillMount() {
     // https://github.com/ai/visibilityjs
     this.timers.messages = Visibility.every(
@@ -29,13 +20,22 @@ class NavBarContainer extends Component {
     );
   }
 
+  componentWillUpdate() {
+    if (!this.checked.alerts) this.updateAlerts();
+    if (!this.checked.messages) this.updateMessages();
+  }
+
   componentWillUnmount() {
     Visibility.stop(this.timers.messages);
   }
 
-  componentWillUpdate() {
-    if (!this.checked.alerts) this.updateAlerts();
-    if (!this.checked.messages) this.updateMessages();
+  timers = {
+    messages: null
+  }
+
+  checked = {
+    alerts: false,
+    messages: false
   }
 
   updateAlerts() {

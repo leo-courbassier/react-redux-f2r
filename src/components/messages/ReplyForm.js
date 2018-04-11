@@ -11,8 +11,6 @@ class ReplyForm extends Component {
     submitted: false
   }
 
-  initialPrefilledMessage: ''
-
   componentWillMount() {
     const message = this.props.message;
     const date = moment(message.tsMessageSent).format('MM/DD/YY');
@@ -25,6 +23,8 @@ class ReplyForm extends Component {
     this.props.keypress('subject', `RE: ${message.subject}`);
     this.props.keypress('message', this.initialPrefilledMessage);
   }
+
+  initialPrefilledMessage: ''
 
   keypress(e) {
     this.props.keypress(e.target.name, e.target.value);
@@ -95,8 +95,7 @@ class ReplyForm extends Component {
               onChange={this.keypress.bind(this)}
               type="text"
               value={reply.subject}
-              maxLength={78}>
-            </BS.FormControl>
+              maxLength={78} />
             <BS.HelpBlock className="text-danger">{this.getValidationState('subject').error}</BS.HelpBlock>
           </BS.FormGroup>
           <BS.FormGroup controlId="replyMessage"  validationState={!this.getValidationState('message').valid ? 'error' : null}>

@@ -175,8 +175,7 @@ class Compose extends Component {
                 type="text"
                 placeholder="Recipient's email address"
                 value={compose.to}
-                autoFocus>
-              </BS.FormControl>
+                autoFocus />
               <BS.HelpBlock className="text-danger">{this.getValidationState('to').error}</BS.HelpBlock>
             </BS.FormGroup>
           )}
@@ -187,8 +186,7 @@ class Compose extends Component {
               onChange={this.keypress.bind(this)}
               type="text"
               value={compose.subject}
-              maxLength={78}>
-            </BS.FormControl>
+              maxLength={78} />
             <BS.HelpBlock className="text-danger">{this.getValidationState('subject').error}</BS.HelpBlock>
           </BS.FormGroup>
           <BS.FormGroup controlId="message"  validationState={!this.getValidationState('message').valid ? 'error' : null}>

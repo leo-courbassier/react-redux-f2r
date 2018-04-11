@@ -30,7 +30,7 @@ export function updateAlerts(page = 0, forceReload = false, callback) {
         data = {
           items: newAlerts,
           hasNext: ((page + 1) * ALERTS_PAGE_SIZE) < alertsCount
-        }
+        };
       }
 
       dispatch({
@@ -50,7 +50,7 @@ export function updateAlerts(page = 0, forceReload = false, callback) {
 export function updateAlertsCount(callback) {
   return function (dispatch, getState) {
     api.getAlertsCount(dispatch, getState, count => {
-      count = parseInt(count)
+      count = parseInt(count);
 
       dispatch({
         type: types.NOTIFICATION_ALERTS_COUNT_UPDATE,
@@ -100,6 +100,6 @@ export function updateMessages(callback) {
 export function updateNewMessages(newMessages) {
   return function (dispatch, getState) {
     let messages = { new: newMessages, unread: null };
-    dispatch({type: types.NOTIFICATION_MESSAGES_UPDATE, messages})
+    dispatch({type: types.NOTIFICATION_MESSAGES_UPDATE, messages});
   };
 }
