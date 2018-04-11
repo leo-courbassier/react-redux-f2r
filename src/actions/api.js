@@ -92,6 +92,40 @@ export function post(endpoint, authHeader, payload, callback, textCallback) {
   });
 }
 
+export function postText(endpoint, authHeader, payload, callback, textCallback){
+  return fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Authorization': authHeader ? authHeader : '',
+      'Content-Type': 'application/json;charset=UTF-8'
+    },
+    body: payload
+  })
+  .then(response => {
+    if(response){
+      // be able to accept non-json callbacks
+      if(textCallback) response.text().then(textCallback);
+
+      if(!textCallback && response.headers.get("content-type") == 'application/json;charset=UTF-8'){
+        return response.json();
+      }else{
+        return false;
+      }
+    }else{
+      return false;
+    }
+  })
+  .then(json => {
+    if(callback){
+      callback(json);
+    }
+    return json;
+  })
+  .catch(err => {
+    throw new Error(err);
+  });
+}
+
 export function put(endpoint, authHeader, callback) {
   return fetch(endpoint, {
     method: 'PUT',
@@ -568,8 +602,6 @@ export function getAlertsCount(dispatch, getState, callback){
 export function deleteAlerts(dispatch, getState, ids, callback){
   return del(`${services.ALERTS_DELETE}?alertIds=${ids.join()}`, getAuthHeaders(dispatch, getState), callback);
 }
-<<<<<<< 2be8c89be0dfb96cddb98567f0bf2eb98b62cda8
-=======
 
 export function getLLLeaseDetails(leaseId, dispatch, getState) {
   return get(services.LL_LEASE_DETAILS + '?leaseId=' + leaseId, getAuthHeaders(dispatch, getState));
@@ -586,4 +618,19 @@ export function updateLLLeaseDetails(dispatch, getState, payload, callback) {
 export function getCCList(dispatch, getState) {
   return get(services.PAYMENT_CC_LIST, getAuthHeaders(dispatch, getState));
 }
->>>>>>> Payments form - WIP
+
+export function addCreditCard(dispatch, getState, payload, callback) {
+  return post(services.PAYMENT_CC_ADD, getAuthHeaders(dispatch, getState), payload, callback);
+}
+
+export function deleteFundingSource(dispatch, getState, id, callback){
+  return del(`${services.PAYMENT_ACHFS_DELETE}?id=${id}`, getAuthHeaders(dispatch, getState), callback);
+}
+
+export function deleteCreditCard(dispatch, getState, id, callback){
+  return del(`${services.PAYMENT_CC_DELETE}?id=${id}`, getAuthHeaders(dispatch, getState), callback);
+}
+
+export function setDefaultAch(dispatch, getState, payload, callback){
+  return postText(services.PAYMENT_ACH_DEFAULT_DEST, getAuthHeaders(dispatch, getState), payload, callback);
+}

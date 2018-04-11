@@ -18,6 +18,8 @@ const initialState = {
   fundingSources: [],
   creditCards: [],
   customerCreated: false,
+  removeFundingSourceSuccess: null,
+  removeCreditCardSuccess: null,
 
   stateList: [],
   cityList: [],
@@ -51,6 +53,9 @@ export default function paymentsAppState(state = initialState, action) {
       newState.fundingSources = action.fundingSources;
       newState.creditCards = action.creditCards;
       newState.stateList = action.stateList;
+      if (action.fundingSources.length > 0) {
+        newState.customerCreated = true;
+      }
       newState.loaded = true;
       return newState;
     }
@@ -66,6 +71,40 @@ export default function paymentsAppState(state = initialState, action) {
     {
       let newState = objectAssign({}, state);
       newState.customerCreated = true;
+      return newState;
+    }
+
+    case types.PAYMENTS_METHODS_FUNDING_SOURCES_UPDATE:
+    {
+      let newState = objectAssign({}, state);
+      newState.fundingSources = action.fundingSources;
+      return newState;
+    }
+
+    case types.PAYMENTS_METHODS_CREDIT_CARDS_UPDATE:
+    {
+      let newState = objectAssign({}, state);
+      newState.creditCards = action.creditCards;
+      return newState;
+    }
+
+    case types.PAYMENTS_METHODS_REMOVE_FUNDING_SOURCE:
+    {
+      let newState = objectAssign({}, state);
+      newState.removeFundingSourceSuccess = action.success;
+      if (action.fundingSources) {
+        newState.fundingSources = action.fundingSources;
+      }
+      return newState;
+    }
+
+    case types.PAYMENTS_METHODS_REMOVE_CREDIT_CARD:
+    {
+      let newState = objectAssign({}, state);
+      newState.removeCreditCardSuccess = action.success;
+      if (action.creditCards) {
+        newState.creditCards = action.creditCards;
+      }
       return newState;
     }
 

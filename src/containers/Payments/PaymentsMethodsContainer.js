@@ -26,6 +26,11 @@ class PaymentMethodsContainer extends Component {
               appState={appState}
               load={actions.loadPaymentsMethodsForm}
               createCustomer={actions.createCustomer}
+              loadFundingSources={actions.loadFundingSources}
+              loadCreditCards={actions.loadCreditCards}
+              removeFundingSource={actions.removeFundingSource}
+              removeCreditCard={actions.removeCreditCard}
+              setDefaultFundingSource={actions.setDefaultFundingSource}
               getCityList={actions.getCityList}
             />
           ) : (

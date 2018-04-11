@@ -1,5 +1,6 @@
 import * as types from '../constants/ActionTypes';
 import 'isomorphic-fetch';
+import _ from 'underscore';
 
 import * as api from './api';
 import * as services from '../constants/Services';
@@ -74,4 +75,171 @@ export function createCustomer(payload, callback) {
       if (callback) callback(response);
     });
   };
+}
+
+export function loadFundingSources(callback) {
+ return function (dispatch, getState) {
+   let requestFundingSources = api.verifyFundingSources(dispatch, getState);
+   let requestUserDetails = api.getUserDetails(dispatch, getState);
+
+   api.setStatus(dispatch, 'loading', 'paymentMethodsFundingSources', true);
+
+   Promise.all([
+     requestFundingSources,
+     requestUserDetails
+     ])
+   .then(results => {
+     let fundingSources = results[0];
+     let userInfo = results[1];
+
+     // check and set default funding source
+     for (let i = 0; i < fundingSources.length; i++) {
+       let defaultSourceId = userInfo.userDetails.paymentDestinationAccount;
+       let currentSourceId = fundingSources[i].id;
+       fundingSources[i].isDefault = (defaultSourceId == currentSourceId);
+     }
+
+     dispatch({
+       type: types.PAYMENTS_METHODS_FUNDING_SOURCES_UPDATE,
+       fundingSources
+     });
+
+     api.setStatus(dispatch, 'loading', 'paymentMethodsFundingSources', false);
+
+     if (callback) callback();
+   });
+ };
+}
+
+export function loadCreditCards(callback) {
+ return function (dispatch, getState) {
+   let requestCCList = api.getCCList(dispatch, getState);
+
+   api.setStatus(dispatch, 'loading', 'paymentMethodsCreditCards', true);
+
+   Promise.all([
+     requestCCList
+     ])
+   .then(results => {
+     let creditCards = results[0];
+
+     dispatch({
+       type: types.PAYMENTS_METHODS_CREDIT_CARDS_UPDATE,
+       creditCards
+     });
+
+     api.setStatus(dispatch, 'loading', 'paymentMethodsCreditCards', false);
+
+     if (callback) callback();
+   });
+ };
+}
+
+export function removeFundingSource(id, callback) {
+ return function (dispatch, getState) {
+   let fundingSources = getState().paymentsAppState.fundingSources;
+
+   api.setStatus(dispatch, 'loading', 'removeFundingSource', true);
+
+   api.deleteFundingSource(dispatch, getState, id, (response) => {
+     if (response.status !== 200) {
+       api.setStatus(dispatch, 'loading', 'removeFundingSource', false);
+
+       let success = false;
+
+       dispatch({
+         type: types.PAYMENTS_METHODS_REMOVE_FUNDING_SOURCE,
+         success
+       });
+
+       if (callback) callback(success);
+
+       return;
+     }
+
+     let updatedFundingSources = _.reject(fundingSources, source => {
+       return source.id === id;
+     });
+
+     api.setStatus(dispatch, 'loading', 'removeFundingSource', false);
+
+     let success = true;
+
+     dispatch({
+       type: types.PAYMENTS_METHODS_REMOVE_FUNDING_SOURCE,
+       success,
+       fundingSources: updatedFundingSources
+     });
+
+     if (callback) callback(success);
+   });
+ };
+}
+
+export function removeCreditCard(id, callback) {
+ return function (dispatch, getState) {
+   let creditCards = getState().paymentsAppState.creditCards;
+
+   api.setStatus(dispatch, 'loading', 'removeCreditCard', true);
+
+   api.deleteCreditCard(dispatch, getState, id, (response) => {
+     if (response.status !== 200) {
+       api.setStatus(dispatch, 'loading', 'removeCreditCard', false);
+
+       let success = false;
+
+       dispatch({
+         type: types.PAYMENTS_METHODS_REMOVE_CREDIT_CARD,
+         success
+       });
+
+       if (callback) callback(success);
+
+       return;
+     }
+
+     let updatedCreditCards = _.reject(creditCards, card => {
+       return card.id === id;
+     });
+
+     api.setStatus(dispatch, 'loading', 'removeCreditCard', false);
+
+     let success = true;
+
+     dispatch({
+       type: types.PAYMENTS_METHODS_REMOVE_CREDIT_CARD,
+       success,
+       creditCards: updatedCreditCards
+     });
+
+     if (callback) callback(success);
+   });
+ };
+}
+
+export function setDefaultFundingSource(sourceId, callback) {
+ return function (dispatch, getState) {
+   let payload = sourceId;
+
+   api.setStatus(dispatch, 'loading', `setFundingSourceDefault${sourceId}`, true);
+
+   api.setDefaultAch(dispatch, getState, payload, () => {
+     let fundingSources = getState().paymentsAppState.fundingSources;
+     let updatedFundingSources = fundingSources.splice();
+
+     for (let i = 0; i < fundingSources.length; i++) {
+       updatedFundingSources[i] = fundingSources[i];
+       updatedFundingSources[i].isDefault = (updatedFundingSources[i].id == sourceId);
+     }
+
+     dispatch({
+       type: types.PAYMENTS_METHODS_FUNDING_SOURCES_UPDATE,
+       fundingSources: updatedFundingSources
+     });
+
+     api.setStatus(dispatch, 'loading', `setFundingSourceDefault${sourceId}`, false);
+
+     if (callback) callback();
+   });
+ };
 }

@@ -77,10 +77,15 @@ export const GR_VERIFY = BASE_URL + '/gr/verify';
 // stripe
 
 export const PAYMENT_CCADHOC = BASE_URL + '/payment/cc-ad-hoc';
+export const PAYMENT_CC_ACCOUNT = BASE_URL + '/payment/cc-account';
+export const PAYMENT_CC_DELETE = BASE_URL + '/payment/cc-delete';
+export const PAYMENT_CC_ADD = BASE_URL + '/payment/cc-add';
 
 // dwolla
 
 export const PAYMENT_ACHFS = BASE_URL + '/payment/ach-fs?verified=true';
+export const PAYMENT_ACHFS_DELETE = BASE_URL + '/payment/ach-fs-delete';
+export const PAYMENT_ACH_DEFAULT_DEST = BASE_URL + '/payment/ach-default-dest';
 
 export const DWOLLA_IAV_CREATECUSTOMER = BASE_URL + '/dwolla/iav/create-customer';
 export const DWOLLA_IAV_TOKEN = BASE_URL + '/dwolla/iav/token';

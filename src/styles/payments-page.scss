@@ -21,7 +21,13 @@
     margin-left: 15px;
   }
 
-  .add-funding-source {
+  table {
+    margin-top: 15px;
+    margin-bottom: 0;
+  }
+
+  .add-funding-source,
+  .add-credit-card {
     margin-top: 20px;
 
     form,
