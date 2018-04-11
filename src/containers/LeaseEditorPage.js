@@ -14,7 +14,7 @@ class LeaseEditorPage extends Component {
     let {children, accountState, params} = this.props;
 
     return (
-      <BS.Row className="property-page">
+      <BS.Row className="leaseEditor">
 
         <BS.Col xs={12} sm={12} md={8} className="panels">
           <PageTitle>My Leases {'>'} Edit My Lease</PageTitle>

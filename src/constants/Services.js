@@ -119,7 +119,7 @@ export const VERIFY_CONFIRM = BASE_URL + '/verify/confirm';
 export const TT_F2RSCORE = BASE_URL + '/tt/f2rScore';
 export const TT_PSEUDO_F2RSCORE = BASE_URL + '/tt/pseudoF2RScore';
 
-// Properties
+// My Properties
 
 export const LL_PROPERTIES_LIST = BASE_URL + '/prop/propsView';
 export const LL_PROPERTY_PROFILE = BASE_URL + '/prop/property';
@@ -129,11 +129,17 @@ export const LL_PROPERTY_PIC = BASE_URL + '/prop/upload';
 export const LL_ADD_PROPERTY_PROFILE = BASE_URL + '/prop/addProp';
 export const LL_UPDATE_PROPERTY_PROFILE = BASE_URL + '/prop/updateProp';
 
-// Leases
+// My Leases
 
 export const LL_LEASES_LIST = BASE_URL + '/lease/leaseView';
-
 export const LEASE_TENANTS = BASE_URL + '/lease/tenants';
+export const LL_LEASE_DETAILS = BASE_URL + '/lease/';
+export const LL_UPDATE_LEASE_DETAILS = BASE_URL + '/lease/update';
+export const LL_ADD_LEASE_DETAILS = BASE_URL + '/lease/create';
+
+// My Tenants
+
+export const LL_TENANTS_LIST = BASE_URL + '/lease/ttView';
 
 // Messages
 
@@ -150,7 +156,3 @@ export const MESSAGE_DELETE = BASE_URL + '/message/delete';
 export const ALERTS = BASE_URL + '/alerts/';
 export const ALERTS_COUNT = BASE_URL + '/alerts/count';
 export const ALERTS_DELETE = BASE_URL + '/alerts/delete';
-
-export const LL_LEASE_DETAILS = BASE_URL + '/lease/';
-export const LL_UPDATE_LEASE_DETAILS = BASE_URL + '/lease/update';
-export const LL_ADD_LEASE_DETAILS = BASE_URL + '/lease/create';

@@ -6,7 +6,7 @@ import LeasesSummaryContainer from './Leases/LeasesSummaryContainer';
 export default class LeasesSummaryPage extends Component {
   render() {
     return (
-      <div className="leasesPage">
+      <div className="leasesSummary">
         <PageTitle>My Leases {'>'} Summary</PageTitle>
 
         <LeasesSummaryContainer />
