@@ -130,7 +130,7 @@ class SignupForm extends Component {
           password={this.props.appState.addUser.password} />
         </BS.FormGroup>
         <BS.FormGroup controlId="signupType">
-          <BS.Radio inline defaultChecked>Tenant</BS.Radio>
+          <BS.Radio inline defaultChecked>Landlord</BS.Radio>
         </BS.FormGroup>
         <BS.FormGroup controlId="signupType">
           <BS.Checkbox

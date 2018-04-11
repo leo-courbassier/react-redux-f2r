@@ -24,17 +24,15 @@ export function login(user, password) {
     api.getLogin(dispatch, getState, "Basic " + auth, (json) =>{
       api.setStatus(dispatch, 'loading', 'loginSubmit', false);
       let authorized = false;
-      if (json.status !== 401){
+      if (json.status !== 401 && (json.userType === 'LANDLORD')){
         authorized = true;
       }else{
         auth = null;
       }
-      
+
       dispatch({ type: types.USER_LOGIN, authorized, auth, json });
-      if (authorized == true && json.userType=='LANDLORD'){
+      if (authorized == true){
         browserHistory.push('/onboardinglandlord');
-      }else if(authorized == true && json.userType == 'RENTER'){
-        browserHistory.push('/onboarding');
       }
     });
 

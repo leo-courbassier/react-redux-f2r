@@ -14,7 +14,7 @@ export function clearSignupForm() {
   return { type: types.SIGNUP_FORM_CLEAR };
 }
 
-export function signup(firstName, lastName, user, password, acceptTerms,userType) {
+export function signup(firstName, lastName, user, password, acceptTerms) {
   return function (dispatch) {
     let auth = btoa(user + ':' + password);
     let endpoint = services.USER_SIGNUP;
@@ -30,7 +30,7 @@ export function signup(firstName, lastName, user, password, acceptTerms,userType
         'email': user,
         'password': password,
         'isAcceptTos': acceptTerms,
-        'userType': userType || '0'
+        'userType': '1'
       })
     })
     .then(response => {
@@ -39,14 +39,7 @@ export function signup(firstName, lastName, user, password, acceptTerms,userType
     .then(json => {
       api.setStatus(dispatch, 'loading', 'signupSubmit', false);
       let success = false;
-      if (json.email === user && json.userType==='RENTER'){
-        success = true;
-        let authorized = true;
-        dispatch({ type: types.USER_LOGIN, authorized, auth, json });
-        browserHistory.push('/onboarding');
-        let header = `Basic ${auth}`;
-        api.checkInvites(dispatch, header);
-      }else if(json.email === user && json.userType==='LANDLORD'){
+      if(json.email === user && json.userType==='LANDLORD'){
 
         success = true;
         let authorized = true;

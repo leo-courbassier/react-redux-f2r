@@ -10,6 +10,16 @@ const LoginForm = ({updateLoginForm, login, appState, store}) => {
   };
   const loginHelpMessage = function () {
     let authorized = appState.authorized;
+    let userInfo = appState.userInfo;
+
+    if (
+      authorized === false &&
+      userInfo.id &&
+      userInfo.userType !== 'LANDLORD'
+    ) {
+      return 'Incorrect user account for landlord application.';
+    }
+
     switch (authorized) {
       case false:
         return 'Incorrect email or password, please try again.';
