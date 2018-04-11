@@ -329,7 +329,9 @@ class DwollaPayment extends Component {
     return (
       <Loader appState={this.props.appState} statusType="loading" statusAction="dwollaForm">
         <div className="dwolla-payment-container clearfix">
-          <div className="section">{this.getHeadingText()}</div>
+          {!this.props.noHeading && (
+            <div className="section">{this.getHeadingText()}</div>
+          )}
           {this.props.helpBlock}
           {ui}
         </div>

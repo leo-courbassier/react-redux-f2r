@@ -61,9 +61,11 @@ export default class DateInput extends Component {
   }
 
   render() {
+    const field = this.props;
     const value = this.getValueArray();
+
     return (
-      <BS.FormGroup>
+      <BS.FormGroup validationState={hasFieldError(field) ? 'error' : null}>
         <div className="date-of-birth">
           <div className="row">
             <div className="item">
@@ -105,6 +107,9 @@ export default class DateInput extends Component {
             </div>
           </div>
         </div>
+        {hasFieldError(field) && (
+          <BS.HelpBlock className="text-danger">{field.meta.error}</BS.HelpBlock>
+        )}
       </BS.FormGroup>
     );
   }

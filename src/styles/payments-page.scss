@@ -1,0 +1,38 @@
+.payments-page {
+  .row {
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    .item {
+      flex: 1;
+    }
+    .item-lg {
+      flex-grow: 2;
+    }
+    .item-remove {
+      flex-grow: 0;
+    }
+    &.has-gutters .item:not(:first-child) {
+      margin-left: 15px;
+    }
+  }
+
+  .date-of-birth .item:not(:first-child) {
+    margin-left: 15px;
+  }
+
+  table {
+    margin-top: 15px;
+    margin-bottom: 0;
+  }
+
+  .add-funding-source,
+  .add-credit-card {
+    margin-top: 20px;
+
+    form,
+    &-button {
+      margin-top: 20px;
+    }
+  }
+}
