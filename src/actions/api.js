@@ -603,18 +603,6 @@ export function deleteAlerts(dispatch, getState, ids, callback){
   return del(`${services.ALERTS_DELETE}?alertIds=${ids.join()}`, getAuthHeaders(dispatch, getState), callback);
 }
 
-export function getLLLeaseDetails(leaseId, dispatch, getState) {
-  return get(services.LL_LEASE_DETAILS + '?leaseId=' + leaseId, getAuthHeaders(dispatch, getState));
-}
-
-export function addLLLeaseDetails(dispatch, getState, payload, callback) {
-  return post(services.LL_ADD_LEASE_DETAILS, getAuthHeaders(dispatch, getState), payload, callback);
-}
-
-export function updateLLLeaseDetails(dispatch, getState, payload, callback) {
-  return post(services.LL_UPDATE_LEASE_DETAILS, getAuthHeaders(dispatch, getState), payload, callback);
-}
-
 export function getCCList(dispatch, getState) {
   return get(services.PAYMENT_CC_LIST, getAuthHeaders(dispatch, getState));
 }
