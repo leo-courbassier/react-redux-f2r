@@ -1,3 +1,4 @@
+import React from 'react';
 import MethodsForm from '../../components/Payments/MethodsForm';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
@@ -63,11 +64,7 @@ const validate = values => {
   return errors;
 };
 
-export default connect(
-  state => ({
-    initialValues: state.paymentsAppState.methods
-  })
-)(reduxForm({
+export default reduxForm({
   form: 'methodsForm',
   validate
 })(MethodsForm));

@@ -101,7 +101,7 @@ class MethodsForm extends Component {
   }
 
   renderRemoveFundingSourceModal() {
-    const { removeFundingSourceSuccess } = this.props.appState;
+    const { removeFundingSourceSuccess } = this.props.paymentsState;
 
     return (
       <div className="remove-funding-source-modal">
@@ -133,7 +133,7 @@ class MethodsForm extends Component {
             <div className="pull-right">
               <SubmitButton
                 submit={this.removeFundingSource.bind(this, this.state.removeFundingSourceData)}
-                appState={this.props.appState}
+                appState={this.props.paymentsState}
                 statusAction="removeFundingSource"
                 textLoading="Removing"
                 bsStyle="danger">
@@ -177,7 +177,7 @@ class MethodsForm extends Component {
             <div className="pull-right">
               <SubmitButton
                 submit={this.removeCreditCard.bind(this, this.state.removeCreditCardData)}
-                appState={this.props.appState}
+                appState={this.props.paymentsState}
                 statusAction="removeCreditCard"
                 textLoading="Removing"
                 bsStyle="danger">
@@ -191,8 +191,8 @@ class MethodsForm extends Component {
   }
 
   renderCreateCustomerForm() {
-    const { appState, handleSubmit } = this.props;
-    const { fundingSources, creditCards, stateList, cityList } = appState;
+    const { paymentsState, handleSubmit } = this.props;
+    const { fundingSources, creditCards, stateList, cityList } = paymentsState;
 
     return (
       <form onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
@@ -316,8 +316,14 @@ class MethodsForm extends Component {
   }
 
   render() {
-    const { appState, handleSubmit } = this.props;
-    const { fundingSources, creditCards, customerCreated } = appState;
+    const { paymentsState, handleSubmit } = this.props;
+    const { fundingSources, creditCards, customerCreated } = paymentsState;
+
+    const dwollaHelpBlock = (
+      <BS.HelpBlock className="text-center">
+        <strong>{`Accounts you have already added will show up, but re-adding them won't do anything.`}</strong>
+      </BS.HelpBlock>
+    );
 
     return (
       <div className="paymentmethodsform-panel">
@@ -326,45 +332,47 @@ class MethodsForm extends Component {
           <div>No accounts added.</div>
         )}
         {fundingSources.length > 0 && (
-          <BS.Table className="data-table" striped bordered responsive>
-            <thead>
-              <tr>
-                <td>Bank Account</td>
-                <td>Status</td>
-                <td>Default</td>
-                <td>{/* Remove button */}</td>
-              </tr>
-            </thead>
-            <tbody>
-              {fundingSources.map((source, i) => (
-                <tr key={i}>
-                  <td>{source.name}</td>
-                  <td>Verified</td>
-                  <td>
-                  {source.isDefault ? 'Yes' : (
-                    <SubmitButton
-                      submit={() => { this.props.setDefaultFundingSource(source.id); }}
-                      appState={this.props.appState}
-                      statusAction={`setFundingSourceDefault${source.id}`}
-                      textLoading="Setting..."
-                      bsStyle="default"
-                      bsSize="small">
-                      Set Default
-                    </SubmitButton>
-                  )}
-                  </td>
-                  <td>
-                    <BS.Button
-                      onClick={this.confirmRemoveFundingSource.bind(this, source)}
-                      bsStyle="default"
-                      bsSize="small">
-                      Remove
-                    </BS.Button>
-                  </td>
+          <Loader appState={paymentsState} statusType="loading" statusAction="paymentMethodsFundingSources">
+            <BS.Table className="data-table" striped bordered responsive>
+              <thead>
+                <tr>
+                  <td>Bank Account</td>
+                  <td>Status</td>
+                  <td>Default</td>
+                  <td>{/* Remove button */}</td>
                 </tr>
-              ))}
-            </tbody>
-          </BS.Table>
+              </thead>
+              <tbody>
+                {fundingSources.map((source, i) => (
+                  <tr key={i}>
+                    <td>{source.name}</td>
+                    <td>Verified</td>
+                    <td>
+                    {source.isDefault ? 'Yes' : (
+                      <SubmitButton
+                        submit={() => { this.props.setDefaultFundingSource(source.id); }}
+                        appState={paymentsState}
+                        statusAction={`setFundingSourceDefault${source.id}`}
+                        textLoading="Setting..."
+                        bsStyle="default"
+                        bsSize="small">
+                        Set Default
+                      </SubmitButton>
+                    )}
+                    </td>
+                    <td>
+                      <BS.Button
+                        onClick={this.confirmRemoveFundingSource.bind(this, source)}
+                        bsStyle="default"
+                        bsSize="small">
+                        Remove
+                      </BS.Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </BS.Table>
+          </Loader>
         )}
         {fundingSources.length <= MAX_FUNDING_SOURCES && (
           <div className="add-funding-source">
@@ -375,6 +383,7 @@ class MethodsForm extends Component {
                   <DwollaPayment
                     type="setup"
                     dwollaCallback={this.addFundingSource.bind(this)}
+                    helpBlock={dwollaHelpBlock}
                     noHeading
                   />
                 ) : this.renderCreateCustomerForm()}
@@ -396,35 +405,37 @@ class MethodsForm extends Component {
           <div>No card added.</div>
         )}
         {creditCards.length > 0 && (
-          <BS.Table className="data-table" striped bordered responsive>
-            <thead>
-              <tr>
-                <td>Card</td>
-                <td>Type</td>
-                <td>Account Number</td>
-                <td>Expiration</td>
-                <td>{/* Remove button */}</td>
-              </tr>
-            </thead>
-            <tbody>
-              {creditCards.map((card, i) => (
-                <tr key={i}>
-                  <td>{card.brand}</td>
-                  <td>{card.funding.charAt(0).toUpperCase() + card.funding.slice(1)}</td>
-                  <td>XXXX XXXX XXXX {card.last4}</td>
-                  <td>{`${card.expMonth} / ${card.expYear}`}</td>
-                  <td>
-                    <BS.Button
-                      onClick={this.confirmRemoveCreditCard.bind(this, card)}
-                      bsStyle="default"
-                      bsSize="small">
-                      Remove
-                    </BS.Button>
-                  </td>
+          <Loader appState={paymentsState} statusType="loading" statusAction="paymentMethodsCreditCards">
+            <BS.Table className="data-table" striped bordered responsive>
+              <thead>
+                <tr>
+                  <td>Card</td>
+                  <td>Type</td>
+                  <td>Account Number</td>
+                  <td>Expiration</td>
+                  <td>{/* Remove button */}</td>
                 </tr>
-              ))}
-            </tbody>
-          </BS.Table>
+              </thead>
+              <tbody>
+                {creditCards.map((card, i) => (
+                  <tr key={i}>
+                    <td>{card.brand}</td>
+                    <td>{card.funding.charAt(0).toUpperCase() + card.funding.slice(1)}</td>
+                    <td>XXXX XXXX XXXX {card.last4}</td>
+                    <td>{`${card.expMonth} / ${card.expYear}`}</td>
+                    <td>
+                      <BS.Button
+                        onClick={this.confirmRemoveCreditCard.bind(this, card)}
+                        bsStyle="default"
+                        bsSize="small">
+                        Remove
+                      </BS.Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </BS.Table>
+          </Loader>
         )}
         {creditCards.length < MAX_CREDIT_CARDS && (
           <div className="add-credit-card">
