@@ -1,5 +1,4 @@
 import * as types from '../constants/ActionTypes';
-import 'isomorphic-fetch';
 import _ from 'lodash';
 import * as api from './api';
 

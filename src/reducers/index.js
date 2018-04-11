@@ -10,6 +10,7 @@ import loginAppState from './login';
 import onboardingAppState from './onboardinglandlord';
 import propertiesAppState from './properties';
 import leasesAppState from './leases';
+import tenantsAppState from './tenants';
 import messagesAppState from './messages';
 import resetAppState from './reset';
 import sidebarState from './sidebar';
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   sidebarState,
   propertiesAppState,
   leasesAppState,
+  tenantsAppState,
   messagesAppState,
   notificationAppState,
   geoAppState,

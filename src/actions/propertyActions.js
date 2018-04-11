@@ -1,6 +1,4 @@
 import * as types from '../constants/ActionTypes';
-import 'isomorphic-fetch';
-
 import * as api from './api';
 
 export function editModeUpdate(panelName, value) {
