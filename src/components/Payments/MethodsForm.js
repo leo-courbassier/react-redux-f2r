@@ -100,7 +100,7 @@ class MethodsForm extends Component {
   }
 
   renderRemoveFundingSourceModal() {
-    const { removeFundingSourceSuccess } = this.props.appState;
+    const { removeFundingSourceSuccess } = this.props.paymentsState;
 
     return (
       <div className="remove-funding-source-modal">
@@ -132,7 +132,7 @@ class MethodsForm extends Component {
             <div className="pull-right">
               <SubmitButton
                 submit={this.removeFundingSource.bind(this, this.state.removeFundingSourceData)}
-                appState={this.props.appState}
+                appState={this.props.paymentsState}
                 statusAction="removeFundingSource"
                 textLoading="Removing"
                 bsStyle="danger">
@@ -176,7 +176,7 @@ class MethodsForm extends Component {
             <div className="pull-right">
               <SubmitButton
                 submit={this.removeCreditCard.bind(this, this.state.removeCreditCardData)}
-                appState={this.props.appState}
+                appState={this.props.paymentsState}
                 statusAction="removeCreditCard"
                 textLoading="Removing"
                 bsStyle="danger">
@@ -190,8 +190,8 @@ class MethodsForm extends Component {
   }
 
   render() {
-    const { appState } = this.props;
-    const { fundingSources, creditCards, stateList, cityList, customerCreated } = appState;
+    const { paymentsState, handleSubmit } = this.props;
+    const { fundingSources, creditCards, customerCreated } = paymentsState;
 
     const dwollaHelpBlock = (
       <BS.HelpBlock className="text-center">
@@ -206,7 +206,7 @@ class MethodsForm extends Component {
           <div>No accounts added.</div>
         )}
         {fundingSources.length > 0 && (
-          <Loader appState={appState} statusType="loading" statusAction="paymentMethodsFundingSources">
+          <Loader appState={paymentsState} statusType="loading" statusAction="paymentMethodsFundingSources">
             <BS.Table className="data-table" striped bordered responsive>
               <thead>
                 <tr>
@@ -225,7 +225,7 @@ class MethodsForm extends Component {
                     {source.isDefault ? 'Yes' : (
                       <SubmitButton
                         submit={() => { this.props.setDefaultFundingSource(source.id); }}
-                        appState={appState}
+                        appState={paymentsState}
                         statusAction={`setFundingSourceDefault${source.id}`}
                         textLoading="Setting..."
                         bsStyle="default"
@@ -286,7 +286,7 @@ class MethodsForm extends Component {
           <div>No card added.</div>
         )}
         {creditCards.length > 0 && (
-          <Loader appState={appState} statusType="loading" statusAction="paymentMethodsCreditCards">
+          <Loader appState={paymentsState} statusType="loading" statusAction="paymentMethodsCreditCards">
             <BS.Table className="data-table" striped bordered responsive>
               <thead>
                 <tr>
