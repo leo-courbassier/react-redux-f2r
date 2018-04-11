@@ -23,7 +23,7 @@ class PaymentMethodsContainer extends Component {
         <Loader appState={appState} statusType="loading" statusAction="paymentMethods">
           {editMode ? (
             <MethodsForm
-              paymentsState={appState}
+              appState={appState}
               load={actions.loadPaymentsMethodsForm}
               createCustomer={actions.createCustomer}
               loadFundingSources={actions.loadFundingSources}

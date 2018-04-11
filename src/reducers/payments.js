@@ -53,9 +53,7 @@ export default function paymentsAppState(state = initialState, action) {
       newState.fundingSources = action.fundingSources;
       newState.creditCards = action.creditCards;
       newState.stateList = action.stateList;
-      if (action.fundingSources.length > 0) {
-        newState.customerCreated = true;
-      }
+      newState.customerCreated = action.customerCreated;
       newState.loaded = true;
       return newState;
     }

@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import * as BS from 'react-bootstrap';
-import { Field } from 'redux-form';
 
-import { renderInput, renderSelect, SelectInput, DateInput } from '../ReduxFormFields';
+import CreateCustomerForm from './CreateCustomerForm';
 import DwollaPayment from '../DwollaPayment';
 import StripePayment from '../StripePayment';
 import ButtonSpinner from '../ButtonSpinner';
@@ -101,7 +100,7 @@ class MethodsForm extends Component {
   }
 
   renderRemoveFundingSourceModal() {
-    const { removeFundingSourceSuccess } = this.props.paymentsState;
+    const { removeFundingSourceSuccess } = this.props.appState;
 
     return (
       <div className="remove-funding-source-modal">
@@ -133,7 +132,7 @@ class MethodsForm extends Component {
             <div className="pull-right">
               <SubmitButton
                 submit={this.removeFundingSource.bind(this, this.state.removeFundingSourceData)}
-                appState={this.props.paymentsState}
+                appState={this.props.appState}
                 statusAction="removeFundingSource"
                 textLoading="Removing"
                 bsStyle="danger">
@@ -177,7 +176,7 @@ class MethodsForm extends Component {
             <div className="pull-right">
               <SubmitButton
                 submit={this.removeCreditCard.bind(this, this.state.removeCreditCardData)}
-                appState={this.props.paymentsState}
+                appState={this.props.appState}
                 statusAction="removeCreditCard"
                 textLoading="Removing"
                 bsStyle="danger">
@@ -190,134 +189,9 @@ class MethodsForm extends Component {
     );
   }
 
-  renderCreateCustomerForm() {
-    const { paymentsState, handleSubmit } = this.props;
-    const { fundingSources, creditCards, stateList, cityList } = paymentsState;
-
-    return (
-      <form onSubmit={handleSubmit(this.handleSubmit.bind(this))}>
-        <div className="row has-gutters">
-          <div className="item">
-            <Field
-              name="firstName"
-              label="First Name"
-              type="text"
-              component={renderInput}
-            />
-          </div>
-          <div className="item">
-            <Field
-              name="lastName"
-              label="Last Name"
-              type="text"
-              component={renderInput}
-            />
-          </div>
-        </div>
-        <div className="form-group">
-          <Field
-            name="email"
-            label="Email"
-            type="text"
-            component={renderInput}
-          />
-        </div>
-        <div className="form-group">
-          <Field
-            name="address"
-            label="Home Address"
-            type="text"
-            component={renderInput}
-          />
-        </div>
-        <div className="row has-gutters">
-          <div className="item">
-            <Field
-              name="state"
-              label="State"
-              optionList={stateList}
-              component={SelectInput}
-              onValueChange={this.props.getCityList}
-              defaultOptionName="Choose a state ..."
-            />
-          </div>
-          <div className="item">
-            <Field
-              name="city"
-              label="City"
-              optionList={cityList}
-              component={SelectInput}
-              defaultOptionName="Choose a city ..."
-            />
-          </div>
-          <div className="item">
-            <Field
-              name="zip"
-              label="Zip Code"
-              type="text"
-              component={renderInput}
-            />
-          </div>
-        </div>
-        <div className="form-group">
-          <BS.ControlLabel>Date of Birth</BS.ControlLabel>
-          <Field
-            name="dateOfBirth"
-            component={DateInput}
-          />
-        </div>
-        <div className="row has-gutters">
-          <div className="item">
-            <Field
-              name="ssn"
-              label="Last 4 of SSN"
-              type="text"
-              component={renderInput}
-            />
-          </div>
-          <div className="item">
-            <Field
-              name="phone"
-              label="Phone"
-              placeholder="ex: (555) 555 5555"
-              type="text"
-              component={renderInput}
-            />
-          </div>
-        </div>
-        {this.renderFooter()}
-      </form>
-    );
-  }
-
-  renderFooter() {
-    const { submitting, errors } = this.props;
-    return (
-      <div className="paymentmethods-submit">
-        <div className="paymentmethods-submit-message">
-          {errors && (
-            <BS.HelpBlock>
-              <span className="text-danger">{errors}</span>
-            </BS.HelpBlock>
-          )}
-        </div>
-        <div className="paymentmethods-submit-button">
-          <BS.Button
-            className="submit-button"
-            bsStyle="success"
-            disabled={submitting}
-            type="submit">
-            {submitting && <div className="spinner"><ButtonSpinner /></div>}
-            <div className="text">Save</div>
-          </BS.Button>
-        </div>
-      </div>
-    );
-  }
-
   render() {
-    const { paymentsState, handleSubmit } = this.props;
-    const { fundingSources, creditCards, customerCreated } = paymentsState;
+    const { appState } = this.props;
+    const { fundingSources, creditCards, stateList, cityList, customerCreated } = appState;
 
     const dwollaHelpBlock = (
       <BS.HelpBlock className="text-center">
@@ -332,7 +206,7 @@ class MethodsForm extends Component {
           <div>No accounts added.</div>
         )}
         {fundingSources.length > 0 && (
-          <Loader appState={paymentsState} statusType="loading" statusAction="paymentMethodsFundingSources">
+          <Loader appState={appState} statusType="loading" statusAction="paymentMethodsFundingSources">
             <BS.Table className="data-table" striped bordered responsive>
               <thead>
                 <tr>
@@ -351,7 +225,7 @@ class MethodsForm extends Component {
                     {source.isDefault ? 'Yes' : (
                       <SubmitButton
                         submit={() => { this.props.setDefaultFundingSource(source.id); }}
-                        appState={paymentsState}
+                        appState={appState}
                         statusAction={`setFundingSourceDefault${source.id}`}
                         textLoading="Setting..."
                         bsStyle="default"
@@ -386,7 +260,14 @@ class MethodsForm extends Component {
                     helpBlock={dwollaHelpBlock}
                     noHeading
                   />
-                ) : this.renderCreateCustomerForm()}
+                ) : (
+                  <CreateCustomerForm
+                    onSubmit={this.handleSubmit.bind(this)}
+                    stateList={stateList}
+                    cityList={cityList}
+                    getCityList={this.props.getCityList}
+                  />
+                )}
               </div>
             ) : (
               <div className="add-funding-source-button">
@@ -405,7 +286,7 @@ class MethodsForm extends Component {
           <div>No card added.</div>
         )}
         {creditCards.length > 0 && (
-          <Loader appState={paymentsState} statusType="loading" statusAction="paymentMethodsCreditCards">
+          <Loader appState={appState} statusType="loading" statusAction="paymentMethodsCreditCards">
             <BS.Table className="data-table" striped bordered responsive>
               <thead>
                 <tr>
