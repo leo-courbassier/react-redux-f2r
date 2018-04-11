@@ -48,8 +48,8 @@ class ViewMessage extends Component {
 
   // https://medium.com/@kevinsimper/react-newline-to-break-nl2br-a1c240ba746
   nl2br(text) {
-    return text.split('\n').map(function(item) {
-      return <span>{item}<br /></span>;
+    return text.split('\n').map(function(item, index) {
+      return <span key={index}>{item}<br /></span>;
     });
   }
 

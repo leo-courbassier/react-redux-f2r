@@ -443,7 +443,7 @@ export function saveStepThree(
               //call send invite tenant
               api.inviteTenant(dispatch, getState, ten.email,response.id,callback, () => {
 
-              })
+              });
              }
 
         if (openNextStep) openNextStep();
@@ -601,9 +601,8 @@ export function saveStripe(payload, id, callback) {
 
 export function showDwollaForm(){
   return function (dispatch, getState) {
-
-  dispatch({type: types.ONBOARDING_STEPFOUR_SHOW_DWOLA_FORM});
-  }
+    dispatch({type: types.ONBOARDING_STEPFOUR_SHOW_DWOLA_FORM});
+  };
 }
 
 export function saveGuarantor(
@@ -635,7 +634,7 @@ export function saveGuarantor(
               "zipCode":"28276",
               "phone":"(704) 555-5555",
               "ssnLast4":"1234"
-              }
+            };
 
     //   api.postGuarantor(dispatch, getState, payload, () => {
     //   api.setStatus(dispatch, 'loading', statusAction, false);

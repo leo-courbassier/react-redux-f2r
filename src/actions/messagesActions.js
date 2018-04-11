@@ -28,7 +28,7 @@ export function loadMessages(folder, onlyMessages, callback) {
         data = {
           items: messages.slice(0, end),
           hasNext: messages.length <= MESSAGES_PAGE_SIZE
-        }
+        };
       }
 
       dispatch({type: types.MESSAGES_LOAD, data, folder, tenants});
@@ -73,7 +73,7 @@ export function nextPage(folder) {
         data = {
           items: newMessages.slice(0, end),
           hasNext: newMessages.length <= MESSAGES_PAGE_SIZE
-        }
+        };
       }
 
       api.setStatus(dispatch, 'loading', 'inboxNext', false);

@@ -97,12 +97,12 @@ class StepFourForm extends Component {
 
     return invalid;
   }
-  
+
   show_dwola_form(){
-        
+
       this.props.showDwollaForm();
   }
- 
+
   submit(openNextStep, e) {
     e.preventDefault();
 
@@ -249,9 +249,9 @@ class StepFourForm extends Component {
 
 
     return (
-    
+
       <Loader appState={this.props.appState} statusType="loading" statusAction="StepFourForm">
-    
+
       <div className="step step-four">
     {this.props.appState[3].showConnectAccountValue != true && (
       <div>
@@ -260,7 +260,7 @@ class StepFourForm extends Component {
           Setting up your rent collection method is free, quick, and easy. We don’t store any of your banking information and all transfers are handled through our secure processing technology. The headaches of paper checks are a thing of the past!.<br />
        </div>
           <div className="collectTitle">Collect Rent and Deposits using... Direct Deposit</div>
-           <div className="row">          
+           <div className="row">
             <div className="item">
               <div className="icon my_pig">
               <BS.Glyphicon glyph="piggy-bank" />
@@ -268,7 +268,7 @@ class StepFourForm extends Component {
             </div>
           </div>
 
-          <div className="row">          
+          <div className="row">
             <div className="item">
                 <ol>
                   <li>$1 fee for every transaction.</li>
@@ -300,7 +300,7 @@ class StepFourForm extends Component {
         <div className="section-box">
           We need the following information so Dwolla, our payment provider, can verify your identity and give you access to the payment system. We don’t store any of this info.<br />
         </div>
-        
+
         <form>
           <BS.FormGroup controlId="guarantor">
           <div className="row">
@@ -403,8 +403,7 @@ class StepFourForm extends Component {
         </form>
         <br/>
         <div className="row">
-         <div className="col-md-5">
-         </div>
+         <div className="col-md-5" />
          <div className="col-md-6">
           <SubmitButton
               appState={this.props.appState}
@@ -415,31 +414,31 @@ class StepFourForm extends Component {
               textModified="Save Changes"
               disabled={this.isMandatoryInvalid()}
               bsStyle="primary">
-                ￼Save 
+                ￼Save
             </SubmitButton>
           </div>
-        
+
         <div className="onboarding-submit-four">
-       
-          {this.props.showProceed && (          
+
+          {this.props.showProceed && (
 
             <SubmitButton
             appState={this.props.appState}
             statusAction="stepFourFormProceed"
             submit={_.partial(this.submit.bind(this), this.props.openNextStep)}
             disabled={this.isMandatoryInvalid()}
-            
+
             bsStyle="success"
             className="proceed-button">
               Skip
             </SubmitButton>
-        
+
           )}
 
               </div>
 
              </div>
-           
+
           </div>
          )}
       </div>

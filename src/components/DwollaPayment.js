@@ -229,7 +229,7 @@ class DwollaPayment extends Component {
 
   renderDwollaUI() {
     return (
-      <div ref="dwolla" id="dwolla-ui"></div>
+      <div ref="dwolla" id="dwolla-ui" />
     );
   }
 
