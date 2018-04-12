@@ -257,3 +257,56 @@ export function setDefaultFundingSource(sourceId, callback) {
    });
  };
 }
+
+export function loadPaymentsMake(callback) {
+  return (dispatch, getState) => {
+    let requestTenants = api.getLeaseTenants(dispatch, getState);
+    let requestFundingSources = api.verifyFundingSources(dispatch, getState);
+
+    api.setStatus(dispatch, 'loading', 'paymentMake', true);
+
+    // TODO: Check getState().paymentsAppState.fundingSources
+    //       to see if funding sources already exist.
+    //       Or load fundingSources as part of entire Payments page.
+    Promise.all([
+      requestTenants,
+      requestFundingSources
+    ])
+    .then(([
+      tenants,
+      fundingSources
+    ]) => {
+      if (!Array.isArray(fundingSources)) fundingSources = [];
+
+      dispatch({
+        type: types.PAYMENTS_MAKE_LOAD,
+        tenants, fundingSources
+      });
+
+      api.setStatus(dispatch, 'loading', 'paymentMake', false);
+
+      if (callback) callback();
+    });
+  };
+}
+
+export function sendPayment(payload, callback) {
+  return (dispatch, getState) => {
+    return api.postDwollaPayment(dispatch, getState, payload, (response) => {
+      let success = response.status == 'PENDING';
+      let message = null;
+      if (!success) {
+        let dwollaResponse = JSON.parse(response.message);
+        let errors = dwollaResponse._embedded && dwollaResponse._embedded.errors;
+        if (errors && errors.length > 0) {
+          message = errors[0].message;
+        }
+      }
+      dispatch({
+        type: types.PAYMENTS_MAKE_SEND_PAYMENT,
+        success,
+        message
+      });
+    });
+  };
+}

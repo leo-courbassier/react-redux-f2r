@@ -15,16 +15,21 @@ const initialState = {
     center: false
   },
 
+  stateList: [],
+  cityList: [],
+
   fundingSources: [],
   creditCards: [],
   customerCreated: false,
   removeFundingSourceSuccess: null,
   removeCreditCardSuccess: null,
 
-  stateList: [],
-  cityList: [],
+  tenants: [],
+  makePaymentSuccess: null,
+  makePaymentError: null,
 
-  loaded: false
+  loaded: false, // Payment Methods panel
+  makePaymentLoaded: false
 
 };
 
@@ -103,6 +108,23 @@ export default function paymentsAppState(state = initialState, action) {
       if (action.creditCards) {
         newState.creditCards = action.creditCards;
       }
+      return newState;
+    }
+
+    case types.PAYMENTS_MAKE_LOAD:
+    {
+      let newState = objectAssign({}, state);
+      newState.tenants = action.tenants;
+      newState.fundingSources = action.fundingSources;
+      newState.makePaymentLoaded = true;
+      return newState;
+    }
+
+    case types.PAYMENTS_MAKE_SEND_PAYMENT:
+    {
+      let newState = objectAssign({}, state);
+      newState.makePaymentSuccess = action.success;
+      newState.makePaymentError = action.message;
       return newState;
     }
 

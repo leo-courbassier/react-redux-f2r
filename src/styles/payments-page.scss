@@ -1,3 +1,5 @@
+@import './mixins/button-variant';
+
 .payments-page {
   .row {
     margin: 0 auto;
@@ -33,6 +35,20 @@
     form,
     &-button {
       margin-top: 20px;
+    }
+  }
+
+  .payments-center-options {
+    display: flex;
+
+    &-item {
+      padding: 30px 0;
+      width: 50%;
+      text-align: center;
+    }
+
+    .btn-success {
+      @include button-variant(#fff, $f2r-green, darken($f2r-green, 10%));
     }
   }
 }

@@ -1,11 +1,45 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import * as BS from 'react-bootstrap';
 
 import * as actions from '../../actions/paymentsActions';
-import TabEditablePanel from '../../components/Payments/TabEditablePanel';
+import Panel from '../../components/Payments/Panel';
+import MakePayment from '../../components/Payments/MakePayment';
 
 class PaymentsCenterContainer extends Component {
+
+  state = {
+    showOptions: true,
+    showMakePayment: false,
+    showRequestPayment: false
+  }
+
+  openScreen(type) {
+    if (type === 'makePayment') {
+      this.setState({
+        showOptions: false,
+        showMakePayment: true,
+        showRequestPayment: false
+      });
+    }
+
+    if (type === 'requestPayment') {
+      this.setState({
+        showOptions: false,
+        showRequestPayment: true,
+        showMakePayment: false
+      });
+    }
+  }
+
+  closeScreen() {
+    this.setState({
+      showOptions: true,
+      showMakePayment: false,
+      showRequestPayment: false
+    });
+  }
 
   render() {
     const {paymentsState, actions} = this.props;
@@ -14,16 +48,37 @@ class PaymentsCenterContainer extends Component {
     const store = this.context.store.getState();
 
     return (
-      <TabEditablePanel title="Payment Center"
-                        editMode={editMode}
-                        onClick={toggleEditMode}
-      >
-        {editMode ? (
-          <div>Edit mode</div>
-        ) : (
-          <div>View mode</div>
+      <Panel title="Payment Center">
+        {this.state.showOptions && (
+          <div className="payments-center-options">
+            <div className="payments-center-options-item">
+              <BS.Button
+                onClick={this.openScreen.bind(this, 'makePayment')}
+                bsStyle="primary">
+                Make a Payment
+              </BS.Button>
+            </div>
+            <div className="payments-center-options-item">
+              <BS.Button
+                onClick={this.openScreen.bind(this, 'requestPayment')}
+                bsStyle="success">
+                Request a Payment
+              </BS.Button>
+            </div>
+          </div>
         )}
-      </TabEditablePanel>
+        {this.state.showMakePayment && (
+          <MakePayment
+            appState={paymentsState}
+            load={actions.loadPaymentsMake}
+            sendPayment={actions.sendPayment}
+            close={this.closeScreen.bind(this)}
+          />
+        )}
+        {this.state.showRequestPayment && (
+          <div>Request payment screen...</div>
+        )}
+      </Panel>
     );
   }
 
