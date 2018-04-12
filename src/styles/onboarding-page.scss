@@ -3,6 +3,19 @@ $onboarding-panel-height: 40px;
 .Dashboard{
   padding-top:12px;
 }
+.onboarding-submit{
+  padding-right:200px;
+}
+.step .step-five{
+  margin-top:-4;
+}
+.img_congrats_content{
+  width:50%;
+  margin:0px auto;
+}
+.img_congrats{
+  width:100%;
+}
 .collectTitle{
     font-size: 12px;
     padding-left: 150px;
@@ -11,7 +24,13 @@ div.my_pig .glyphicon-piggy-bank{
 font-size: 45px;  
 padding-right:10px;
 }
+.successStepFour h4{
+  padding-left:200px;
+}
 
+.successStepFour p{
+  padding-left:10px;
+}
 
 .buttonStep2{
   padding-top: 25px;
@@ -51,6 +70,14 @@ padding-right:10px;
   position:relative;
   left:60px;
 }
+.welcome-dashboard-finish .panel-heading{
+  background-color: $f2r-blue!important;
+}
+.title-last-dashboard{
+  color:#ffffff;
+  font-size:20px;
+}
+
 .onboarding-page {
   .welcome-text{
     @include invisible-panel();

@@ -99,8 +99,15 @@ class StepFourForm extends Component {
   }
 
   show_dwola_form(){
-
       this.props.showDwollaForm();
+  }
+  showSucess(){
+    this.props.showSucessScreen();
+  }
+
+  showDashboardPage(){
+    this.props.showCongratsDashboard();
+    this.props.openNextStep();
   }
 
   submit(openNextStep, e) {
@@ -253,7 +260,7 @@ class StepFourForm extends Component {
       <Loader appState={this.props.appState} statusType="loading" statusAction="StepFourForm">
 
       <div className="step step-four">
-    {this.props.appState[3].showConnectAccountValue != true && (
+    {!this.props.appState[3].showConnectAccountValue && (
       <div>
       <div className="section">Set up your rent collection method</div>
         <div className="section-box">
@@ -442,7 +449,36 @@ class StepFourForm extends Component {
           </div>
          )}
       </div>
-      {this.props.appState[3].showDwolla && (<DwollaPayment />)}
+      {this.props.appState[3].showDwolla && this.props.appState[3].showDwollaSucess !=true && (<DwollaPayment type="setup" dwollaCallback={this.showSucess.bind(this)} />)}
+      {this.props.appState[3].showDwollaSucess ==true && (
+        <div className="successStepFour">
+          <h4>SUCCESS!!!</h4>
+          <p>Your account is now connected.  In order to start receiving deposits and rent payments, you’ll have to do the following in your Dashboard:</p>
+          <BS.HelpBlock>
+              <ol>
+                <li>Make sure your Tenant(s) have signed up for an F2R account.</li>
+                <li>Go to the My Payments section of your Dashboard.</li>
+                <li>For each Deposit or Recurring Rent Payment you need, make a request by clicking “Request a Payment” and providing the required info.</li>
+              </ol>
+              </BS.HelpBlock><br></br>
+              <p>Any other questions you have can be answered in our Help Center or by our Customer Service team.</p>
+              <div className="row">
+                <div className="col-md-5">
+                </div>
+                <div className="col-md-6">
+                <SubmitButton
+                appState={this.props.appState}
+                statusAction="stepFourFormProceed"
+                submit={_.partial(this.showDashboardPage.bind(this), this.props.openNextStep)}
+                disabled={this.isMandatoryInvalid()}
+                bsStyle="success"
+                className="proceed-button">
+                  Next
+                </SubmitButton>
+                </div>
+              </div>
+        </div>
+        )}
       </Loader>
     );
 

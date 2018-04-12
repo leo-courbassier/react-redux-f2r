@@ -466,6 +466,13 @@ export function updateStepFourForm(settings, name, value, statusAction) {
   };
 }
 
+export function showSucessScreen() {
+  return function (dispatch, getState) {
+    //api.setStatus(dispatch, 'modified', statusAction, true);
+    dispatch({type: types.ONBOARDING_STEPFOUR_SHOW_SUCESS});
+  };
+}
+
 //step load form four
 
 export function loadStepFour(){
@@ -599,11 +606,18 @@ export function saveStripe(payload, id, callback) {
   };
 }
 
+export function showCongratsDashboard(){
+  return function (dispatch, getState) {
+    dispatch({type: types.ONBOARDING_STEPFOUR_SHOW_CONGRATS});
+  };
+}
+
 export function showDwollaForm(){
   return function (dispatch, getState) {
     dispatch({type: types.ONBOARDING_STEPFOUR_SHOW_DWOLA_FORM});
   };
 }
+
 
 export function saveGuarantor(
   firstName,
@@ -717,12 +731,12 @@ export function uploadSupportingDoc(file, callback) {
 // step six
 
 
-export function updateStepSixForm(settings, name, value) {
-  return function (dispatch, getState) {
-    api.setStatus(dispatch, 'modified', 'stepSixForm', true);
-    dispatch({type: types.ONBOARDING_STEPSIX_FORM_UPDATE, settings, name, value});
-  };
-}
+// export function updateStepSixForm(settings, name, value) {
+//   return function (dispatch, getState) {
+//     api.setStatus(dispatch, 'modified', 'stepSixForm', true);
+//     dispatch({type: types.ONBOARDING_STEPSIX_FORM_UPDATE, settings, name, value});
+//   };
+// }
 
 export function loadStepSix(callback){
   return function (dispatch, getState) {
@@ -756,8 +770,8 @@ export function loadStepSix(callback){
 
       callback({mandate});
 
-      dispatch({ type: types.ONBOARDING_STEPSIX_FORM_LOAD,
-        stateList, mandate });
+      // dispatch({ type: types.ONBOARDING_STEPSIX_FORM_LOAD,
+      //   stateList, mandate });
 
       dispatch({ type: types.ONBOARDING_INVITE_STATUS,
         inviteStatus });
