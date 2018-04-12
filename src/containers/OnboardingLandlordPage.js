@@ -16,7 +16,7 @@ import StepTwoForm from '../components/onboardinglandlord/StepTwoForm';
 import StepThreeForm from '../components/onboardinglandlord/StepThreeForm';
 import StepFourForm from '../components/onboardinglandlord/StepFourForm';
 import StepFiveForm from '../components/onboardinglandlord/StepFiveForm';
-import StepSixForm from '../components/onboardinglandlord/StepSixForm';
+//import StepSixForm from '../components/onboardinglandlord/StepSixForm';
 
 import * as actions from '../actions/onboardingLandlordActions';
 
@@ -41,7 +41,7 @@ const headerData = [
   {title: 'Step 3 of 5', subtitle: 'Let us set up your leases', tooltip: 'Where you’ll set up the timing, frequency, and specifics of your rental payments and deposits so we can put your mind to rest.', icon: 'file' },
   {title: 'Step 4 of 5', subtitle: 'Time to start getting you paid!', tooltip: 'Details for the accounts and mechanics of how you’d like us to set up your recurring rental payments.', icon: 'piggy-bank' },
   {title: 'Welcome to your Dashboard', subtitle: '', tooltip: 'A comprehensive solution for administering your rental property needs.', icon: 'flag',class:'Dashboard'},
-  {title: 'You…are awesome!', subtitle: '', tooltip: '', icon: '',class:"title-last-dashboard"}
+  {title: 'You…are awesome!', subtitle: '',class:"title-last-dashboard"}
 ];
 
 const stepTips = [
@@ -53,7 +53,7 @@ const stepTips = [
   {heading: 'Selecting your criteria', text: 'A wide range of desired characteristics helps us expand your search and increase the number of potential properties. We are happy to be your matchmaker in the rental world!'},
 ];
 
-const STEP_IDS = ['stepOneForm', 'stepTwoForm', 'stepThreeForm', 'stepFourForm', 'stepFiveForm', 'stepSixForm'];
+const STEP_IDS = ['stepOneForm', 'stepTwoForm', 'stepThreeForm', 'stepFourForm', 'stepFiveForm'];
 
 
 class OnboardingLandlordPage extends Component {
@@ -288,18 +288,9 @@ class OnboardingLandlordPage extends Component {
         showProceed={this.state.hasNotCheckedOut && !this.state.canSkipStep6}
       />
     );
-    const stepSix =
-    (
-      <StepSixForm
-        load={this.props.actions.loadStepSix}
-        save={this.props.actions.saveStepSix}
-        update={this.props.actions.updateStepSixForm}
-        appState={this.props.appState}
-        updateOnboardingScore={this.props.actions.updateOnboardingScore}
-      />
-    );
+    
 
-    const steps = [stepOne,stepTwo,stepThree,stepFour,stepFive,stepSix];
+    const steps = [stepOne,stepTwo,stepThree,stepFour,stepFive];
     const panel = [];
     panel[this.state.activeKey] = steps[this.state.activeKey];
 
