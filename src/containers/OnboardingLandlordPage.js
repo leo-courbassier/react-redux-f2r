@@ -40,8 +40,8 @@ const headerData = [
   {title: 'Step 2 of 5', subtitle: 'Tell us about your properties', tooltip: 'Share the specifics of your various properties so we can use those details as a means to find your future tenants later on.', icon: 'home' },
   {title: 'Step 3 of 5', subtitle: 'Let us set up your leases', tooltip: 'Where you’ll set up the timing, frequency, and specifics of your rental payments and deposits so we can put your mind to rest.', icon: 'file' },
   {title: 'Step 4 of 5', subtitle: 'Time to start getting you paid!', tooltip: 'Details for the accounts and mechanics of how you’d like us to set up your recurring rental payments.', icon: 'piggy-bank' },
-  {title: 'Welcome to your Dashboard', subtitle: '', tooltip: 'A comprehensive solution for administering your rental property needs.', icon: 'flag',class:'Dashboard'}
-  //{title: 'Step 6 of 6', subtitle: 'Create your rent mandate', tooltip: '', icon: 'flag', extraTooltip: endTooltip }
+  {title: 'Welcome to your Dashboard', subtitle: '', tooltip: 'A comprehensive solution for administering your rental property needs.', icon: 'flag',class:'Dashboard'},
+  {title: 'You…are awesome!', subtitle: '', tooltip: '', icon: '',class:"title-last-dashboard"}
 ];
 
 const stepTips = [
@@ -50,7 +50,7 @@ const stepTips = [
   {heading: 'Landlords want to know', text: 'Nothing says more about your renting dependability than the endorsements of those whom you’ve rented from previously. Ask for their feedback and when their submissions are received, your score will take off. Don’t let them forget to complete their reviews though...your score depends on it!'},
   {heading: 'Show you’re ready to move', text: 'We recommend posting a deposit that equates to the size of the monthly rent you’re looking to pay. Why? Because it gives landlords a clear indication that you’re capable of acting fast. Without it they have no assurance that you have the means to rent from them.'},
   {heading: 'The importance of credit reports', text: 'Credit reports give landlords a view into your financial condition and your ability to afford their rent.  We incorporate aspects of your report into your score as well as our recommendations on the rent amount you should be targeting.'},
-  {heading: 'Selecting your criteria', text: 'A wide range of desired characteristics helps us expand your search and increase the number of potential properties. We are happy to be your matchmaker in the rental world!'}
+  {heading: 'Selecting your criteria', text: 'A wide range of desired characteristics helps us expand your search and increase the number of potential properties. We are happy to be your matchmaker in the rental world!'},
 ];
 
 const STEP_IDS = ['stepOneForm', 'stepTwoForm', 'stepThreeForm', 'stepFourForm', 'stepFiveForm', 'stepSixForm'];
@@ -268,10 +268,12 @@ class OnboardingLandlordPage extends Component {
         saveStripe={this.props.actions.saveStripe}
         update={this.props.actions.updateStepFourForm}
         clear={this.props.actions.clearStepFourForm}
+        showSucessScreen={this.props.actions.showSucessScreen}
         openNextStep={this.openNextStep.bind(this)}
         showDwollaForm={this.props.actions.showDwollaForm}
         updateOnboardingScore={this.props.actions.updateOnboardingScore}
         showProceed={this.state.hasNotCheckedOut}
+        showCongratsDashboard={this.props.actions.showCongratsDashboard}
       />
     );
     const stepFive =
@@ -331,13 +333,22 @@ class OnboardingLandlordPage extends Component {
         eventKey="3">
           {panel[3]}
         </BS.Panel>
+       {this.props.appState[3].show_congrats_page !=true && (
         <BS.Panel
         className="welcome-dashboard"
         onEntered={this.scrollToPanel.bind(this)}
         header={this.renderHeader(headerData[4])}
         eventKey="4">
           {panel[4]}
-        </BS.Panel>
+        </BS.Panel>)}
+        {this.props.appState[3].show_congrats_page ==true && (
+        <BS.Panel
+        className="welcome-dashboard-finish"
+        onEntered={this.scrollToPanel.bind(this)}
+        header={this.renderHeader(headerData[5])}
+        eventKey="4">
+          {panel[4]}
+        </BS.Panel>)}
       </BS.PanelGroup>
     );
 

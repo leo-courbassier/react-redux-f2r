@@ -53,95 +53,23 @@ class StepFiveForm extends Component {
     let uploadDocComplete = this.props.appState.status.uploading['uploadDoc'] == false;
 
 
-    const creditTooltip = (
-      <span>
-        <h7><b>Your Credit Report</b></h7>
-        <p>The Federal Government requires each of the three credit bureaus to provide you with an annual free credit report. Visit the Annual Credit Report and download any of the three reports for use in generating your F2R score.</p>
-      </span>
-    );
-
     return (
       <Loader appState={this.props.appState} statusType="loading" statusAction="stepFiveForm">
-        <div className="step step-five">
-
-          <div className="section">Upload your Credit Report<InfoTooltip placement="right" tooltip={creditTooltip} /></div>
-          <div className="section-box">
-            The Federal Government requires each of the three credit bureaus to provide you with an annual free credit report. Visit the Annual Credit Report and download any of the three reports for use in generating your F2R score.
-          </div>
+        <div className="step step-five">    
 
 
           <div className="row">
             <div className='item'>
-            <h4>
-              <BS.Button bsStyle="warning" href="http://www.annualcreditreport.com" target="_blank">
-                Get your FREE Credit Report HERE
-              </BS.Button>
-            </h4>
+            <div className="img_congrats_content"><img className="img_congrats" src="/onboarding/dog_congrats.png"/></div>
             </div>
           </div>
           <div className="row">
-            <div className='item'>
-              <FileReaderInput
-              name="creditUpload"
-              as="url"
-              id="credit-upload"
-              onChange={this.handleCreditFileChange.bind(this)}>
-                <SubmitButton
-                className="upload-button"
-                appState={this.props.appState}
-                statusAction="uploadCredit"
-                textLoading="Uploading">
-                  Upload your Credit Report
-                </SubmitButton>
-                <BS.HelpBlock className="text-center">
-                  <span className="text-success">
-                    <b>{uploadCreditComplete ? 'Upload complete.' : this.props.appState[STEP_ID].hasCreditReport && 'Your credit report is uploaded.'}</b>
-                  </span>
-                </BS.HelpBlock>
-              </FileReaderInput>
+            <div className='section'>
+            <p>Congratulations! You’ve completed setting up your account and are ready to start managing all your tenants and properties</p>
+            <p>Renting empowerment is just a click away!</p>
             </div>
           </div>
 
-
-          <div className="section">Upload Supporting Documents</div>
-          <div className="section-box">
-            It’s time to show off! By providing additional information, you become a more desirable tenant in a competitive rental market.
-          </div>
-          <div className="row">
-            <div className='item'>
-              <BS.HelpBlock>
-                <h5>Recommended Documents:</h5>
-                <ul>
-                  <li>Proof of additional income</li>
-                  <li>Landlord letters of reference</li>
-                </ul>
-              </BS.HelpBlock>
-            </div>
-          </div>
-
-
-          <div className="row">
-            <div className='item'>
-              <FileReaderInput
-              name="supportingUpload"
-              as="url"
-              id="supporting-upload"
-              onChange={this.handleSupportingFileChange.bind(this)}>
-                <SubmitButton
-                className="upload-button"
-                appState={this.props.appState}
-                statusAction="uploadDoc"
-                textLoading="Uploading">
-                  Upload a Supporting Document
-                </SubmitButton>
-                <BS.HelpBlock className="text-center">
-                  <span className="text-success">
-                    {uploadDocComplete ? 'Upload complete.' : ''}
-                  </span>
-                </BS.HelpBlock>
-              </FileReaderInput>
-            </div>
-          </div>
 
           <div className="onboarding-submit">
             {/* There is no data that is submitted by a save or proceed button
@@ -154,7 +82,7 @@ class StepFiveForm extends Component {
               textLoading="Saving"
               bsStyle="success"
               className="proceed-button">
-                Proceed
+                Access my Dshboard
               </SubmitButton>
             )}
           </div>

@@ -84,6 +84,8 @@ const initialState = {
       stateList: null,
       showConnectAccountValue:false,
       showDwolla:false,
+      showDwollaSucess:false,
+      show_congrats_page:false,
       saved: false
   },
   4: {
@@ -400,7 +402,7 @@ export default function onboardingAppState(state = initialState, action) {
           let newState = objectAssign({}, state);
           
           newState[3]['stateList'] = action.stateList;
-          newState[3]['showConnectAccountValue'] = action.showConnectAccountValue;
+          //newState[3]['showConnectAccountValue'] = action.showConnectAccountValue;
           
           return newState;
         }
@@ -447,6 +449,20 @@ export default function onboardingAppState(state = initialState, action) {
       {
         let newState = objectAssign({}, state);
         newState[3]['showConnectAccountValue'] = true;
+        return newState;
+      }
+      
+      case types.ONBOARDING_STEPFOUR_SHOW_SUCESS:
+      {
+        let newState = objectAssign({}, state);
+        newState[3]['showDwollaSucess'] = true;
+        return newState;
+      }
+
+       case types.ONBOARDING_STEPFOUR_SHOW_CONGRATS:
+      {
+        let newState = objectAssign({}, state);
+        newState[3]['show_congrats_page'] = true;
         return newState;
       }
       
