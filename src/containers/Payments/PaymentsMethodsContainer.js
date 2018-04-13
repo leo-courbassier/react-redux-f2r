@@ -6,7 +6,7 @@ import * as actions from '../../actions/paymentsActions';
 import Loader from '../../components/Loader';
 import TabEditablePanel from '../../components/Payments/TabEditablePanel';
 import Methods from '../../components/Payments/Methods';
-import MethodsForm from '../../containers/Payments/MethodsFormContainer';
+import MethodsForm from '../../components/Payments/MethodsForm';
 
 class PaymentMethodsContainer extends Component {
 

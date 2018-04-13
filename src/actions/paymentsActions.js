@@ -20,6 +20,7 @@ export function loadPaymentsMethods(callback) {
     let requestCCList = api.getCCList(dispatch, getState);
     let requestUserDetails = api.getUserDetails(dispatch, getState);
     let requestStateList = api.getStateList(dispatch, getState);
+    let requestAccts = api.getPaymentAccts(dispatch, getState);
 
     api.setStatus(dispatch, 'loading', 'paymentMethods', true);
 
@@ -27,13 +28,17 @@ export function loadPaymentsMethods(callback) {
       requestFundingSources,
       requestCCList,
       requestUserDetails,
-      requestStateList
+      requestStateList,
+      requestAccts
     ])
     .then(results => {
       let fundingSources = Array.isArray(results[0]) ? results[0] : [];
       let creditCards = Array.isArray(results[1]) ? results[1] : [];
       let userInfo = results[2];
       let stateList = results[3];
+      let accts = results[4];
+
+      let customerCreated = false;
 
       // check and set default funding source
       for (let i = 0; i < fundingSources.length; i++) {
@@ -42,9 +47,18 @@ export function loadPaymentsMethods(callback) {
         fundingSources[i].isDefault = (defaultSourceId == currentSourceId);
       }
 
+      // check for dwolla customer existence
+      if (fundingSources.length > 0) {
+        customerCreated = true;
+      } else {
+        for (let acct of accts) {
+          if (acct === 'DWOLLA') customerCreated = true;
+        }
+      }
+
       dispatch({
         type: types.PAYMENTS_METHODS_LOAD,
-        fundingSources, creditCards, stateList
+        fundingSources, creditCards, stateList, customerCreated
       });
 
       api.setStatus(dispatch, 'loading', 'paymentMethods', false);
@@ -242,4 +256,99 @@ export function setDefaultFundingSource(sourceId, callback) {
      if (callback) callback();
    });
  };
+}
+
+export function loadPaymentsMake(callback) {
+  return (dispatch, getState) => {
+    let requestTenants = api.getLeaseTenants(dispatch, getState);
+    let requestFundingSources = api.verifyFundingSources(dispatch, getState);
+
+    api.setStatus(dispatch, 'loading', 'paymentMake', true);
+
+    // TODO: Check getState().paymentsAppState.fundingSources
+    //       to see if funding sources already exist.
+    //       Or load fundingSources as part of entire Payments page.
+    Promise.all([
+      requestTenants,
+      requestFundingSources
+    ])
+    .then(([
+      tenants,
+      fundingSources
+    ]) => {
+      if (!Array.isArray(fundingSources)) fundingSources = [];
+
+      dispatch({
+        type: types.PAYMENTS_MAKE_LOAD,
+        tenants, fundingSources
+      });
+
+      api.setStatus(dispatch, 'loading', 'paymentMake', false);
+
+      if (callback) callback();
+    });
+  };
+}
+
+export function sendPayment(payload, callback) {
+  return (dispatch, getState) => {
+    return api.postDwollaPayment(dispatch, getState, payload, (response) => {
+      let success = response.status == 'PENDING';
+      let message = null;
+      if (!success) {
+        let dwollaResponse = JSON.parse(response.message);
+        let errors = dwollaResponse._embedded && dwollaResponse._embedded.errors;
+        if (errors && errors.length > 0) {
+          message = errors[0].message;
+        }
+      }
+      dispatch({
+        type: types.PAYMENTS_MAKE_SEND_PAYMENT,
+        success,
+        message
+      });
+    });
+  };
+}
+
+export function loadPaymentsRequest(callback) {
+  return (dispatch, getState) => {
+    let requestTenants = api.getLeaseTenants(dispatch, getState);
+    let requestLeases = api.getActiveLeases(dispatch, getState);
+
+    api.setStatus(dispatch, 'loading', 'paymentRequest', true);
+
+    Promise.all([
+      requestTenants,
+      requestLeases
+    ])
+    .then(([
+      tenants,
+      leases
+    ]) => {
+
+      dispatch({
+        type: types.PAYMENTS_REQUEST_LOAD,
+        tenants, leases
+      });
+
+      api.setStatus(dispatch, 'loading', 'paymentRequest', false);
+
+      if (callback) callback();
+    });
+  };
+}
+
+export function requestPayment(payload, callback) {
+  return (dispatch, getState) => {
+    return api.requestPaymentFromTenant(dispatch, getState, payload, (response) => {
+      let success = !(typeof response === 'object' && 'status' in response && response.status !== 200);
+      let message = success ? null : 'Error sending: ' + response.message;
+      dispatch({
+        type: types.PAYMENTS_MAKE_REQUEST_PAYMENT,
+        success,
+        message
+      });
+    });
+  };
 }

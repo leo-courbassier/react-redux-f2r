@@ -6,6 +6,7 @@ import renderInput from './renderInput';
 import renderRadio from './renderRadio';
 import renderSelect from './renderSelect';
 import renderTextarea from './renderTextarea';
+import renderCheckboxGroup from './renderCheckboxGroup';
 import SelectInput from './SelectInput';
 import TenantListInput from './TenantListInput';
 import { hasFieldError } from './helpers';
@@ -20,6 +21,7 @@ export {
   renderRadio,
   renderSelect,
   renderTextarea,
+  renderCheckboxGroup,
   SelectInput,
   TenantListInput
 };

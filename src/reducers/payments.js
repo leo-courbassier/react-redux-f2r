@@ -15,16 +15,26 @@ const initialState = {
     center: false
   },
 
+  stateList: [],
+  cityList: [],
+
   fundingSources: [],
   creditCards: [],
   customerCreated: false,
   removeFundingSourceSuccess: null,
   removeCreditCardSuccess: null,
 
-  stateList: [],
-  cityList: [],
+  tenants: [],
+  makePaymentSuccess: null,
+  makePaymentError: null,
 
-  loaded: false
+  leases: [],
+  requestPaymentSuccess: null,
+  requestPaymentError: null,
+
+  loaded: false, // Payment Methods panel
+  makePaymentLoaded: false,
+  requestPaymentLoaded: false
 
 };
 
@@ -53,9 +63,7 @@ export default function paymentsAppState(state = initialState, action) {
       newState.fundingSources = action.fundingSources;
       newState.creditCards = action.creditCards;
       newState.stateList = action.stateList;
-      if (action.fundingSources.length > 0) {
-        newState.customerCreated = true;
-      }
+      newState.customerCreated = action.customerCreated;
       newState.loaded = true;
       return newState;
     }
@@ -105,6 +113,40 @@ export default function paymentsAppState(state = initialState, action) {
       if (action.creditCards) {
         newState.creditCards = action.creditCards;
       }
+      return newState;
+    }
+
+    case types.PAYMENTS_MAKE_LOAD:
+    {
+      let newState = objectAssign({}, state);
+      newState.tenants = action.tenants;
+      newState.fundingSources = action.fundingSources;
+      newState.makePaymentLoaded = true;
+      return newState;
+    }
+
+    case types.PAYMENTS_MAKE_SEND_PAYMENT:
+    {
+      let newState = objectAssign({}, state);
+      newState.makePaymentSuccess = action.success;
+      newState.makePaymentError = action.message;
+      return newState;
+    }
+
+    case types.PAYMENTS_REQUEST_LOAD:
+    {
+      let newState = objectAssign({}, state);
+      newState.tenants = action.tenants;
+      newState.leases = action.leases;
+      newState.requestPaymentLoaded = true;
+      return newState;
+    }
+
+    case types.PAYMENTS_MAKE_REQUEST_PAYMENT:
+    {
+      let newState = objectAssign({}, state);
+      newState.requestPaymentSuccess = action.success;
+      newState.requestPaymentError = action.message;
       return newState;
     }
 

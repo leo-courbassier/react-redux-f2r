@@ -108,6 +108,7 @@ export const TT_FEEDBACK = BASE_URL + '/tt/feedback';
 
 export const PAYMENT_ACCTS = BASE_URL + '/payment/accts';
 export const PAYMENT_CC_LIST = BASE_URL + '/payment/cc-list';
+export const LL_REQUEST = BASE_URL + '/ll/request';
 
 // ecommerce
 
