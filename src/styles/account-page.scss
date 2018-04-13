@@ -177,4 +177,57 @@
       text-align: right;
     }
   }
+
+  .documents-panel {
+    .file-row {
+      &:not(:first-child) {
+        margin-top: 10px;
+      }
+      .file-item {
+        float: left;
+      }
+      .file-item-title {
+        width: 90%;
+      }
+      .file-item-icon {
+        width: 10%;
+        text-align: center;
+      }
+    }
+  }
+  .documents-panel,
+  .documentsform-panel {
+    .filename,
+    .fileicon {
+      line-height: 24px;
+    }
+    .fileicon a {
+      font-size: 21px;
+    }
+  }
+  .documentsform-panel {
+    .file-upload {
+      margin-top: 15px;
+    }
+    .file-row {
+      &:not(:first-child) {
+        margin-top: 10px;
+      }
+      .file-item {
+        float: left;
+      }
+      .file-item-title {
+        width: 70%;
+      }
+      .file-item-icon {
+        width: 10%;
+        text-align: center;
+      }
+      .file-item-delete {
+        width: 20%;
+        text-align: right;
+        line-height: 24px;
+      }
+    }
+  }
 }
