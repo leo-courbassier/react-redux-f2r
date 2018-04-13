@@ -1,0 +1,29 @@
+.tenant-subitem {
+  margin: 10px 0;
+}
+
+.tenant-summary-table {
+  text-align: center;
+  tr:hover {
+    background: none !important;
+  }
+  th {
+    text-align: center !important;
+  }
+  td {
+    vertical-align: middle !important;
+  }
+  .tenantsMadePayments,
+  .tenantsOwedPayments,
+  .tenantsScheduledPayments {
+    background-color: rgba(0, 0, 0, .05);
+  }
+  .tenantProfileImage {
+    display: inline-block;
+    max-width: 200px;
+  }
+}
+
+.tenantsSummary {
+  margin-top: 70px;
+}
