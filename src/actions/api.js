@@ -622,3 +622,11 @@ export function deleteCreditCard(dispatch, getState, id, callback){
 export function setDefaultAch(dispatch, getState, payload, callback){
   return postText(services.PAYMENT_ACH_DEFAULT_DEST, getAuthHeaders(dispatch, getState), payload, callback);
 }
+
+export function getActiveLeases(dispatch, getState) {
+  return get(services.LL_PROPERTY_LEASES + '?activeOnly=true', getAuthHeaders(dispatch, getState));
+}
+
+export function requestPaymentFromTenant(dispatch, getState, payload, callback) {
+  return post(services.LL_REQUEST, getAuthHeaders(dispatch, getState), payload, callback);
+}

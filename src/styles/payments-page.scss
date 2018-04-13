@@ -51,4 +51,8 @@
       @include button-variant(#fff, $f2r-green, darken($f2r-green, 10%));
     }
   }
+
+  .paymentrequest-panel form {
+    margin-top: 15px;
+  }
 }

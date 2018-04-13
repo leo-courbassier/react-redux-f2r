@@ -28,8 +28,13 @@ const initialState = {
   makePaymentSuccess: null,
   makePaymentError: null,
 
+  leases: [],
+  requestPaymentSuccess: null,
+  requestPaymentError: null,
+
   loaded: false, // Payment Methods panel
-  makePaymentLoaded: false
+  makePaymentLoaded: false,
+  requestPaymentLoaded: false
 
 };
 
@@ -125,6 +130,23 @@ export default function paymentsAppState(state = initialState, action) {
       let newState = objectAssign({}, state);
       newState.makePaymentSuccess = action.success;
       newState.makePaymentError = action.message;
+      return newState;
+    }
+
+    case types.PAYMENTS_REQUEST_LOAD:
+    {
+      let newState = objectAssign({}, state);
+      newState.tenants = action.tenants;
+      newState.leases = action.leases;
+      newState.requestPaymentLoaded = true;
+      return newState;
+    }
+
+    case types.PAYMENTS_MAKE_REQUEST_PAYMENT:
+    {
+      let newState = objectAssign({}, state);
+      newState.requestPaymentSuccess = action.success;
+      newState.requestPaymentError = action.message;
       return newState;
     }
 

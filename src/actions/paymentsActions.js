@@ -310,3 +310,45 @@ export function sendPayment(payload, callback) {
     });
   };
 }
+
+export function loadPaymentsRequest(callback) {
+  return (dispatch, getState) => {
+    let requestTenants = api.getLeaseTenants(dispatch, getState);
+    let requestLeases = api.getActiveLeases(dispatch, getState);
+
+    api.setStatus(dispatch, 'loading', 'paymentRequest', true);
+
+    Promise.all([
+      requestTenants,
+      requestLeases
+    ])
+    .then(([
+      tenants,
+      leases
+    ]) => {
+
+      dispatch({
+        type: types.PAYMENTS_REQUEST_LOAD,
+        tenants, leases
+      });
+
+      api.setStatus(dispatch, 'loading', 'paymentRequest', false);
+
+      if (callback) callback();
+    });
+  };
+}
+
+export function requestPayment(payload, callback) {
+  return (dispatch, getState) => {
+    return api.requestPaymentFromTenant(dispatch, getState, payload, (response) => {
+      let success = !(typeof response === 'object' && 'status' in response && response.status !== 200);
+      let message = success ? null : 'Error sending: ' + response.message;
+      dispatch({
+        type: types.PAYMENTS_MAKE_REQUEST_PAYMENT,
+        success,
+        message
+      });
+    });
+  };
+}

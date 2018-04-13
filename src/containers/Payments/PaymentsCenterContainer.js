@@ -6,6 +6,7 @@ import * as BS from 'react-bootstrap';
 import * as actions from '../../actions/paymentsActions';
 import Panel from '../../components/Payments/Panel';
 import MakePayment from '../../components/Payments/MakePayment';
+import RequestPayment from '../../components/Payments/RequestPayment';
 
 class PaymentsCenterContainer extends Component {
 
@@ -76,7 +77,12 @@ class PaymentsCenterContainer extends Component {
           />
         )}
         {this.state.showRequestPayment && (
-          <div>Request payment screen...</div>
+          <RequestPayment
+            appState={paymentsState}
+            load={actions.loadPaymentsRequest}
+            requestPayment={actions.requestPayment}
+            close={this.closeScreen.bind(this)}
+          />
         )}
       </Panel>
     );

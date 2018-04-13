@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as BS from 'react-bootstrap';
 import { reduxForm, Field } from 'redux-form';
+import { isCurrency } from 'validator';
 import { renderInput, renderSelect, SelectInput, DateInput } from '../ReduxFormFields';
 import ButtonSpinner from '../ButtonSpinner';
 
@@ -8,9 +9,15 @@ const validate = values => {
   const errors = {};
   const { recipient, amount, source, details } = values;
 
-  // TODO: Uncomment this line when empty array issue with tenants is fixed:
-  // if (!recipient) errors.recipient = 'Tenant is required.';
-  if (!amount) errors.amount = 'Amount is required';
+  // remove $ and ,
+  const newAmount = amount && amount.toString().trim().replace(/\$|,/g, '');
+
+  if (!recipient) errors.recipient = 'Tenant is required.';
+  if (!newAmount) {
+    errors.amount = 'Amount is required';
+  } else if (!isCurrency(newAmount, {allow_negatives: false, thousands_separator: '.', decimal_separator: '.'})) {
+    errors.amount = 'Amount must be in 0.00 format.';
+  }
   if (!source) errors.source = 'Bank account is required';
   if (!details) errors.details = 'Details are required.';
 

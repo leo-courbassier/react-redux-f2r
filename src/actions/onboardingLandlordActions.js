@@ -427,9 +427,6 @@ export function saveStepThree(
        "rentAmount":parseInt(monthlyRent),
        "isMonthToMonth":isMonthToMonth,
        "leaseStatus":"ACTIVE",
-       "renterIds":[
-           {"renterId":1}
-       ],
        "depositList":depositList
     };
 
