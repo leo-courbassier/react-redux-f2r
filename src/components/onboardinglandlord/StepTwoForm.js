@@ -738,8 +738,8 @@ class StepTwoForm extends Component {
     );
 
     const incomeSources = (
-      <div className="col-md-4">
-        <div>
+  
+        <div className="col-md-4">
             <BS.Button
             onClick={(e) => this.addIncomeSource(e)}
             className="add-button"
@@ -747,12 +747,10 @@ class StepTwoForm extends Component {
             bsStyle="success">
               Add Another Property
             </BS.Button>
+            
             {sources.length ? removeButton : null}
         </div>
-        <div className="row">
-        {sources}
-        </div>
-      </div>
+  
     );
 
     let warn = (<span className="warn">* <span className="text">{this.state.submitted}</span></span>);
@@ -824,6 +822,9 @@ class StepTwoForm extends Component {
                         </SubmitButton>
                   </div>
               </div>
+               <div className="col-md-12">
+                  {sources}
+             </div>
             </div>
          </form>
         </div>
