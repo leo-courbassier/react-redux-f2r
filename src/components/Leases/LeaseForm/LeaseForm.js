@@ -45,6 +45,32 @@ export default class LeaseForm extends Component {
     })), {});
   }
 
+  get depositListTable() {
+    const { appState: { leaseDetails } } = this.props;
+    const { depositList } = leaseDetails;
+    return (
+      <div>
+        <h6 className="depositListTitle">On File</h6>
+        {(depositList && depositList.length > 0)
+          ? <BS.Table responsive className="depositListTable">
+            <tbody>
+              {_.map(depositList, (item, index) => (
+                <tr key={index}>
+                  <td className="tdDepositAmount">
+                    {item.depositType}: {item.depositAmount}
+                  </td>
+                  <td className="tdDepositPet">Pet: N/A</td>
+                  <td className="tdDepositOther">Other: {item.depositStatus}</td>
+                </tr>
+              ))}
+            </tbody>
+          </BS.Table>
+          : <p className="text-center"> Not Available </p>
+        }
+      </div>
+    );
+  }
+
   renderFooter() {
     const { appState: { status }, errors, submitSucceeded } = this.props;
     const submitting = status.saving['propertyProfile'];
@@ -231,9 +257,11 @@ export default class LeaseForm extends Component {
       </BS.Collapse>
     );
 
+
     const { collectionType } = this.state;
     const depositListSection = (
       <div>
+        {this.depositListTable}
         <BS.Row className="collectionTypeSection text-center">
           <BS.Col md={4} mdOffset={1} sm={5}>
             <BS.Radio inline checked={collectionType === 'collect-deposits'}
