@@ -688,12 +688,15 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
 
 getRecipients() {
 
-      if(!this.props.appState[2].propertyList)return;
+      if(!this.props.appState[2].propertyList){
+         return [];
+      }
 
       const landlords = this.props.appState[2].propertyList;//this.props.appState[2].propertyList;
+
       let recipients = {};
       for (let landlord of landlords) {
-        recipients[landlord.id] = `${landlord.headline}`;
+           recipients[landlord.id] = `${landlord.headline}`;
       }
       return recipients;
     }

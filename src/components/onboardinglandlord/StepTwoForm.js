@@ -177,7 +177,7 @@ class StepTwoForm extends Component {
     }
 
 
-   store.amenityList = amenityArray;
+    store.amenityList = amenityArray;
     // if proceed button is clicked, only save if form has been modified
     // otherwise, save button will always trigger a save
     let isModified = this.props.appState.status['modified']['stepTwoForm'];
