@@ -39,8 +39,11 @@ export const loadLeaseDetails = (leaseId) => {
 };
 
 const inviteTenants = (dispatch, getState, { tenants }, leaseId, callback) => {
-  const requestInviteTenants = _.map(tenants, (tenant) => {
-    return api.inviteTenant(dispatch, getState, tenant.email, leaseId);
+  const requestInviteTenants = [];
+  _.forEach(tenants, (tenant) => {
+    if (tenant.email) {
+      requestInviteTenants.push(api.inviteTenant(dispatch, getState, tenant.email, leaseId));
+    }
   });
 
   Promise.all(requestInviteTenants)

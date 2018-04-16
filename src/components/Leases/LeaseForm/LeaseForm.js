@@ -4,11 +4,10 @@ import _ from 'lodash';
 import FileReaderInput from 'react-file-reader-input';
 import { Field } from 'redux-form';
 import { Link } from 'react-router';
-import ButtonSpinner from '../../ButtonSpinner';
-import SubmitButton from '../../SubmitButton';
 import { getLastPropertyImageURL } from '../../../utils/property';
 import { DepositListInput, renderDatePicker, renderInput, renderRadio, renderSelect,
-  SelectInput, TenantListInput } from '../../ReduxFormFields';
+  SelectInput, SubmitFooter, TenantListInput } from '../../ReduxFormFields';
+import { reduxFormProps } from '../../../utils/form';
 
 export default class LeaseForm extends Component {
   static propTypes = {
@@ -45,33 +44,28 @@ export default class LeaseForm extends Component {
     })), {});
   }
 
-  renderFooter() {
-    const { appState: { status }, errors, submitSucceeded } = this.props;
-    const submitting = status.saving['propertyProfile'];
+  get depositListTable() {
+    const { appState: { leaseDetails } } = this.props;
+    const { depositList } = leaseDetails;
     return (
-      <div className="property-submit">
-        <div className="property-submit-message">
-          {errors && (
-            <BS.HelpBlock>
-              <span className="text-danger">{errors}</span>
-            </BS.HelpBlock>
-          )}
-          {submitSucceeded && !submitting && (
-            <BS.HelpBlock>
-              <span className="text-success">Changes saved successfully.</span>
-            </BS.HelpBlock>
-          )}
-        </div>
-        <div className="property-submit-button">
-          <BS.Button
-            className="submit-button"
-            bsStyle="success"
-            disabled={submitting}
-            type="submit">
-            {submitting && <div className="spinner"><ButtonSpinner /></div>}
-            <div className="text">Save</div>
-          </BS.Button>
-        </div>
+      <div>
+        <h6 className="depositListTitle">On File</h6>
+        {(depositList && depositList.length > 0)
+          ? <BS.Table responsive className="depositListTable">
+            <tbody>
+              {_.map(depositList, (item, index) => (
+                <tr key={index}>
+                  <td className="tdDepositAmount">
+                    {item.depositType}: {item.depositAmount}
+                  </td>
+                  <td className="tdDepositPet">Pet: N/A</td>
+                  <td className="tdDepositOther">Other: {item.depositStatus}</td>
+                </tr>
+              ))}
+            </tbody>
+          </BS.Table>
+          : <p className="text-center"> Not Available </p>
+        }
       </div>
     );
   }
@@ -231,9 +225,11 @@ export default class LeaseForm extends Component {
       </BS.Collapse>
     );
 
+
     const { collectionType } = this.state;
     const depositListSection = (
       <div>
+        {this.depositListTable}
         <BS.Row className="collectionTypeSection text-center">
           <BS.Col md={4} mdOffset={1} sm={5}>
             <BS.Radio inline checked={collectionType === 'collect-deposits'}
@@ -287,12 +283,13 @@ export default class LeaseForm extends Component {
 
   render() {
     const { handleSubmit, propertyId } = this.props;
+    const submitting = _.get(this.props, ['appState', 'status', 'saving', 'leaseDetails']);
     return (
       <div className="lease-form-panel">
         <BS.Form onSubmit={handleSubmit(this.handleFormSubmit)}>
           {propertyId && this.renderUploader()}
           {this.renderFormFields()}
-          {this.renderFooter()}
+          <SubmitFooter submitting={submitting} {...reduxFormProps(this.props)} />
         </BS.Form>
       </div>
     );

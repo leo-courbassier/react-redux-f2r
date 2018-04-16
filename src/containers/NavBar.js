@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Visibility from 'visibilityjs';
-
+import _ from 'lodash';
 import NavBar from '../components/NavBar';
 
 import * as loginActions from '../actions/loginActions';
@@ -63,10 +63,11 @@ class NavBarContainer extends Component {
   }
 
   render() {
-    return (
+    const alerts = _.get(this.props, 'appState.alerts', false);
+    return alerts && (
       <NavBar
         logout={loginActions.logout()}
-        alerts={this.props.appState.alerts}
+        alerts={alerts}
         alertsCount={this.props.appState.alertsCount}
         alertsPage={this.props.appState.alertsPage}
         updateAlerts={this.props.actions.updateAlerts}

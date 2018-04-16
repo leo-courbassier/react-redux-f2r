@@ -460,11 +460,10 @@ class StepFourForm extends Component {
                 <li>Go to the My Payments section of your Dashboard.</li>
                 <li>For each Deposit or Recurring Rent Payment you need, make a request by clicking “Request a Payment” and providing the required info.</li>
               </ol>
-              </BS.HelpBlock><br></br>
+              </BS.HelpBlock><br />
               <p>Any other questions you have can be answered in our Help Center or by our Customer Service team.</p>
               <div className="row">
-                <div className="col-md-5">
-                </div>
+                <div className="col-md-5" />
                 <div className="col-md-6">
                 <SubmitButton
                 appState={this.props.appState}

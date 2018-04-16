@@ -4,10 +4,10 @@ import _ from 'lodash';
 import FileReaderInput from 'react-file-reader-input';
 import { Field } from 'redux-form';
 import { Link } from 'react-router';
-import ButtonSpinner from '../../ButtonSpinner';
-import SubmitButton from '../../SubmitButton';
 import { getLastPropertyImageURL } from '../../../utils/property';
-import { AmenityListInput, renderInput, renderSelect, renderTextarea, SelectInput, DateInput } from '../../ReduxFormFields';
+import { AmenityListInput, renderInput, renderSelect, renderTextarea, SelectInput,
+  SubmitFooter, DateInput } from '../../ReduxFormFields';
+import { reduxFormProps } from '../../../utils/form';
 
 export default class PropertyForm extends Component {
   static propTypes = {
@@ -47,42 +47,11 @@ export default class PropertyForm extends Component {
     }));
   }
 
-  renderFooter() {
-    const { appState: { status }, errors, submitSucceeded } = this.props;
-    const submitting = status.saving['propertyProfile'];
-    return (
-      <div className="property-submit">
-        <div className="property-submit-message">
-          {errors && (
-            <BS.HelpBlock>
-              <span className="text-danger">{errors}</span>
-            </BS.HelpBlock>
-          )}
-          {submitSucceeded && !submitting && (
-            <BS.HelpBlock>
-              <span className="text-success">Changes saved successfully.</span>
-            </BS.HelpBlock>
-          )}
-        </div>
-        <div className="property-submit-button">
-          <BS.Button
-            className="submit-button"
-            bsStyle="success"
-            disabled={submitting}
-            type="submit">
-            {submitting && <div className="spinner"><ButtonSpinner /></div>}
-            <div className="text">Save</div>
-          </BS.Button>
-        </div>
-      </div>
-    );
-  }
-
   renderUploader() {
     const { appState, params } = this.props;
     const { status, propertyProfile: property } = appState;
     const imageURL = getLastPropertyImageURL(property);
-    
+
     const uploadComplete = status.uploading['propertyPicUpload'] == false;
     return (
       <div className="property-image">
@@ -298,12 +267,13 @@ export default class PropertyForm extends Component {
 
   render() {
     const { handleSubmit, propertyId } = this.props;
+    const submitting = _.get(this.props, ['appState', 'status', 'saving', 'propertyProfile']);
     return (
       <div className="propertyform-panel">
         <BS.Form onSubmit={handleSubmit(this.handleFormSubmit)}>
           {propertyId && this.renderUploader()}
           {this.renderFormFields()}
-          {this.renderFooter()}
+          <SubmitFooter submitting={submitting} {...reduxFormProps(this.props)} />
         </BS.Form>
       </div>
     );

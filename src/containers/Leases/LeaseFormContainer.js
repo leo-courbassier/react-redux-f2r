@@ -27,8 +27,9 @@ const selector = formValueSelector('leaseForm');
 export default connect(
   (state, props) => ({
     initialValues: props.leaseId
-      ? _.merge(state.leasesAppState.leaseDetails, {
+      ? _.assign({}, props.appState.leaseDetails, {
         tenants: [{}], // used for tenants assignment
+        depositList: []
       })
       : _.merge(INITIAL_VALUES, {
         landlordId: landlordIdSelector(state)
