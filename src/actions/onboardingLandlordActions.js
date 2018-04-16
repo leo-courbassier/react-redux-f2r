@@ -354,7 +354,7 @@ export function loadStepThree(){
     let requestAddresses = api.getAddresses(dispatch, getState);
     let requestStates = api.getStateList(dispatch, getState);
     let getPropertyList = api.getPropertyList(dispatch, getState);
-
+    
     api.setStatus(dispatch, 'loading', 'stepThreeForm', true);
     Promise.all([
       requestUser,

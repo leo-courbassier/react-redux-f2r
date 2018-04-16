@@ -264,7 +264,7 @@ export default function onboardingAppState(state = initialState, action) {
         newState[1]['amenityList'] = action.amenityList;
         newState[1]['stateList'] = action.stateList;
         newState[1]['propertyTypeList'] = action.propertyTypeList;
-        newState[1].status['modified'] = false;
+        //newState[1].status['modified'] = false;
         return newState;
       }
 
