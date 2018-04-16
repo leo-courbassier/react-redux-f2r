@@ -2,7 +2,9 @@ import React from 'react';
 import { FormGroup, ControlLabel, HelpBlock, Label } from 'react-bootstrap';
 import { hasFieldError } from './helpers';
 
+/*eslint-disable */
 const Error = ({ meta : {touched, error} }) =>  (touched && error ? <HelpBlock>{error}</HelpBlock> : null);
+/*eslint-disable */
 
 const CheckboxGroup = (field) => {
   const { label, name, options,  input, meta} = field;
