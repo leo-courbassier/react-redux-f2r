@@ -29,3 +29,16 @@ textarea {
     padding-right: 5px;
   }
 }
+
+.reduxFormSubmit {
+  margin-top: 15px;
+  display: flex;
+  &Message {
+    width: 75%;
+    text-align: left;
+  }
+  &Button {
+    width: 25%;
+    text-align: right;
+  }
+}

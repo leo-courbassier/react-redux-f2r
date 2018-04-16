@@ -8,6 +8,7 @@ import renderSelect from './renderSelect';
 import renderTextarea from './renderTextarea';
 import renderCheckboxGroup from './renderCheckboxGroup';
 import SelectInput from './SelectInput';
+import SubmitFooter from './SubmitFooter';
 import TenantListInput from './TenantListInput';
 import { hasFieldError } from './helpers';
 
@@ -23,5 +24,6 @@ export {
   renderTextarea,
   renderCheckboxGroup,
   SelectInput,
+  SubmitFooter,
   TenantListInput
 };
