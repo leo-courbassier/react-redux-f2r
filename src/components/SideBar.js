@@ -43,6 +43,7 @@ class SideBar extends Component {
             <ul className={'sub-menu ' + (paymentSubMenu ? 'show' : '')}>
               <li><Link to="/dashboard/payments/methods">Payment Methods</Link></li>
               <li><Link to="/dashboard/payments/center">Payment Center</Link></li>
+              <li><Link to="/dashboard/payments/recurring">Recurring Payments</Link></li>
             </ul>
           </li>
           <li>

@@ -46,6 +46,7 @@ import PaymentsPage from './containers/PaymentsPage';
 import PaymentsSummaryPage from './containers/PaymentsSummaryPage';
 import PaymentsMethodsPage from './containers/PaymentsMethodsPage';
 import PaymentsCenterPage from './containers/PaymentsCenterPage';
+import PaymentsRecurringPage from './containers/PaymentsRecurringPage';
 
 let NotImplemented = () => <div>Not Implemented</div>;
 
@@ -110,6 +111,7 @@ render(
             <IndexRoute component={PaymentsSummaryPage} />
             <Route path="methods" component={PaymentsMethodsPage} />
             <Route path="center" component={PaymentsCenterPage} />
+            <Route path="recurring" component={PaymentsRecurringPage} />
           </Route>
         </Route>
         <Route onEnter={requireAuth} path="messages(/:folder)(/:id)" component={MessagesPage}/>
