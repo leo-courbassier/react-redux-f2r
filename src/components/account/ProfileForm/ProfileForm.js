@@ -36,7 +36,7 @@ class ProfileForm extends Component {
 
   handleFormSubmit = (values) => {
     const { saveUserDetails } = this.props;
-    saveUserDetails(values);
+    saveUserDetails(_.omit(values, ['email']));
   }
 
   renderFooter() {
@@ -145,6 +145,7 @@ class ProfileForm extends Component {
       <Field
         name="email"
         type="email"
+        readOnly
         placeholder="example@email.com"
         component={renderInput} />
     );

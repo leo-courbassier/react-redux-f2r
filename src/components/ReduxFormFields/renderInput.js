@@ -10,6 +10,7 @@ const renderInput = field =>
       <BS.Col sm={6}>
         <BS.FormControl
           type={field.type}
+          readOnly={field.readOnly}
           placeholder={field.placeholder ? field.placeholder : ''}
           {...field.input} />
       </BS.Col>
@@ -24,6 +25,7 @@ const renderInput = field =>
     {field.label && <BS.ControlLabel>{field.label}</BS.ControlLabel>}
     <BS.FormControl
       type={field.type}
+      readOnly={field.readOnly}
       placeholder={field.placeholder ? field.placeholder : ''}
       {...field.input} />
     {hasFieldError(field) &&
