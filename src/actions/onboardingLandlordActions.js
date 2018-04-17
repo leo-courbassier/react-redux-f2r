@@ -27,7 +27,7 @@ export function updateOnboardingScore() {
   return function (dispatch, getState) {
     api.getPseudoScore(dispatch, getState, (response) => {
       let score = response.f2rScore;
-      dispatch({type: types.ONBOARDING_UPDATE_SCORE, score});
+      //dispatch({type: types.ONBOARDING_UPDATE_SCORE, score});
     });
   };
 }
@@ -47,42 +47,23 @@ export function loadStepOne(){
   return function (dispatch, getState) {
 
     let requestUser = api.getUserDetails(dispatch, getState);
-    let requestPets = api.getPets(dispatch, getState);
-    let requestLinkedAccounts = api.getLinkedAccounts(dispatch, getState);
-    let requestFacebookToken = api.getFacebookToken(dispatch, getState);
-    let requestLinkedinToken = api.getLinkedinToken(dispatch, getState);
+ 
 
 
     api.setStatus(dispatch, 'loading', 'stepOneForm', true);
 
     Promise.all([
-      requestUser,
-      requestPets,
-      requestLinkedAccounts,
-      requestFacebookToken,
-      requestLinkedinToken
+      requestUser
+     
       ])
     .then((results) => {
 
       let user = results[0].userDetails;
-      let pets = results[1];
-      let linkedAccounts = results[2];
 
-      let dogs = _.where(pets, {type: 'DOG'}).length.toString();
-      let cats = _.where(pets, {type: 'CAT'}).length.toString();
-      let other = _.where(pets, {type: 'OTHER'}).length.toString();
-
-      let facebookToken = results[3];
-      let linkedinToken = results[4];
 
       dispatch({ type: types.ONBOARDING_STEPONE_FORM_LOAD,
-        user,
-        dogs,
-        cats,
-        other,
-        linkedAccounts,
-        facebookToken,
-        linkedinToken });
+        user       
+      });
 
       api.setStatus(dispatch, 'loading', 'stepOneForm', false);
     });
@@ -97,18 +78,7 @@ export function saveStepOne(description,  dogs, cats, other, openNextStep, callb
 
     let userId = getState().loginAppState.userInfo.id;
 
-    let pets = [];
-    for (let i=0;i < dogs;i++){
-      pets.push({"type": "DOG", "userId": userId});
-    }
-    for (let i=0;i < cats;i++){
-      pets.push({"type": "CAT", "userId": userId});
-    }
-    for (let i=0;i < other;i++){
-      pets.push({"type": "OTHER", "userId": userId});
-    }
-
-
+    
     let statusAction = openNextStep ? 'stepOneFormProceed' : 'stepOneForm';
     api.setStatus(dispatch, 'saving', statusAction, true);
 
@@ -119,7 +89,7 @@ export function saveStepOne(description,  dogs, cats, other, openNextStep, callb
         }
       };
 
-    let payload = {"user": payloadUser, "petList": pets};
+    let payload = {"user": payloadUser, "petList": []};
 
 
     api.postStepOne(dispatch, getState, payload, () => {
