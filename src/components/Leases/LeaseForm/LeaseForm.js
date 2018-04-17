@@ -45,8 +45,7 @@ export default class LeaseForm extends Component {
   }
 
   get depositListTable() {
-    const { appState: { leaseDetails } } = this.props;
-    const { depositList } = leaseDetails;
+    const depositList = _.get(this.props, ['appState', 'leaseDetails', 'depositList']);
     return (
       <div>
         <h6 className="depositListTitle">On File</h6>

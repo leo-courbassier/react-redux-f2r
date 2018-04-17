@@ -55,9 +55,13 @@ export default class LeasesSummary extends Component {
           <td>{lease.refundableAmount}</td>
           <td>{lease.nonRefundableAmount}</td>
           <td>
-            <Button block bsSize="small" bsStyle="success"
-              onClick={function () { goTo(`/dashboard/leases/${lease.leaseId}`); }}>Edit Lease</Button>
-            <Button block bsSize="small" bsStyle="danger">End Lease</Button>
+            {lease.leaseId &&
+              <span>
+                <Button block bsSize="small" bsStyle="success"
+                  onClick={function () { goTo(`/dashboard/leases/${lease.leaseId}`); }}>Edit Lease</Button>
+                <Button block bsSize="small" bsStyle="danger">End Lease</Button>
+              </span>
+            }
           </td>
         </tr>
       ))
