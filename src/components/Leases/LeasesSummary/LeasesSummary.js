@@ -43,7 +43,7 @@ export default class LeasesSummary extends Component {
         <tr key={index}>
           <td>
             <Link to={`/dashboard/properties/${lease.propertyId}`}>
-              {lease.propertyName}
+              {lease.propertyName || 'N/A'}
             </Link>
           </td>
           <td>{this.getType(lease)}</td>

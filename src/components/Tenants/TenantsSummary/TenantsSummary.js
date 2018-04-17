@@ -75,7 +75,7 @@ export default class TenantsSummary extends Component {
                 {subIndex === 0 &&
                   <td className="tenantPropertyName" rowSpan={tenant.tenantList.length}>
                     <Link to={`/dashboard/properties/${tenant.propertyId}`}>
-                      {tenant.propertyName}
+                      {tenant.propertyName || 'N/A'}
                     </Link>
                   </td>
                 }
@@ -111,7 +111,7 @@ export default class TenantsSummary extends Component {
               <tr key={index}>
                 <td className="tenantPropertyName">
                   <Link to={`/dashboard/properties/${tenant.propertyId}`}>
-                    {tenant.propertyName}
+                    {tenant.propertyName || 'N/A'}
                   </Link>
                 </td>
                 <td className="tenantsName">N/A</td>

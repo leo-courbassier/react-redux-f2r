@@ -45,11 +45,14 @@ const inviteTenants = (dispatch, getState, { tenants }, leaseId, callback) => {
       requestInviteTenants.push(api.inviteTenant(dispatch, getState, tenant.email, leaseId));
     }
   });
-
-  Promise.all(requestInviteTenants)
-  .then((results) => {
+  if (requestInviteTenants.length === 0) {
     if (callback) callback();
-  });
+    return;
+  }
+  Promise.all(requestInviteTenants)
+    .then((results) => {
+      if (callback) callback();
+    });
 };
 
 export const addLeaseDetails = (payload, callback) => {

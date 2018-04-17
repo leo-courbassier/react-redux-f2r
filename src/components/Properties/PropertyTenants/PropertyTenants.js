@@ -35,7 +35,7 @@ export default class PropertyTenants extends Component {
   renderEmptyContent() {
     return (
       <tr>
-        <td colSpan={5}>No tenants information found.</td>
+        <td colSpan={6}>No tenants information found.</td>
       </tr>
     );
   }

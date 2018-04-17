@@ -43,7 +43,7 @@ export default class PropertyLeases extends Component {
           <td>{lease.rentDueDate || 'N/A'}</td>
           <td>
             {this.renderDividedColumn(
-              this.getSumDeposits(lease, 'REFUNDABLE'), 
+              this.getSumDeposits(lease, 'REFUNDABLE'),
               this.getSumDeposits(lease, 'NONREFUNDABLE')
             )}
           </td>
@@ -55,7 +55,7 @@ export default class PropertyLeases extends Component {
   renderEmptyContent() {
     return (
       <tr>
-        <td colSpan={5}>No lease information found.</td>
+        <td colSpan={6}>No lease information found.</td>
       </tr>
     );
   }

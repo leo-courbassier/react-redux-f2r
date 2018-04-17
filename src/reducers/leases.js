@@ -20,9 +20,13 @@ export default function leasesAppState(state = initialState, action) {
 
     case types.STATUS_UPDATE:
     {
-      let newState = _.assign({}, state);
-      newState['status'][action.statusType][action.statusAction] = action.statusState;
-      return newState;
+      return _.merge({}, state, {
+        status: {
+          [action.statusType]: _.assign({}, state[action.statusType], {
+            [action.statusAction]: action.statusState
+          })
+        }
+      });
     }
 
     case types.LEASES_LIST_LOAD:

@@ -8,6 +8,7 @@ import { getLastPropertyImageURL } from '../../../utils/property';
 import { AmenityListInput, renderInput, renderSelect, renderTextarea, SelectInput,
   SubmitFooter, DateInput } from '../../ReduxFormFields';
 import { reduxFormProps } from '../../../utils/form';
+import SubmitButton from '../../SubmitButton';
 
 export default class PropertyForm extends Component {
   static propTypes = {
