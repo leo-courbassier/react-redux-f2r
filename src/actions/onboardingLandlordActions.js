@@ -161,18 +161,16 @@ export function updateStepTwoForm(settings, name, value) {
 
 export function loadStepTwo(){
   return function (dispatch, getState) {
-    let requestIncomeSources = api.getIncomeSources(dispatch, getState);
+    //let requestIncomeSources = api.getIncomeSources(dispatch, getState);
     let authHeader = api.getAuthHeaders(dispatch, getState);
     let requestUser = api.getUserDetails(dispatch, getState);
     let requestStates = api.getStateList(dispatch, getState);
-    let requestEmployerVerification = api.getEmployerVerification(dispatch, getState);
     let getPropertyList = api.getPropertyList(dispatch, getState);
     api.setStatus(dispatch, 'loading', 'stepTwoForm', true);
     Promise.all([
       requestUser,
-      requestIncomeSources,
+     // requestIncomeSources,
       requestStates,
-      requestEmployerVerification,
       getPropertyList
       ]).then((results) => {
       let user = results[0].userDetails;
@@ -191,10 +189,9 @@ export function loadStepTwo(){
       let headline = '';
       let sqft = '';
       let amenityList:[];
-      let stateList = results[2];
-      let incomeSources = [];//results[4];
-      //let propertyTypeList = {"APT":"Apartment"}//["APT","SFM","CONDO","DUPLEX","MOBILE_HOME","TOWNHOUSE"]
-      let employerVerification = results[3];
+      let stateList = results[1];
+      let incomeSources = [];
+      
 
       dispatch({ type: types.ONBOARDING_STEPTWO_FORM_LOAD,
         landlordId,
