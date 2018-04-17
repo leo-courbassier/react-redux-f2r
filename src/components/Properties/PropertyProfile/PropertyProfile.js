@@ -28,16 +28,33 @@ export default class PropertyProfile extends Component {
     geoActions.loadStateList();
     geoActions.loadCityList(property.state);
   }
+
+  get editMode() {
+    const { appState } = this.props;
+    return appState.editMode.propertyProfile;
+  }
+
+  updateEditMode = () => {
+    const { actions } = this.props;
+    actions.editModeUpdate('propertyProfile', !this.editMode);
+  }
+
+  handleSavePropertyDetails = (payload) => {
+    const { actions } = this.props;
+    actions.savePropertyDetails(payload, () => {
+      actions.editModeUpdate('propertyProfile', false);
+    });
+  }
+
   render() {
     const { appState, geoState, actions, geoActions, propertyId, goTo } = this.props;
-    const editMode = appState.editMode.propertyProfile;
-    const updateEditMode = () => actions.editModeUpdate('propertyProfile', !editMode);
+    const editMode = this.editMode;
 
     const propertyTenants = _.reduce(
       appState.propertyLeases,
       (tenants, item) => (
         _.concat(
-          tenants, 
+          tenants,
           _.map(item.renterList, (renter) => (
             _.set(renter, 'leaseId', item.id)
           ))
@@ -50,13 +67,13 @@ export default class PropertyProfile extends Component {
       <div>
         <TabEditablePanel title="Property Infomation"
           editMode={editMode}
-          onClick={updateEditMode}
+          onClick={this.updateEditMode}
         >
           <Loader appState={this.props.appState} statusType="loading" statusAction="propertyProfile">
             {
               editMode
               ? <PropertyForm appState={appState} geoState={geoState}
-                savePropertyDetails={actions.savePropertyDetails}
+                savePropertyDetails={this.handleSavePropertyDetails}
                 propertyId={propertyId}
                 geoActions={geoActions}
                 upload={actions.uploadPropertyPic} />

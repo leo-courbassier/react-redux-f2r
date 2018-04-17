@@ -40,7 +40,7 @@ export const loadPropertyProfile = (propertyId) => {
     .then((results) => {
       const property = results[0][0];
 
-      dispatch({ type: types.PROPERTY_PROFILE_LOAD, payload: property });
+      property && dispatch({ type: types.PROPERTY_PROFILE_LOAD, payload: property });
 
       api.setStatus(dispatch, 'loading', 'propertyProfile', false);
     });

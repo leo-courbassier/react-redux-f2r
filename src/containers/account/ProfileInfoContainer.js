@@ -13,6 +13,14 @@ class ProfileInfoContainer extends Component {
   componentWillMount() {
     this.props.actions.loadProfileInfo();
   }
+
+  handleSaveUserDetails = (payload) => {
+    const { actions } = this.props;
+    actions.saveUserDetails(payload, () => {
+      actions.editModeUpdate('profile', false);
+    });
+  }
+
   render() {
     let {appState, actions} = this.props;
     let editMode = appState.editMode.profile;
@@ -28,7 +36,7 @@ class ProfileInfoContainer extends Component {
           {
             editMode
             ? <ProfileForm appState={appState}
-                saveUserDetails={actions.saveUserDetails}
+                saveUserDetails={this.handleSaveUserDetails}
                 upload={actions.uploadProfilePic} />
             : <ProfileInfo profile={appState.profile} />
           }

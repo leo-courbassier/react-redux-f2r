@@ -282,8 +282,8 @@ export default class LeaseForm extends Component {
   }
 
   render() {
-    const { handleSubmit, propertyId } = this.props;
-    const submitting = _.get(this.props, ['appState', 'status', 'saving', 'leaseDetails']);
+    const { handleSubmit, propertyId, appState } = this.props;
+    const submitting = _.get(appState, ['status', 'saving', 'leaseDetails']);
     return (
       <div className="lease-form-panel">
         <BS.Form onSubmit={handleSubmit(this.handleFormSubmit)}>

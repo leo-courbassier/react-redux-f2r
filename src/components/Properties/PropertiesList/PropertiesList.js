@@ -75,7 +75,7 @@ export default class PropertiesList extends Component {
         <tr key={index}>
           <td>
             <Link to={`/dashboard/properties/${property.propertyId}`}>
-              {property.propertyName}
+              {property.propertyName || 'N/A'}
             </Link>
           </td>
           <td>{this.getAddress(property)}</td>

@@ -34,7 +34,7 @@ export default connect(
       : _.merge(INITIAL_VALUES, {
         landlordId: landlordIdSelector(state)
       }),
-    monthToMonth: selector(state, 'monthToMonth')
+    monthToMonth: _.defaultTo(selector(state, 'monthToMonth'), false)
   })
 )(reduxForm({
   form: 'leaseForm',
