@@ -352,3 +352,77 @@ export function requestPayment(payload, callback) {
     });
   };
 }
+
+export function loadPaymentsRecurring(callback) {
+  return (dispatch, getState) => {
+    let requestRecurring = api.getRecurringPayments(dispatch, getState);
+    let requestLeases = api.getActiveLeases(dispatch, getState);
+    let requestTenants = api.getLeaseTenants(dispatch, getState);
+    let requestFundingSources = api.verifyFundingSources(dispatch, getState);
+
+    api.setStatus(dispatch, 'loading', 'paymentRecurring', true);
+
+    Promise.all([
+      requestRecurring,
+      requestLeases,
+      requestTenants,
+      requestFundingSources
+    ])
+    .then(([
+      recurring,
+      leases,
+      tenants,
+      fundingSources
+    ]) => {
+
+      dispatch({
+        type: types.PAYMENTS_RECURRING_LOAD,
+        recurring, leases, tenants, fundingSources
+      });
+
+      api.setStatus(dispatch, 'loading', 'paymentRecurring', false);
+
+      if (callback) callback();
+    });
+  };
+}
+
+export function removeRecurringPayment(id, callback) {
+  return function (dispatch, getState) {
+    api.setStatus(dispatch, 'loading', 'removeRecurring', true);
+    api.deleteRecurringPayment(dispatch, getState, id, response => {
+      let recurringPayments = getState().paymentsAppState.recurring;
+
+      if (response.status !== 200) {
+        api.setStatus(dispatch, 'loading', 'removeRecurring', false);
+
+        let success = false;
+
+        dispatch({
+          type: types.PAYMENTS_REMOVE_RECURRING,
+          success
+        });
+
+        if (callback) callback(success);
+
+        return;
+      }
+
+      let updatedRecurringPayments = _.reject(recurringPayments, payment => {
+        return payment.id === id;
+      });
+
+      api.setStatus(dispatch, 'loading', 'removeRecurring', false);
+
+      let success = true;
+
+      dispatch({
+        type: types.PAYMENTS_REMOVE_RECURRING,
+        success,
+        recurring: updatedRecurringPayments
+      });
+
+      if (callback) callback(success);
+    });
+  };
+}

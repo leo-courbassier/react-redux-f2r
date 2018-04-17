@@ -630,3 +630,11 @@ export function getActiveLeases(dispatch, getState) {
 export function requestPaymentFromTenant(dispatch, getState, payload, callback) {
   return post(services.LL_REQUEST, getAuthHeaders(dispatch, getState), payload, callback);
 }
+
+export function getRecurringPayments(dispatch, getState, callback) {
+  return get(services.PAYMENT_ACH_RECURRING, getAuthHeaders(dispatch, getState), callback);
+}
+
+export function deleteRecurringPayment(dispatch, getState, id, callback){
+  return del(`${services.PAYMENT_ACH_RECURRING}?id=${id}`, getAuthHeaders(dispatch, getState), callback);
+}

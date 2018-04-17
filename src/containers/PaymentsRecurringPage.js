@@ -2,19 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import PageTitle from '../components/PageTitle';
-import PaymentsMethodsContainer from '../containers/Payments/PaymentsMethodsContainer';
-import PaymentsCenterContainer from '../containers/Payments/PaymentsCenterContainer';
 import PaymentsRecurringContainer from '../containers/Payments/PaymentsRecurringContainer';
 
-class PaymentsSummaryPage extends Component {
+class PaymentsRecurringPage extends Component {
   render() {
     return (
       <div>
-        <PageTitle>My Payments {'>'} Summary</PageTitle>
-
-        <PaymentsMethodsContainer />
-
-        <PaymentsCenterContainer />
+        <PageTitle>My Payments {'>'} Methods</PageTitle>
 
         <PaymentsRecurringContainer />
 
@@ -34,4 +28,4 @@ function mapDispatchToProps() {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PaymentsSummaryPage);
+)(PaymentsRecurringPage);

@@ -12,7 +12,8 @@ const initialState = {
 
   editMode:{
     methods: false,
-    center: false
+    center: false,
+    recurring: false
   },
 
   stateList: [],
@@ -32,9 +33,16 @@ const initialState = {
   requestPaymentSuccess: null,
   requestPaymentError: null,
 
+  recurring: [],
+  recurringPaymentSuccess: null,
+  recurringPaymentError: null,
+  removeRecurringSuccess: null,
+  removeRecurringError: null,
+
   loaded: false, // Payment Methods panel
   makePaymentLoaded: false,
-  requestPaymentLoaded: false
+  requestPaymentLoaded: false,
+  recurringPaymentLoaded: false
 
 };
 
@@ -147,6 +155,27 @@ export default function paymentsAppState(state = initialState, action) {
       let newState = objectAssign({}, state);
       newState.requestPaymentSuccess = action.success;
       newState.requestPaymentError = action.message;
+      return newState;
+    }
+
+    case types.PAYMENTS_RECURRING_LOAD:
+    {
+      let newState = objectAssign({}, state);
+      newState.recurring = action.recurring;
+      newState.leases = action.leases;
+      newState.tenants = action.tenants;
+      newState.fundingSources = action.fundingSources;
+      newState.recurringPaymentLoaded = true;
+      return newState;
+    }
+
+    case types.PAYMENTS_REMOVE_RECURRING:
+    {
+      let newState = objectAssign({}, state);
+      newState.removeRecurringSuccess = action.success;
+      if (action.recurring) {
+        newState.recurring = action.recurring;
+      }
       return newState;
     }
 

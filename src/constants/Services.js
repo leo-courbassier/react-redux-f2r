@@ -92,6 +92,7 @@ export const DWOLLA_IAV_TOKEN = BASE_URL + '/dwolla/iav/token';
 
 export const PAYMENT_ACHADHOC = BASE_URL + '/payment/ach-ad-hoc';
 
+export const PAYMENT_ACH_RECURRING = BASE_URL + '/payment/ach-recurring';
 
 // reset password
 
