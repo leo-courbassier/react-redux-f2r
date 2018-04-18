@@ -629,3 +629,7 @@ export function getRecurringPayments(dispatch, getState, callback) {
 export function deleteRecurringPayment(dispatch, getState, id, callback){
   return del(`${services.PAYMENT_ACH_RECURRING}?id=${id}`, getAuthHeaders(dispatch, getState), callback);
 }
+
+export function getPaymentHistory(dispatch, getState, page=0, pageSize=50) {
+  return get(`${services.PAYMENT_HISTORY}?page=${page}&pageSize=${pageSize}`, getAuthHeaders(dispatch, getState));
+}

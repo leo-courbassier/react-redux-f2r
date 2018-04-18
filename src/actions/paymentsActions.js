@@ -4,6 +4,7 @@ import _ from 'underscore';
 
 import * as api from './api';
 import * as services from '../constants/Services';
+import {PAYMENT_HISTORY_PAGE_SIZE} from '../constants/App';
 import {updateUserInfo} from './loginActions';
 
 export function editModeUpdate(panelName, value) {
@@ -425,4 +426,50 @@ export function removeRecurringPayment(id, callback) {
       if (callback) callback(success);
     });
   };
+}
+
+export function loadPaymentsHistory(page = 0, statusAction = 'paymentHistory', callback) {
+ return function (dispatch, getState) {
+   let history = getState().paymentsAppState.history;
+
+   // If the page data already exists, simply switch to that page
+   if (history[page]) {
+     dispatch({
+       type: types.PAYMENTS_HISTORY_LOAD,
+       page
+     });
+
+     if (callback) callback(history[page]);
+
+     return;
+   }
+   
+   let requestPaymentHistory = api.getPaymentHistory(dispatch, getState, page, PAYMENT_HISTORY_PAGE_SIZE);
+
+   api.setStatus(dispatch, 'loading', statusAction, true);
+
+   Promise.all([
+     requestPaymentHistory
+     ])
+   .then(results => {
+     let newHistory = results[0];
+     let data = null;
+
+     if (Array.isArray(newHistory) && newHistory.length) {
+       data = {
+         items: newHistory
+       }
+     }
+
+     api.setStatus(dispatch, 'loading', statusAction, false);
+
+     dispatch({
+       type: types.PAYMENTS_HISTORY_LOAD,
+       data,
+       page
+     });
+
+     if (callback) callback();
+   });
+ };
 }
