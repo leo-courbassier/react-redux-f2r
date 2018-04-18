@@ -25,7 +25,7 @@ export default class LeasesSummary extends Component {
   }
 
   getType(lease) {
-    return lease.monthToMonth ? 'Month to Month' : 'Set Term';
+    return lease.leaseId && (lease.monthToMonth ? 'Month to Month' : 'Set Term');
   }
 
   renderTenantList(tenantList) {
