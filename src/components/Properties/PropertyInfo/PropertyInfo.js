@@ -39,7 +39,7 @@ export default class PropertyInfo extends Component {
   render(){
     const { property, params } = this.props;
     const imageURL = getLastPropertyImageURL(property);
-    return (
+    return property && (
       <Grid fluid>
         <Row>
           <Col sm={4}>

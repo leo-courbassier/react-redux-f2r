@@ -68,6 +68,10 @@ export default class PropertiesList extends Component {
     );
   }
 
+  wrapCurrency(value) {
+    return _.isNumber(value) ? `$${value}` : value;
+  }
+
   renderContent() {
     const { properties } = this.props;
     return (
@@ -80,12 +84,12 @@ export default class PropertiesList extends Component {
           </td>
           <td>{this.getAddress(property)}</td>
           <td>{this.renderStatus(property.status)}</td>
-          <td>{property.rent}</td>
-          <td>{this.renderDividedColumn(property.monthOccupied, property.rentCollected)}</td>
-          <td>{this.renderDividedColumn(property.monthsLeft, property.rentRemaining)}</td>
-          <td>{property.totalEarnings}</td>
+          <td>{this.wrapCurrency(property.rent)}</td>
+          <td>{this.renderDividedColumn(property.monthOccupied, this.wrapCurrency(property.rentCollected))}</td>
+          <td>{this.renderDividedColumn(property.monthsLeft, this.wrapCurrency(property.rentRemaining))}</td>
+          <td>{this.wrapCurrency(property.totalEarnings)}</td>
           <td>{property.occupancyRate}</td>
-          <td>{property.averageYield}</td>
+          <td>{this.wrapCurrency(property.averageYield)}</td>
           <td>
             <Button block bsSize="small" bsStyle="success">Search for Tenants</Button>
             <Button block bsSize="small" bsStyle="warning">Search for Agents</Button>
