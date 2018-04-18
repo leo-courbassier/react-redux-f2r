@@ -44,6 +44,7 @@ class SideBar extends Component {
               <li><Link to="/dashboard/payments/methods">Payment Methods</Link></li>
               <li><Link to="/dashboard/payments/center">Payment Center</Link></li>
               <li><Link to="/dashboard/payments/recurring">Recurring Payments</Link></li>
+              <li><Link to="/dashboard/payments/history">Past Payments</Link></li>
             </ul>
           </li>
           <li>

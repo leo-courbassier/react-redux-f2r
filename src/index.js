@@ -47,6 +47,7 @@ import PaymentsSummaryPage from './containers/PaymentsSummaryPage';
 import PaymentsMethodsPage from './containers/PaymentsMethodsPage';
 import PaymentsCenterPage from './containers/PaymentsCenterPage';
 import PaymentsRecurringPage from './containers/PaymentsRecurringPage';
+import PaymentsHistoryPage from './containers/PaymentsHistoryPage';
 
 let NotImplemented = () => <div>Not Implemented</div>;
 
@@ -112,6 +113,7 @@ render(
             <Route path="methods" component={PaymentsMethodsPage} />
             <Route path="center" component={PaymentsCenterPage} />
             <Route path="recurring" component={PaymentsRecurringPage} />
+            <Route path="history" component={PaymentsHistoryPage} />
           </Route>
         </Route>
         <Route onEnter={requireAuth} path="messages(/:folder)(/:id)" component={MessagesPage}/>

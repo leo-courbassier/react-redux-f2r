@@ -39,10 +39,14 @@ const initialState = {
   removeRecurringSuccess: null,
   removeRecurringError: null,
 
+  history: [],
+  historyPage: 0,
+
   loaded: false, // Payment Methods panel
   makePaymentLoaded: false,
   requestPaymentLoaded: false,
-  recurringPaymentLoaded: false
+  recurringPaymentLoaded: false,
+  historyPaymentLoaded: false
 
 };
 
@@ -176,6 +180,17 @@ export default function paymentsAppState(state = initialState, action) {
       if (action.recurring) {
         newState.recurring = action.recurring;
       }
+      return newState;
+    }
+
+    case types.PAYMENTS_HISTORY_LOAD:
+    {
+      let newState = objectAssign({}, state);
+      if (action.data) {
+        newState.history.push(action.data);
+      }
+      newState.historyPage = action.page;
+      newState.historyPaymentLoaded = true;
       return newState;
     }
 

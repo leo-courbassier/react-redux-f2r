@@ -5,6 +5,7 @@ import PageTitle from '../components/PageTitle';
 import PaymentsMethodsContainer from '../containers/Payments/PaymentsMethodsContainer';
 import PaymentsCenterContainer from '../containers/Payments/PaymentsCenterContainer';
 import PaymentsRecurringContainer from '../containers/Payments/PaymentsRecurringContainer';
+import PaymentsHistoryContainer from '../containers/Payments/PaymentsHistoryContainer';
 
 class PaymentsSummaryPage extends Component {
   render() {
@@ -17,6 +18,8 @@ class PaymentsSummaryPage extends Component {
         <PaymentsCenterContainer />
 
         <PaymentsRecurringContainer />
+
+        <PaymentsHistoryContainer />
 
       </div>
     );
