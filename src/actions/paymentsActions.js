@@ -443,7 +443,7 @@ export function loadPaymentsHistory(page = 0, statusAction = 'paymentHistory', c
 
      return;
    }
-   
+
    let requestPaymentHistory = api.getPaymentHistory(dispatch, getState, page, PAYMENT_HISTORY_PAGE_SIZE);
 
    api.setStatus(dispatch, 'loading', statusAction, true);
@@ -458,7 +458,7 @@ export function loadPaymentsHistory(page = 0, statusAction = 'paymentHistory', c
      if (Array.isArray(newHistory) && newHistory.length) {
        data = {
          items: newHistory
-       }
+       };
      }
 
      api.setStatus(dispatch, 'loading', statusAction, false);

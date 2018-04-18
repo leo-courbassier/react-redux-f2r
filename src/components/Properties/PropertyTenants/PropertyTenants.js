@@ -25,8 +25,6 @@ export default class PropertyTenants extends Component {
           </td>
           <td>{tenant.email}</td>
           <td>{tenant.userDetails.phoneNumber || 'N/A'}</td>
-          <td>{tenant.madePayments || 'N/A'}</td>
-          <td>{tenant.totalPayment || 'N/A'}</td>
         </tr>
       ))
     );
@@ -51,8 +49,6 @@ export default class PropertyTenants extends Component {
               <th className="text-center">Name</th>
               <th className="text-center">Email</th>
               <th className="text-center">Phone</th>
-              <th className="text-center">Payments Made</th>
-              <th className="text-center">Total Payments</th>
             </tr>
           </thead>
           <tbody>
