@@ -1,15 +1,24 @@
 import React, { Component, PropTypes } from 'react';
-import { Button, DropdownButton, MenuItem, Label, Table, OverlayTrigger, Glyphicon, Tooltip } from 'react-bootstrap';
+import { Button, DropdownButton, MenuItem, Label, Table, OverlayTrigger, Modal, Glyphicon, Tooltip } from 'react-bootstrap';
 import { Link } from 'react-router';
 import _ from 'lodash';
 
 import ButtonSpinner from '../../ButtonSpinner';
+import SubmitButton from '../../SubmitButton';
 
 export default class LeasesSummary extends Component {
   static propTypes = {
     leases: PropTypes.array,
     goTo: PropTypes.func.isRequired
   };
+
+  state = {
+    showEndLeaseModal: false,
+    endLeaseData: {
+      id: null,
+      leaseStatus: null
+    }
+  }
 
   handleAddNewLease = () => {
     const { goTo } = this.props;
@@ -32,7 +41,20 @@ export default class LeasesSummary extends Component {
 
   updateLeaseStatus(id, leaseStatus) {
     const payload = { id, leaseStatus };
-    this.props.updateLeaseDetails(payload);
+    this.props.updateLeaseDetails(payload, () => {
+      if (this.state.showEndLeaseModal) this.closeEndLeaseModal();
+    });
+  }
+
+  closeEndLeaseModal() {
+    this.setState({ showEndLeaseModal: false });
+  }
+
+  endLease(id, leaseStatus) {
+    this.setState({
+      showEndLeaseModal: true,
+      endLeaseData: { id, leaseStatus }
+    });
   }
 
   renderTenantList(tenantList) {
@@ -41,6 +63,43 @@ export default class LeasesSummary extends Component {
         {`${tenant.firstName || ''} ${tenant.middleName || ''} ${tenant.lastName || ''}`}
       </div>
     ));
+  }
+
+  renderEndLeaseModal() {
+    return (
+      <div className="end-lease-modal">
+        <Modal
+          show={this.state.showEndLeaseModal}
+          onHide={this.closeEndLeaseModal.bind(this)}
+          backdrop='static'>
+          <Modal.Header>
+            <Modal.Title>End Lease</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Clicking "End Lease" will end this current lease.</p>
+            <p>Are you sure you want to proceed?</p>
+          </Modal.Body>
+          <Modal.Footer className="clearfix">
+            <div className="pull-left">
+              <Button
+                onClick={this.closeEndLeaseModal.bind(this)}>
+                Close
+              </Button>
+            </div>
+            <div className="pull-right">
+              <SubmitButton
+                submit={this.updateLeaseStatus.bind(this, this.state.endLeaseData.id, this.state.endLeaseData.leaseStatus)}
+                appState={this.props.appState}
+                statusAction="leaseDetails"
+                textLoading="Ending"
+                bsStyle="danger">
+                End Lease
+              </SubmitButton>
+            </div>
+          </Modal.Footer>
+        </Modal>
+      </div>
+    );
   }
 
   renderContent() {
@@ -70,7 +129,7 @@ export default class LeasesSummary extends Component {
               <div className="lease-actions">
                 <Button block bsSize="small" bsStyle="success"
                   onClick={function () { goTo(`/dashboard/leases/${lease.leaseId}`); }}>Edit Lease</Button>
-                {lease.leaseStatus === 'ACTIVE' ? (
+                {lease.leaseStatus !== 'ACTIVE' ? (
                   <Button
                     bsSize="small"
                     bsStyle="success"
@@ -86,8 +145,8 @@ export default class LeasesSummary extends Component {
                     title="End Lease"
                     id="dropdown-end-lease"
                   >
-                    <MenuItem onClick={this.updateLeaseStatus.bind(this, lease.leaseId, 'COMPLETE')} eventKey="1">Completed</MenuItem>
-                    <MenuItem onClick={this.updateLeaseStatus.bind(this, lease.leaseId, 'EVICTED')} eventKey="2">Evicted</MenuItem>
+                    <MenuItem onClick={this.endLease.bind(this, lease.leaseId, 'COMPLETE')} eventKey="1">Completed</MenuItem>
+                    <MenuItem onClick={this.endLease.bind(this, lease.leaseId, 'EVICTED')} eventKey="2">Evicted</MenuItem>
                   </DropdownButton>
                 )}
               </div>
@@ -142,6 +201,7 @@ export default class LeasesSummary extends Component {
         <div className="text-right">
           <Button bsStyle="primary" onClick={this.handleAddNewLease}>Create a New Lease</Button>
         </div>
+        {this.renderEndLeaseModal()}
       </div>
     );
   }
