@@ -21,7 +21,7 @@ $onboarding-panel-height: 40px;
     padding-left: 150px;
 }
 div.my_pig .glyphicon-piggy-bank{
-font-size: 45px;  
+font-size: 45px;
 padding-right:10px;
 }
 .successStepFour h4{
@@ -522,4 +522,16 @@ padding-right:10px;
     .proceed-button {
       margin-left: 15px;
     }
+}
+
+.amenityCheckbox {
+  font-size: 12px;
+  font-weight: normal;
+  input {
+    margin-right: 5px;
+  }
+}
+
+.step2-amenity-list {
+  margin-bottom: 20px;
 }
