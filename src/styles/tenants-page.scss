@@ -7,11 +7,17 @@
   tr:hover {
     background: none !important;
   }
+  thead {
+    border-bottom: 2px solid #ccc;
+  }
   th {
     text-align: center !important;
+    border: none !important;
+    background-color: rgba(0, 0, 0, .05);
   }
   td {
     vertical-align: middle !important;
+    border: none !important;
   }
   .tenantsMadePayments,
   .tenantsOwedPayments,

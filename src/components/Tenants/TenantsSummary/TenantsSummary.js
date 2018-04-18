@@ -48,19 +48,19 @@ export default class TenantsSummary extends Component {
 
   renderMadePayments(tenant, id) {
     return tenant.madePayments[id]
-      ? `${tenant.madePayments[id].count}/${tenant.madePayments[id].amount}`
+      ? `${tenant.madePayments[id].count} / $${tenant.madePayments[id].amount}`
       : 'N/A';
   }
 
   renderOwedPayments(tenant, id) {
     return tenant.owedPayments[id]
-      ? `${tenant.owedPayments[id].count}/${tenant.owedPayments[id].amount}`
+      ? `${tenant.owedPayments[id].count} / $${tenant.owedPayments[id].amount}`
       : 'N/A';
   }
 
   renderScheduledPayments(tenant, id) {
     return tenant.scheduledPayments[id]
-      ? `${tenant.scheduledPayments[id].count}/${tenant.scheduledPayments[id].amount}`
+      ? `${tenant.scheduledPayments[id].count} / $${tenant.scheduledPayments[id].amount}`
       : 'N/A';
   }
 
