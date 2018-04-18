@@ -26,7 +26,6 @@ export default class PropertyProfile extends Component {
     actions.loadPropertyProfile(propertyId);
     actions.loadPropertyLeases(propertyId);
     geoActions.loadStateList();
-    geoActions.loadCityList(property.state);
   }
 
   get editMode() {
@@ -75,8 +74,7 @@ export default class PropertyProfile extends Component {
               ? <PropertyForm appState={appState} geoState={geoState}
                 savePropertyDetails={this.handleSavePropertyDetails}
                 propertyId={propertyId}
-                geoActions={geoActions}
-                upload={actions.uploadPropertyPic} />
+                geoActions={geoActions} />
               : <PropertyInfo property={appState.propertyProfile} />
             }
           </Loader>

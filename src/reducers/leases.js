@@ -19,7 +19,6 @@ export default function leasesAppState(state = initialState, action) {
     /* STATUS_UPDATE required in each appState to track status events */
 
     case types.STATUS_UPDATE:
-    {
       return _.merge({}, state, {
         status: {
           [action.statusType]: _.assign({}, state[action.statusType], {
@@ -27,7 +26,6 @@ export default function leasesAppState(state = initialState, action) {
           })
         }
       });
-    }
 
     case types.LEASES_LIST_LOAD:
       return _.assign({}, state, {

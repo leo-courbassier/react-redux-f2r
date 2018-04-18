@@ -19,7 +19,7 @@ class Loader extends Component {
 }
 
 Loader.propTypes = {
-  children: PropTypes.element
+  children: PropTypes.node
 };
 
 Loader.contextTypes = {

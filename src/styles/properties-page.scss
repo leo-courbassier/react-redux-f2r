@@ -48,11 +48,10 @@
       }
     }
   }
-  .propertyform-panel {
-    .family .label-spacer {
-      height: 25px;
-    }
-  }
+}
+
+.property-page,
+.propertyform-panel {
   .property-image img {
     width: 100%;
     max-width: 100%;

@@ -22,7 +22,7 @@ export default class PropertyInfo extends Component {
 
   amenityItem(name) {
     const { property: { amenityList } } = this.props;
-    return (
+    return amenityList && (
       <div className="amenity-item">
         {name}
         <span className="pull-right">
@@ -38,7 +38,6 @@ export default class PropertyInfo extends Component {
 
   render(){
     const { property, params } = this.props;
-    const { amenityList } = property;
     const imageURL = getLastPropertyImageURL(property);
     return (
       <Grid fluid>

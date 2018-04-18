@@ -16,44 +16,63 @@ export default class PropertyForm extends Component {
     geoState: PropTypes.object.isRequired,
     geoActions: PropTypes.object.isRequired,
     savePropertyDetails: PropTypes.func.isRequired,
-    upload: PropTypes.func.isRequired,
     stateCode: PropTypes.string
   };
+
+  constructor(props) {
+    super(props);
+    const property = _.get(props, ['appState', 'propertyProfile'], null);
+
+    this.state = {
+      imageURL: props.propertyId && property ? getLastPropertyImageURL(property) : null
+    };
+  }
 
   componentWillReceiveProps(nextProps) {
     const { geoActions, stateCode } = nextProps;
     if (this.props.stateCode !== stateCode) {
       geoActions.loadCityList(stateCode);
     }
+    const nextProperty = _.get(nextProps, ['appState', 'propertyProfile'], null);
+    if (nextProperty) {
+      const prevImageUrls = _.get(this.props, ['appState', 'propertyProfile', 'imageUrls'], []);
+      const nextImageUrls = _.get(nextProperty, ['imageUrls'], []);
+      if (prevImageUrls.length !== nextProperty.imageUrls.length) {
+        this.setState({
+          imageURL: getLastPropertyImageURL(nextProperty)
+        });
+      }
+    }
   }
 
   handleFileChange(e, results) {
-    const { propertyId } = this.props;
     results.forEach(result => {
       const [e, file] = result;
-      this.props.upload(propertyId, file);
+      this.setState({
+        imageURL: e.target.result,
+        file
+      });
     });
   }
 
   handleStateChange = (value) => {
-    // const { geoActions } = this.props;
-    // geoActions.loadCityList(value);
+    const { geoActions } = this.props;
+    geoActions.loadCityList(value);
   }
 
   handleFormSubmit = (values) => {
-    const { propertyId } = this.props;
-    const { savePropertyDetails } = this.props;
+    const { propertyId, savePropertyDetails } = this.props;
+    const { file } = this.state;
     savePropertyDetails(_.merge({}, values, {
-      id: propertyId
+      id: propertyId,
+      file
     }));
   }
 
-  renderUploader() {
+  renderProfileImage() {
     const { appState, params } = this.props;
     const { status, propertyProfile: property } = appState;
-    const imageURL = getLastPropertyImageURL(property);
-
-    const uploadComplete = status.uploading['propertyPicUpload'] == false;
+    const { imageURL } = this.state;
     return (
       <div className="property-image">
         <div className="section section-padded">Profile Image</div>
@@ -64,7 +83,6 @@ export default class PropertyForm extends Component {
             <BS.Col xs={6} className="text-center">
               <FileReaderInput
               name="propertyPic"
-              as="url"
               id="property-pic-upload"
               onChange={this.handleFileChange.bind(this)}>
                 <SubmitButton
@@ -73,14 +91,8 @@ export default class PropertyForm extends Component {
 
                 statusAction="propertyPicUpload"
                 textLoading="Uploading">
-                  Upload Cover Photo
+                  Choose a Cover Photo
                 </SubmitButton>
-                <BS.HelpBlock className="text-center">
-                  <span className="text-success">
-                    {uploadComplete ? 'Cover Photo updated.' : ''}
-                  </span>
-                </BS.HelpBlock>
-
               </FileReaderInput>
             </BS.Col>
 
@@ -272,7 +284,7 @@ export default class PropertyForm extends Component {
     return (
       <div className="propertyform-panel">
         <BS.Form onSubmit={handleSubmit(this.handleFormSubmit)}>
-          {propertyId && this.renderUploader()}
+          {this.renderProfileImage()}
           {this.renderFormFields()}
           <SubmitFooter submitting={submitting} {...reduxFormProps(this.props)} />
         </BS.Form>

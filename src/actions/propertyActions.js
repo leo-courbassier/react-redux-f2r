@@ -1,5 +1,6 @@
 import * as types from '../constants/ActionTypes';
 import * as api from './api';
+import _ from 'lodash';
 
 export function editModeUpdate(panelName, value) {
  return {
@@ -27,6 +28,10 @@ export const loadPropertiesList = () => {
     });
   };
 };
+
+export const initPropertyProfile = () => ({
+  type: types.PROPERTY_PROFILE_INIT
+});
 
 export const loadPropertyProfile = (propertyId) => {
   return (dispatch, getState) => {
@@ -85,12 +90,12 @@ export const loadPropertyTenants = (propertyId) => {
   };
 };
 
-export const uploadPropertyPic = (propertyId, file) => {
+export const uploadPropertyPic = (propertyId, file, callback) => {
   return function (dispatch, getState) {
     api.setStatus(dispatch, 'uploading', 'propertyPicUpload', true);
     api.uploadPropertyPic(propertyId, dispatch, getState, file, (response) => {
       api.setStatus(dispatch, 'uploading', 'propertyPicUpload', false);
-      dispatch(loadPropertyProfile(propertyId));
+      if (callback) callback();
     });
 
   };
@@ -99,10 +104,18 @@ export const uploadPropertyPic = (propertyId, file) => {
 export const savePropertyDetails = (payload, callback) => {
   return function (dispatch, getState) {
     api.setStatus(dispatch, 'saving', 'propertyProfile', true);
-    api.updateLLPropertyProfile(dispatch, getState, payload, (response) => {
-      api.setStatus(dispatch, 'saving', 'propertyProfile', false);
-      dispatch({ type: types.PROPERTY_PROFILE_LOAD, payload: response });
-      if (callback) callback(response);
+    api.updateLLPropertyProfile(dispatch, getState, _.omit(payload, ['file']), (response) => {
+      if (payload.file) {
+        dispatch(uploadPropertyPic(response.id, payload.file, () => {
+          api.setStatus(dispatch, 'saving', 'propertyProfile', false);
+          dispatch(loadPropertyProfile(response.id));
+          if (callback) callback(response);
+        }));
+      } else {
+        api.setStatus(dispatch, 'saving', 'propertyProfile', false);
+        dispatch({ type: types.PROPERTY_PROFILE_LOAD, payload: response });
+        if (callback) callback(response);
+      }
     });
   };
 };
@@ -111,9 +124,17 @@ export const addPropertyDetails = (payload, callback) => {
   return function (dispatch, getState) {
     api.setStatus(dispatch, 'saving', 'propertyProfile', true);
     api.addLLPropertyProfile(dispatch, getState, payload, (response) => {
-      api.setStatus(dispatch, 'saving', 'propertyProfile', false);
-      dispatch({ type: types.PROPERTY_PROFILE_LOAD, payload: response });
-      if (callback) callback(response);
+      if (payload.file) {
+        dispatch(uploadPropertyPic(response.id, payload.file, () => {
+          api.setStatus(dispatch, 'saving', 'propertyProfile', false);
+          dispatch(loadPropertyProfile(response.id));
+          if (callback) callback(response);
+        }));
+      } else {
+        api.setStatus(dispatch, 'saving', 'propertyProfile', false);
+        dispatch({ type: types.PROPERTY_PROFILE_LOAD, payload: response });
+        if (callback) callback(response);
+      }
     });
   };
 };
