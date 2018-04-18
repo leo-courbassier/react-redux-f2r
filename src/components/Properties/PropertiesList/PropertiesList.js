@@ -84,9 +84,9 @@ export default class PropertiesList extends Component {
           </td>
           <td>{this.getAddress(property)}</td>
           <td>{this.renderStatus(property.status)}</td>
-          <td>{this.wrapCurrency(property.rent)}</td>
-          <td>{this.renderDividedColumn(property.monthOccupied, this.wrapCurrency(property.rentCollected))}</td>
-          <td>{this.renderDividedColumn(property.monthsLeft, this.wrapCurrency(property.rentRemaining))}</td>
+          <td className="propertiesRent">{this.wrapCurrency(property.rent)}</td>
+          <td className="propertiesOccupiedCollected">{this.renderDividedColumn(property.monthOccupied, this.wrapCurrency(property.rentCollected))}</td>
+          <td className="propertiesRemainingBalance">{this.renderDividedColumn(property.monthsLeft, this.wrapCurrency(property.rentRemaining))}</td>
           <td>{this.wrapCurrency(property.totalEarnings)}</td>
           <td>{property.occupancyRate}</td>
           <td>{this.wrapCurrency(property.averageYield)}</td>
@@ -111,11 +111,11 @@ export default class PropertiesList extends Component {
     const { properties } = this.props;
     return (
       <div>
-        <Table striped bordered condensed hover className="data-table">
+        <Table condensed hover className="data-table">
           <thead>
             <tr>
-              <th width="10%">Property</th>
-              <th>Address</th>
+              <th width="15%">Property</th>
+              <th width="15%">Address</th>
               <th>Status</th>
               <th>Rent<br /><sub>(per month)</sub></th>
               <th>{this.renderDividedColumn('Months Occupied', 'Rent Collected')}</th>

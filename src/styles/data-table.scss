@@ -5,12 +5,23 @@
   }
   thead {
     background-color: #f1f1f1;
+    border-bottom: 2px solid #ccc;
   }
   th {
+    height: 50px;
+    text-align: center !important;
+    border: none !important;
+    background-color: rgba(0, 0, 0, .05);
     position: relative;
+    vertical-align: bottom !important;
     .divide-column {
-      font-size: 80%;
+      font-size: 75%;
     }
+  }
+  td {
+    vertical-align: middle !important;
+    border: none !important;
+    border-bottom: 1px solid #ccc !important;
   }
   .top-right-corner {
     position: absolute;

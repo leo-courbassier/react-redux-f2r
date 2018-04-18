@@ -114,9 +114,9 @@ export default class LeasesSummary extends Component {
           </td>
           <td>{this.getType(lease)}</td>
           <td>{this.renderTenantList(lease.tenantList)}</td>
-          <td>{lease.startDate}</td>
-          <td>{lease.endDate}</td>
-          <td>{lease.rentPaymentDate || 'N/A'}</td>
+          <td className="leasesStartDate">{lease.startDate}</td>
+          <td className="leasesEndDate">{lease.endDate}</td>
+          <td className="leasesRentPaymentDate">{lease.rentPaymentDate || 'N/A'}</td>
           <td>{lease.maturity}</td>
           <td>{lease.refundableAmount}</td>
           <td>{lease.nonRefundableAmount}</td>
@@ -169,7 +169,7 @@ export default class LeasesSummary extends Component {
     const { leases } = this.props;
     return (
       <div>
-        <Table striped bordered condensed hover className="data-table">
+        <Table condensed hover className="data-table">
           <thead>
             <tr>
               <th>Property</th>
