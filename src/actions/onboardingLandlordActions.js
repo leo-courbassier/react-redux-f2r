@@ -25,10 +25,10 @@ export function getCheckoutReady(callback) {
 
 export function updateOnboardingScore() {
   return function (dispatch, getState) {
-    api.getPseudoScore(dispatch, getState, (response) => {
-      let score = response.f2rScore;
-      //dispatch({type: types.ONBOARDING_UPDATE_SCORE, score});
-    });
+    // api.getPseudoScore(dispatch, getState, (response) => {
+    //   let score = response.f2rScore;
+    //   //dispatch({type: types.ONBOARDING_UPDATE_SCORE, score});
+    // });
   };
 }
 
