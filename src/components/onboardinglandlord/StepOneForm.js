@@ -359,7 +359,7 @@ class StepOneForm extends Component {
                    {this.props.showProceed && (
                       <SubmitButton
                       appState={this.props.appState}
-                      statusAction="stepOneFormProceed"
+                      
                       submit={_.partial(this.props.openPreviousStep)}           
                       disabled={this.isMandatoryInvalid()}
                       bsStyle="success"
@@ -373,7 +373,7 @@ class StepOneForm extends Component {
                    {this.props.showProceed && (
                       <SubmitButton
                       appState={this.props.appState}
-                      statusAction="stepOneFormProceed"
+                     
                       submit={_.partial(this.props.openNextStep)}
                       bsStyle="success"
                       className="skyp-button">
