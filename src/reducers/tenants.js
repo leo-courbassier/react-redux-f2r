@@ -18,11 +18,13 @@ export default function tenantsAppState(state = initialState, action) {
     /* STATUS_UPDATE required in each appState to track status events */
 
     case types.STATUS_UPDATE:
-    {
-      let newState = _.assign({}, state);
-      newState['status'][action.statusType][action.statusAction] = action.statusState;
-      return newState;
-    }
+      return _.merge({}, state, {
+        status: {
+          [action.statusType]: _.assign({}, state[action.statusType], {
+            [action.statusAction]: action.statusState
+          })
+        }
+      });
 
     case types.TENANTS_LIST_LOAD:
       return _.assign({}, state, {

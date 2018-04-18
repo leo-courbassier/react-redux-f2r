@@ -63,10 +63,14 @@ SelectOptions.propTypes = {
     PropTypes.number
   ]).isRequired,
   className: PropTypes.string,
-  optionList: PropTypes.array.isRequired,
+  optionList: PropTypes.array,
   disabled: PropTypes.bool,
   loading: PropTypes.bool,
   loadingText: PropTypes.string
+};
+
+SelectOptions.defaultProps = {
+  optionList: []
 };
 
 SelectOptions.contextTypes = {

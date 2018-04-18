@@ -15,8 +15,8 @@ export default class PropertyCreator extends Component {
 
   componentWillMount() {
     const { actions, geoActions, appState: { propertyProfile: property } } = this.props;
+    actions.initPropertyProfile();
     geoActions.loadStateList();
-    geoActions.loadCityList(property.state);
   }
 
   handleSavePropertyDetails = (values) => {
@@ -33,8 +33,7 @@ export default class PropertyCreator extends Component {
       <TabPanel title="Property Infomation">
         <PropertyForm appState={appState} geoState={geoState}
           savePropertyDetails={this.handleSavePropertyDetails}
-          geoActions={geoActions}
-          upload={actions.uploadPropertyPic} />
+          geoActions={geoActions} />
       </TabPanel>
     );
   }

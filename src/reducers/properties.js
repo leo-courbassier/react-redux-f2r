@@ -22,11 +22,13 @@ export default function propertiesAppState(state = initialState, action) {
     /* STATUS_UPDATE required in each appState to track status events */
 
     case types.STATUS_UPDATE:
-    {
-      let newState = _.assign({}, state);
-      newState['status'][action.statusType][action.statusAction] = action.statusState;
-      return newState;
-    }
+      return _.merge({}, state, {
+        status: {
+          [action.statusType]: _.assign({}, state[action.statusType], {
+            [action.statusAction]: action.statusState
+          })
+        }
+      });
 
     case types.PROPERTY_EDIT_MODE:
     {
@@ -38,6 +40,11 @@ export default function propertiesAppState(state = initialState, action) {
     case types.PROPERTIES_LIST_LOAD:
       return _.assign({}, state, {
         propertiesList: action.payload
+      });
+
+    case types.PROPERTY_PROFILE_INIT:
+      return _.assign({}, state, {
+        propertyProfile: null
       });
 
     case types.PROPERTY_PROFILE_LOAD:
