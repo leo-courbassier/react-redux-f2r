@@ -29,7 +29,6 @@ export default connect(
     initialValues: props.leaseId
       ? _.assign({}, props.appState.leaseDetails, {
         tenants: [{}], // used for tenants assignment
-        depositList: []
       })
       : _.merge(INITIAL_VALUES, {
         landlordId: landlordIdSelector(state)

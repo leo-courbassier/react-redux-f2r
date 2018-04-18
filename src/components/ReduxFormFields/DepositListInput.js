@@ -110,13 +110,13 @@ export default class DepositListInput extends Component {
                   dateFormat="YYYY-MM-DD"
                   timeFormat={false}
                   inputProps={{
-                    name: 'depositDueOn',
+                    name: 'dueDate',
                     placeholder: 'YYYY-MM-DD'
                   }}
                   viewMode="years"
                   closeOnSelect
-                  value={item.depositDueOn}
-                  onChange={function(m) { that.handleValueChange(index, 'depositDueOn', m.format ? m.format('YYYY-MM-DD') : m); }}
+                  value={item.dueDate}
+                  onChange={function(m) { that.handleValueChange(index, 'dueDate', m.format ? m.format('YYYY-MM-DD') : m); }}
                 />
               </Col>
             </FormGroup>
