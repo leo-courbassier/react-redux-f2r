@@ -15,13 +15,13 @@ export default class PropertiesList extends Component {
   }
 
   getAddress(property) {
-    return _.join([
+    return _.join(_.compact([
       property.address1,
       property.address2,
       property.city,
       property.state,
       property.zipCode
-    ], ', ');
+    ]), ', ');
   }
 
   get totalEarningsTooltip() {
