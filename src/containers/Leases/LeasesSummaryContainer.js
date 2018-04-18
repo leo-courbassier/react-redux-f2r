@@ -20,7 +20,7 @@ class LeasesSummaryContainer extends Component {
         <LeasesSummary
           appState={this.props.appState}
           leases={appState.leasesList}
-          updateLeaseDetails={actions.updateLeaseDetails}
+          updateLeaseDetails={payload => { actions.updateLeaseDetails(payload, this.props.actions.loadLeasesList) }}
           goTo={goTo}
         />
       </Loader>
