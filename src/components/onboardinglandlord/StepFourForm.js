@@ -215,7 +215,7 @@ class StepFourForm extends Component {
               <BS.HelpBlock>
               <ol>
                 <li>We charge a 4% transaction fee</li>
-                <li>Can t be used for rent payments</li>
+                <li>{`Can't be used for rent payments`}</li>
                 <li>Simple refund process</li>
               </ol>
               </BS.HelpBlock>
@@ -254,6 +254,11 @@ class StepFourForm extends Component {
     const steps = [postDepositSection, dwollaCheckout, stripeCheckout];
     const panel = steps[this.state.activeKey];
 
+    const dwollaHelpBlock = (
+      <BS.HelpBlock className="text-center">
+        <strong>{`NOTICE: If used to receive recurring rent payments, we charge a $1 fee for each recurring rent payment that occurs.`}</strong>
+      </BS.HelpBlock>
+    );
 
     return (
 
@@ -449,7 +454,7 @@ class StepFourForm extends Component {
           </div>
          )}
       </div>
-      {this.props.appState[3].showDwolla && this.props.appState[3].showDwollaSucess !=true && (<DwollaPayment type="setup" dwollaCallback={this.showSucess.bind(this)} />)}
+      {this.props.appState[3].showDwolla && this.props.appState[3].showDwollaSucess !=true && (<DwollaPayment type="setup" helpBlock={dwollaHelpBlock} dwollaCallback={this.showSucess.bind(this)} />)}
       {this.props.appState[3].showDwollaSucess ==true && (
         <div className="successStepFour">
           <h4>SUCCESS!!!</h4>

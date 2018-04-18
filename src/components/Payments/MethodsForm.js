@@ -195,7 +195,9 @@ class MethodsForm extends Component {
 
     const dwollaHelpBlock = (
       <BS.HelpBlock className="text-center">
-        <strong>{`Accounts you have already added will show up, but re-adding them won't do anything.`}</strong>
+        <strong>{`NOTICE: If used to receive recurring rent payments, we charge a $1 fee for each recurring rent payment that occurs.`}</strong>
+        <br />
+        <strong>{`Also, accounts you have already added will show up, but re-adding them won't do anything.`}</strong>
       </BS.HelpBlock>
     );
 
