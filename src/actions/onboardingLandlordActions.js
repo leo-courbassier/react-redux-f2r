@@ -131,17 +131,13 @@ export function updateStepTwoForm(settings, name, value) {
 
 export function loadStepTwo(){
   return function (dispatch, getState) {
-    //let requestIncomeSources = api.getIncomeSources(dispatch, getState);
     let authHeader = api.getAuthHeaders(dispatch, getState);
     let requestUser = api.getUserDetails(dispatch, getState);
     let requestStates = api.getStateList(dispatch, getState);
-    let getPropertyList = api.getPropertyList(dispatch, getState);
     api.setStatus(dispatch, 'loading', 'stepTwoForm', true);
     Promise.all([
       requestUser,
-     // requestIncomeSources,
-      requestStates,
-      getPropertyList
+      requestStates
       ]).then((results) => {
       let user = results[0].userDetails;
       let landlordId = results[0].userDetails.userId;
@@ -318,22 +314,18 @@ export function loadStepThree(){
   return function (dispatch, getState) {
     let authHeader = api.getAuthHeaders(dispatch, getState);
     let requestUser = api.getUserDetails(dispatch, getState);
-    let requestAddresses = api.getAddresses(dispatch, getState);
     let requestStates = api.getStateList(dispatch, getState);
     let getPropertyList = api.getPropertyList(dispatch, getState);
-    
     api.setStatus(dispatch, 'loading', 'stepThreeForm', true);
     Promise.all([
       requestUser,
       requestStates,
-      requestAddresses,
       getPropertyList
       ]).then((results) => {
-
        let landlordId = results[0].userDetails.userId;
        let propertyId;
        let email = results[0].userDetails.email;
-       let propertyList = results[3];
+       let propertyList = results[2];
        let startDate;
        let endDate;
        let monthlyRent;
