@@ -287,9 +287,6 @@ export function getUserDetails(dispatch, getState, callback) {
   return get(services.USER_USER_DETAILS, getAuthHeaders(dispatch, getState), callback);
 }
 
-export function getPets(dispatch, getState) {
-  return get(services.TT_PETS, getAuthHeaders(dispatch, getState));
-}
 
 export function getLinkedAccounts(dispatch, getState) {
   return get(services.TT_LINKEDACCOUNTS, getAuthHeaders(dispatch, getState));
@@ -311,13 +308,9 @@ export function getLinkedinToken(dispatch, getState, callback) {
   return getText(services.LINKEDIN_TOKEN, getAuthHeaders(dispatch, getState), callback);
 }
 
-export function getIncomeSources(dispatch, getState) {
-  return get(services.TT_AI, getAuthHeaders(dispatch, getState));
-}
 
-export function getAddresses(dispatch, getState) {
-  return get(services.TT_ADDRESSES, getAuthHeaders(dispatch, getState));
-}
+
+
 
 export function getPaymentAccts(dispatch, getState) {
   return get(services.PAYMENT_ACCTS, getAuthHeaders(dispatch, getState));
@@ -344,7 +337,7 @@ export function postUserLoginUpdate(dispatch, getState, payload, callback) {
 }
 
 export function postStepOne(dispatch, getState, payload, callback) {
-  return post(services.TT_STEP1, getAuthHeaders(dispatch, getState), payload, callback);
+  return post(services.LL_STEP1, getAuthHeaders(dispatch, getState), payload, callback);
 }
 
 export function uploadProfilePic(dispatch, getState, file, callback) {
@@ -363,9 +356,7 @@ export function postStepThree(dispatch, getState, payload, callback) {
   return post(services.TT_STEP3, getAuthHeaders(dispatch, getState), payload, callback);
 }
 
-export function postStepSix(dispatch, getState, payload, callback) {
-  return post(services.TT_STEP6, getAuthHeaders(dispatch, getState), payload, callback);
-}
+
 
 export function getMandates(dispatch, getState, callback) {
   return get(services.TT_MANDATES, getAuthHeaders(dispatch, getState), callback);

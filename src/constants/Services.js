@@ -29,17 +29,13 @@ export const USER_PROPERTY_PIC = BASE_URL + '/prop/upload';
 export const LL_ADD_PROPERTY = BASE_URL + '/prop/addProp';
 export const GET_PROPERTY_LIST = BASE_URL + '/prop/property';
 
-export const TT_ADDPETS = BASE_URL + '/tt/addPets';
-export const TT_DELETEPETS = BASE_URL + '/tt/deletePets';
-export const TT_PETS = BASE_URL + '/tt/pets';
 
-export const TT_ADDRESSES = BASE_URL + '/tt/addresses';
 
-export const TT_STEP1 = BASE_URL + '/tt/step1';
+export const LL_STEP1 = BASE_URL + '/user/updateUser';
 export const TT_STEP2 = BASE_URL + '/prop/addProp';
 export const TT_STEP3 = BASE_URL + '/lease/create';
 export const ADD_TENANT = BASE_URL + '/user/invite';
-export const TT_STEP6 = BASE_URL + '/tt/step6';
+
 
 export const TT_LINKEDACCOUNTS = BASE_URL + '/tt/linkedAccounts';
 export const FACEBOOK_AUTHORIZEURL = BASE_URL + '/facebook/authorizeUrl';

@@ -59,8 +59,6 @@ export function loadStepOne(){
     .then((results) => {
 
       let user = results[0].userDetails;
-
-
       dispatch({ type: types.ONBOARDING_STEPONE_FORM_LOAD,
         user       
       });
@@ -77,8 +75,6 @@ export function saveStepOne(description,  dogs, cats, other, openNextStep, callb
     let authHeader = api.getAuthHeaders(dispatch, getState);
 
     let userId = getState().loginAppState.userInfo.id;
-
-    
     let statusAction = openNextStep ? 'stepOneFormProceed' : 'stepOneForm';
     api.setStatus(dispatch, 'saving', statusAction, true);
 
@@ -89,10 +85,9 @@ export function saveStepOne(description,  dogs, cats, other, openNextStep, callb
         }
       };
 
-    let payload = {"user": payloadUser, "petList": []};
 
 
-    api.postStepOne(dispatch, getState, payload, () => {
+      api.postStepOne(dispatch, getState, payloadUser, () => {
       api.setStatus(dispatch, 'saving', statusAction, false);
       api.setStatus(dispatch, 'modified', 'stepOneForm', false);
       dispatch({type: types.ONBOARDING_STEPONE_FORM_UPDATE, name: 'saved', value: true});
@@ -436,7 +431,7 @@ export function loadStepFour(){
     let authHeader = api.getAuthHeaders(dispatch, getState);
 
     let requestUser = api.getUserDetails(dispatch, getState);
-    let requestIncomeSources = api.getIncomeSources(dispatch, getState);
+    
     let requestStates = api.getStateList(dispatch, getState);
     let requestEmployerVerification = api.getEmployerVerification(dispatch, getState);
 
@@ -444,7 +439,6 @@ export function loadStepFour(){
     api.setStatus(dispatch, 'loading', 'stepFourForm', true);
     Promise.all([
       requestUser,
-      requestIncomeSources,
       requestStates,
       requestEmployerVerification
       ]).then((results) => {
@@ -456,11 +450,9 @@ export function loadStepFour(){
       let employerCity = user.employerCity;
       let employerState = user.employerState;
 
-      let incomeSources = results[1];
-      let stateList = results[2];
+      let stateList = results[1];
       //let propertyTypeList = {"APT":"Apartment"}//["APT","SFM","CONDO","DUPLEX","MOBILE_HOME","TOWNHOUSE"]
 
-      let employerVerification = results[3];
 
       dispatch({ type: types.ONBOARDING_STEPFOUR_FORM_LOAD,
         position,
@@ -468,10 +460,7 @@ export function loadStepFour(){
         employer,
         employerCity,
         employerState,
-        incomeSources,
-        //propertyTypeList,
-        stateList,
-        employerVerification });
+        stateList });
 
       api.getCityList(
           dispatch,
@@ -809,22 +798,6 @@ export function saveStepSix(
       mates = [spouseEmail];
     }
 
-
-    api.postStepSix(dispatch, getState, mandate, (mandate) => {
-      if(familyAges !== null){
-        let ages = familyAges.replace(/(^,)|(,$)/g, "").split(',');
-        let family = [];
-        _.map(ages, (age) => { family.push({"age": age}); });
-        api.addFamily(dispatch, getState, family);
-      }
-      if(mandateType == "SHARED" || mandateType == "JOINT"){
-        _.map(mates, (mate) => { api.inviteRoommate(dispatch, getState, `?email=${mate}&mandateId=${mandate.id}`); });
-      }
-      api.setStatus(dispatch, 'saving', 'stepSixForm', false);
-      api.setStatus(dispatch, 'modified', 'stepSixForm', false);
-      dispatch({ type: types.ONBOARDING_COMPLETE, success: true, reviewingProfile: true });
-      if (callback) callback();
-    });
 
 
 
