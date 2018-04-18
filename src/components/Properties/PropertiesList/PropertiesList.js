@@ -60,7 +60,7 @@ export default class PropertiesList extends Component {
   }
 
   renderDividedColumn(text1, text2) {
-    return (text1 || text2) && (
+    return (text1 !== null || text2 !== null) && (
       <span className="divide-column">
         <span className="half-col">{text1}</span>
         <span className="half-col">{text2}</span>
@@ -79,10 +79,10 @@ export default class PropertiesList extends Component {
             </Link>
           </td>
           <td>{this.getAddress(property)}</td>
-          <td>{this.renderStatus(property.propertyStatus)}</td>
+          <td>{this.renderStatus(property.status)}</td>
           <td>{property.rent}</td>
           <td>{this.renderDividedColumn(property.monthOccupied, property.rentCollected)}</td>
-          <td>{property.rentRemaining}</td>
+          <td>{this.renderDividedColumn(property.monthsLeft, property.rentRemaining)}</td>
           <td>{property.totalEarnings}</td>
           <td>{property.occupancyRate}</td>
           <td>{property.averageYield}</td>
@@ -110,7 +110,7 @@ export default class PropertiesList extends Component {
         <Table striped bordered condensed hover className="data-table">
           <thead>
             <tr>
-              <th>Property</th>
+              <th width="10%">Property</th>
               <th>Address</th>
               <th>Status</th>
               <th>Rent<br /><sub>(per month)</sub></th>
