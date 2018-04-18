@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import { Button, Label, Table, OverlayTrigger, Glyphicon, Tooltip } from 'react-bootstrap';
+import { Button, DropdownButton, MenuItem, Label, Table, OverlayTrigger, Glyphicon, Tooltip } from 'react-bootstrap';
 import { Link } from 'react-router';
 import _ from 'lodash';
+
+import ButtonSpinner from '../../ButtonSpinner';
 
 export default class LeasesSummary extends Component {
   static propTypes = {
@@ -28,6 +30,11 @@ export default class LeasesSummary extends Component {
     return lease.leaseId && (lease.monthToMonth ? 'Month to Month' : 'Set Term');
   }
 
+  updateLeaseStatus(id, leaseStatus) {
+    const payload = { id, leaseStatus };
+    this.props.updateLeaseDetails(payload);
+  }
+
   renderTenantList(tenantList) {
     return _.map(tenantList, (tenant, index) => (
       <div className="text-center" key={index}>
@@ -37,7 +44,7 @@ export default class LeasesSummary extends Component {
   }
 
   renderContent() {
-    const { goTo, leases } = this.props;
+    const { appState, goTo, leases } = this.props;
     return (
       _.map(leases, (lease, index) => (
         <tr key={index}>
@@ -55,13 +62,36 @@ export default class LeasesSummary extends Component {
           <td>{lease.refundableAmount}</td>
           <td>{lease.nonRefundableAmount}</td>
           <td>
-            {lease.leaseId &&
-              <span>
+            {appState.status.saving['leaseDetails'] ? (
+              <div className="lease-actions-loading">
+                <ButtonSpinner />
+              </div>
+            ) : lease.leaseId && (
+              <div className="lease-actions">
                 <Button block bsSize="small" bsStyle="success"
                   onClick={function () { goTo(`/dashboard/leases/${lease.leaseId}`); }}>Edit Lease</Button>
-                <Button block bsSize="small" bsStyle="danger">End Lease</Button>
-              </span>
-            }
+                {lease.leaseStatus === 'ACTIVE' ? (
+                  <Button
+                    bsSize="small"
+                    bsStyle="success"
+                    onClick={this.updateLeaseStatus.bind(this, lease.leaseId, 'ACTIVE')}
+                    block
+                  >
+                    Reopen Lease
+                  </Button>
+                ) : (
+                  <DropdownButton
+                    bsSize="small"
+                    bsStyle="danger"
+                    title="End Lease"
+                    id="dropdown-end-lease"
+                  >
+                    <MenuItem onClick={this.updateLeaseStatus.bind(this, lease.leaseId, 'COMPLETE')} eventKey="1">Completed</MenuItem>
+                    <MenuItem onClick={this.updateLeaseStatus.bind(this, lease.leaseId, 'EVICTED')} eventKey="2">Evicted</MenuItem>
+                  </DropdownButton>
+                )}
+              </div>
+            )}
           </td>
         </tr>
       ))

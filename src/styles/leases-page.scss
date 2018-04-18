@@ -32,3 +32,20 @@
 .tdDepositOther {
   width: 25%;
 }
+
+.lease-actions {
+  .btn {
+    width: 93px;
+  }
+  > .btn:first-child {
+    margin-bottom: 5px;
+  }
+}
+
+.lease-actions-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 95px;
+  height: 65px;
+}

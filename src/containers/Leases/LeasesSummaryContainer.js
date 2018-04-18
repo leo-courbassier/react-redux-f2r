@@ -17,7 +17,12 @@ class LeasesSummaryContainer extends Component {
 
     return (
       <Loader appState={this.props.appState} statusType="loading" statusAction="leasesList">
-        <LeasesSummary leases={appState.leasesList} goTo={goTo} />
+        <LeasesSummary
+          appState={this.props.appState}
+          leases={appState.leasesList}
+          updateLeaseDetails={actions.updateLeaseDetails}
+          goTo={goTo}
+        />
       </Loader>
     );
   }
