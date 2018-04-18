@@ -273,7 +273,7 @@ class StepTwoForm extends Component {
       <div className="your-job">
         <BS.FormGroup controlId="yourJob">
           <div className="row">
-          <div className='col-md-4 buttonStep2'>
+          <div className='col-md-4 buttonStep2 hide'>
 
             <FileReaderInput
             name="profilePic"
@@ -298,7 +298,7 @@ class StepTwoForm extends Component {
 
             </FileReaderInput>
           </div>
-            <div className='col-md-4'>
+            <div className='col-md-6'>
             <BS.ControlLabel>Property Title</BS.ControlLabel>
             <BS.FormControl
             value={store.propertyTitle}
@@ -307,7 +307,7 @@ class StepTwoForm extends Component {
             id="propertyTitle"
             type="text" />
             </div>
-            <div className='col-md-4'>
+            <div className='col-md-6'>
             <BS.ControlLabel>Property Type</BS.ControlLabel>
              {MyPropertyTypeList}
             </div>
@@ -388,7 +388,6 @@ class StepTwoForm extends Component {
     );
   }
 
-
   render() {
 
     let store = this.props.appState[STEP_ID];
@@ -428,186 +427,187 @@ class StepTwoForm extends Component {
     );
 
 
-     const MyPropertyTypeList = (
-       <select className="form-control">
-         <option value="" />
-         <option value="APT">Apartment</option>
-         <option value="SFM">Single Family Home</option>
-         <option value="CONDO">Condo</option>
-         <option value="DUPLEX">Duplex</option>
-         <option value="MOBILE_HOME">Mobile Home</option>
-         <option value="TOWNHOUSE">Town Home</option>
-       </select>
-   );
+    const MyPropertyTypeList = (
+      <select className="form-control">
+        <option value="" />
+        <option value="APT">Apartment</option>
+        <option value="SFM">Single Family Home</option>
+        <option value="CONDO">Condo</option>
+        <option value="DUPLEX">Duplex</option>
+        <option value="MOBILE_HOME">Mobile Home</option>
+        <option value="TOWNHOUSE">Town Home</option>
+      </select>
+    );
 
-   const interior = (
-     <div className="row">
-        <div className="col-md-12">
-
-          <div className="col-md-2">
-          <span className="check_box_aline">
-            Central A/C
-                <input
-                className="form-check-input"
-                defaultValue={store.centralAc}
-                onChange={this.keypress.bind(this)}
-                name="centralAc"
-                type="checkbox" />
-            </span>
+    const amenityList = (
+      <BS.Row className="step2-amenity-list">
+        <BS.Col sm={4}>
+          <div className="amenities-heading">
+            Interior
           </div>
-
-          <div className="col-md-2">
-          <span className="check_box_aline">
-            Hot Water Heater
+          <BS.Row className="row-narrow">
+            <BS.Col lg={6} md={12} sm={6}>
+              <label className="amenityCheckbox">
                 <input
-                className="form-check-input"
-                defaultValue={store.hotWater}
-                onChange={this.keypress.bind(this)}
-                name="hotWater"
-                type="checkbox" />
-            </span>
-          </div>
-
-          <div className="col-md-2">
-          <span className="check_box_aline">
-            Central Heat
+                  className="form-check-input"
+                  defaultValue={store.centralAc}
+                  onChange={this.keypress.bind(this)}
+                  name="centralAc"
+                  type="checkbox" />
+                Central A/C
+              </label>
+            </BS.Col>
+            <BS.Col lg={6} md={12} sm={6}>
+              <label className="amenityCheckbox">
                 <input
-                className="form-check-input"
-                defaultValue={store.centralHeat}
-                onChange={this.keypress.bind(this)}
-                name="centralHeat"
-                type="checkbox" />
-            </span>
-          </div>
-
-          <div className="col-md-2">
-          <span className="check_box_aline">
-            Washer / Dryer
+                  className="form-check-input"
+                  defaultValue={store.centralHeat}
+                  onChange={this.keypress.bind(this)}
+                  name="centralHeat"
+                  type="checkbox" />
+                Central Heat
+              </label>
+            </BS.Col>
+          </BS.Row>
+          <BS.Row className="row-narrow">
+            <BS.Col lg={6} md={12} sm={6}>
+              <label className="amenityCheckbox">
                 <input
-                className="form-check-input"
-                defaultValue={store.washer}
-                onChange={this.keypress.bind(this)}
-                name="washer"
-                type="checkbox" />
-            </span>
-          </div>
-          <div className="col-md-2">
-          <span className="check_box_aline">
-            Fence
+                  className="form-check-input"
+                  defaultValue={store.hotWater}
+                  onChange={this.keypress.bind(this)}
+                  name="hotWater"
+                  type="checkbox" />
+                Hot Water
+              </label>
+            </BS.Col>
+            <BS.Col lg={6} md={12} sm={6}>
+              <label className="amenityCheckbox">
                 <input
-                className="form-check-input"
-                defaultValue={store.fence}
-                onChange={this.keypress.bind(this)}
-                name="fence"
-                type="checkbox" />
-            </span>
+                  className="form-check-input"
+                  defaultValue={store.washer}
+                  onChange={this.keypress.bind(this)}
+                  name="washer"
+                  type="checkbox" />
+                Washer / Dryer
+              </label>
+            </BS.Col>
+          </BS.Row>
+        </BS.Col>
+        <BS.Col sm={4}>
+          <div className="amenities-heading">
+            Kitchen
           </div>
-
-          <div className="col-md-2">
-          <span className="check_box_aline">
-            Patio
+          <BS.Row className="row-narrow">
+            <BS.Col lg={6} md={12} sm={6}>
+              <label className="amenityCheckbox">
                 <input
-                className="form-check-input"
-                defaultValue={store.patio}
-                onChange={this.keypress.bind(this)}
-                name="patio"
-                type="checkbox" />
-            </span>
-          </div>
-
-        </div>
-
-     </div>
-   );
-
-   const kitchen = (
-     <div className="row">
-        <div className="col-md-12">
-
-          <div className="col-md-2">
-          <span className="check_box_aline">
-            Refrigerator
+                  className="form-check-input"
+                  defaultValue={store.refrigerator}
+                  onChange={this.keypress.bind(this)}
+                  name="refrigerator"
+                  type="checkbox" />
+                Refrigerator
+              </label>
+            </BS.Col>
+            <BS.Col lg={6} md={12} sm={6}>
+              <label className="amenityCheckbox">
                 <input
-                className="form-check-input"
-                defaultValue={store.refrigerator}
-                onChange={this.keypress.bind(this)}
-                name="refrigerator"
-                type="checkbox" />
-            </span>
-          </div>
-
-          <div className="col-md-2">
-          <span className="check_box_aline">
-            Dishwasher
+                  className="form-check-input"
+                  defaultValue={store.dishawer}
+                  onChange={this.keypress.bind(this)}
+                  name="dishawer"
+                  type="checkbox" />
+                Dishwasher
+              </label>
+            </BS.Col>
+          </BS.Row>
+          <BS.Row className="row-narrow">
+            <BS.Col lg={6} md={12} sm={6}>
+              <label className="amenityCheckbox">
                 <input
-                className="form-check-input"
-                defaultValue={store.dishawer}
-                onChange={this.keypress.bind(this)}
-                name="dishawer"
-                type="checkbox" />
-            </span>
-          </div>
-
-          <div className="col-md-2">
-          <span className="check_box_aline">
-            Oven/Range
+                  className="form-check-input"
+                  defaultValue={store.ovenRange}
+                  onChange={this.keypress.bind(this)}
+                  name="ovenRange"
+                  type="checkbox" />
+                Oven/Range
+              </label>
+            </BS.Col>
+            <BS.Col lg={6} md={12} sm={6}>
+              <label className="amenityCheckbox">
                 <input
-                className="form-check-input"
-                defaultValue={store.ovenRange}
-                onChange={this.keypress.bind(this)}
-                name="ovenRange"
-                type="checkbox" />
-            </span>
+                  className="form-check-input"
+                  defaultValue={store.microwave}
+                  onChange={this.keypress.bind(this)}
+                  name="microwave"
+                  type="checkbox" />
+                Microwave
+              </label>
+            </BS.Col>
+          </BS.Row>
+        </BS.Col>
+        <BS.Col sm={4}>
+          <div className="amenities-heading">
+            Exterior
           </div>
-
-          <div className="col-md-2">
-          <span className="check_box_aline">
-            Microwave
+          <BS.Row className="row-narrow">
+            <BS.Col lg={6} md={12} sm={6}>
+              <label className="amenityCheckbox">
                 <input
-                className="form-check-input"
-                defaultValue={store.microwave}
-                onChange={this.keypress.bind(this)}
-                name="microwave"
-                type="checkbox" />
-            </span>
-          </div>
-          <div className="col-md-2">
-          <span className="check_box_aline">
-            Yard
+                  className="form-check-input"
+                  defaultValue={store.yard}
+                  onChange={this.keypress.bind(this)}
+                  name="yard"
+                  type="checkbox" />
+                Yard
+              </label>
+            </BS.Col>
+            <BS.Col lg={6} md={12} sm={6}>
+              <label className="amenityCheckbox">
                 <input
-                className="form-check-input"
-                defaultValue={store.yard}
-                onChange={this.keypress.bind(this)}
-                name="yard"
-                type="checkbox" />
-            </span>
-          </div>
-
-          <div className="col-md-2">
-          <span className="check_box_aline">
-            Deck
+                  className="form-check-input"
+                  defaultValue={store.deck}
+                  onChange={this.keypress.bind(this)}
+                  name="deck"
+                  type="checkbox" />
+                Deck
+              </label>
+            </BS.Col>
+          </BS.Row>
+          <BS.Row className="row-narrow">
+            <BS.Col lg={6} md={12} sm={6}>
+              <label className="amenityCheckbox">
                 <input
-                className="form-check-input"
-                defaultValue={store.deck}
-                onChange={this.keypress.bind(this)}
-                name="deck"
-                type="checkbox" />
-            </span>
-          </div>
-        </div>
-
-     </div>
-   );
-
-   const exterior = (
-     <div className="row" />
-   );
+                  className="form-check-input"
+                  defaultValue={store.patio}
+                  onChange={this.keypress.bind(this)}
+                  name="patio"
+                  type="checkbox" />
+                Patio
+              </label>
+            </BS.Col>
+            <BS.Col lg={6} md={12} sm={6}>
+              <label className="amenityCheckbox">
+                <input
+                  className="form-check-input"
+                  defaultValue={store.fence}
+                  onChange={this.keypress.bind(this)}
+                  name="fence"
+                  type="checkbox" />
+                Fence
+              </label>
+            </BS.Col>
+          </BS.Row>
+        </BS.Col>
+      </BS.Row>
+    );
 
     const yourPropertyData = (
       <div className="your-job">
         <BS.FormGroup controlId="yourJob">
           <div className="row">
-          <div className='col-md-4 buttonStep2'>
+          <div className='col-md-4 buttonStep2 hide'>
 
             <FileReaderInput
             name="profilePic"
@@ -632,7 +632,7 @@ class StepTwoForm extends Component {
 
             </FileReaderInput>
           </div>
-            <div className='col-md-4'>
+            <div className='col-md-6'>
             <BS.ControlLabel>Property Title</BS.ControlLabel>
             <BS.FormControl
             value={store.propertyTitle}
@@ -641,7 +641,7 @@ class StepTwoForm extends Component {
             id="propertyTitle"
             type="text" />
             </div>
-            <div className='col-md-4'>
+            <div className='col-md-6'>
             <BS.ControlLabel>Property Type</BS.ControlLabel>
              {MyPropertyTypeList}
             </div>
@@ -738,19 +738,22 @@ class StepTwoForm extends Component {
     );
 
     const incomeSources = (
-  
-        <div className="col-md-4">
+      <div>
+        {sources}
+        {sources.length ? removeButton : null}
+        <BS.Row>
+          <BS.Col mdOffset={4} md={4} clsasName="text-center">
             <BS.Button
-            onClick={(e) => this.addIncomeSource(e)}
-            className="add-button"
-            type="submit"
-            bsStyle="success">
+              onClick={(e) => this.addIncomeSource(e)}
+              className="add-button"
+              type="submit"
+              bsStyle="success"
+            >
               Add Another Property
             </BS.Button>
-            
-            {sources.length ? removeButton : null}
-        </div>
-  
+          </BS.Col>
+        </BS.Row>
+      </div>
     );
 
     let warn = (<span className="warn">* <span className="text">{this.state.submitted}</span></span>);
@@ -770,68 +773,49 @@ class StepTwoForm extends Component {
             <div className="section">Property #1{warn}</div>
             {yourPropertyData}
             <div className="section">Amenities{warn}</div>
-            <div className="col-md-12">
-             <div className="col-md-4">
-             Interior
-             </div>
-             <div className="col-md-4">
-             Kitchen
-             </div>
-             <div className="col-md-4">
-             Exterior
-            </div>
-            </div>
-            <div className="col-md-12">
-                  {interior}
-            </div>
+            {amenityList}
 
-            <div className="col-md-12">
-                  {kitchen}
-            </div>
-
-
-         <div className="row">
-         <div className="section" />
-           <div className="col-md-4">
-               {this.props.showProceed && (
-                 <SubmitButton
-                 appState={this.props.appState}
-                 statusAction="stepTwoFormPrevious"
-                 submit={this.props.openPrevStep}
-                 textLoading=""
-                 bsStyle="success"
-                 className="proceed-button prev-button">
-                   Previous
-                 </SubmitButton>
-               )}
-              <BS.HelpBlock className="pullLeft warn">
-                {this.state.submitted}
-              </BS.HelpBlock>
-            </div>
             {incomeSources}
-            <div className="col-md-4">
+            <div className="section" />
+            <BS.Row>
+              <BS.Col md={4}>
+                {this.props.showProceed && (
+                  <SubmitButton
+                    appState={this.props.appState}
+                    statusAction="stepTwoFormPrevious"
+                    submit={this.props.openPrevStep}
+                    textLoading=""
+                    bsStyle="success"
+                    className="proceed-button prev-button"
+                  >
+                    Previous
+                  </SubmitButton>
+                )}
+                <BS.HelpBlock className="pullLeft warn">
+                  {this.state.submitted}
+                </BS.HelpBlock>
+              </BS.Col>
+              <BS.Col md={4} />
+              <BS.Col md={4}>
                 <div className="onboarding-submit">
-                        <SubmitButton
-                        appState={this.props.appState}
-                        statusAction="stepTwoForm"
-                        submit={_.partial(this.submit.bind(this), this.props.openNextStep)}
-                        textLoading="Next"
-                        className="proceed-button next-button"
-                        bsStyle="primary">
-                          Next
-                        </SubmitButton>
-                  </div>
-              </div>
-               <div className="col-md-12">
-                  {sources}
-             </div>
-            </div>
-         </form>
+                  <SubmitButton
+                    appState={this.props.appState}
+                    statusAction="stepTwoForm"
+                    submit={_.partial(this.submit.bind(this), this.props.openNextStep)}
+                    textLoading="Next"
+                    textModified="Next"
+                    className="proceed-button next-button"
+                    bsStyle="primary"
+                  >
+                    Next
+                  </SubmitButton>
+                </div>
+              </BS.Col>
+            </BS.Row>
+          </form>
         </div>
       </Loader>
     );
-
-
 
   }
 

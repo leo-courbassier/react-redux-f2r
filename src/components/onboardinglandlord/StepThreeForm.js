@@ -677,7 +677,7 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
     this.props.update(this.props.appState, e.target.name, e.target.value,index);
   }
 
- leasesKeypress(index,e) {
+  leasesKeypress(index,e) {
     this.props.update(this.props.appState, e.target.name, e.target.value,index);
   }
 
@@ -686,44 +686,45 @@ const { collectionTypeState: collectionTypeState } = this.props.appState[2];
     return true;
   }
 
-getRecipients() {
+  getRecipients() {
+    if(!this.props.appState[2].propertyList){
+       return [];
+    }
 
-      if(!this.props.appState[2].propertyList){
-         return [];
-      }
+    const landlords = this.props.appState[2].propertyList;//this.props.appState[2].propertyList;
 
-      const landlords = this.props.appState[2].propertyList;//this.props.appState[2].propertyList;
-
-      let recipients = {};
+    let recipients = {};
+    if (landlords.length > 0) {
       for (let landlord of landlords) {
-           recipients[landlord.id] = `${landlord.headline}`;
+        recipients[landlord.id] = `${landlord.headline}`;
       }
-      return recipients;
     }
+    return recipients;
+  }
 
-    isInvalid() {
-      let store = this.props.appState[STEP_ID];
-      let invalid = false;
+  isInvalid() {
+    let store = this.props.appState[STEP_ID];
+    let invalid = false;
 
-      if (
-        store.firstName ||
-        store.email ||
-        store.phone ||
-        store.lastName
-        )
-      {
-        if (store.phone && store.phone.replace(/\D/g,'').trim().length < 10){
-          invalid = 'Phone must be at least a 10 digit number.';
-        }
-
-        if (store.email && !isEmail(store.email)) {
-          invalid = 'Guarantor email must be valid.';
-        }
-
+    if (
+      store.firstName ||
+      store.email ||
+      store.phone ||
+      store.lastName
+      )
+    {
+      if (store.phone && store.phone.replace(/\D/g,'').trim().length < 10){
+        invalid = 'Phone must be at least a 10 digit number.';
       }
 
-      return invalid;
+      if (store.email && !isEmail(store.email)) {
+        invalid = 'Guarantor email must be valid.';
+      }
+
     }
+
+    return invalid;
+  }
 
   submit(openNextStep, e) {
     e.preventDefault();
