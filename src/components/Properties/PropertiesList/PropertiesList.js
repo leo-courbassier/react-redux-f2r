@@ -90,10 +90,6 @@ export default class PropertiesList extends Component {
           <td>{this.wrapCurrency(property.totalEarnings)}</td>
           <td>{property.occupancyRate}</td>
           <td>{this.wrapCurrency(property.averageYield)}</td>
-          <td>
-            <Button block bsSize="small" bsStyle="success">Search for Tenants</Button>
-            <Button block bsSize="small" bsStyle="warning">Search for Agents</Button>
-          </td>
         </tr>
       ))
     );
@@ -144,7 +140,6 @@ export default class PropertiesList extends Component {
                   </div>
                 </OverlayTrigger>
               </th>
-              <th />
             </tr>
           </thead>
           <tbody>
