@@ -19,8 +19,14 @@ const validate = values => {
   if (!numBeds) {
     errors.numBeds = 'No. of Beds is required.';
   }
+  if (numBeds * 10 % 10 !== 0) {
+    errors.numBeds = 'Only whole numbers are accepted.'
+  }
   if (!numBaths) {
     errors.numBaths = 'No. of Baths is required.';
+  }
+  if (numBaths * 100 % 50 !== 0) {
+    errors.numBaths = 'Only whole numbers and halves are accepted.';
   }
   return errors;
 };

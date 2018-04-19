@@ -194,6 +194,7 @@ export default class PropertyForm extends Component {
         name="numBeds"
         label="No. of Beds"
         type="number"
+        step={1}
         placeholder="Beds"
         component={renderInput}
       />
@@ -204,6 +205,7 @@ export default class PropertyForm extends Component {
         name="numBaths"
         label="No. of Baths"
         type="number"
+        step={0.5}
         placeholder="Baths"
         component={renderInput}
       />

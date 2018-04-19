@@ -12,6 +12,7 @@ const renderInput = field =>
           type={field.type}
           readOnly={field.readOnly}
           placeholder={field.placeholder ? field.placeholder : ''}
+          step={field.step}
           {...field.input} />
       </BS.Col>
       {hasFieldError(field) &&
@@ -27,6 +28,7 @@ const renderInput = field =>
       type={field.type}
       readOnly={field.readOnly}
       placeholder={field.placeholder ? field.placeholder : ''}
+      step={field.step}
       {...field.input} />
     {hasFieldError(field) &&
       <BS.HelpBlock className="text-danger">{field.meta.error}</BS.HelpBlock>}
