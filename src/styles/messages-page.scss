@@ -41,10 +41,10 @@ $messages-page-top-margin: 50px;
       display: block;
       padding: 8px 0;
       color: #fff;
-      background: darken($f2r-green, 10%);
+      background: darken($f2r-blue, 10%);
       text-align: center;
       &.active {
-        background: $f2r-green;
+        background: $f2r-blue;
       }
     }
     @media (min-width: $screen-small) {
@@ -58,7 +58,7 @@ $messages-page-top-margin: 50px;
         height: 0;
         border: solid transparent;
         border-color: rgba(136, 183, 213, 0);
-        border-left-color: $f2r-green;
+        border-left-color: $f2r-blue;
         border-width: 18px 0 18px 10px;
         pointer-events: none;
         z-index: 1;
@@ -67,7 +67,7 @@ $messages-page-top-margin: 50px;
   }
   .inbox-content {
     padding: 10px 15px;
-    border: 1px solid $f2r-green;
+    border: 1px solid $f2r-blue;
     min-height: 65vh;
   }
   .inbox-messages {
