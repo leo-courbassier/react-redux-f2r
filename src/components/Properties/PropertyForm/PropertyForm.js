@@ -16,40 +16,22 @@ export default class PropertyForm extends Component {
     geoState: PropTypes.object.isRequired,
     geoActions: PropTypes.object.isRequired,
     savePropertyDetails: PropTypes.func.isRequired,
-    stateCode: PropTypes.string
+    stateCode: PropTypes.string,
+    propertyLocalPic: PropTypes.object,
+    setPropertyLocalPic: PropTypes.func.isRequired
   };
 
-  constructor(props) {
-    super(props);
-    const property = _.get(props, ['appState', 'propertyProfile'], null);
-
-    this.state = {
-      imageURL: props.propertyId && property ? getLastPropertyImageURL(property) : null
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { geoActions, stateCode } = nextProps;
-    if (this.props.stateCode !== stateCode) {
-      geoActions.loadCityList(stateCode);
-    }
-    const nextProperty = _.get(nextProps, ['appState', 'propertyProfile'], null);
-    if (nextProperty) {
-      const prevImageUrls = _.get(this.props, ['appState', 'propertyProfile', 'imageUrls'], []);
-      const nextImageUrls = _.get(nextProperty, ['imageUrls'], []);
-      if (prevImageUrls.length !== nextProperty.imageUrls.length) {
-        this.setState({
-          imageURL: getLastPropertyImageURL(nextProperty)
-        });
-      }
-    }
+  componentWillMount() {
+    const { setPropertyLocalPic } = this.props;
+    setPropertyLocalPic(null);
   }
 
   handleFileChange(e, results) {
+    const { setPropertyLocalPic } = this.props;
     results.forEach(result => {
       const [e, file] = result;
-      this.setState({
-        imageURL: e.target.result,
+      setPropertyLocalPic({
+        url: e.target.result,
         file
       });
     });
@@ -57,22 +39,21 @@ export default class PropertyForm extends Component {
 
   handleStateChange = (value) => {
     const { geoActions } = this.props;
-    geoActions.loadCityList(value);
+    value && geoActions.loadCityList(value);
   }
 
   handleFormSubmit = (values) => {
-    const { propertyId, savePropertyDetails } = this.props;
-    const { file } = this.state;
+    const { propertyLocalPic, propertyId, savePropertyDetails } = this.props;
     savePropertyDetails(_.merge({}, values, {
       id: propertyId,
-      file
+      file: propertyLocalPic ? propertyLocalPic.file : undefined
     }));
   }
 
   renderProfileImage() {
-    const { appState, params } = this.props;
+    const { appState, params, propertyLocalPic } = this.props;
     const { status, propertyProfile: property } = appState;
-    const { imageURL } = this.state;
+    const imageURL = propertyLocalPic ? propertyLocalPic.url : getLastPropertyImageURL(property);
     return (
       <div className="property-image">
         <div className="section section-padded">Profile Image</div>
