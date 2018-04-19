@@ -35,10 +35,9 @@ export default class SubmitFooter extends Component {
             className="submit-button"
             bsStyle="success"
             disabled={submitting}
-            textLoading="Saving..."
             type="submit">
             {submitting && <div className="spinner"><ButtonSpinner /></div>}
-            <div className="text">Save</div>
+            <div className="text">{submitting ? 'Saving' : 'Save'}</div>
           </BS.Button>
         </div>
       </div>

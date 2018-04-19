@@ -359,8 +359,8 @@ class StepOneForm extends Component {
                    {this.props.showProceed && (
                       <SubmitButton
                       appState={this.props.appState}
-                      
-                      submit={_.partial(this.props.openPreviousStep)}           
+
+                      submit={_.partial(this.props.openPreviousStep)}
                       disabled={this.isMandatoryInvalid()}
                       bsStyle="success"
                       className="prev-button">
@@ -373,7 +373,7 @@ class StepOneForm extends Component {
                    {this.props.showProceed && (
                       <SubmitButton
                       appState={this.props.appState}
-                     
+
                       submit={_.partial(this.props.openNextStep)}
                       bsStyle="success"
                       className="skyp-button">
@@ -384,7 +384,7 @@ class StepOneForm extends Component {
           <div className="onboarding-submit">
             <SubmitButton
             appState={this.props.appState}
-            statusAction="stepOneForm"
+            statusAction="stepOneFormProceed"
             submit={_.partial(this.submit.bind(this), false)}
             textLoading="Saving"
             textModified="Next"

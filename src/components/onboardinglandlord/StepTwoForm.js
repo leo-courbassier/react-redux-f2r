@@ -85,8 +85,8 @@ class StepTwoForm extends Component {
             <div className="onboarding-submit">
               <SubmitButton
                 appState={appState}
-                statusAction="stepTwoForm"
-                textLoading="Next"
+                statusAction="propertyProfile"
+                textLoading="Saving"
                 textModified="Next"
                 submit={openNextStep}
                 className="proceed-button next-button"
