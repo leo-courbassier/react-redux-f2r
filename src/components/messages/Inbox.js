@@ -27,9 +27,11 @@ class Inbox extends Component {
       return (
         <Compose
           appState={this.props.appState}
+          load={this.props.loadCompose}
           keypress={this.props.composeKeypress}
           updateTo={this.props.updateTo}
           updateToUserId={this.props.updateToUserId}
+          recipientId={this.props.recipientId}
           send={this.props.sendMessage}
           />
       );

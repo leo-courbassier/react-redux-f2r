@@ -22,6 +22,7 @@ const initialState = {
   tenants: [],
 
   compose: {
+    recipientsDropdown: 'Choose...',
     to: '',
     toUserId: null,
     subject: '',
@@ -237,6 +238,17 @@ export default function messagesAppState(state = initialState, action) {
       {
         let newState = objectAssign({}, state);
         newState['singleMessages'][action.folder][action.id].newMessageFlag = false;
+        return newState;
+      }
+
+    case types.MESSAGES_COMPOSE_LOAD:
+      {
+        let newState = objectAssign({}, state);
+        newState.tenants = action.tenants;
+        if (action.tenantId) {
+          newState.compose.recipientsDropdown = action.tenantId;
+          newState.compose.toUserId = action.tenantId;
+        }
         return newState;
       }
 

@@ -13,14 +13,15 @@ export function loadMessages(folder, onlyMessages, callback) {
     if (folder === 'inbox') requests.push(api.getMessageInbox(dispatch, getState, current, pageSize));
     else requests.push(api.getMessageOutbox(dispatch, getState, current, pageSize));
 
-    if (!onlyMessages) requests.push(api.getLeaseTenants(dispatch, getState));
+    // No longer needed because Compose loads its own tenant list
+    // if (!onlyMessages) requests.push(api.getLeaseTenants(dispatch, getState));
 
     api.setStatus(dispatch, 'loading', folder, true);
 
     Promise.all(requests)
     .then((results) => {
       let messages = results[0];
-      let tenants = !onlyMessages ? results[1] : null;
+      // let tenants = !onlyMessages ? results[1] : null;
       let data = null;
 
       if (messages.length > 0) {
@@ -31,7 +32,7 @@ export function loadMessages(folder, onlyMessages, callback) {
         };
       }
 
-      dispatch({type: types.MESSAGES_LOAD, data, folder, tenants});
+      dispatch({type: types.MESSAGES_LOAD, data, folder});
 
       api.setStatus(dispatch, 'loading', folder, false);
 
@@ -222,6 +223,28 @@ export function markAsRead(folder, id, callback) {
       dispatch({type: types.MESSAGES_MARK_AS_READ, folder, id});
       dispatch({type: types.NOTIFICATION_MESSAGES_UNREAD_DECREMENT});
       if (callback) callback(success);
+    });
+  };
+}
+
+export function loadCompose(recipientId, callback) {
+  return function (dispatch, getState) {
+    let requestTenants = api.getLeaseTenants(dispatch, getState);
+
+    api.setStatus(dispatch, 'loading', 'messagesCompose', true);
+
+    Promise.all([
+      requestTenants
+    ])
+    .then((results) => {
+      let tenants = results[0];
+      let tenantId = parseInt(recipientId);
+
+      dispatch({type: types.MESSAGES_COMPOSE_LOAD, tenants, tenantId});
+
+      api.setStatus(dispatch, 'loading', 'messagesCompose', false);
+
+      if (callback) callback();
     });
   };
 }

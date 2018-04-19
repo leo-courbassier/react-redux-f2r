@@ -38,6 +38,7 @@ class MessagesPage extends Component {
 
               folder={this.getFolder()}
               messageId={this.props.routeParams.id}
+              recipientId={this.props.routeParams.id}
 
               updateUnreadCount={() => { this.context.store.dispatch(updateMessages()); }}
               updateNewMessages={(newMessages) => { this.context.store.dispatch(updateNewMessages(newMessages)); }}
@@ -52,6 +53,7 @@ class MessagesPage extends Component {
               loadMessage={this.props.actions.loadMessage}
               markAsRead={this.props.actions.markAsRead}
 
+              loadCompose={this.props.actions.loadCompose}
               composeKeypress={this.props.actions.updateComposeForm}
               updateTo={this.props.actions.updateTo}
               updateToUserId={this.props.actions.updateToUserId}
