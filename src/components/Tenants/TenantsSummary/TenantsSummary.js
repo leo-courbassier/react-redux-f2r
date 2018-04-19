@@ -148,7 +148,7 @@ export default class TenantsSummary extends Component {
     const { tenants } = this.props;
     return (
       <div>
-        <Table bordered condensed hover className="tenant-summary-table">
+        <Table condensed hover className="tenant-summary-table">
           <thead>
             <tr>
               <th className="tenantPropertyName">Property</th>
