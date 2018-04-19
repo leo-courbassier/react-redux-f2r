@@ -45,7 +45,7 @@ export default class DateInput extends Component {
   handleChangeMonth = (event) => {
     const { input: { onChange } } = this.props;
     const prevValues = this.getValueArray();
-    var month = event.target.value;
+    let month = parseInt(event.target.value, 10) + 1;
     if (parseInt(month, 10) < 10) month = '0' + month;
     const value = prevValues[0] + '-' + month + '-' + prevValues[2];
     onChange(value);
@@ -78,7 +78,7 @@ export default class DateInput extends Component {
                 optionList={this.months}
                 defaultOption="Month..."
                 defaultOptionName="Month..."
-                defaultValue={parseInt(value[1], 10)}
+                defaultValue={parseInt(value[1], 10) - 1}
                 keyValue
                 ref="dobMonth"
                />

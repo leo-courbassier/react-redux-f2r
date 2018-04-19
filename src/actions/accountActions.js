@@ -50,8 +50,10 @@ export const loadProfileInfo = () => {
 
 export const saveUserDetails = (payload, callback) => {
   return function (dispatch, getState) {
+    api.setStatus(dispatch, 'saving', 'accountProfile', true);
     api.postUserDetails(dispatch, getState, payload, (response) => {
       dispatch({ type: types.PROFILE_LOAD, payload: response });
+      api.setStatus(dispatch, 'saving', 'accountProfile', false);
       dispatch(updateUserInfo(user => {
         dispatch({type: types.DASHBOARD_USER_SAVE, user});
       }));

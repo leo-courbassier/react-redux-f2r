@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import * as BS from 'react-bootstrap';
-import _ from 'underscore';
+import _ from 'lodash';
 import FileReaderInput from 'react-file-reader-input';
 import { Field } from 'redux-form';
 import * as api from '../../../actions/api';
@@ -9,8 +9,8 @@ import * as Conversion from '../../../utils/conversion';
 import Loader from '../../Loader';
 import ButtonSpinner from '../../ButtonSpinner';
 import SubmitButton from '../../SubmitButton';
-import SubmitFooter from '../SubmitFooter';
-import { renderInput, renderTextarea, DateInput } from '../../ReduxFormFields';
+import { renderInput, renderTextarea, DateInput, SubmitFooter } from '../../ReduxFormFields';
+import { reduxFormProps } from '../../../utils/form';
 
 
 class ProfileForm extends Component {
@@ -76,6 +76,7 @@ class ProfileForm extends Component {
 
     const imageURL = user.profilePicURL ? Conversion.urlToHttps(user.profilePicURL) : '';
     const uploadComplete = status.uploading['profilePicUpload'] == false;
+    const submitting = _.get(this.props, ['appState', 'status', 'saving', 'accountProfile']);
 
     const profileImage = (
       <div className="profile-image">
@@ -250,7 +251,7 @@ class ProfileForm extends Component {
           {address}
           <div className="section section-padded">Backup Info</div>
           {backupInfo}
-          {this.renderFooter()}
+          <SubmitFooter submitting={submitting} {...reduxFormProps(this.props)} />
         </BS.Form>
       </div>
     );
