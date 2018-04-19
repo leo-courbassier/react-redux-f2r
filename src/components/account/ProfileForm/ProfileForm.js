@@ -166,7 +166,7 @@ class ProfileForm extends Component {
       <Field
         name="userDetails.phoneNumber"
         type="text"
-        placeholder="ex: (555) 555 5555"
+        placeholder="e.g: (555) 555 5555"
         component={renderInput} />
     );
 
@@ -226,7 +226,7 @@ class ProfileForm extends Component {
             name="userDetails.alternativePhone"
             label="Backup Phone"
             type="text"
-            placeholder="ex: (555) 555 5555"
+            placeholder="e.g: (555) 555 5555"
             component={renderInput} />
         </div>
       </div>
