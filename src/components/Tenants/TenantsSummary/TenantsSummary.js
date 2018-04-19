@@ -101,7 +101,7 @@ export default class TenantsSummary extends Component {
                 }
                 <td className="tenantAction">
                   <Button block bsSize="small" bsStyle="success"
-                    onClick={function () { goTo(`/dashboard/tenants/${tenant.tenantId}`); }}>
+                    onClick={function () { goTo(`/messages/compose/${item.id}`); }}>
                     Contact Tenant
                   </Button>
                 </td>
@@ -123,10 +123,6 @@ export default class TenantsSummary extends Component {
                 <td className="tenantsOwed">N/A</td>
                 <td className="tenantReceived">N/A</td>
                 <td className="tenantAction">
-                  <Button block bsSize="small" bsStyle="success"
-                    onClick={function () { goTo(`/dashboard/tenants/${tenant.tenantId}`); }}>
-                    Contact Tenant
-                  </Button>
                 </td>
               </tr>
             )

@@ -3,6 +3,7 @@ import * as BS from 'react-bootstrap';
 import TextareaAutosize from 'react-autosize-textarea';
 import isEmail from 'validator/lib/isEmail';
 
+import Loader from '../Loader';
 import SelectOptions from '../SelectOptions';
 import SubmitButton from '../SubmitButton';
 
@@ -15,11 +16,17 @@ class Compose extends Component {
     showEmailField: false
   }
 
+  componentWillMount() {
+    this.props.load(this.props.recipientId);
+  }
+
   keypress(e) {
     this.props.keypress(e.target.name, e.target.value);
   }
 
   handleRecipient(e) {
+    this.props.keypress(e.target.name, e.target.value);
+
     if (e.target.value === '') {
       this.props.updateToUserId(null);
       this.setState({showEmailField: false});
@@ -149,76 +156,79 @@ class Compose extends Component {
 
     return (
       <div className="compose">
-        <form>
-          {tenants.length > 0 && (
-            <BS.FormGroup controlId="recipient" validationState={!this.getValidationState('recipient').valid ? 'error' : null}>
-              <BS.ControlLabel>To</BS.ControlLabel>
-              <SelectOptions
-                name="recipientsDropdown"
-                onChange={this.handleRecipient.bind(this)}
-                value="Choose..."
-                optionList={this.getRecipients()}
-                defaultOption="Choose..."
-                defaultOptionName="Choose..."
-                keyValue
-               />
-              <BS.HelpBlock className="text-danger">{this.getValidationState('recipient').error}</BS.HelpBlock>
-            </BS.FormGroup>
-          )}
-          {(this.state.showEmailField || tenants.length < 1) && (
-            <BS.FormGroup controlId="to" validationState={!this.getValidationState('to').valid ? 'error' : null}>
-              <BS.ControlLabel>Email</BS.ControlLabel>
+        <Loader appState={this.props.appState} statusType="loading" statusAction="messagesCompose">
+          <form>
+            {tenants.length > 0 && (
+              <BS.FormGroup controlId="recipient" validationState={!this.getValidationState('recipient').valid ? 'error' : null}>
+                <BS.ControlLabel>To</BS.ControlLabel>
+                <SelectOptions
+                  name="recipientsDropdown"
+                  onChange={this.handleRecipient.bind(this)}
+                  defaultValue={compose.recipientsDropdown}
+                  optionList={this.getRecipients()}
+                  defaultOption="Choose..."
+                  defaultOptionName="Choose..."
+                  keyValue
+                 />
+                <BS.HelpBlock className="text-danger">{this.getValidationState('recipient').error}</BS.HelpBlock>
+              </BS.FormGroup>
+            )}
+            {(this.state.showEmailField || tenants.length < 1) && (
+              <BS.FormGroup controlId="to" validationState={!this.getValidationState('to').valid ? 'error' : null}>
+                <BS.ControlLabel>Email</BS.ControlLabel>
+                <BS.FormControl
+                  name="to"
+                  onChange={this.keypress.bind(this)}
+                  onBlur={this.updateTo.bind(this)}
+                  type="text"
+                  placeholder="Recipient's email address"
+                  value={compose.to}
+                  autoFocus />
+                <BS.HelpBlock className="text-danger">{this.getValidationState('to').error}</BS.HelpBlock>
+              </BS.FormGroup>
+            )}
+            <BS.FormGroup controlId="subject" validationState={!this.getValidationState('subject').valid ? 'error' : null}>
+              <BS.ControlLabel>Subject</BS.ControlLabel>
               <BS.FormControl
-                name="to"
+                name="subject"
                 onChange={this.keypress.bind(this)}
-                onBlur={this.updateTo.bind(this)}
                 type="text"
-                placeholder="Recipient's email address"
-                value={compose.to}
-                autoFocus />
-              <BS.HelpBlock className="text-danger">{this.getValidationState('to').error}</BS.HelpBlock>
+                value={compose.subject}
+                maxLength={78}
+                autoFocus={!!this.props.recipientId} />
+              <BS.HelpBlock className="text-danger">{this.getValidationState('subject').error}</BS.HelpBlock>
             </BS.FormGroup>
-          )}
-          <BS.FormGroup controlId="subject" validationState={!this.getValidationState('subject').valid ? 'error' : null}>
-            <BS.ControlLabel>Subject</BS.ControlLabel>
-            <BS.FormControl
-              name="subject"
-              onChange={this.keypress.bind(this)}
-              type="text"
-              value={compose.subject}
-              maxLength={78} />
-            <BS.HelpBlock className="text-danger">{this.getValidationState('subject').error}</BS.HelpBlock>
-          </BS.FormGroup>
-          <BS.FormGroup controlId="message"  validationState={!this.getValidationState('message').valid ? 'error' : null}>
-            <BS.ControlLabel>Message</BS.ControlLabel>
-            <TextareaAutosize
-              className="compose-message form-control"
-              name="message"
-              onChange={this.keypress.bind(this)}
-              value={compose.message}
-              />
-            <BS.HelpBlock className="text-danger">{this.getValidationState('message').error}</BS.HelpBlock>
-          </BS.FormGroup>
-          <div className="clearfix">
-            <div className="pull-left">
-              {compose.success === true && !isSending && (
-                <BS.HelpBlock><strong className="text-success">Message sent.</strong></BS.HelpBlock>
-              )}
-              {compose.success === false && !isSending && (
-                <BS.HelpBlock><strong className="text-danger">Sorry, an error occurred.</strong></BS.HelpBlock>
-              )}
+            <BS.FormGroup controlId="message"  validationState={!this.getValidationState('message').valid ? 'error' : null}>
+              <BS.ControlLabel>Message</BS.ControlLabel>
+              <TextareaAutosize
+                className="compose-message form-control"
+                name="message"
+                onChange={this.keypress.bind(this)}
+                value={compose.message}
+                />
+              <BS.HelpBlock className="text-danger">{this.getValidationState('message').error}</BS.HelpBlock>
+            </BS.FormGroup>
+            <div className="clearfix">
+              <div className="pull-left">
+                {compose.success === true && !isSending && (
+                  <BS.HelpBlock><strong className="text-success">Message sent.</strong></BS.HelpBlock>
+                )}
+                {compose.success === false && !isSending && (
+                  <BS.HelpBlock><strong className="text-danger">Sorry, an error occurred.</strong></BS.HelpBlock>
+                )}
+              </div>
+              <div className="pull-right">
+                <SubmitButton
+                  appState={this.props.appState}
+                  submit={this.submit.bind(this)}
+                  statusAction="composeSubmit"
+                  textLoading="Sending">
+                  Send
+                </SubmitButton>
+              </div>
             </div>
-            <div className="pull-right">
-              <SubmitButton
-                appState={this.props.appState}
-                submit={this.submit.bind(this)}
-                statusAction="composeSubmit"
-                textLoading="Sending">
-                Send
-              </SubmitButton>
-            </div>
-          </div>
-        </form>
+          </form>
+        </Loader>
       </div>
     );
   }
