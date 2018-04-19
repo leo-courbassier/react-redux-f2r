@@ -33,6 +33,11 @@ export const initPropertyProfile = () => ({
   type: types.PROPERTY_PROFILE_INIT
 });
 
+export const setPropertyLocalPic = (payload) => ({
+  type: types.PROPERTY_LOCAL_PIC_SET,
+  payload
+});
+
 export const loadPropertyProfile = (propertyId) => {
   return (dispatch, getState) => {
     let requestPropertyProfile = api.getLLPropertyProfile(propertyId, dispatch, getState);

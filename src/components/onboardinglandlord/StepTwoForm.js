@@ -6,7 +6,7 @@ import Loader from '../Loader';
 import FileReaderInput from 'react-file-reader-input';
 import SubmitButton from '../SubmitButton';
 import SelectOptions from '../SelectOptions';
-import _ from 'underscore';
+import _ from 'lodash';
 import * as Validation from '../../utils/validation';
 import isEmail from 'validator/lib/isEmail';
 import isCurrency from 'validator/lib/isCurrency';
@@ -45,13 +45,14 @@ class StepTwoForm extends Component {
 
   handleSavePropertyDetails = (values) => {
     const { propertyActions, goTo } = this.props;
-    propertyActions.addPropertyDetails(values, (property) => {});
+    propertyActions.addPropertyDetails(_.merge({propertyClass: 'STANDARD'}, values), (property) => {});
   }
 
   handleAddAnother = () => {
-    const { resetForm } = this.props;
+    const { propertyActions, resetForm } = this.props;
     resetForm('propertyForm');
-    this.refs.propertyForm.setState({ imageURL: null });
+    propertyActions.setPropertyLocalPic(null);
+    propertyActions.initPropertyProfile();
   }
 
   renderFooter() {
@@ -125,6 +126,7 @@ StepTwoForm.contextTypes = {
 
 function mapStateToProps(state) {
   return {
+    appState: state.propertiesAppState,
     geoState: state.geoAppState
   };
 }

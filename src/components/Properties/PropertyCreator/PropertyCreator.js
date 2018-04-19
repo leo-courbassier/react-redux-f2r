@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import _ from 'lodash';
 import Loader from '../../Loader';
 import TabPanel from '../../TabPanel';
 import PageTitle from '../../PageTitle';
@@ -21,7 +22,7 @@ export default class PropertyCreator extends Component {
 
   handleSavePropertyDetails = (values) => {
     const { actions, goTo } = this.props;
-    actions.addPropertyDetails(values, (property) => {
+    actions.addPropertyDetails(_.merge({propertyClass: 'STANDARD'}, values), (property) => {
       goTo(`/dashboard/properties/${property.id}`);
     });
   }

@@ -10,9 +10,10 @@ const initialState = {
   },
   editMode: {},
   propertiesList: [],
-  propertyProfile: {},
+  propertyProfile: null,
   propertyLeases: [],
-  propertyTenants: []
+  propertyTenants: [],
+  propertyLocalPic: null
 };
 
 
@@ -61,7 +62,10 @@ export default function propertiesAppState(state = initialState, action) {
       return _.assign({}, state, {
         propertyTenants: action.payload
       });
-
+    case types.PROPERTY_LOCAL_PIC_SET:
+      return _.assign({}, state, {
+        propertyLocalPic: action.payload
+      });
     default:
       return state;
   }
