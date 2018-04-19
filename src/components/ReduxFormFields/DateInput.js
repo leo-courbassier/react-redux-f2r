@@ -5,20 +5,20 @@ import SelectOptions from '../SelectOptions';
 
 export default class DateInput extends Component {
   get months() {
-    return {
-      '01': 'January',
-      '02': 'February',
-      '03': 'March',
-      '04': 'April',
-      '05': 'May',
-      '06': 'June',
-      '07': 'July',
-      '08': 'August',
-      '09': 'September',
-      '10': 'October',
-      '11': 'November',
-      '12': 'December'
-    };
+    return [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
   }
   get days() {
     let days = [];
@@ -45,7 +45,9 @@ export default class DateInput extends Component {
   handleChangeMonth = (event) => {
     const { input: { onChange } } = this.props;
     const prevValues = this.getValueArray();
-    const value = prevValues[0] + '-' + event.target.value + '-' + prevValues[2];
+    var month = event.target.value;
+    if (parseInt(month, 10) < 10) month = '0' + month;
+    const value = prevValues[0] + '-' + month + '-' + prevValues[2];
     onChange(value);
   }
   handleChangeDay = (event) => {
@@ -76,7 +78,7 @@ export default class DateInput extends Component {
                 optionList={this.months}
                 defaultOption="Month..."
                 defaultOptionName="Month..."
-                defaultValue={value[1]}
+                defaultValue={parseInt(value[1], 10)}
                 keyValue
                 ref="dobMonth"
                />
