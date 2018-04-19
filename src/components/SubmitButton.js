@@ -74,7 +74,7 @@ class SubmitButton extends Component {
 }
 
 SubmitButton.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
   appState: PropTypes.object.isRequired,
   textLoading: PropTypes.string.isRequired,
   textModified: PropTypes.string,

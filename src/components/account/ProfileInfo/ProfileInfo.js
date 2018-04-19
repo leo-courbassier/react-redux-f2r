@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { Col, Glyphicon } from 'react-bootstrap';
-import UserRating from '../UserRating';
 import _ from 'lodash';
 
 export default class ProfileInfo extends Component {
@@ -14,12 +13,12 @@ export default class ProfileInfo extends Component {
   get address() {
     const { profile } = this.props;
     const userDetails = _.get(profile, 'userDetails', {});
-    return [
+    return _.compact([
       userDetails.address,
       userDetails.city,
       userDetails.state,
       userDetails.zipCode
-    ].join(', ');
+    ]).join(', ');
   }
 
   renderView(){
@@ -28,7 +27,7 @@ export default class ProfileInfo extends Component {
     return (
       <div>
         <div className="row">
-          <Col xs={6} sm={5} md={6}>
+          <Col xs={8}>
             <div className="user-name">{profile.firstName} {profile.lastName}</div>
             <a href={'mailto:' + profile.email}>{profile.email}</a>
             <br/>
@@ -36,10 +35,7 @@ export default class ProfileInfo extends Component {
             <br/>
             {userDetails.dateOfBirth || 'No date of birth provided'}
           </Col>
-          <Col xs={6} sm={3} md={3} className="right-column">
-            <UserRating userInfo={profile} />
-          </Col>
-          <Col xs={6} sm={3} md={3} className="right-column">
+          <Col xs={4} className="right-column">
             <img src={profile.profilePicURL} />
           </Col>
         </div>
@@ -66,20 +62,6 @@ export default class ProfileInfo extends Component {
             <div className="value">
               {userDetails.alternativePhone || 'Not provided'}
             </div>
-          </Col>
-          <Col xs={4} sm={4} md={4}>
-            <div className="sub-heading">Alternate Contact</div>
-            <div className="value">Some name</div>
-          </Col>
-          <Col xs={4} sm={4} md={4}>
-            <div className="sub-heading">Backup Email</div>
-            <div className="value">
-              {userDetails.alternativeEmail || 'Not provided'}
-            </div>
-          </Col>
-          <Col xs={4} sm={4} md={4}>
-            <div className="sub-heading">Phone</div>
-            <div className="value">Some phone</div>
           </Col>
         </div>
       </div>

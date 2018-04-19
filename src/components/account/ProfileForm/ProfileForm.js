@@ -10,7 +10,7 @@ import Loader from '../../Loader';
 import ButtonSpinner from '../../ButtonSpinner';
 import SubmitButton from '../../SubmitButton';
 import SubmitFooter from '../SubmitFooter';
-import { renderInput, DateInput } from '../../ReduxFormFields';
+import { renderInput, renderTextarea, DateInput } from '../../ReduxFormFields';
 
 
 class ProfileForm extends Component {
@@ -154,7 +154,7 @@ class ProfileForm extends Component {
       <Field name="userDetails.description"
         label="Description"
         type="textarea"
-        component={renderInput} />
+        component={renderTextarea} />
     );
 
     const dateOfBirth = (
