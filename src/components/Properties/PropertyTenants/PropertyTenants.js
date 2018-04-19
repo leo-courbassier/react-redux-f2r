@@ -19,7 +19,6 @@ export default class PropertyTenants extends Component {
     return (
       _.map(propertyTenants, (tenant, index) => (
         <tr key={index}>
-          <td>{tenant.leaseId}</td>
           <td>
             {tenant.firstName} {tenant.middleName} {tenant.lastName}
           </td>
@@ -42,10 +41,9 @@ export default class PropertyTenants extends Component {
     const { propertyTenants } = this.props;
     return (
       <div>
-        <Table striped bordered condensed hover className="properties-list-table text-center">
+        <Table condensed hover className="property-tenants-table text-center">
           <thead>
             <tr>
-              <th className="text-center">Lease ID</th>
               <th className="text-center">Name</th>
               <th className="text-center">Email</th>
               <th className="text-center">Phone</th>
