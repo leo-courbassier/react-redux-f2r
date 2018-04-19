@@ -52,12 +52,13 @@ export default class PropertyProfile extends Component {
     const propertyTenants = _.reduce(
       appState.propertyLeases,
       (tenants, item) => (
-        _.concat(
-          tenants,
-          _.map(item.renterList, (renter) => (
-            _.set(renter, 'leaseId', item.id)
-          ))
-        )
+        // _.concat(
+        //   tenants,
+        //   _.map(item.renterList, (renter) => (
+        //     _.set(renter, 'leaseId', item.id)
+        //   ))
+        // )
+        _.unionBy(tenants, item.renterList, 'email')
       ),
       []
     );

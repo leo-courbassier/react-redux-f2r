@@ -94,3 +94,10 @@
 .propertiesRemainingBalance {
   background-color: rgba(0, 0, 0, .05) !important;
 }
+
+.property-leases-table,
+.property-tenants-table {
+  td, th {
+    border: none !important;
+  }
+}

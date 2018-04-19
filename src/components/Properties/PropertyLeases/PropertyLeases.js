@@ -22,30 +22,18 @@ export default class PropertyLeases extends Component {
     );
   }
 
-  renderDividedColumn(text1, text2) {
-    return (
-      <span className="divide-column">
-        <span className="half-col">{text1}</span>
-        <span className="half-col">{text2}</span>
-      </span>
-    );
-  }
-
   renderContent() {
     const { propertyLeases } = this.props;
     return (
       _.map(propertyLeases, (lease, index) => (
         <tr key={index}>
-          <td>{lease.id}</td>
           <td>{lease.rentAmount}</td>
           <td>{lease.startDate || 'N/A'}</td>
           <td>{lease.endDate || 'N/A'}</td>
           <td>{lease.rentDueDate || 'N/A'}</td>
           <td>
-            {this.renderDividedColumn(
-              this.getSumDeposits(lease, 'REFUNDABLE'),
-              this.getSumDeposits(lease, 'NONREFUNDABLE')
-            )}
+            ${this.getSumDeposits(lease, 'REFUNDABLE')} /
+            ${this.getSumDeposits(lease, 'NONREFUNDABLE')}
           </td>
         </tr>
       ))
@@ -64,10 +52,9 @@ export default class PropertyLeases extends Component {
     const { propertyLeases } = this.props;
     return (
       <div>
-        <Table striped bordered condensed hover className="properties-list-table text-center">
+        <Table condensed hover className="property-leases-table text-center">
           <thead>
             <tr>
-              <th className="text-center">Lease ID</th>
               <th className="text-center">Rent</th>
               <th className="text-center">Start Date</th>
               <th className="text-center">End Date</th>
