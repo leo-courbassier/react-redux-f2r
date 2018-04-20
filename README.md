@@ -1,4 +1,4 @@
-# Fit To Rent Front End Application
+# React Redux F2R Front End Application
 
 ### Installation / Deployment Steps
 
